@@ -8,23 +8,21 @@ interface ISelectOption {
 }
 
 const SelectOption:FC<ISelectOption> = ({type}) => {
-    const [clickItem, setClickItem] = useState<number[]>([]);
+    const [clickCheckbox, setClickCheckbox] = useState<number[]>([]);
+    const [clickItem, setClickItem] = useState<number>(0);
     const arrDate: IDate[] = getArrayDate();
     let arrSelect: string[] = [];
 
     switch(type) {
-        case 'video': arrSelect = ['2D', '3D', 'ScreenX', 'IMAX'];
-            break;
-        case 'audio': arrSelect = ['Dolby Digital', 'Dolby Atmos', 'Harman Kardon'];
-            break;
-        case 'language': arrSelect = ['Русский язык', 'Беларуская мова', 'English', 'SUB'];
-            break;
+        case 'video': arrSelect = ['2D', '3D', 'ScreenX', 'IMAX']; break;
+        case 'audio': arrSelect = ['Dolby Digital', 'Dolby Atmos', 'Harman Kardon']; break;
+        case 'language': arrSelect = ['Русский язык', 'Беларуская мова', 'English', 'SUB']; break;
         default: arrSelect = ['ошибка'];
     }
 
-    const handleClickItem = (i: number, event: React.MouseEvent<HTMLLabelElement | HTMLSpanElement>) => {
+    const handleClickCheckbox = (i: number, event: React.MouseEvent<HTMLLabelElement | HTMLSpanElement>) => {
         if (event.target === event.currentTarget) {
-            setClickItem(prevArr => {
+            setClickCheckbox(prevArr => {
                 if (prevArr.includes(i)) {
                     return prevArr.filter(item => item !== i);
                 } else {
@@ -34,14 +32,16 @@ const SelectOption:FC<ISelectOption> = ({type}) => {
         }
     };
     console.log(clickItem);
+    console.log(clickCheckbox);
+
     return (
         <div className='selectOption'>
             <div className="selectOption__text">
                 {type === 'calendar' ? 
                     arrDate.map((item: IDate, i: number) => (
-                        <a href='#' className={`selectOption__item ${i === 0 ? 'active' : ''}`}>
-                            {i === 0 ? '✔ ' : ''}{item.dayOfWeek}, {item.dateNumMonth}
-                        </a>
+                        <p className={`selectOption__item ${clickItem === i ? 'active' : ''}`} onClick={() => setClickItem(i)}>
+                            {clickItem === i ? '✔ ' : ''}{item.dayOfWeek}, {item.dateNumMonth}
+                        </p>
                     ))
                 :
                     <>
@@ -51,13 +51,13 @@ const SelectOption:FC<ISelectOption> = ({type}) => {
                         {type === 'language' && 'Язык:'}
                     </p>
                     {arrSelect.map((item: string, i: number) => (
-                        <label className='selectOption__choise' onClick={(event) => handleClickItem(i, event)}>
-                            <span 
-                                className={`checkmark ${clickItem.includes(i) ? 'click' : ''}`} 
-                                onClick={(event) => handleClickItem(i, event)} 
-                            ></span>
+                        <label className='selectOption__choise' onClick={(event) => handleClickCheckbox(i, event)}>
                             {item}
                             <input type="checkbox" />
+                            <span 
+                                className={`checkmark ${clickCheckbox.includes(i) ? 'click' : ''}`} 
+                                onClick={(event) => handleClickCheckbox(i, event)} 
+                            ></span>
                         </label>
                     ))}
                     </>

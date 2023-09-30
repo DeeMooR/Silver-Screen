@@ -35,6 +35,9 @@
   transition: all 0.3s ease 0s;
   cursor: pointer;
 }
+.selectOption .selectOption__text .selectOption__choise:last-child {
+  padding: 10px 0 20px 25px;
+}
 .selectOption .selectOption__text .selectOption__choise input {
   position: absolute;
   z-index: -1;

@@ -1,12 +1,17 @@
 import React from 'react';
-import Afisha from './pages/Afisha/Afisha';
-import './App.css';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import Afisha from './pages/Afisha';
 
 function App() {
+    const location = useLocation();
   return (
-    <div className="App">
-        <Afisha />
-    </div>
+    <>
+        <Routes>
+            <Route path='/afisha' element={<Afisha />} />
+            <Route path='*' element={<Navigate to='/afisha'/>} />
+        </Routes>
+        {location.pathname === '/' && <Navigate to='/afisha' />}
+    </>
   );
 }
 
