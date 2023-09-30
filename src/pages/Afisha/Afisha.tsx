@@ -18,6 +18,12 @@ const Afisha = () => {
         {id: 8, image: '', title: 'Искусство по понятиям', age: 18, language: 'RU', genres: ['триллер']},
         {id: 9, image: '', title: 'Индиана Джонс и колесо судьбы', age: 12, language: 'RU', genres: ['боевик', 'приключения']},
         {id: 10, image: '', title: 'Дозор джунглей: Кругосветка', age: 6, language: 'RU', genres: ['комедия', 'мультфильм', 'приключения']},
+        {id: 11, image: '', title: 'Иван Семенов: Большой поход', age: 6, language: 'RU', genres: ['комедия']},
+        {id: 12, image: '', title: 'Синий Жук', age: 12, language: 'RU', genres: ['боевик', 'триллер', 'фантастика']},
+        {id: 13, image: '', title: 'Дети шпионов: Армагеддон', age: 6, language: 'RU', genres: ['комедия', 'боевик', 'фантастика']},
+        {id: 14, image: '', title: 'Великая ирония', age: 16, language: 'RU', genres: ['мелодрама', 'триллер', 'драма']},
+        {id: 15, image: '', title: 'Великий уравнитель 3', age: 18, language: 'RU', genres: ['криминал', 'боевик', 'триллер']},
+        {id: 16, image: '', title: 'Леди Баг и Супер-Кот: Пробуждение силы', age: 6, language: 'RU', genres: ['мультфильм', 'фэнтези', 'приключения']},
     ]
 
     return (

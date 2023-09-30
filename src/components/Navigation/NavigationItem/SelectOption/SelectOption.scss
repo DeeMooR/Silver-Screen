@@ -12,17 +12,17 @@
                 transition: all 0.2s ease 0s;
             }
             &:first-child {
-                padding: 20px 0 10px;
+                padding: 25px 0 10px;
             }
             &:last-child {
-                padding: 10px 0 20px;
+                padding: 10px 0 30px;
             }
             &.active {
                 color: rgb(212, 7, 84);
             }
         }
         .selectOption__title {
-            padding: 20px 0 10px;
+            padding: 25px 0 10px;
             font-weight: 700;
         }
         .selectOption__choise {
@@ -30,7 +30,7 @@
             position: relative;
             padding: 10px 0 10px 25px;
             &:last-child {
-                padding: 10px 0 20px 25px;
+                padding: 10px 0 30px 25px;
             }
             cursor: pointer;
             input {

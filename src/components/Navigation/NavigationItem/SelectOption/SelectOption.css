@@ -16,16 +16,16 @@
   transition: all 0.2s ease 0s;
 }
 .selectOption .selectOption__text .selectOption__item:first-child {
-  padding: 20px 0 10px;
+  padding: 25px 0 10px;
 }
 .selectOption .selectOption__text .selectOption__item:last-child {
-  padding: 10px 0 20px;
+  padding: 10px 0 30px;
 }
 .selectOption .selectOption__text .selectOption__item.active {
   color: rgb(212, 7, 84);
 }
 .selectOption .selectOption__text .selectOption__title {
-  padding: 20px 0 10px;
+  padding: 25px 0 10px;
   font-weight: 700;
 }
 .selectOption .selectOption__text .selectOption__choise {
@@ -35,7 +35,7 @@
   cursor: pointer;
 }
 .selectOption .selectOption__text .selectOption__choise:last-child {
-  padding: 10px 0 20px 25px;
+  padding: 10px 0 30px 25px;
 }
 .selectOption .selectOption__text .selectOption__choise input {
   position: absolute;
