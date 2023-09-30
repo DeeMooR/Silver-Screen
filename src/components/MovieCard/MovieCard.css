@@ -1,0 +1,87 @@
+.movieCard {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.movieCard__age-lang {
+    margin: 36px 0 8px;
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 500;
+}
+.movieCard__title {
+    height: 110px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+.movieCard__title a {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.2s ease 0s;
+}
+.movieCard__title a:hover {
+    color: #fff;
+    transition: all 0.2s ease 0s;
+}
+.movieCard__genres {
+    height: 50px;
+    margin: auto;
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+@media (max-width: 599.98px) {
+    .movieCard {
+        flex-direction: row;
+        gap: 30px;
+        text-align: left;
+        position: relative;
+    }
+    .movieCard button {
+        margin: 20px 0 0;
+    }
+    .movieCard:after {
+        position: absolute;
+        content: '';
+        left: 0;
+        bottom: -40px;
+        width: 100%;
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    .movieCard__info {
+        width: 60%;
+    }
+}
+@media (max-width: 479.98px) {
+    .movieCard {
+        flex-direction: column;
+        gap: 0;
+        text-align: center;
+    }
+    .movieCard__age-lang {
+        margin: 25px 0 8px;
+    }
+    .movieCard button {
+        margin: 20px auto 0;
+    }
+    .movieCard__info {
+        width: 100%;
+    }
+}
+@media (max-width: 319.98px) {
+    .movieCard {
+        font-size: 14px;
+    }
+    .movieCard__title {
+        font-size: 20px;
+        height: 80px;
+    }
+    .movieCard__genres {
+        height: 40px;
+    }
+    .movieCard button {
+        margin: 13px auto 0;
+    }
+}

@@ -1,0 +1,107 @@
+.afisha {
+  margin: 140px auto;
+}
+.afisha .afisha__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.afisha .afisha__header h1 {
+  font-size: 50px;
+  font-weight: 700;
+}
+.afisha .afisha__header a {
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.35);
+  transition: all 0.3s ease 0s;
+}
+.afisha .afisha__header .active {
+  position: relative;
+  color: rgba(255, 255, 255, 0.8);
+}
+.afisha .afisha__header .active:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: -10px;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.afisha .afisha__header .soon {
+  margin: 0 0 0 20px;
+}
+.afisha .afisha__header a:hover {
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease 0s;
+}
+.afisha .afisha__navigation {
+  padding: 40px 0 0 0;
+}
+.afisha .afisha__cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.afisha .afisha__cards .cards__item {
+  width: 270px;
+  padding: 0 10px;
+  margin: 0 auto;
+}
+.afisha .afisha__cards .cards__item.center-4 {
+  grid-column: span 4;
+}
+
+@media (max-width: 1199.98px) {
+  .afisha .afisha__cards .cards__item {
+    width: 240px;
+  }
+}
+@media (max-width: 1023.98px) {
+  .afisha .afisha__cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .afisha .afisha__cards .cards__item {
+    width: 250px;
+  }
+  .afisha .afisha__cards .cards__item.center-3 {
+    grid-column: span 3;
+  }
+  .afisha .afisha__cards .cards__item.center-4 {
+    grid-column: span 1;
+  }
+}
+@media (max-width: 899.98px) {
+  .afisha .afisha__cards .cards__item {
+    width: 235px;
+  }
+}
+@media (max-width: 767.98px) {
+  .afisha .afisha__cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .afisha .afisha__cards .cards__item {
+    width: 250px;
+  }
+  .afisha .afisha__cards .cards__item.center-3 {
+    grid-column: span 1;
+  }
+  .afisha .afisha__cards .cards__item.center-2 {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 599.98px) {
+  .afisha .afisha__header {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .afisha .afisha__cards {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .afisha .afisha__cards .cards__item {
+    width: 100%;
+  }
+  .afisha .afisha__cards .cards__item.center-2 {
+    grid-column: span 1;
+  }
+}

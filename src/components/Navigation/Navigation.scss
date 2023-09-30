@@ -1,0 +1,12 @@
+.navigation {
+    display: flex;
+    .navigation__item {
+        width: 25%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-left: 0;
+        cursor: pointer;
+    }
+    .navigation__item:last-child {
+        border-right: 0;
+    }
+}
