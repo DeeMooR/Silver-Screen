@@ -9,7 +9,7 @@ const NotFind = () => {
     return (
         <>
         <h2 className='afisha__not-find'>Не нашли фильм?</h2>
-        <Button color='white'>завтра, {tomorrowDate}</Button>
+        <Button color='white'>{tomorrowDate}</Button>
         <Button color='white'>Скоро в кино</Button>
         </>
     )

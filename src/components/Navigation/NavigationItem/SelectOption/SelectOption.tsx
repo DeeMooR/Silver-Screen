@@ -1,46 +1,63 @@
-import React, { FC, useState } from 'react'
-import { getArrayDate } from 'src/helpers';
-import { IDate } from 'src/interfaces';
+import React, { FC, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { getArrDate, getArrSelect } from 'src/helpers';
 import './SelectOption.css'
 
 interface ISelectOption {
-    type: string
+    type: string,
+    searchDate: string,
+    setSearchDate: (v: string) => void,
+    setSearchArr: (v: string[]) => void
 }
 
-const SelectOption:FC<ISelectOption> = ({type}) => {
-    const [clickCheckbox, setClickCheckbox] = useState<number[]>([]);
-    const [clickItem, setClickItem] = useState<number>(0);
-    const arrDate: IDate[] = getArrayDate();
-    let arrSelect: string[] = [];
+const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSearchArr}) => {
+    const [clickCheckbox, setClickCheckbox] = useState<string[]>([]);
+    // const typeKey = useSelector(({ search }) => search[type]);
+    // const dispatch = useDispatch();
+    // useEffect(() => {
+    //     setClickCheckbox(typeKey);
+    // }, [typeKey]);
 
-    switch(type) {
-        case 'video': arrSelect = ['2D', '3D', 'ScreenX', 'IMAX']; break;
-        case 'audio': arrSelect = ['Dolby Digital', 'Dolby Atmos', 'Harman Kardon']; break;
-        case 'language': arrSelect = ['Русский язык', 'Беларуская мова', 'English', 'SUB']; break;
-        default: arrSelect = ['ошибка'];
+    const arrDate: string[] = getArrDate();
+    const arrSelect: string[] = getArrSelect(type);
+
+    const handleClickItem = (i: number) => {
+        setSearchDate(arrDate[i]);
+        // dispatch({ 
+        //     type: "SET_SEARCH", 
+        //     payload: {
+        //         type: 'date', 
+        //         data: arrDate[i]
+        //     } 
+        // });
     }
 
     const handleClickCheckbox = (i: number, event: React.MouseEvent<HTMLLabelElement | HTMLSpanElement>) => {
         if (event.target === event.currentTarget) {
             setClickCheckbox(prevArr => {
-                if (prevArr.includes(i)) {
-                    return prevArr.filter(item => item !== i);
-                } else {
-                    return [...prevArr, i];
-                }
+                let newArr;
+                if (prevArr.includes(arrSelect[i])) newArr = prevArr.filter(item => item !== arrSelect[i]);
+                else newArr = [...prevArr, arrSelect[i]];
+                // dispatch({ 
+                //     type: "SET_SEARCH", 
+                //     payload: {
+                //         type: {type}, 
+                //         data: newArr
+                //     } 
+                // });
+                setSearchArr(newArr);
+                return newArr;
             });
         }
     };
-    console.log(clickItem);
-    console.log(clickCheckbox);
 
     return (
         <div className='selectOption'>
             <div className="selectOption__text">
-                {type === 'calendar' ? 
-                    arrDate.map((item: IDate, i: number) => (
-                        <p className={`selectOption__item ${clickItem === i ? 'active' : ''}`} onClick={() => setClickItem(i)}>
-                            {clickItem === i ? '✔ ' : ''}{item.dayOfWeek}, {item.dateNumMonth}
+                {type === 'date' ? 
+                    arrDate.map((item: string, i: number) => (
+                        <p className={`selectOption__item ${searchDate === item ? 'active' : ''}`} onClick={() => handleClickItem(i)}>
+                            {searchDate === item ? '✔ ' : ''}{item}
                         </p>
                     ))
                 :
@@ -55,7 +72,7 @@ const SelectOption:FC<ISelectOption> = ({type}) => {
                             {item}
                             <input type="checkbox" />
                             <span 
-                                className={`checkmark ${clickCheckbox.includes(i) ? 'click' : ''}`} 
+                                className={`checkmark ${clickCheckbox.includes(arrSelect[i]) ? 'click' : ''}`} 
                                 onClick={(event) => handleClickCheckbox(i, event)} 
                             ></span>
                         </label>

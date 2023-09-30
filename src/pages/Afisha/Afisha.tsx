@@ -20,24 +20,6 @@ const Afisha = () => {
         {id: 10, image: '', title: 'Дозор джунглей: Кругосветка', age: 6, language: 'RU', genres: ['комедия', 'мультфильм', 'приключения']},
     ]
 
-
-    let mockApi:any[] = [];
-
-    try {
-        let postData = fetch(
-            `https://65158a65dc3282a6a3ce950f.mockapi.io/movies`
-        )
-        .then((postData) => postData.json())
-        .then((data) => {
-            mockApi = data;
-            console.log(mockApi);
-        });
-    } catch (err) {
-        console.log(err);
-    }
-
-    if (mockApi.length) console.log(mockApi[0]);
-
     return (
         <PageTemplate>
             <div className='afisha'>

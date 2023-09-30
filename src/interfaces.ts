@@ -6,8 +6,3 @@ export interface IMovie {
     language: 'RU' | 'ENG',
     genres: string[],
 }
-
-export interface IDate {
-    dayOfWeek: string,
-    dateNumMonth: string,
-}
