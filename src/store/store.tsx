@@ -3,28 +3,17 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools} from 'redux-devtools-extension'
 
 const initialState = {
-    // dispatch НЕ активны в NavigationItem и SeleptOption
-    // Возможно понадобится при запросах на сервер
-    search: {
-        date: '',
-        video: [],
-        audio: [],
-        language: []
-    }
+    navActive: ''
 };
 
 const rootReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case 'SET_SEARCH': {
-            const {type, data} = action.payload;
+        case 'TOGGLE_NAV_ACTIVE': {
             return {
                 ...state,
-                search: {
-                    ...state.search,
-                    [type]: data
-                }
+                navActive: action.payload
             };
-          }
+        }
         default: return state;
     }
 };

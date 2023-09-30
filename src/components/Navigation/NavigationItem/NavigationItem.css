@@ -30,7 +30,7 @@
   background-color: rgb(241, 241, 241);
   z-index: 1;
   overflow: hidden;
-  transition: max-height 0.2s ease-in-out;
+  transition: max-height 0.08s ease-in-out;
 }
 .navigationItem__choise-block::before {
   content: "";
@@ -43,4 +43,5 @@
 }
 .navigationItem__choise-block.show {
   max-height: 100%;
+  transition: max-height 0.2s ease-in-out;
 }

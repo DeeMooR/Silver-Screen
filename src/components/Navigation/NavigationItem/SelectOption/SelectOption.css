@@ -32,7 +32,6 @@
   display: block;
   position: relative;
   padding: 10px 0 10px 25px;
-  transition: all 0.3s ease 0s;
   cursor: pointer;
 }
 .selectOption .selectOption__text .selectOption__choise:last-child {
@@ -54,7 +53,6 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 50% 50%;
-  transition: all 0.3s ease 0s;
 }
 .selectOption .selectOption__text .selectOption__choise .checkmark.click {
   background-color: rgb(212, 7, 84);

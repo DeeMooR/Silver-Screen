@@ -13,24 +13,24 @@ interface INavigationItem {
 }
 
 const NavigationItem:FC<INavigationItem> = ({icon, text, type}) => {
-    const [isRotated, setIsRotated] = useState(false);
     const todayDate = getTodayDate();
+    const [isActive, setIsActive] = useState(false);
     const [searchArr, setSearchArr] = useState<string[]>([]);
     const [searchDate, setSearchDate] = useState<string>(todayDate);
+    const activeStore = useSelector(({ navActive }) => navActive);
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     dispatch({ 
-    //         type: "SET_SEARCH", 
-    //         payload: {
-    //             type: 'date', 
-    //             data: todayDate
-    //         } 
-    //     });
-    // },[]);
+    useEffect(() => {
+        if (activeStore !== type) setIsActive(false);
+    }, [activeStore])
 
     const handleClick = () => {
-        setIsRotated(!isRotated);
+        setIsActive(prev => {
+            const newIsActive = !prev;
+            if (newIsActive) dispatch({ type: "TOGGLE_NAV_ACTIVE", payload: type })
+            else if (activeStore === type) dispatch({ type: "TOGGLE_NAV_ACTIVE", payload: '' })
+            return newIsActive;
+        });
     };
 
     return (
@@ -42,9 +42,9 @@ const NavigationItem:FC<INavigationItem> = ({icon, text, type}) => {
                     (searchArr.length !== 0 ? searchArr.join(', ') : text)
                 }
             </p>
-            <img src={arrow} className={`navigationItem__arrow ${isRotated && 'rotate'}`} alt="arrow" />
+            <img src={arrow} className={`navigationItem__arrow ${isActive && 'rotate'}`} alt="arrow" />
         </div>
-        <div className={`navigationItem__choise-block ${isRotated ? 'show' : ''}`}>
+        <div className={`navigationItem__choise-block ${isActive ? 'show' : ''}`}>
             <SelectOption type={type} searchDate={searchDate} setSearchDate={setSearchDate} setSearchArr={setSearchArr} />
         </div>
         </>

@@ -35,8 +35,8 @@ const Afisha = () => {
                 </div>
                 <div className='afisha__cards'>
                     {movieCards.map((card: IMovie, i: number) => (
-                        <div className="cards__item">
-                            <MovieCard key={i} obj={card} />
+                        <div className="cards__item" key={i}>
+                            <MovieCard obj={card} />
                         </div>
                     ))}
                     <div className={`cards__item 

@@ -1,35 +1,25 @@
-import React, { FC, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC, useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { getArrDate, getArrSelect } from 'src/helpers';
 import './SelectOption.css'
 
 interface ISelectOption {
     type: string,
     searchDate: string,
-    setSearchDate: (v: string) => void,
-    setSearchArr: (v: string[]) => void
+    setSearchDate: (value: string) => void,
+    setSearchArr: (value: string[]) => void
 }
 
 const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSearchArr}) => {
     const [clickCheckbox, setClickCheckbox] = useState<string[]>([]);
-    // const typeKey = useSelector(({ search }) => search[type]);
-    // const dispatch = useDispatch();
-    // useEffect(() => {
-    //     setClickCheckbox(typeKey);
-    // }, [typeKey]);
+    const dispatch = useDispatch();
 
     const arrDate: string[] = getArrDate();
     const arrSelect: string[] = getArrSelect(type);
 
     const handleClickItem = (i: number) => {
         setSearchDate(arrDate[i]);
-        // dispatch({ 
-        //     type: "SET_SEARCH", 
-        //     payload: {
-        //         type: 'date', 
-        //         data: arrDate[i]
-        //     } 
-        // });
+        dispatch({ type: "TOGGLE_NAV_ACTIVE", payload: '' });
     }
 
     const handleClickCheckbox = (i: number, event: React.MouseEvent<HTMLLabelElement | HTMLSpanElement>) => {
@@ -38,16 +28,10 @@ const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSea
                 let newArr;
                 if (prevArr.includes(arrSelect[i])) newArr = prevArr.filter(item => item !== arrSelect[i]);
                 else newArr = [...prevArr, arrSelect[i]];
-                // dispatch({ 
-                //     type: "SET_SEARCH", 
-                //     payload: {
-                //         type: {type}, 
-                //         data: newArr
-                //     } 
-                // });
                 setSearchArr(newArr);
                 return newArr;
             });
+            dispatch({ type: "TOGGLE_NAV_ACTIVE", payload: '' });
         }
     };
 
@@ -56,7 +40,7 @@ const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSea
             <div className="selectOption__text">
                 {type === 'date' ? 
                     arrDate.map((item: string, i: number) => (
-                        <p className={`selectOption__item ${searchDate === item ? 'active' : ''}`} onClick={() => handleClickItem(i)}>
+                        <p className={`selectOption__item ${searchDate === item ? 'active' : ''}`} onClick={() => handleClickItem(i)} key={i}>
                             {searchDate === item ? '✔ ' : ''}{item}
                         </p>
                     ))
@@ -68,7 +52,7 @@ const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSea
                         {type === 'language' && 'Язык:'}
                     </p>
                     {arrSelect.map((item: string, i: number) => (
-                        <label className='selectOption__choise' onClick={(event) => handleClickCheckbox(i, event)}>
+                        <label className='selectOption__choise' onClick={(event) => handleClickCheckbox(i, event)} key={i}>
                             {item}
                             <input type="checkbox" />
                             <span 
