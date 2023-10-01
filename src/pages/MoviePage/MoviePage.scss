@@ -1,0 +1,102 @@
+.moviePage {
+    height: 1500px;
+    .moviePage__header {
+        position: sticky;
+        z-index: 100;
+        top: 0;
+        transition: all 0.2s ease 0s;
+        &.scrollHeader {
+            background-color: rgba(39, 39, 42, 0.8);
+            box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 0px 0px;
+        }
+        .header__wrapper {
+            display: flex;
+            align-items: center;
+            height: 80px;
+            max-width: 1200px;
+            padding: 0 15px;
+            margin: 0 auto;
+            img {
+                width: 25px;
+                cursor: pointer;
+            }
+            span {
+                flex-grow: 1;
+                font-weight: 700;
+                font-size: 18px;
+                letter-spacing: 1px;
+                text-align: center;
+                color: rgba(255, 255, 255, 0.35);
+            }
+        }
+        
+    }
+    .moviePage__wrapper {
+        max-width: 1200px;
+        padding: 0 15px;
+        margin: 0 auto;
+    }
+    .moviePage__content {
+        margin: 60px 0 0 0;
+        display: flex;
+        gap: 50px;
+        .content__article {
+            width: 75%;
+            .content__movie {
+                display: flex;
+                gap: 50px;
+                .content__image {
+                    width: 11%;
+                    border-radius: 10px;
+                }
+                .content__text {
+                    .content__title {
+                        font-size: 50px;
+                        font-weight: 700;
+                    }
+                    .content__other {
+                        margin: 25px 0 0 0;
+                        color: rgba(255, 255, 255, 0.35);
+                        span {
+                            padding: 0 10px;
+                            &:first-child {
+                                padding: 0 10px 0 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        .content__aside {
+            width: 25%;
+            .content__trailer {
+                width: 100%;
+                position: relative;
+                display: block;
+                filter: brightness(0.6);
+                transition: all 0.2s ease 0s;
+                &:hover {
+                    filter: brightness(1);
+                    transition: all 0.3s ease 0s;
+                }
+                &:after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    // transform: translate(-50%, -50%);
+                    width: 50%;
+                    height: 50%;
+                    border-radius: 50%;
+                    background-color: red;
+                    z-index: 5;
+                }
+            }
+            .content__description {
+                margin: 30px 0 0 0;
+                line-height: 25px;
+            }
+        }
+    }
+}

@@ -29,7 +29,7 @@
     background-color: rgba(241, 241, 241);
     z-index: 1;
     overflow: hidden; 
-    transition: max-height 0.08s ease-in-out;
+    transition: max-height 0.15s ease-in-out;
     &::before {
         content: '';
         position: absolute;
@@ -41,7 +41,7 @@
     }
     &.show {
         max-height: 100%;
-        transition: max-height 0.2s ease-in-out;
+        transition: max-height 0.25s ease-in-out;
     }
 }
 

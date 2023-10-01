@@ -4,11 +4,12 @@ import './Button.css'
 interface IButton {
     children: ReactNode,
     color: 'red' | 'white',
+    handleClick?: () => void,
 }
 
-const Button:FC<IButton> = ({children, color}) => {
+const Button:FC<IButton> = ({children, color, handleClick}) => {
   return (
-    <button type='button' className={`custom-button border-${color}`}>{children}</button>
+    <button type='button' className={`custom-button border-${color}`} onClick={handleClick}>{children}</button>
   )
 }
 

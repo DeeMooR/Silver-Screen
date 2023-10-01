@@ -13,13 +13,11 @@
     height: 110px;
     font-weight: 700;
     line-height: 1.1;
-}
-.movieCard__title a {
-    cursor: pointer;
     color: rgba(255, 255, 255, 0.8);
     transition: all 0.2s ease 0s;
+    cursor: pointer;
 }
-.movieCard__title a:hover {
+.movieCard__title:hover {
     color: #fff;
     transition: all 0.2s ease 0s;
 }
