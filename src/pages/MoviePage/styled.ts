@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 
-export const StyledImage = styled.div<{ image: string }>`
-    width: 14%;
-    height: 0px;
-    padding-bottom: 22%;
-    background: url(${props => props.image}) no-repeat center;
-    background-size: cover;
-    border-radius: 10px;
-`;
+// export const StyledImage = styled.div<{ image: string }>`
+//     width: 120px;
+//     height: 170px;
+//     background: url(${props => props.image}) no-repeat center;
+//     background-size: cover;
+//     border-radius: 10px;
+// `;
 
 export const StyledTrailer = styled.div<{ video: string, play: string }>`
     position: relative;  
@@ -31,5 +30,27 @@ export const StyledTrailer = styled.div<{ video: string, play: string }>`
         width: 50px;
         height: 50px;
         background: url(${props => props.play}) center center / cover no-repeat;
+    }
+
+    @media (max-width: 1023.98px) {
+        max-width: 300px;
+        padding-bottom: 168.75px;
+    }
+    @media (max-width: 767.98px) {
+        min-width: calc(50% - 15px);
+        max-width: calc(50% - 15px);
+        padding-bottom: 27%;
+    }
+    @media (max-width: 599.98px) {
+        min-width: 60%;
+        padding-bottom: 33.75%;
+    }
+    @media (max-width: 479.98px) {
+        max-width: 260px;
+        padding-bottom: 146px;
+    }
+    @media (max-width: 319.98px) {
+        width: 100%;
+        padding-bottom: 56.25%;
     }
 `;

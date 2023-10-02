@@ -14,7 +14,7 @@
             align-items: center;
             height: 80px;
             max-width: 1200px;
-            padding: 0 15px;
+            padding: 0 30px;
             margin: 0 auto;
             img {
                 width: 25px;
@@ -33,7 +33,7 @@
     }
     .moviePage__wrapper {
         max-width: 1200px;
-        padding: 0 15px;
+        padding: 0 30px;
         margin: 0 auto;
     }
     .moviePage__content {
@@ -44,9 +44,10 @@
             width: 75%;
             .content__movie {
                 display: flex;
-                gap: 50px;
+                gap: 45px;
                 .content__image {
-                    width: 11%;
+                    width: 120px;
+                    height: 170px;
                     border-radius: 10px;
                 }
                 .content__text {
@@ -55,7 +56,8 @@
                         font-weight: 700;
                     }
                     .content__other {
-                        margin: 25px 0 0 0;
+                        margin: 20px 0 0 0;
+                        line-height: 25px;
                         color: rgba(255, 255, 255, 0.35);
                         span {
                             padding: 0 10px;
@@ -70,32 +72,117 @@
         }
         .content__aside {
             width: 25%;
-            .content__trailer {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            .content__description {
+                line-height: 25px;
+            }
+        }
+    }
+}
+@media (max-width: 1023.98px) {
+    .moviePage {
+        .moviePage__content {
+            flex-direction: column;
+            .content__article {
                 width: 100%;
-                position: relative;
-                display: block;
-                filter: brightness(0.6);
-                transition: all 0.2s ease 0s;
-                &:hover {
-                    filter: brightness(1);
-                    transition: all 0.3s ease 0s;
-                }
-                &:after {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    // transform: translate(-50%, -50%);
-                    width: 50%;
-                    height: 50%;
-                    border-radius: 50%;
-                    background-color: red;
-                    z-index: 5;
+            }
+            .content__aside {
+                width: 100%;
+                flex-direction: row;
+                .content__description {
+                    max-width: 350px;
                 }
             }
-            .content__description {
-                margin: 30px 0 0 0;
-                line-height: 25px;
+        }
+    }
+}
+@media (max-width: 767.98px) {
+    .moviePage {
+        .moviePage__content {
+            .content__aside {
+                .content__description {
+                    width: calc(50% - 15px);
+                }
+            }
+        }
+    }
+}
+@media (max-width: 599.98px) {
+    .moviePage {
+        .moviePage__content {
+            .content__aside {
+                flex-direction: column;
+                .content__description {
+                    min-width: 100%;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 479.98px) {
+    .moviePage {
+        .moviePage__content {
+            margin: 45px 0 0 0;
+            .content__article {
+                .content__movie {
+                    gap: 30px;
+                    .content__image {
+                        width: 70px;
+                        height: 100px;
+                    }
+                    .content__text {
+                        .content__title {
+                            font-size: 30px;
+                        }
+                        .content__other {
+                            margin: 15px 0 0 0;
+                            span {
+                                padding: 0 7px;
+                                &:first-child {
+                                    padding: 0 7px 0 0;
+                                }
+                            }
+                        }
+                    }
+                }
+    
+            }
+            .content__aside {
+                .content__description {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 319.98px) {
+    .moviePage {
+        .moviePage__content {
+            .content__article {
+                .content__movie {
+                    flex-direction: column;
+                    .content__image {
+                        width: 150px;
+                        height: 212px;
+                    }
+                    .content__text {
+                        .content__title {
+                            font-size: 35px;
+                        }
+                        .content__other {
+                            margin: 15px 0 0 0;
+                            span {
+                                padding: 0 7px;
+                                &:first-child {
+                                    padding: 0 7px 0 0;
+                                }
+                            }
+                        }
+                    }
+                }
+    
             }
         }
     }

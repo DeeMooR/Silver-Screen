@@ -23,14 +23,14 @@ const arrDaysOfWeek = ['воскресенье', 'понедельник', 'вт
 
 export const getTodayDate = () => {
     const currentDate = new Date();
-    const formattedDate = `сегодня, ${currentDate.getDate()} ${russianMonths[currentDate.getMonth()]}`;
+    const formattedDate = `${currentDate.getDate()} ${russianMonths[currentDate.getMonth()]}`;
     return formattedDate;
 };
 
 export const getTomorrowDate = () => {
     const currentDate = new Date();
     const tomorrowDate = addDays(currentDate, 1);
-    const formattedDate = `завтра, ${tomorrowDate.getDate()} ${russianMonths[tomorrowDate.getMonth()]}`;
+    const formattedDate = `${tomorrowDate.getDate()} ${russianMonths[tomorrowDate.getMonth()]}`;
     return formattedDate;
 };
 
@@ -41,11 +41,23 @@ export const getArrDate = () => {
         let dayOfWeek = arrDaysOfWeek[+currentDate.getDay()];
         if (i === 0 ) dayOfWeek = 'сегодня';
         if (i === 1 ) dayOfWeek = 'завтра';
-        const dateNumMonth = currentDate.getDate() + ' ' + russianMonths[currentDate.getMonth()];
+
+        const day = currentDate.getDate().toString().padStart(2, '0');
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const year = currentDate.getFullYear();
+        const dateNumMonth = `${day}.${month}.${year}`;
+
         datesArray.push(dayOfWeek + ', ' + dateNumMonth);
         currentDate = addDays(currentDate, 1);
     }
     return datesArray;
+}
+
+export function formateDateItem(item: string) {
+    const [dayOfWeek, dateNumber] = item.split(', ');
+    const [dayNum, monthIndex, year] = dateNumber.split('.');
+    const month = russianMonths[Number(monthIndex) - 1];
+    return `${dayOfWeek}, ${+dayNum} ${month}`;
 }
 
 export const getArrSelect = (type: string) => {
@@ -63,7 +75,7 @@ export const arrMovies: IMovie[] = [
     trailer: 'https://www.youtube.com/watch?v=w0m2C3lN1h8',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '02.10.2023',
             room1: ['12:10', '17:30'],
             room2: ['10:15', '19:10'],
             room3: ['11:40', '15:50'],
@@ -77,7 +89,7 @@ export const arrMovies: IMovie[] = [
     trailer: '',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '02.10.2023',
             room1: ['12:10', '17:30'],
             room2: ['10:15', '19:10'],
             room3: [],

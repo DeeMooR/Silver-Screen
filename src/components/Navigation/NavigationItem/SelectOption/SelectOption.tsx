@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { getArrDate, getArrSelect } from 'src/helpers';
+import { getArrDate, getArrSelect, formateDateItem } from 'src/helpers';
 import './SelectOption.css'
 
 interface ISelectOption {
@@ -41,7 +41,7 @@ const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSea
                 {type === 'date' ? 
                     arrDate.map((item: string, i: number) => (
                         <p className={`selectOption__item ${searchDate === item ? 'active' : ''}`} onClick={() => handleClickItem(i)} key={i}>
-                            {searchDate === item ? '✔ ' : ''}{item}
+                            {searchDate === item ? '✔ ' : ''}{formateDateItem(item)}
                         </p>
                     ))
                 :

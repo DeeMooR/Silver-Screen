@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import SelectOption from './SelectOption';
-import { getTodayDate } from 'src/helpers';
+import { getArrDate, formateDateItem } from 'src/helpers';
 import './NavigationItem.css'
 
 import arrow from "../../../icons/arrow-button.png"
@@ -13,10 +13,10 @@ interface INavigationItem {
 }
 
 const NavigationItem:FC<INavigationItem> = ({icon, text, type}) => {
-    const todayDate = getTodayDate();
+    const arrDate = getArrDate();
     const [isActive, setIsActive] = useState(false);
     const [searchArr, setSearchArr] = useState<string[]>([]);
-    const [searchDate, setSearchDate] = useState<string>(todayDate);
+    const [searchDate, setSearchDate] = useState<string>(arrDate[0]);
     const activeStore = useSelector(({ navActive }) => navActive);
     const dispatch = useDispatch();
 
@@ -38,7 +38,7 @@ const NavigationItem:FC<INavigationItem> = ({icon, text, type}) => {
         <div className="navigationItem" onClick={handleClick}>
             <img src={icon} className="navigationItem__image" alt="icon" />
             <p className="navigationItem__text">
-                {type === 'date' ? searchDate :
+                {type === 'date' ? formateDateItem(searchDate) :
                     (searchArr.length !== 0 ? searchArr.join(', ') : text)
                 }
             </p>

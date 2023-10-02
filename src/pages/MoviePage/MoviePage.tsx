@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Navigation from 'src/components/Navigation';
 import Modal from 'src/components/Modal';
 import { arrMovies } from 'src/helpers';
-import { StyledImage, StyledTrailer } from './styled'
+import { StyledTrailer } from './styled'
 import { IMovie } from 'src/interfaces';
 import './MoviePage.css'
 
@@ -49,7 +49,8 @@ const MoviePage = () => {
                     <div className="moviePage__content">
                         <article className="content__article">
                             <section className='content__movie'>
-                                <StyledImage image={movie.image}></StyledImage>
+                                <img src={movie.image} className='content__image' alt="poster" />
+                                {/* <StyledImage image={movie.image}></StyledImage> */}
                                 <article className='content__text'>
                                     <h2 className='content__title'>{movie.title}</h2>
                                     <p className='content__other'>
