@@ -3,7 +3,7 @@
 }
 .moviePage .moviePage__header {
   position: sticky;
-  z-index: 100;
+  z-index: 5;
   top: 0;
   transition: all 0.2s ease 0s;
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import Navigation from 'src/components/Navigation';
+import Modal from 'src/components/Modal';
 import { arrMovies } from 'src/helpers';
 import { StyledImage, StyledTrailer } from './styled'
 import { IMovie } from 'src/interfaces';
@@ -12,6 +12,7 @@ import iconPlay from "src/icons/play.png"
 
 const MoviePage = () => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isModal, setIsModal] = useState(false);
     const {id} = useParams<{id: string}>();
     let movie: IMovie | undefined;
     if (id) movie = arrMovies[+id];
@@ -32,7 +33,6 @@ const MoviePage = () => {
         newDuration = `${Math.floor(movie.duration / 60)} ч ${movie.duration % 60} мин`
     }
     const trailerImage = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-    
 
     return (
         <>
@@ -61,11 +61,12 @@ const MoviePage = () => {
                             </section>
                         </article>
                         <aside className="content__aside">
-                            <StyledTrailer video={trailerImage} play={iconPlay}></StyledTrailer>
+                            <StyledTrailer video={trailerImage} play={iconPlay} onClick={() => setIsModal(true)}></StyledTrailer>
                             <div className="content__description">{movie.description}</div>
                         </aside>
                     </div>
                 </div>
+                <Modal movie={movie} isModal={isModal} setIsModal={setIsModal} />
             </div>
         }
         </>
