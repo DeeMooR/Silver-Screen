@@ -1,7 +1,10 @@
 .scheduleItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin: 5px;
     padding: 0 10px;
-    min-height: 144px;
+    height: 144px;
     text-align: center;
     border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: 22px;
@@ -12,29 +15,26 @@
         transition: all 0.2s ease 0s;
     }
     .scheduleItem__time {
-        margin: 25px 0 0 0;
         font-size: 30px;
     }
     .scheduleItem__audio {
         margin: 10px 0 0 0;
         line-height: 20px;
-        font-weight: 700;
+        font-size: 14px;
+        font-weight: 700;   
     }
     .scheduleItem__room {
         margin: 6px 0 0 0;
+        font-size: 14px;
         color: rgba(255, 255, 255, 0.35);
     }
 }
 @media (max-width: 767.98px) {
     .scheduleItem {
+        display: block;
         .scheduleItem__time {
+            margin: 25px 0 0 0;
             font-size: 26px;
-        }
-        .scheduleItem__audio {
-            font-size: 14px;
-        }
-        .scheduleItem__room {
-            font-size: 14px;
         }
     }
 }
@@ -44,10 +44,10 @@
             font-size: 30px;
         }
         .scheduleItem__audio {
-            font-size: 16px;
+            font-size: 15px;
         }
         .scheduleItem__room {
-            font-size: 16px;
+            font-size: 15px;
         }
     }
 }

@@ -65,9 +65,16 @@ export const getArrSelect = (type: string) => {
         case 'video': return ['2D', '3D', 'ScreenX', 'IMAX'];
         case 'audio': return ['Dolby Digital', 'Dolby Atmos', 'Harman Kardon'];
         case 'language': return ['Русский язык', 'Беларуская мова', 'English', 'SUB'];
+        case 'shortLang': return ['RU', 'BEL', 'ENG', 'SUB'];
         default: return ['ошибка'];
     }
 }
+
+export const languageMap = {
+    'RU': 'Русский язык',
+    'BEL': 'Беларуская мова',
+    'ENG': 'English',
+};
 
 export const getAudio = (room: number) => {
     switch(room) {
@@ -87,12 +94,12 @@ export const getRoomVideo = (room: number) => {
 }
 
 export const arrMovies: IMovie[] = [
-    {id: 0, image: img0, title: 'Барби', age: 12, language: 'RU', genres: ['комедия', 'фэнтези', 'приключения'], video: '2D', duration: 120, 
+    {id: 0, image: img0, title: 'Барби', age: 12, language: 'RU', isSUB: true, genres: ['комедия', 'фэнтези', 'приключения'], video: '2D', duration: 120, 
     description: 'Барби выгоняют из Барбиленда, потому что она не соответствует его нормам красоты. Тогда она начинает новую жизнь в реальном мире, где обнаруживает, что совершенства можно достичь только благодаря внутренней гармонии.',
     trailer: 'https://www.youtube.com/watch?v=w0m2C3lN1h8',
     schedule: [
         {
-            date: '02.10.2023',
+            date: '05.10.2023',
             seances: [
                 {room: '2', time: '10:15'},
                 {room: '3', time: '11:40'},
@@ -104,6 +111,21 @@ export const arrMovies: IMovie[] = [
                 {room: '2', time: '19:10'},
                 {room: '6', time: '20:20'},
                 {room: '4', time: '21:10'},
+            ]
+        },
+        {
+            date: '06.10.2023',
+            seances: [
+                {room: '3', time: '10:45'},
+                {room: '5', time: '11:50'},
+                {room: '2', time: '13:10'},
+                {room: '4', time: '14:35'},
+                {room: '1', time: '15:25'},
+                {room: '1', time: '17:15'},
+                {room: '6', time: '18:40'},
+                {room: '4', time: '19:10'},
+                {room: '3', time: '20:10'},
+                {room: '5', time: '21:30'},
             ]
         }
     ]},

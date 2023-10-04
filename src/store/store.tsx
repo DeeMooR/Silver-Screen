@@ -3,7 +3,13 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools} from 'redux-devtools-extension'
 
 const initialState = {
-    navActive: ''
+    navActive: '',
+    search: {
+        date: '',
+        video: [],
+        audio: [],
+        language: [],
+    }
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -12,6 +18,16 @@ const rootReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 navActive: action.payload
+            };
+        }
+        case 'SET_SEARCH': {
+            const {type, data} = action.payload;
+            return {
+                ...state,
+                search: {
+                    ...state.search,
+                    [type]: data
+                }
             };
         }
         default: return state;

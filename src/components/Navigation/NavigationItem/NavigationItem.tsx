@@ -9,43 +9,40 @@ import arrow from "../../../icons/arrow-button.png"
 interface INavigationItem {
     icon: string,
     text?: string,
-    type: string
+    type: string,
+    navActive: string,
+    handleClick: (type: string) => void
 }
 
-const NavigationItem:FC<INavigationItem> = ({icon, text, type}) => {
+const NavigationItem:FC<INavigationItem> = ({icon, text, type, navActive, handleClick}) => {
     const arrDate = getArrDate();
-    const [isActive, setIsActive] = useState(false);
     const [searchArr, setSearchArr] = useState<string[]>([]);
     const [searchDate, setSearchDate] = useState<string>(arrDate[0]);
-    const activeStore = useSelector(({ navActive }) => navActive);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (activeStore !== type) setIsActive(false);
-    }, [activeStore])
-
-    const handleClick = () => {
-        setIsActive(prev => {
-            const newIsActive = !prev;
-            if (newIsActive) dispatch({ type: "TOGGLE_NAV_ACTIVE", payload: type })
-            else if (activeStore === type) dispatch({ type: "TOGGLE_NAV_ACTIVE", payload: '' })
-            return newIsActive;
+        dispatch({ 
+            type: "SET_SEARCH", 
+            payload: {
+                type: 'date',
+                data: searchDate
+            } 
         });
-    };
+    },[]);
 
     return (
         <>
-        <div className="navigationItem" onClick={handleClick}>
+        <div className="navigationItem" onClick={() => handleClick(type)}>
             <img src={icon} className="navigationItem__image" alt="icon" />
             <p className="navigationItem__text">
                 {type === 'date' ? formateDateItem(searchDate) :
                     (searchArr.length !== 0 ? searchArr.join(', ') : text)
                 }
             </p>
-            <img src={arrow} className={`navigationItem__arrow ${isActive && 'rotate'}`} alt="arrow" />
+            <img src={arrow} className={`navigationItem__arrow ${navActive == type && 'rotate'}`} alt="arrow" />
         </div>
-        <div className={`navigationItem__choise-block ${isActive ? 'show' : ''}`}>
-            <SelectOption type={type} searchDate={searchDate} setSearchDate={setSearchDate} setSearchArr={setSearchArr} />
+        <div className={`navigationItem__choise-block ${navActive == type ? 'show' : ''}`}>
+            <SelectOption type={type} searchDate={searchDate} setSearchDate={setSearchDate} setSearchArr={setSearchArr} handleClick={handleClick} />
         </div>
         </>
     );
