@@ -69,6 +69,23 @@ export const getArrSelect = (type: string) => {
     }
 }
 
+export const getAudio = (room: number) => {
+    switch(room) {
+        case 1: case 2: return 'Dolby Digital';
+        case 3: case 4: return 'Dolby Atmos';
+        case 5: case 6: return 'Harman Kardon';
+        default: return 'ошибка';
+    }
+}
+
+export const getRoomVideo = (room: number) => {
+    switch(room) {
+        case 5: return 'screenX';
+        case 6: return 'IMAX';
+        default: return '';
+    }
+}
+
 export const arrMovies: IMovie[] = [
     {id: 0, image: img0, title: 'Барби', age: 12, language: 'RU', genres: ['комедия', 'фэнтези', 'приключения'], video: '2D', duration: 120, 
     description: 'Барби выгоняют из Барбиленда, потому что она не соответствует его нормам красоты. Тогда она начинает новую жизнь в реальном мире, где обнаруживает, что совершенства можно достичь только благодаря внутренней гармонии.',
@@ -76,12 +93,18 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '02.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: ['11:40', '15:50'],
-            room4: ['15:50', '21:10'],
-            room5: ['18:20'],
-            room6: ['20:20']
+            seances: [
+                {room: '2', time: '10:15'},
+                {room: '3', time: '11:40'},
+                {room: '1', time: '12:10'},
+                {room: '4', time: '14:45'},
+                {room: '3', time: '15:50'},
+                {room: '1', time: '17:30'},
+                {room: '5', time: '18:20'},
+                {room: '2', time: '19:10'},
+                {room: '6', time: '20:20'},
+                {room: '4', time: '21:10'},
+            ]
         }
     ]},
     {id: 1, image: img1, title: 'Неудержимые 4', age: 18, language: 'RU', genres: ['комедия', 'экшн', 'боевик'], video: '', duration: 0, 
@@ -90,12 +113,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '02.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 2, image: img2, title: 'Оппенгеймер', age: 16, language: 'RU', genres: ['история', 'биография', 'драма'], video: '', duration: 0, 
@@ -104,12 +123,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 3, image: img3, title: 'После. Навсегда', age: 16, language: 'RU', genres: ['мелодрама'], video: '', duration: 0, 
@@ -118,12 +133,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 4, image: img4, title: 'Черепашки-ниндзя: Погром мутантов', age: 12, language: 'RU', genres: ['мультфильм', 'боевик', 'фантастика'], video: '', duration: 0, 
@@ -132,12 +143,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 5, image: img5, title: 'Элементарно', age: 6, language: 'RU', genres: ['комедия', 'мультфильм', 'приключения'], video: '', duration: 0, 
@@ -146,12 +153,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 6, image: img6, title: 'Монстр и маги синих морей', age: 6, language: 'RU', genres: ['комедия', 'мультфильм', 'приключения'], video: '', duration: 0, 
@@ -160,12 +163,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 7, image: img7, title: 'Искусство по понятиям', age: 18, language: 'RU', genres: ['триллер'], video: '', duration: 0, 
@@ -174,12 +173,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 8, image: img8, title: 'Индиана Джонс и колесо судьбы', age: 12, language: 'RU', genres: ['боевик', 'приключения'], video: '', duration: 0, 
@@ -188,12 +183,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 9, image: img9, title: 'Дозор джунглей: Кругосветка', age: 6, language: 'RU', genres: ['комедия', 'мультфильм', 'приключения'], video: '', duration: 0, 
@@ -202,12 +193,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 10, image: img10, title: 'Иван Семенов: Большой поход', age: 6, language: 'RU', genres: ['комедия'], video: '', duration: 0, 
@@ -216,12 +203,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 11, image: img11, title: 'Синий Жук', age: 12, language: 'RU', genres: ['боевик', 'триллер', 'фантастика'], video: '', duration: 0, 
@@ -230,12 +213,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 12, image: img12, title: 'Дети шпионов: Армагеддон', age: 6, language: 'RU', genres: ['комедия', 'боевик', 'фантастика'], video: '', duration: 0, 
@@ -244,12 +223,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 13, image: img13, title: 'Великая ирония', age: 16, language: 'RU', genres: ['мелодрама', 'триллер', 'драма'], video: '', duration: 0, 
@@ -258,12 +233,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 14, image: img14, title: 'Великий уравнитель 3', age: 18, language: 'RU', genres: ['криминал', 'боевик', 'триллер'], video: '', duration: 0, 
@@ -272,12 +243,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
     {id: 15, image: img15, title: 'Леди Баг и Супер-Кот: Пробуждение силы', age: 6, language: 'RU', genres: ['мультфильм', 'фэнтези', 'приключения'], video: '', duration: 0, 
@@ -286,12 +253,8 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '01.10.2023',
-            room1: ['12:10', '17:30'],
-            room2: ['10:15', '19:10'],
-            room3: [],
-            room4: [],
-            room5: [],
-            room6: []
+            seances: [
+            ]
         }
     ]},
 ]

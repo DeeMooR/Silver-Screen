@@ -47,6 +47,7 @@
 .moviePage .moviePage__content .content__article .content__movie {
   display: flex;
   gap: 45px;
+  margin: 0 0 40px 0;
 }
 .moviePage .moviePage__content .content__article .content__movie .content__image {
   width: 120px;

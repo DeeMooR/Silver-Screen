@@ -11,11 +11,9 @@ export interface IMovie {
     trailer: string,
     schedule: {
         date: string,
-        room1: string[] | [],
-        room2: string[] | [],
-        room3: string[] | [],
-        room4: string[] | [],
-        room5: string[] | [],
-        room6: string[] | [],
+        seances: {
+            room: string,
+            time: string
+        }[]
     }[]
 }

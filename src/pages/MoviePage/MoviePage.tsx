@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import Navigation from 'src/components/Navigation';
+import Schedule from 'src/components/Schedule';
 import Modal from 'src/components/Modal';
 import { arrMovies } from 'src/helpers';
 import { StyledTrailer } from './styled'
@@ -59,6 +60,9 @@ const MoviePage = () => {
                                         <span>{newDuration}</span>
                                         </p>
                                 </article> 
+                            </section>
+                            <section className='content__schedule'>
+                                <Schedule movie={movie} />
                             </section>
                         </article>
                         <aside className="content__aside">
