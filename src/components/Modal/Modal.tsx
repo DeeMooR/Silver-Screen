@@ -14,14 +14,12 @@ const Modal:FC<IModal> = ({movie, isModal, setIsModal}) => {
 
     if (isModal) {
         document.body.style.overflowY = 'hidden';
-        document.body.style.padding = '0 17px 0 0';
     }
 
     const clickCross = () => {
         setIsModal(false);
         setTimeout(() => {
             document.body.style.overflowY = 'auto';
-            document.body.style.padding = '0';
         },400);
     }
     const clickBackground = (event: React.MouseEvent<HTMLDivElement>) => {

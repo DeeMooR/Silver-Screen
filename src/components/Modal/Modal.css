@@ -67,3 +67,11 @@
     height: calc((100vw - 40px) / 16 * 9 + 62px);
   }
 }
+@media (max-width: 599.98px) {
+  .modal__background .modal {
+    height: 100%;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+}

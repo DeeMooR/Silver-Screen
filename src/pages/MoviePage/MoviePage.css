@@ -1,6 +1,3 @@
-.moviePage {
-  height: 1500px;
-}
 .moviePage .moviePage__header {
   position: sticky;
   z-index: 5;
