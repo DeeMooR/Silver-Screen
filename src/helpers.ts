@@ -127,6 +127,36 @@ export const arrMovies: IMovie[] = [
                 {room: '3', time: '20:10'},
                 {room: '5', time: '21:30'},
             ]
+        },
+        {
+            date: '07.10.2023',
+            seances: [
+                {room: '2', time: '10:15'},
+                {room: '3', time: '11:40'},
+                {room: '1', time: '12:10'},
+                {room: '4', time: '14:45'},
+                {room: '3', time: '15:50'},
+                {room: '1', time: '17:30'},
+                {room: '5', time: '18:20'},
+                {room: '2', time: '19:10'},
+                {room: '6', time: '20:20'},
+                {room: '4', time: '21:10'},
+            ]
+        },
+        {
+            date: '08.10.2023',
+            seances: [
+                {room: '3', time: '10:45'},
+                {room: '5', time: '11:50'},
+                {room: '2', time: '13:10'},
+                {room: '4', time: '14:35'},
+                {room: '1', time: '15:25'},
+                {room: '1', time: '17:15'},
+                {room: '6', time: '18:40'},
+                {room: '4', time: '19:10'},
+                {room: '3', time: '20:10'},
+                {room: '5', time: '21:30'},
+            ]
         }
     ]},
     {id: 1, image: img1, title: 'Неудержимые 4', age: 18, language: 'RU', genres: ['комедия', 'экшн', 'боевик'], video: '', duration: 0, 

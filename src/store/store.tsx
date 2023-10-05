@@ -4,6 +4,7 @@ import { composeWithDevTools} from 'redux-devtools-extension'
 
 const initialState = {
     navActive: '',
+    idActiveMoviePage: '',
     search: {
         date: '',
         video: [],
@@ -18,6 +19,12 @@ const rootReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 navActive: action.payload
+            };
+        }
+        case 'SET_ID_ACTIVE_MOVIE_PAGE': {
+            return {
+                ...state,
+                idActiveMoviePage: action.payload
             };
         }
         case 'SET_SEARCH': {

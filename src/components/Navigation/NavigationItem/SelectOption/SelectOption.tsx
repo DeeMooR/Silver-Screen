@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getArrDate, getArrSelect, formateDateItem } from 'src/helpers';
+import { getArrDate, getArrSelect, formateDateItem, arrMovies } from 'src/helpers';
 import './SelectOption.css'
 
 interface ISelectOption {
@@ -23,6 +23,24 @@ const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSea
     const arrDate: string[] = getArrDate();
     const arrSelect: string[] = getArrSelect(type);
     const arrShortLang: string[] = getArrSelect('shortLang');
+
+
+    const idMovie = useSelector(({ idActiveMoviePage }) => idActiveMoviePage);
+    let movie = arrMovies[idMovie];
+    let arrMoviesDates: string[] = [];
+
+    const filterOutputDates = () => {
+        arrMoviesDates = movie.schedule.map(item => item.date)
+        .map(item => {
+            for (let itemWithDayOfWeek of arrDate) {
+                if (itemWithDayOfWeek.split(', ')[1] === item) return itemWithDayOfWeek;
+            }
+            return '';
+        })
+        .filter(item => item !== '');
+    }
+    if (idMovie) filterOutputDates();
+
 
     const handleClickItem = (i: number) => {
         setSearchDate(arrDate[i]);
@@ -66,13 +84,13 @@ const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSea
     return (
         <div className='selectOption'>
             <div className="selectOption__text">
-                {type === 'date' ? 
-                    arrDate.map((item: string, i: number) => (
+                {type === 'date' ? (
+                    arrMoviesDates.map((item: string, i: number) => (
                         <p className={`selectOption__item ${searchDate === item ? 'active' : ''}`} onClick={() => handleClickItem(i)} key={i}>
                             {searchDate === item ? '✔ ' : ''}{formateDateItem(item)}
                         </p>
                     ))
-                :
+                ) : (
                     <>
                     <p className='selectOption__title'>
                         {type === 'video' && 'Видео:'}
@@ -90,7 +108,7 @@ const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSea
                         </label>
                     ))}
                     </>
-                }
+                )}
             </div>
         </div>
     )
