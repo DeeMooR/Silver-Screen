@@ -1,13 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import PageTemplate from 'src/components/PageTemplate'
 import MovieCard from 'src/components/MovieCard'
 import NotFind from 'src/components/NotFind'
 import Navigation from 'src/components/Navigation'
 import { IMovie } from 'src/interfaces'
-import { arrMovies } from 'src/helpers';
+import { arrMovies, getArrDate } from 'src/helpers';
 import './Afisha.css'
 
 const Afisha = () => {
+    const searchDate = useSelector(({ search }) => search.date);
+    const dispatch = useDispatch();
+    const arrDate = getArrDate();
+
+    console.log('Afisha')
+    if (searchDate === '') {
+        dispatch({ 
+            type: "SET_SEARCH", 
+            payload: {
+                type: 'date',
+                data: arrDate[0]
+            }
+        });
+    }
+    dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: '' });
+    
     return (
         <PageTemplate>
             <div className='afisha'>

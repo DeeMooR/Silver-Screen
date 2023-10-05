@@ -8,6 +8,11 @@ import styled from 'styled-components';
 //     border-radius: 10px;
 // `;
 
+export const BackgroundImage = styled.div<{ image: string }>`
+    background: url(${props => props.image}) no-repeat center;
+    background-size: cover;
+`;
+
 export const StyledTrailer = styled.div<{ video: string, play: string }>`
     position: relative;  
     width: 100%;

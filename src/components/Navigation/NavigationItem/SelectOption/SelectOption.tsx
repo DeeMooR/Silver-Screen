@@ -5,13 +5,10 @@ import './SelectOption.css'
 
 interface ISelectOption {
     type: string,
-    searchDate: string,
-    setSearchDate: (value: string) => void,
-    setSearchArr: (value: string[]) => void,
     handleClick: (type: string) => void,
 }
 
-const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSearchArr, handleClick}) => {
+const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
     const [clickCheckbox, setClickCheckbox] = useState<string[]>([]);
 
     const typeKey = useSelector(({ search }) => search[type]);
@@ -39,11 +36,14 @@ const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSea
         })
         .filter(item => item !== '');
     }
-    if (idMovie) filterOutputDates();
+    if (idMovie) {
+        filterOutputDates();
+    } else {
+        arrMoviesDates = arrDate;
+    }
 
 
     const handleClickItem = (i: number) => {
-        setSearchDate(arrDate[i]);
         handleClick('');    // Скрывает slidebar после нажатия (1/2)
         dispatch({ type: "TOGGLE_NAV_ACTIVE", payload: '' });
         dispatch({ 
@@ -73,7 +73,6 @@ const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSea
                         data: newArr
                     } 
                 });
-                setSearchArr(newArr);
                 return newArr;
             });
             handleClick('');    // Скрывает slidebar после нажатия (2/2)
@@ -86,8 +85,8 @@ const SelectOption:FC<ISelectOption> = ({type, searchDate, setSearchDate, setSea
             <div className="selectOption__text">
                 {type === 'date' ? (
                     arrMoviesDates.map((item: string, i: number) => (
-                        <p className={`selectOption__item ${searchDate === item ? 'active' : ''}`} onClick={() => handleClickItem(i)} key={i}>
-                            {searchDate === item ? '✔ ' : ''}{formateDateItem(item)}
+                        <p className={`selectOption__item ${typeKey === item ? 'active' : ''}`} onClick={() => handleClickItem(i)} key={i}>
+                            {typeKey === item ? '✔ ' : ''}{formateDateItem(item)}
                         </p>
                     ))
                 ) : (

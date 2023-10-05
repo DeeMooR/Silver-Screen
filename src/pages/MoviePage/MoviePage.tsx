@@ -5,7 +5,7 @@ import Navigation from 'src/components/Navigation';
 import Schedule from 'src/components/Schedule';
 import Modal from 'src/components/Modal';
 import { arrMovies } from 'src/helpers';
-import { StyledTrailer } from './styled'
+import { StyledTrailer, BackgroundImage } from './styled'
 import { IMovie } from 'src/interfaces';
 import './MoviePage.css'
 
@@ -31,6 +31,7 @@ const MoviePage = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+    
     let videoId, newDuration;
     if (movie)  {
         videoId = movie.trailer.split("v=")[1];
@@ -40,6 +41,7 @@ const MoviePage = () => {
     return (
         <>
         {movie &&
+        // <BackgroundImage image={movie.image}>
             <div className='moviePage'>
                 <div className={`moviePage__header ${isScrolled ? 'scrollHeader' : ''}`}>
                     <div className="header__wrapper">
@@ -75,6 +77,7 @@ const MoviePage = () => {
                 </div>
                 <Modal movie={movie} isModal={isModal} setIsModal={setIsModal} />
             </div>
+        // </BackgroundImage>
         }
         </>
     )

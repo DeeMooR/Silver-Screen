@@ -15,20 +15,11 @@ interface INavigationItem {
 }
 
 const NavigationItem:FC<INavigationItem> = ({icon, text, type, navActive, handleClick}) => {
-    const arrDate = getArrDate();
-    const [searchArr, setSearchArr] = useState<string[]>([]);
-    const [searchDate, setSearchDate] = useState<string>(arrDate[0]);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch({ 
-            type: "SET_SEARCH", 
-            payload: {
-                type: 'date',
-                data: searchDate
-            } 
-        });
-    },[]);
+    // const [searchArr, setSearchArr] = useState<string[]>([]);
+    // const [searchDate, setSearchDate] = useState<string>(arrDate[0]);
+    const searchDate = useSelector(({ search }) => search.date);
+    const searchArr = useSelector(({ search }) => search[type]);
+    console.log(searchDate)
 
     return (
         <>
@@ -42,7 +33,8 @@ const NavigationItem:FC<INavigationItem> = ({icon, text, type, navActive, handle
             <img src={arrow} className={`navigationItem__arrow ${navActive == type && 'rotate'}`} alt="arrow" />
         </div>
         <div className={`navigationItem__choise-block ${navActive == type ? 'show' : ''}`}>
-            <SelectOption type={type} searchDate={searchDate} setSearchDate={setSearchDate} setSearchArr={setSearchArr} handleClick={handleClick} />
+            <SelectOption type={type} handleClick={handleClick} />
+            {/* <SelectOption type={type} searchDate={searchDate} setSearchDate={setSearchDate} setSearchArr={setSearchArr} handleClick={handleClick} /> */}
         </div>
         </>
     );

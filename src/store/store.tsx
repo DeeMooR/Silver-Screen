@@ -29,6 +29,7 @@ const rootReducer = (state = initialState, action: any) => {
         }
         case 'SET_SEARCH': {
             const {type, data} = action.payload;
+            console.log('is store')
             return {
                 ...state,
                 search: {
