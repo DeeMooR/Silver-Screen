@@ -50,7 +50,7 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
             type: "SET_SEARCH", 
             payload: {
                 type: 'date', 
-                data: arrDate[i]
+                data: arrMoviesDates[i]
             } 
         });
     }

@@ -5,25 +5,55 @@ import MovieCard from 'src/components/MovieCard'
 import NotFind from 'src/components/NotFind'
 import Navigation from 'src/components/Navigation'
 import { IMovie } from 'src/interfaces'
-import { arrMovies, getArrDate } from 'src/helpers';
+import { arrMovies, getArrDate, setTodayDateStore } from 'src/helpers';
 import './Afisha.css'
 
 const Afisha = () => {
-    const searchDate = useSelector(({ search }) => search.date);
-    const dispatch = useDispatch();
-    const arrDate = getArrDate();
+   let searchDate = useSelector(({ search }) => search.date);
+   if (searchDate) searchDate = searchDate.split(', ')[1]
 
-    console.log('Afisha')
-    if (searchDate === '') {
-        dispatch({ 
-            type: "SET_SEARCH", 
-            payload: {
-                type: 'date',
-                data: arrDate[0]
-            }
-        });
-    }
+    const searchVideo = useSelector(({ search }) => search.video);
+    const searchAudio = useSelector(({ search }) => search.audio);
+    let searchLanguage = useSelector(({ search }) => search.language);
+    const arrDate = getArrDate();
+    
+    
+    const dispatch = useDispatch();
+    setTodayDateStore(searchDate, dispatch);
     dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: '' });
+
+
+    // const filterMovies = () => {
+    //     if (!searchLanguage.length ||
+    //         (searchLanguage.includes('SUB') && movie.isSUB) ||
+    //         (searchLanguage.length && searchLanguage.includes(movie.language))) i++;
+    //     if (!searchVideo.length || (searchVideo.length && searchVideo.includes(movie.video))) i++;
+
+    //     const scheduleDay = movie.schedule.find(item => item.date == searchDate);
+    //     if (scheduleDay) {
+    //         for (const item of searchAudio) {
+    //             switch (item) {
+    //             case 'Dolby Digital': {
+    //                 const addSeances = scheduleDay.seances.filter(item => ['1', '2'].includes(item.room));
+    //                 filteredMovie.push(...addSeances);
+    //             } break;
+    //             case 'Dolby Atmos': {
+    //                 const addSeances = scheduleDay.seances.filter(item => ['3', '4'].includes(item.room));
+    //                 filteredMovie.push(...addSeances);
+    //             } break;
+    //             case 'Harman Kardon': {
+    //                 const addSeances = scheduleDay.seances.filter(item => ['5', '6'].includes(item.room));
+    //                 filteredMovie.push(...addSeances);
+    //             } break;
+    //             default: break;
+    //             }
+    //         }
+    //         if (searchAudio.length === 0) filteredMovie = scheduleDay.seances;
+    //         if (filteredMovie.length) i++;
+    //     }
+    // }
+    // filterMovies();
+
     
     return (
         <PageTemplate>

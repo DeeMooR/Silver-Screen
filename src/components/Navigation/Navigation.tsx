@@ -11,11 +11,6 @@ import { useDispatch, useSelector } from 'react-redux'
 const Navigation = () => {
     const [navActive, setNavActive] = useState('');
     const dispatch = useDispatch();
-    const navActiveStore = useSelector(({ navActive }) => navActive);
-
-    useEffect(() => {
-        setNavActive(navActiveStore);
-    },[])
 
     const handleClick = (type: string) => {
         if (navActive === type) {

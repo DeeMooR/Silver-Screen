@@ -1,7 +1,7 @@
-import React, { FC } from 'react'
-import { useSelector } from 'react-redux';
+import React, { FC, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import ScheduleItem from './ScheduleItem/ScheduleItem';
-import { getAudio } from 'src/helpers';
+import { getAudio, setTodayDateStore } from 'src/helpers';
 import { IMovie, ISeance } from 'src/interfaces'
 import './Schedule.css'
 
@@ -17,41 +17,74 @@ const Schedule:FC<ISchedule> = ({movie}) => {
 
     let i = 0;
     let filteredMovie: ISeance[] = [];
+    let fixSeances: ISeance[] = [];
+    let addSeances: ISeance[] = [];
     
     const filterMovies = () => {
+        // Проверка "Фильм на выбранном языке и есть ли субтитры?"
         if (!searchLanguage.length ||
             (searchLanguage.includes('SUB') && movie.isSUB) ||
-            (searchLanguage.length && searchLanguage.includes(movie.language))) i++;
-        if (!searchVideo.length || (searchVideo.length && searchVideo.includes(movie.video))) i++;
+            (searchLanguage.length && searchLanguage.includes(movie.language))) i = 1;
+        else return;
 
-        const scheduleDay = movie.schedule.find(item => item.date == searchDate);
-        if (scheduleDay) {
+        // Проверка "Фильм на в выбранном формате?"
+        if ((!searchVideo.includes('2D') && !searchVideo.includes('3D')) ||
+            (movie.video === '2D' && searchVideo.includes('2D')) ||
+            (movie.video === '2D' && !searchVideo.includes('2D') && (searchVideo.includes('IMAX') || searchVideo.includes('ScreenX'))) ||
+            (movie.video === '3D' && searchVideo.includes('3D')) ||
+            (movie.video === '3D' && !searchVideo.includes('3D') && (searchVideo.includes('IMAX') || searchVideo.includes('ScreenX')))) i = 1;
+        else return;
+
+        // Проверка "Есть ли сеансы в выбранную дату?"
+        let scheduleDay = movie.schedule.find(item => item.date == searchDate);
+        if (!scheduleDay) return;
+
+        // Фильтрация по выбранным параметрам звука
+        if (searchAudio.length) {
+            console.log('in audio')
             for (const item of searchAudio) {
                 switch (item) {
-                case 'Dolby Digital': {
-                    const addSeances = scheduleDay.seances.filter(item => ['1', '2'].includes(item.room));
+                case 'Dolby Digital':
+                    addSeances = scheduleDay.seances.filter(item => ['1', '2'].includes(item.room));
                     filteredMovie.push(...addSeances);
-                } break;
-                case 'Dolby Atmos': {
-                    const addSeances = scheduleDay.seances.filter(item => ['3', '4'].includes(item.room));
+                    break;
+                case 'Dolby Atmos':
+                    addSeances = scheduleDay.seances.filter(item => ['3', '4'].includes(item.room));
                     filteredMovie.push(...addSeances);
-                } break;
-                case 'Harman Kardon': {
-                    const addSeances = scheduleDay.seances.filter(item => ['5', '6'].includes(item.room));
+                    break;
+                case 'Harman Kardon':
+                    addSeances = scheduleDay.seances.filter(item => ['5', '6'].includes(item.room));
                     filteredMovie.push(...addSeances);
-                } break;
-                default: break;
+                    break;
                 }
             }
-            if (searchAudio.length === 0) filteredMovie = scheduleDay.seances;
-            if (filteredMovie.length) i++;
+        } else {
+            filteredMovie = scheduleDay.seances;
+        }
+
+        // Проверка "Есть ли сеансы на IMAX или ScreenX?"
+        if (!searchVideo.includes(movie.video)) {
+            if (searchVideo.includes('IMAX') && searchVideo.includes('ScreenX')) {
+                const arrScreenX = filteredMovie.filter(item => item.room === '5');
+                const arrIMAX = filteredMovie.filter(item => item.room === '6');
+                filteredMovie = [...arrScreenX, ...arrIMAX];
+                return;
+            }
+            if (searchVideo.includes('ScreenX')) {
+                fixSeances = filteredMovie.filter(item => item.room === '5');
+                filteredMovie = [...fixSeances];
+            } 
+            if (searchVideo.includes('IMAX')) {
+                fixSeances = filteredMovie.filter(item => item.room === '6');
+                filteredMovie = [...fixSeances];
+            }
         }
     }
     filterMovies();
 
     return (
         <div className='schedule'>
-            {i !== 3 ? (
+            {!filteredMovie.length ? (
                 <div className='shedule__not-find'>По выбранным параметрам сеансы не найдены.</div>
             ) : (
                 <>

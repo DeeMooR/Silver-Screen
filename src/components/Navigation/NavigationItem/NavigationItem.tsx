@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import SelectOption from './SelectOption';
-import { getArrDate, formateDateItem } from 'src/helpers';
+import { getArrDate, formateDateItem, getFullLanguage } from 'src/helpers';
 import './NavigationItem.css'
 
 import arrow from "../../../icons/arrow-button.png"
@@ -15,11 +15,12 @@ interface INavigationItem {
 }
 
 const NavigationItem:FC<INavigationItem> = ({icon, text, type, navActive, handleClick}) => {
-    // const [searchArr, setSearchArr] = useState<string[]>([]);
-    // const [searchDate, setSearchDate] = useState<string>(arrDate[0]);
     const searchDate = useSelector(({ search }) => search.date);
-    const searchArr = useSelector(({ search }) => search[type]);
-    console.log(searchDate)
+    let searchArr = useSelector(({ search }) => search[type]);
+
+    if (type === 'language') {
+        searchArr = searchArr.map((item: string) => getFullLanguage(item))
+    }
 
     return (
         <>
@@ -34,7 +35,6 @@ const NavigationItem:FC<INavigationItem> = ({icon, text, type, navActive, handle
         </div>
         <div className={`navigationItem__choise-block ${navActive == type ? 'show' : ''}`}>
             <SelectOption type={type} handleClick={handleClick} />
-            {/* <SelectOption type={type} searchDate={searchDate} setSearchDate={setSearchDate} setSearchArr={setSearchArr} handleClick={handleClick} /> */}
         </div>
         </>
     );

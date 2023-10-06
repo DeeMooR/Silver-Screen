@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Navigation from 'src/components/Navigation';
 import Schedule from 'src/components/Schedule';
 import Modal from 'src/components/Modal';
-import { arrMovies } from 'src/helpers';
+import { arrMovies, setTodayDateStore } from 'src/helpers';
 import { StyledTrailer, BackgroundImage } from './styled'
 import { IMovie } from 'src/interfaces';
 import './MoviePage.css'
@@ -20,6 +20,9 @@ const MoviePage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     if (id) movie = arrMovies[+id];
+
+    let searchDate = useSelector(({ search }) => search.date);
+    setTodayDateStore(searchDate, dispatch);
 
     useEffect(() => {
         if (id) dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: id });
