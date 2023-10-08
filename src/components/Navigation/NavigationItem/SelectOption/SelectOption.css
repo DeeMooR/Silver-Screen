@@ -38,9 +38,7 @@
   padding: 10px 0 30px 25px;
 }
 .selectOption .selectOption__text .selectOption__choise input {
-  position: absolute;
-  z-index: -1;
-  opacity: 0;
+  display: none;
 }
 .selectOption .selectOption__text .selectOption__choise .checkmark {
   position: absolute;

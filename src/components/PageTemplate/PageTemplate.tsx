@@ -1,4 +1,5 @@
 import React, { FC, ReactNode } from 'react'
+import Header from '../Header'
 import Footer from '../Footer'
 import './PageTemplate.css'
 
@@ -9,9 +10,11 @@ interface IPageTemplate {
 const PageTemplate:FC<IPageTemplate> = ({children}) => {
     return (
         <div className='pageTemplate'>
-            <header>Header</header>
-            <main>{children}</main>
-            <Footer />
+            <Header />
+            <div className="pageTemplate__wrapper">
+                <main>{children}</main>
+                <Footer />
+            </div>
         </div>
     )
 }

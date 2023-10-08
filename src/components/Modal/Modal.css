@@ -1,6 +1,6 @@
 .modal__background {
   position: fixed;
-  z-index: 10;
+  z-index: 3;
   top: 0;
   left: 0;
   width: 100%;
@@ -37,7 +37,7 @@
   display: flex;
   align-items: center;
   height: 62px;
-  padding: 0 12px 0 40px;
+  padding: 0 16px 0 40px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 .modal__background .modal .modal__content .modal__header .modal__title {
@@ -47,9 +47,15 @@
 }
 .modal__background .modal .modal__content .modal__header .modal__cross {
   display: block;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+  opacity: 0.6;
   cursor: pointer;
+  transition: all 0.2s ease 0s;
+}
+.modal__background .modal .modal__content .modal__header .modal__cross:hover {
+  opacity: 1;
+  transition: all 0.2s ease 0s;
 }
 .modal__background .modal .modal__content .modal__video {
   width: 100%;

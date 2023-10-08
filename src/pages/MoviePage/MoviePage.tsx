@@ -11,6 +11,8 @@ import './MoviePage.css'
 
 import left from "src/icons/left.png"
 import iconPlay from "src/icons/play.png"
+import SlideBar from 'src/components/Header/SlideBar';
+import Header from 'src/components/Header';
 
 const MoviePage = () => {
     const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -48,7 +50,7 @@ const MoviePage = () => {
     let videoId, newDuration;
     if (movie)  {
         videoId = movie.trailer.split("v=")[1];
-        newDuration = `${Math.floor(movie.duration / 60)} ч ${movie.duration % 60} мин`
+        newDuration = `${Math.floor(movie.duration / 60)} ч ${movie.duration % 60} мин`;
     }
     const trailerImage = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 

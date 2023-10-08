@@ -1,13 +1,5 @@
 import styled from 'styled-components';
 
-// export const StyledImage = styled.div<{ image: string }>`
-//     width: 120px;
-//     height: 170px;
-//     background: url(${props => props.image}) no-repeat center;
-//     background-size: cover;
-//     border-radius: 10px;
-// `;
-
 export const BackgroundImage = styled.div<{ image: string }>`
     width: 100%;
     position: fixed;

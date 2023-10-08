@@ -1,14 +1,13 @@
 .moviePage {
     position: absolute;
     inset: 0px;
-    z-index: 2;
     overscroll-behavior: contain;
     display: flex;
     flex-direction: column;
     .moviePage__header {
         position: sticky;
         top: 0px;
-        z-index: 5;
+        z-index: 2;
         transition: all 0.2s ease 0s;
         &.scrollHeader {
             background-color: rgba(39, 39, 42, 0.8);

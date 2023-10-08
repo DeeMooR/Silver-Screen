@@ -34,9 +34,7 @@
             }
             cursor: pointer;
             input {
-                position: absolute;
-                z-index: -1;
-                opacity: 0;
+                display: none;
             }
             .checkmark {
                 position: absolute;
