@@ -10,7 +10,8 @@ const initialState = {
         video: [],
         audio: [],
         language: [],
-    }
+    },
+    scrollAfisha: null,
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -36,6 +37,12 @@ const rootReducer = (state = initialState, action: any) => {
                     ...state.search,
                     [type]: data
                 }
+            };
+        }
+        case 'SET_SCROLL_AFISHA': {
+            return {
+                ...state,
+                scrollAfisha: action.payload
             };
         }
         default: return state;

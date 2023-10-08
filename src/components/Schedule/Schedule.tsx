@@ -83,11 +83,11 @@ const Schedule:FC<ISchedule> = ({movie}) => {
     filterMovies();
 
     return (
-        <div className='schedule'>
-            {!filteredMovie.length ? (
-                <div className='shedule__not-find'>По выбранным параметрам сеансы не найдены.</div>
-            ) : (
-                <>
+        <>
+        {!filteredMovie.length ? (
+            <div className='shedule__not-find'>По выбранным параметрам сеансы не найдены.</div>
+        ) : (
+            <div className='schedule'>
                 <div className="schedule__left">
                     <h2 className='shedule__name'>Silver Screen в ТРЦ Arena city</h2>
                     <p className='shedule__place'>г. Минск, пр Победителей, 84</p>
@@ -97,9 +97,9 @@ const Schedule:FC<ISchedule> = ({movie}) => {
                         <ScheduleItem video={movie.video} seance={item} key={index}/>
                     ))}
                 </div>
-                </>
-            )}
-        </div>
+            </div>
+        )}
+        </>
     )
 }
 

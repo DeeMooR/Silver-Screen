@@ -4,15 +4,18 @@ import { IMovie } from '../../interfaces'
 import { StyledImage } from './styled'
 import './MovieCard.css'
 import Button from '../Button'
+import { useDispatch } from 'react-redux'
 
 interface IMovieCard {
     obj: IMovie,
 }
 
 const MovieCard:FC<IMovieCard> = ({obj}) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const moveNewPage = () => {
+        dispatch({ type: "SET_SCROLL_AFISHA", payload: window.scrollY });
         navigate(`/afisha/${obj.id}`);
     }
 
