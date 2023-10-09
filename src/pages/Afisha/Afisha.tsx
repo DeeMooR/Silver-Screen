@@ -31,10 +31,10 @@ const Afisha = () => {
     }, []);
     
     return (
-        <PageTemplate>
+        <PageTemplate wrapper>
             <div className='afisha'>
                 <div className='afisha__header'>
-                    <h1>Афиша кино</h1>
+                    <h2>Афиша кино</h2>
                     <div>
                         <a href="#" className='today active'>Сейчас в кино</a>
                         <a href="#" className='soon'>Скоро</a>

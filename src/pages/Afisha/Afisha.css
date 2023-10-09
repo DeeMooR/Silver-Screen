@@ -3,10 +3,6 @@
   align-items: center;
   justify-content: space-between;
 }
-.afisha .afisha__header h1 {
-  font-size: 50px;
-  font-weight: 700;
-}
 .afisha .afisha__header a {
   font-size: 18px;
   font-weight: 700;
@@ -109,15 +105,9 @@
   .afisha .afisha__header {
     gap: 35px;
   }
-  .afisha .afisha__header h1 {
-    font-size: 45px;
-  }
 }
 @media (max-width: 319.98px) {
   .afisha .afisha__header {
     gap: 30px;
-  }
-  .afisha .afisha__header h1 {
-    font-size: 35px;
   }
 }

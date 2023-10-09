@@ -11,6 +11,7 @@
 }
 .movieCard__title {
     height: 110px;
+    font-size: 24px;
     font-weight: 700;
     line-height: 1.1;
     color: rgba(255, 255, 255, 0.8);

@@ -1,0 +1,102 @@
+.swiper {
+  width: 100%;
+  height: 670px;
+  margin: 0 auto;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.swiper-button-prev {
+    padding: 70px 70px 70px 30px;
+    margin: 0 0 0 15px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.2s ease 0s;
+    &:hover {
+        color: rgba(255, 255, 255);
+        margin: 0 0 0 0;
+    }
+}
+.swiper-button-next {
+    padding: 70px 30px 70px 70px;
+    margin: 0 15px 0 0;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.2s ease 0s;
+    &:hover {
+        color: rgba(255, 255, 255);
+        margin: 0;
+    }
+}
+.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 5px 60px;
+}
+.swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(200, 199, 198);
+    transition: all 0.2s ease 0s;
+}
+.swiper-pagination-bullet-active {
+    transform: scale(1.25);
+    background: rgba(200, 199, 198, 0.5);
+    border: 2px solid rgba(200, 199, 198);
+}
+
+.mySlide:before {
+        content: "";
+        position: absolute;
+        inset: 0px;
+        z-index: 2;
+        background: linear-gradient(78deg, rgb(9, 9, 10) 0%, rgb(9, 9, 10) 44%, rgba(9, 9, 10, 0) 60%, rgba(9, 9, 10, 0));
+}
+.mySlide:after {
+    content: "";
+    position: absolute;
+    inset: 0px;
+    z-index: 2;
+    background: linear-gradient(rgb(9, 9, 10) 0%, rgba(9, 9, 10, 0.6) 72px, rgba(9, 9, 10, 0) 170px, rgba(9, 9, 10, 0));
+}
+
+@media (max-width: 1199.98px) {
+    .mySlide:before {
+        background: linear-gradient(to right, rgb(9, 9, 10) 0px, rgb(9, 9, 10) 17%, rgba(9, 9, 10, 0.3) 80%, rgba(9, 9, 10, 0.3));
+    }
+}
+@media (max-width: 1023.98px) {
+    .swiper-button-prev,
+    .swiper-button-next {
+        display: none;
+    }
+}
+@media (max-width: 767.98px) {
+    .mySlide:before {
+        background: linear-gradient(75deg, rgb(9, 9, 10) 0%, rgba(9, 9, 10, 0.5) 60%, rgba(9, 9, 10, 0.3));
+    }
+}
+@media (max-width: 599.98px) {
+    .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+        margin: 0 5px 50px;
+    }
+}
+@media (max-width: 479.98px) {
+    .swiper {
+        height: 570px;
+    }
+    .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+        margin: 0 5px 40px;
+    }
+}

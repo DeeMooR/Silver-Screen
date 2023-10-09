@@ -20,3 +20,12 @@ export interface ISeance {
     room: string,
     time: string
 }
+
+export interface ISlide {
+    id: number,
+    image: string,
+    idFilm?: number,
+    title?: string,
+    text?: string,
+    textButton?: string,
+}

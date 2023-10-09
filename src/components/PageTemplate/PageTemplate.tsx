@@ -5,13 +5,14 @@ import './PageTemplate.css'
 
 interface IPageTemplate {
     children: ReactNode,
+    wrapper?: boolean,
 }
 
-const PageTemplate:FC<IPageTemplate> = ({children}) => {
+const PageTemplate:FC<IPageTemplate> = ({children, wrapper}) => {
     return (
         <div className='pageTemplate'>
             <Header />
-            <div className="pageTemplate__wrapper">
+            <div className={wrapper ? 'pageTemplate__wrapper' : ''}>
                 <main>{children}</main>
                 <Footer />
             </div>

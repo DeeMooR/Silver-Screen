@@ -47,9 +47,9 @@ const Header = () => {
                         }
                     </div>
                     <nav className='header__nav'>
-                        <Link to='/afisha/0'>Главная</Link>
+                        <Link to='/'>Главная</Link>
                         <Link to='/afisha'>Афиша</Link>
-                        <Link to='/afisha'>Новости</Link>
+                        <Link to='/afisha/0'>Новости</Link>
                         <Link to='/afisha'>Акции</Link>
                     </nav>
                     <div className="header__icons">

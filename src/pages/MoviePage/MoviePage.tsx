@@ -75,7 +75,7 @@ const MoviePage = () => {
                                 <section className='content__movie'>
                                     <img src={movie.image} className='content__image' alt="poster" />
                                     <article className='content__text'>
-                                        <h2 className='content__title'>{movie.title}</h2>
+                                        <h3>{movie.title}</h3>
                                         <p className='content__other'>
                                             <span>{movie.genres.join(', ')}</span> /
                                             <span>{movie.age}+</span> /

@@ -1,6 +1,6 @@
 import { format, addDays } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
-import { IMovie } from "./interfaces";
+import { IMovie, ISlide } from "./interfaces";
 
 import img0 from "src/icons/movies/Барби.jpeg"
 import img1 from "src/icons/movies/Неудержимые_4.jpeg"
@@ -18,6 +18,19 @@ import img12 from "src/icons/movies/Дети_шпионов.jpeg"
 import img13 from "src/icons/movies/Великая_ирония.jpeg"
 import img14 from "src/icons/movies/Великий_уравнитель_3.jpeg"
 import img15 from "src/icons/movies/Леди_Баг_и_Супер_Кот.jpeg"
+import img16 from "src/icons/movies/Мой_хатико.jpeg"
+import img17 from "src/icons/movies/Призраки_в_Венеции.jpeg"
+import img18 from "src/icons/movies/Дурные_деньги.jpeg"
+import img19 from "src/icons/movies/Особняк_с_привидениями.jpeg"
+
+import img100 from "src/icons/main_slidebar/Мой_хатико.jpg"
+import img101 from "src/icons/main_slidebar/Призраки_в_Венеции.jpg"
+import img102 from "src/icons/main_slidebar/Дурные_деньги.jpg"
+import img103 from "src/icons/main_slidebar/Особняк_с_привидениями.jpg"
+import img104 from "src/icons/main_slidebar/Барби.jpg"
+import img105 from "src/icons/main_slidebar/Подарочная_карта.png"
+import img106 from "src/icons/main_slidebar/День_рождения.jpg"
+
 
 const russianMonths = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const arrDaysOfWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
@@ -111,6 +124,15 @@ export const setTodayDateStore = (searchDate: string, dispatch: any) => {
     }
 }
 
+export const arrSliderSwiper: ISlide[] = [
+    {id: 0, image: img100, idFilm: 16},
+    {id: 1, image: img101, idFilm: 17},
+    {id: 2, image: img102, idFilm: 18},
+    {id: 3, image: img103, idFilm: 19},
+    {id: 4, image: img104, idFilm: 0},
+    {id: 5, image: img105, title: 'Детский день рождения в кино', text: ' ', textButton: 'Отпраздновать в mooon'},
+    {id: 6, image: img106, title: 'Дарите радость от неожиданных эмоций!', text: 'Электронные подарочные карты mooon и silver screen', textButton: 'Подробнее'},
+]
 
 export const arrMovies: IMovie[] = [
     {id: 0, image: img0, title: 'Барби', age: 12, language: 'RU', isSUB: true, genres: ['комедия', 'фэнтези', 'приключения'], video: '2D', duration: 120, 
@@ -433,4 +455,44 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
+    {id: 16, image: img16, title: 'Мой Хатико', age: 12, language: 'RU', genres: ['семейный', 'драма'], video: '2D', duration: 135, 
+    description: 'Кто не знает Хатико? Однажды профессор подобрал на улице бездомного милого щенка. Несмотря на протесты семьи, он оставляет пушистика дома, и вскоре тот вырастает в доброго и преданного пса. Любовь к обаятельной собаке сближает членов семьи, добавляет ей тепла и уюта. История жизни профессора и преданного пса навсегда стала примером самой искренней дружбы.',
+    trailer: 'https://www.youtube.com/watch?v=TsaJmJg9RIc',
+    schedule: [
+        {
+            date: '01.10.2023',
+            seances: [
+            ]
+        }
+    ]},
+    {id: 17, image: img17, title: 'Призраки в Венеции', age: 16, language: 'RU', genres: ['детектив', 'драма', 'ужасы'], video: '2D', duration: 110, 
+    description: 'Венеция. Вышедший на пенсию Эркюль Пуаро неохотно посещает спиритический сеанс, во время которого один из гостей оказывается убит. Бывший детектив берется за расследование.',
+    trailer: 'https://www.youtube.com/watch?v=scT3B2iOTZ0',
+    schedule: [
+        {
+            date: '01.10.2023',
+            seances: [
+            ]
+        }
+    ]},
+    {id: 18, image: img18, title: 'Дурные деньги', age: 18, language: 'RU', genres: ['комедия', 'биография', 'драма'], video: '2D', duration: 110, 
+    description: 'Говорят, что миром правят деньги. А деньгами распоряжается Уолл-Стрит. И если на самом верху решили, что небольшая сеть магазинов видеоигр должна обанкротиться, то под это можно брать кредит в банке! Но однажды обычные люди сказали «нет» и дали бой мировым биржам. Геймеры, тик-токеры, домохозяйки и мелкие инвесторы принялись скупать акции и «сломали» Уолл-Стрит, попутно заработав дурные деньги! Эта абсолютно реальная история стала настоящим глобальным феноменом и доказала, что люди способны на все, если они объединятся.',
+    trailer: 'https://www.youtube.com/watch?v=BqbyPQA4V70',
+    schedule: [
+        {
+            date: '01.10.2023',
+            seances: [
+            ]
+        }
+    ]},
+    {id: 19, image: img19, title: 'Особняк с привидениями', age: 16, language: 'RU', genres: ['детектив', 'комедия', 'фэнтези'], video: '3D', duration: 130, 
+    description: 'Мать-одиночка нанимает экстрасенса, священника и историка, чтобы они помогли изгнать нечистую силу из недавно купленного особняка.',
+    trailer: 'https://www.youtube.com/watch?v=Oz2mdlgzSyA',
+    schedule: [
+        {
+            date: '01.10.2023',
+            seances: [
+            ]
+        }
+    ]}
 ]

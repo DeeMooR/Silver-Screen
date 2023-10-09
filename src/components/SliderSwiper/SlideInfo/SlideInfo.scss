@@ -1,0 +1,93 @@
+.slideInfo__image {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 62%;
+    height: 100%;
+}
+.slideInfo__wrapper {
+    position: absolute;
+    bottom: 120px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 15px 0 90px;
+    z-index: 3;
+    text-align: left;
+    .slideInfo__description {
+        max-width: 605px;
+        .slideInfo__genres {
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 17px;
+        }
+        .slideInfo__title {
+            line-height: 65px;
+            margin: 15px 0 10px 0;
+        }
+        .slideInfo__button {
+            display: inline-block;
+        }
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .slideInfo__image {
+        width: 85%;
+    }
+}
+@media (max-width: 1023.98px) {
+    .slideInfo__wrapper {
+        padding: 0 30px;
+        .slideInfo__description {
+            .slideInfo__title {
+                line-height: 65px;
+                margin: 12px 0 2px 0;
+            }
+        }
+    }
+}
+@media (max-width: 767.98px) {
+    .slideInfo__image {
+        width: 100%;
+    }
+    .slideInfo__wrapper {
+        .slideInfo__description {
+            .slideInfo__genres {
+                font-size: 16px;
+            }
+            .slideInfo__title {
+                font-size: 45px;
+                line-height: 55px;
+                margin: 14px 0 2px 0;
+            }
+        }
+    }
+}
+@media (max-width: 599.98px) {
+    .slideInfo__wrapper {
+        bottom: 100px;
+        .slideInfo__description {
+            .slideInfo__genres {
+                font-size: 14px;
+                line-height: 20px;
+            }
+            .slideInfo__title {
+                font-size: 32px;
+                line-height: 40px;
+            }
+        }
+    }
+}
+@media (max-width: 479.98px) {
+    .slideInfo__wrapper {
+        bottom: 90px;
+        .slideInfo__description {
+            .slideInfo__title {
+                font-size: 30px;
+                line-height: 37px;
+                margin: 10px 0 0 0;
+            }
+        }
+    }
+}

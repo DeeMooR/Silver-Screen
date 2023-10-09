@@ -27,9 +27,9 @@ const SlideBar:FC<ISlideBar> = ({ clickMenu, setClickMenu }) => {
             <div className="slideBar__logo" onClick={handleClick}>
                 <StyledLogoBig logo={logoBig} logo_pink={logoBig_pink} />
             </div>
-            <Link to='/afisha/0' className="slideBar__item" onClick={handleClick}>Главная</Link>
+            <Link to='/' className="slideBar__item" onClick={handleClick}>Главная</Link>
             <Link to='/afisha' className="slideBar__item" onClick={handleClick}>Афиша</Link>
-            <Link to='/afisha' className="slideBar__item" onClick={handleClick}>Новости</Link>
+            <Link to='/afisha/0' className="slideBar__item" onClick={handleClick}>Новости</Link>
             <Link to='/afisha' className="slideBar__item" onClick={handleClick}>Акции</Link>
             <div className="slideBar__icons">
                 <img src={search} alt="search" className='slideBar__search' onClick={handleClick} />

@@ -70,10 +70,6 @@
   height: 170px;
   border-radius: 10px;
 }
-.moviePage .moviePage__scroll .moviePage__wrapper .moviePage__content .content__article .content__movie .content__text .content__title {
-  font-size: 50px;
-  font-weight: 700;
-}
 .moviePage .moviePage__scroll .moviePage__wrapper .moviePage__content .content__article .content__movie .content__text .content__other {
   margin: 20px 0 0 0;
   line-height: 25px;
@@ -141,9 +137,6 @@
     width: 70px;
     height: 100px;
   }
-  .moviePage .moviePage__scroll .moviePage__wrapper .moviePage__content .content__article .content__movie .content__text .content__title {
-    font-size: 30px;
-  }
   .moviePage .moviePage__scroll .moviePage__wrapper .moviePage__content .content__article .content__movie .content__text .content__other {
     margin: 15px 0 0 0;
   }
@@ -164,9 +157,6 @@
   .moviePage .moviePage__scroll .moviePage__wrapper .moviePage__content .content__article .content__movie .content__image {
     width: 150px;
     height: 212px;
-  }
-  .moviePage .moviePage__scroll .moviePage__wrapper .moviePage__content .content__article .content__movie .content__text .content__title {
-    font-size: 35px;
   }
   .moviePage .moviePage__scroll .moviePage__wrapper .moviePage__content .content__article .content__movie .content__text .content__other {
     margin: 15px 0 0 0;

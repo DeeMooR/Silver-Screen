@@ -3,10 +3,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        h1 {
-            font-size: 50px;
-            font-weight: 700;
-        }
         a {
             font-size: 18px;
             font-weight: 700;
@@ -123,9 +119,6 @@
     .afisha {
         .afisha__header {
             gap: 35px;
-            h1 {
-                font-size: 45px;
-            }
         }
     }
 }
@@ -133,9 +126,6 @@
     .afisha {
         .afisha__header {
             gap: 30px;
-            h1 {
-                font-size: 35px;
-            }
         }
     }
 }
