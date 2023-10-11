@@ -113,15 +113,13 @@ export const getFullLanguage = (shortLang: string) => {
 
 export const setTodayDateStore = (searchDate: string, dispatch: any) => {
     const arrDate = getArrDate();
-    if (!searchDate) {
-        dispatch({ 
-            type: "SET_SEARCH", 
-            payload: {
-                type: 'date',
-                data: arrDate[0]
-            }
-        });
-    }
+    dispatch({ 
+        type: "SET_SEARCH", 
+        payload: {
+            type: 'date',
+            data: searchDate
+        }
+    });
 }
 
 export const arrSliderSwiper: ISlide[] = [
@@ -140,7 +138,7 @@ export const arrMovies: IMovie[] = [
     trailer: 'https://www.youtube.com/watch?v=w0m2C3lN1h8',
     schedule: [
         {
-            date: '06.10.2023',
+            date: '10.10.2023',
             seances: [
                 { room: '3', time: '10:45' },
                 { room: '5', time: '11:50' },
@@ -155,7 +153,7 @@ export const arrMovies: IMovie[] = [
             ]
         },
         {
-            date: '07.10.2023',
+            date: '11.10.2023',
             seances: [
                 { room: '1', time: '10:30' },
                 { room: '2', time: '11:45' },
@@ -169,7 +167,7 @@ export const arrMovies: IMovie[] = [
             ]
         },
         {
-            date: '08.10.2023',
+            date: '12.10.2023',
             seances: [
                 { room: '4', time: '10:10' },
                 { room: '2', time: '11:35' },
@@ -182,7 +180,7 @@ export const arrMovies: IMovie[] = [
             ]
         },
         {
-            date: '09.10.2023',
+            date: '13.10.2023',
             seances: [
                 { room: '2', time: '10:15' },
                 { room: '3', time: '11:40' },
@@ -202,7 +200,7 @@ export const arrMovies: IMovie[] = [
     trailer: 'https://www.youtube.com/watch?v=Oh6hSeN4Nag',
     schedule: [
         {
-            date: '07.10.2023',
+            date: '13.10.2023',
             seances: [
                 { room: '1', time: '10:15' },
                 { room: '3', time: '11:40' },
@@ -214,7 +212,7 @@ export const arrMovies: IMovie[] = [
             ]
         },
         {
-            date: '08.10.2023',
+            date: '14.10.2023',
             seances: [
                 { room: '2', time: '10:15' },
                 { room: '3', time: '11:40' },
@@ -230,7 +228,7 @@ export const arrMovies: IMovie[] = [
             ]
         },
         {
-            date: '09.10.2023',
+            date: '16.10.2023',
             seances: [
                 { room: '1', time: '10:30' },
                 { room: '2', time: '11:45' },
@@ -245,7 +243,7 @@ export const arrMovies: IMovie[] = [
             ]
         },
         {
-            date: '10.10.2023',
+            date: '18.10.2023',
             seances: [
                 { room: '4', time: '10:10' },
                 { room: '2', time: '11:35' },
@@ -260,12 +258,12 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 2, image: img2, title: 'Оппенгеймер', age: 16, language: 'RU', genres: ['история', 'биография', 'драма'], video: '2D', duration: 185, 
+    {id: 2, image: img2, title: 'Оппенгеймер', age: 16, language: 'ENG', isSUB: true, genres: ['история', 'биография', 'драма'], video: '2D', duration: 185, 
     description: 'История жизни американского физика Роберта Оппенгеймера, который стоял во главе первых разработок ядерного оружия.',
     trailer: 'https://www.youtube.com/watch?v=zU2vtD7npd0',
     schedule: [
         {
-            date: '06.10.2023',
+            date: '14.10.2023',
             seances: [
                 { room: '1', time: '10:15' },
                 { room: '2', time: '11:40' },
@@ -279,7 +277,7 @@ export const arrMovies: IMovie[] = [
             ]
         },
         {
-            date: '07.10.2023',
+            date: '15.10.2023',
             seances: [
                 { room: '6', time: '10:30' },
                 { room: '4', time: '11:45' },
@@ -294,7 +292,7 @@ export const arrMovies: IMovie[] = [
             ]
         },
         {
-            date: '08.10.2023',
+            date: '17.10.2023',
             seances: [
                 { room: '1', time: '10:10' },
                 { room: '2', time: '11:35' },
@@ -310,7 +308,7 @@ export const arrMovies: IMovie[] = [
             ]
         },
         {
-            date: '09.10.2023',
+            date: '19.10.2023',
             seances: [
                 { room: '3', time: '10:15' },
                 { room: '5', time: '11:40' },
@@ -325,72 +323,72 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 3, image: img3, title: 'После. Навсегда', age: 16, language: 'RU', genres: ['мелодрама'], video: '', duration: 0, 
+    {id: 3, image: img3, title: 'После. Навсегда', age: 16, language: 'RU', genres: ['мелодрама'], video: '3D', duration: 0, 
     description: '',
     trailer: '',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '13.10.2023',
             seances: [
             ]
         }
     ]},
-    {id: 4, image: img4, title: 'Черепашки-ниндзя: Погром мутантов', age: 12, language: 'RU', genres: ['мультфильм', 'боевик', 'фантастика'], video: '', duration: 0, 
+    {id: 4, image: img4, title: 'Черепашки-ниндзя: Погром мутантов', age: 12, language: 'RU', genres: ['мультфильм', 'боевик', 'фантастика'], video: '3D', duration: 0, 
     description: '',
     trailer: '',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '14.10.2023',
             seances: [
             ]
         }
     ]},
-    {id: 5, image: img5, title: 'Элементарно', age: 6, language: 'RU', genres: ['комедия', 'мультфильм', 'приключения'], video: '3D', duration: 105, 
+    {id: 5, image: img5, title: 'Элементарно', age: 6, language: 'RU', isSUB: true, genres: ['комедия', 'мультфильм', 'приключения'], video: '3D', duration: 105, 
     description: 'В Городе Стихий обитатели огня, воды, земли и воздуха живут вместе. У сильной и вспыльчивой Эмбер завязывается дружба с расслабленным, плывущим по течению Уэйдом — дружба, которая бросит вызов её представлениям о мире вокруг.',
     trailer: '',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '15.10.2023',
             seances: [
             ]
         }
     ]},
-    {id: 6, image: img6, title: 'Монстр и маги синих морей', age: 6, language: 'RU', genres: ['комедия', 'мультфильм', 'приключения'], video: '', duration: 0, 
+    {id: 6, image: img6, title: 'Монстр и маги синих морей', age: 6, language: 'RU', genres: ['комедия', 'мультфильм', 'приключения'], video: '3D', duration: 0, 
     description: '',
     trailer: '',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '16.10.2023',
             seances: [
             ]
         }
     ]},
-    {id: 7, image: img7, title: 'Искусство по понятиям', age: 18, language: 'RU', genres: ['триллер'], video: '', duration: 0, 
+    {id: 7, image: img7, title: 'Искусство по понятиям', age: 18, language: 'RU', genres: ['триллер'], video: '2D', duration: 0, 
     description: '',
     trailer: '',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '13.10.2023',
             seances: [
             ]
         }
     ]},
-    {id: 8, image: img8, title: 'Индиана Джонс и колесо судьбы', age: 12, language: 'RU', genres: ['боевик', 'приключения'], video: '', duration: 0, 
+    {id: 8, image: img8, title: 'Индиана Джонс и колесо судьбы', age: 12, language: 'RU', genres: ['боевик', 'приключения'], video: '3D', duration: 0, 
     description: '',
     trailer: '',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '14.10.2023',
             seances: [
             ]
         }
     ]},
-    {id: 9, image: img9, title: 'Дозор джунглей: Кругосветка', age: 6, language: 'RU', genres: ['комедия', 'мультфильм', 'приключения'], video: '', duration: 0, 
+    {id: 9, image: img9, title: 'Дозор джунглей: Кругосветка', age: 6, language: 'RU', isSUB: true, genres: ['комедия', 'мультфильм', 'приключения'], video: '3D', duration: 0, 
     description: '',
     trailer: '',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '15.10.2023',
             seances: [
             ]
         }
@@ -400,7 +398,7 @@ export const arrMovies: IMovie[] = [
     trailer: 'https://www.youtube.com/watch?v=-MWFfzxzWgI',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '16.10.2023',
             seances: [
             ]
         }
@@ -410,7 +408,7 @@ export const arrMovies: IMovie[] = [
     trailer: 'https://www.youtube.com/watch?v=aV_an1PcDXs',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '18.10.2023',
             seances: [
             ]
         }
@@ -420,7 +418,7 @@ export const arrMovies: IMovie[] = [
     trailer: 'https://www.youtube.com/watch?v=8NkgQ0Odiew',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '13.10.2023',
             seances: [
             ]
         }
@@ -430,7 +428,7 @@ export const arrMovies: IMovie[] = [
     trailer: 'https://www.youtube.com/watch?v=LrBznZYVOLM',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '14.10.2023',
             seances: [
             ]
         }
@@ -440,7 +438,7 @@ export const arrMovies: IMovie[] = [
     trailer: 'https://www.youtube.com/watch?v=9miykCyQcmc',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '15.10.2023',
             seances: [
             ]
         }
@@ -450,18 +448,20 @@ export const arrMovies: IMovie[] = [
     trailer: 'https://www.youtube.com/watch?v=rY2OLeGYsdU',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '16.10.2023',
             seances: [
             ]
         }
     ]},
-    {id: 16, image: img16, title: 'Мой Хатико', age: 12, language: 'RU', genres: ['семейный', 'драма'], video: '2D', duration: 135, 
+    {id: 16, image: img16, title: 'Мой Хатико', age: 12, language: 'RU', genres: ['семейный', 'драма'], video: '3D', duration: 135, 
     description: 'Кто не знает Хатико? Однажды профессор подобрал на улице бездомного милого щенка. Несмотря на протесты семьи, он оставляет пушистика дома, и вскоре тот вырастает в доброго и преданного пса. Любовь к обаятельной собаке сближает членов семьи, добавляет ей тепла и уюта. История жизни профессора и преданного пса навсегда стала примером самой искренней дружбы.',
     trailer: 'https://www.youtube.com/watch?v=TsaJmJg9RIc',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '13.10.2023',
             seances: [
+                { room: '4', time: '12:10' },
+                { room: '6', time: '15:45' },
             ]
         }
     ]},
@@ -470,7 +470,7 @@ export const arrMovies: IMovie[] = [
     trailer: 'https://www.youtube.com/watch?v=scT3B2iOTZ0',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '14.10.2023',
             seances: [
             ]
         }
@@ -480,7 +480,7 @@ export const arrMovies: IMovie[] = [
     trailer: 'https://www.youtube.com/watch?v=BqbyPQA4V70',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '15.10.2023',
             seances: [
             ]
         }
@@ -490,7 +490,7 @@ export const arrMovies: IMovie[] = [
     trailer: 'https://www.youtube.com/watch?v=Oz2mdlgzSyA',
     schedule: [
         {
-            date: '01.10.2023',
+            date: '17.10.2023',
             seances: [
             ]
         }

@@ -1,6 +1,6 @@
 @charset "UTF-8";
 .selectOption {
-  padding: 0 20px;
+  margin: 15px 20px 0;
 }
 .selectOption .selectOption__text {
   color: #000;
@@ -15,9 +15,6 @@
   color: rgb(28, 156, 223);
   transition: all 0.2s ease 0s;
 }
-.selectOption .selectOption__text .selectOption__item:first-child {
-  padding: 25px 0 10px;
-}
 .selectOption .selectOption__text .selectOption__item:last-child {
   padding: 10px 0 30px;
 }
@@ -25,7 +22,7 @@
   color: rgb(212, 7, 84);
 }
 .selectOption .selectOption__text .selectOption__title {
-  padding: 25px 0 10px;
+  padding: 10px 0;
   font-weight: 700;
 }
 .selectOption .selectOption__text .selectOption__choise {

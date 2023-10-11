@@ -15,6 +15,7 @@ const SliderSwiper = () => {
         <Swiper 
             speed={800}
             slidesPerView={1}
+            spaceBetween={0}
             loop={true}
             navigation={true}
             pagination={{ clickable: true }}
@@ -23,7 +24,7 @@ const SliderSwiper = () => {
                 disableOnInteraction: false,
             }}
             modules={[Autoplay, Navigation, Pagination, A11y]}
-            className="mySwiper"
+            className="swiperPosters"
         >
             {arrSliderSwiper.map((item, index) => (
                 <SwiperSlide key={index} className='mySlide'>

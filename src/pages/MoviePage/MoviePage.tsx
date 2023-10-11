@@ -25,7 +25,9 @@ const MoviePage = () => {
     if (id) movie = arrMovies[+id];
 
     let searchDate = useSelector(({ search }) => search.date);
-    setTodayDateStore(searchDate, dispatch);
+    let dateFromLocalStorage = localStorage.getItem('date');
+    if (dateFromLocalStorage) setTodayDateStore(dateFromLocalStorage, dispatch);
+    else setTodayDateStore(searchDate, dispatch);
 
     useEffect(() => {
         if (id) dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: id });
