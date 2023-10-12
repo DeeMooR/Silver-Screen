@@ -38,6 +38,17 @@ const rootReducer = (state = initialState, action: any) => {
                 }
             };
         }
+        case 'CLEAR_SEARCH': {
+            return {
+                ...state,
+                search: {
+                    date: action.payload,
+                    video: [],
+                    audio: [],
+                    language: [],
+                }
+            };
+        }
         case 'SET_SCROLL_AFISHA': {
             return {
                 ...state,

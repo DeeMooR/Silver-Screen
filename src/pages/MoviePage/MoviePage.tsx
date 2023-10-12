@@ -11,8 +11,6 @@ import './MoviePage.css'
 
 import left from "src/icons/left.png"
 import iconPlay from "src/icons/play.png"
-import SlideBar from 'src/components/Header/SlideBar';
-import Header from 'src/components/Header';
 
 const MoviePage = () => {
     const scrollRef = useRef<HTMLDivElement | null>(null);

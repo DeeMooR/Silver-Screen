@@ -22,14 +22,18 @@ import img16 from "src/icons/movies/Мой_хатико.jpeg"
 import img17 from "src/icons/movies/Призраки_в_Венеции.jpeg"
 import img18 from "src/icons/movies/Дурные_деньги.jpeg"
 import img19 from "src/icons/movies/Особняк_с_привидениями.jpeg"
+import img20 from "src/icons/movies/Создатель.jpeg"
+import img21 from "src/icons/movies/Смешарики_снимают_кино.jpeg"
 
-import img100 from "src/icons/main_slidebar/Мой_хатико.jpg"
-import img101 from "src/icons/main_slidebar/Призраки_в_Венеции.jpg"
-import img102 from "src/icons/main_slidebar/Дурные_деньги.jpg"
-import img103 from "src/icons/main_slidebar/Особняк_с_привидениями.jpg"
-import img104 from "src/icons/main_slidebar/Барби.jpg"
-import img105 from "src/icons/main_slidebar/Подарочная_карта.png"
-import img106 from "src/icons/main_slidebar/День_рождения.jpg"
+import img100 from "src/icons/main_slidebar/Создатель.jpg"
+import img101 from "src/icons/main_slidebar/Смешарики_снимают_кино.jpg"
+import img102 from "src/icons/main_slidebar/Мой_хатико.jpg"
+import img103 from "src/icons/main_slidebar/Призраки_в_Венеции.jpg"
+import img104 from "src/icons/main_slidebar/Дурные_деньги.jpg"
+import img105 from "src/icons/main_slidebar/Особняк_с_привидениями.jpg"
+import img106 from "src/icons/main_slidebar/Барби.jpg"
+import img107 from "src/icons/main_slidebar/Подарочная_карта.png"
+import img108 from "src/icons/main_slidebar/День_рождения.jpg"
 
 
 const russianMonths = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
@@ -123,13 +127,15 @@ export const setTodayDateStore = (searchDate: string, dispatch: any) => {
 }
 
 export const arrSliderSwiper: ISlide[] = [
-    {id: 0, image: img100, idFilm: 16},
-    {id: 1, image: img101, idFilm: 17},
-    {id: 2, image: img102, idFilm: 18},
-    {id: 3, image: img103, idFilm: 19},
-    {id: 4, image: img104, idFilm: 0},
-    {id: 5, image: img105, title: 'Детский день рождения в кино', text: ' ', textButton: 'Отпраздновать в mooon'},
-    {id: 6, image: img106, title: 'Дарите радость от неожиданных эмоций!', text: 'Электронные подарочные карты mooon и silver screen', textButton: 'Подробнее'},
+    {id: 0, image: img100, idFilm: 20},
+    {id: 1, image: img101, idFilm: 21},
+    {id: 2, image: img102, idFilm: 16},
+    {id: 3, image: img103, idFilm: 17},
+    {id: 4, image: img104, idFilm: 18},
+    {id: 5, image: img105, idFilm: 19},
+    {id: 6, image: img106, idFilm: 0},
+    {id: 7, image: img107, title: 'Детский день рождения в кино', text: ' ', textButton: 'Отпраздновать в mooon'},
+    {id: 8, image: img108, title: 'Дарите радость от неожиданных эмоций!', text: 'Электронные подарочные карты mooon и silver screen', textButton: 'Подробнее'},
 ]
 
 export const arrMovies: IMovie[] = [
@@ -491,6 +497,26 @@ export const arrMovies: IMovie[] = [
     schedule: [
         {
             date: '17.10.2023',
+            seances: [
+            ]
+        }
+    ]},
+    {id: 20, image: img20, title: 'Создатель', age: 16, language: 'ENG', isSUB: true, genres: ['боевик', 'фантастика', 'приключения'], video: '2D', duration: 135, 
+    description: 'На фоне войны будущего между человечеством и силами искусственного интеллекта, Джошуа, закаленный в боях и бывший оперативный агент переживает исчезновение своей жены, и теперь ему предстоит найти и уничтожить Создателя — неуловимого архитектора, создавшего искусственный интеллект и таинственное оружие, способное положить конец войне и всему людскому роду.',
+    trailer: 'https://www.youtube.com/watch?v=JEEQjpNT8BQ',
+    schedule: [
+        {
+            date: '15.10.2023',
+            seances: [
+            ]
+        }
+    ]},
+    {id: 21, image: img21, title: 'Смешарики снимают кино', age: 6, language: 'RU', genres: ['мультфильм', 'приключения'], video: '3D', duration: 65, 
+    description: 'Смешарики снимают кино! И не просто кино, а целый сборник из нескольких короткометражных фильмов. В программе боевик и комедия, фантастика и фэнтези, мюзикл и немое кино. А также эльфы, феи, древние пророчества, мировое зло, Пин Бонд и роботы-дроиды. Хотите заглянуть на съёмочную площадку и увидеть, как создают киношедевры? Тогда поспешите – съёмочная группа Смешариков уже ждёт вас.',
+    trailer: 'https://www.youtube.com/watch?v=5u7Pzv53eF4',
+    schedule: [
+        {
+            date: '15.10.2023',
             seances: [
             ]
         }

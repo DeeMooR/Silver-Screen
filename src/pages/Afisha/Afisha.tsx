@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PageTemplate from 'src/components/PageTemplate'
 import MovieCard from 'src/components/MovieCard'
@@ -22,8 +22,7 @@ const Afisha = () => {
     if (dateFromLocalStorage) setTodayDateStore(dateFromLocalStorage, dispatch);
     else setTodayDateStore(arrDate[0], dispatch);
     dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: '' });
-
-
+    
     const scrollPosition = useSelector(({ scrollAfisha }) => scrollAfisha);
     useEffect(() => {
         if (scrollPosition !== null) {
@@ -31,8 +30,7 @@ const Afisha = () => {
             window.scrollTo(0, scrollPosition);
         }
     }, []);
-
-
+    
     let filteredMovies: IMovie[] = [];
     let filterOne: IMovie[];
     let addToFilterOne: IMovie[];
@@ -159,7 +157,6 @@ const Afisha = () => {
         }
     }
     filterMovies();
-
     
     return (
         <PageTemplate wrapper>
