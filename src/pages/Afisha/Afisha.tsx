@@ -110,7 +110,7 @@ const Afisha = () => {
                             let scheduleDay = movie.schedule.find(item => item.date == searchDate);     // Поиск массива сеансов в определённый день
                             if (scheduleDay) return scheduleDay.seances.some(oneSeance => oneSeance.room === '5');   // Если хотя бы в одном сеансе есть ScreenX вернёт true
                             return false;
-                        });
+                        });              
                         filterOne.push(...addToFilterOne);
                         break;
                     case 'IMAX':

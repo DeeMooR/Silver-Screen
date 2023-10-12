@@ -93,11 +93,13 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
                 ) : (
                     <>
                     <p className='selectOption__title'>
-                        {type === 'video' && 'Видео:'}
+                        {type === 'video' && 'Формат:'}
                         {type === 'audio' && 'Аудио:'}
                         {type === 'language' && 'Язык:'}
                     </p>
                     {arrSelect.map((item: string, i: number) => (
+                        <>
+                        {type === 'video' && i === 2 && <p className='selectOption__title'>Экран:</p>}
                         <label className='selectOption__choise' onClick={(event) => handleClickCheckbox(i, event)} key={i}>
                             {item}
                             <input type="checkbox" />
@@ -106,6 +108,7 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
                                 onClick={(event) => handleClickCheckbox(i, event)} 
                             ></span>
                         </label>
+                        </>
                     ))}
                     </>
                 )}

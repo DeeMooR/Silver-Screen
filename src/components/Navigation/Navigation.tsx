@@ -25,7 +25,7 @@ const Navigation = () => {
     return (
         <div className='navigation'>
         <div className='navigation__item'><NavigationItem icon={calendar} type='date' navActive={navActive} handleClick={handleClick} /></div>
-        <div className='navigation__item'><NavigationItem icon={video} text='Формат' type='video' navActive={navActive} handleClick={handleClick} /></div>
+        <div className='navigation__item'><NavigationItem icon={video} text='Видео' type='video' navActive={navActive} handleClick={handleClick} /></div>
         <div className='navigation__item'><NavigationItem icon={audio} text='Звук' type='audio' navActive={navActive} handleClick={handleClick} /></div>
         <div className='navigation__item'><NavigationItem icon={language} text='Прочее' type='language' navActive={navActive} handleClick={handleClick} /></div>
         </div>

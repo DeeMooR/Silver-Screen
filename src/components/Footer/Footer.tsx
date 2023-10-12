@@ -20,9 +20,9 @@ const Footer = () => {
         <footer className="footer">
             <div className="footer__icons">
                 <div className="footer__social-networks">
-                    <a href="https://vk.com/moooncinemas"><StyledIcon image={{light: vk, dark: vkDark}} /></a>
-                    <a href="https://www.facebook.com/mooonminsk"><StyledIcon image={{light: facebook, dark: facebookDark}} /></a>
-                    <a href="https://www.instagram.com/moooncinema"><StyledIcon image={{light: instagram, dark: instagramDark}} /></a>
+                    <a href="https://vk.com/moooncinemas" target='blank'><StyledIcon image={{light: vk, dark: vkDark}} /></a>
+                    <a href="https://www.facebook.com/mooonminsk" target='blank'><StyledIcon image={{light: facebook, dark: facebookDark}} /></a>
+                    <a href="https://www.instagram.com/moooncinema" target='blank'><StyledIcon image={{light: instagram, dark: instagramDark}} /></a>
                 </div>
                 <div className="footer__payments">
                     <img src={visa} className='visa' alt="visa" />

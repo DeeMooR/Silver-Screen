@@ -13,7 +13,7 @@ const Schedule:FC<ISchedule> = ({movie}) => {
     const searchDate = useSelector(({ search }) => search.date).split(', ')[1];
     const searchVideo = useSelector(({ search }) => search.video);
     const searchAudio = useSelector(({ search }) => search.audio);
-    let searchLanguage = useSelector(({ search }) => search.language);
+    const searchLanguage = useSelector(({ search }) => search.language);
 
     let i = 0;
     let filteredMovie: ISeance[] = [];
@@ -21,18 +21,19 @@ const Schedule:FC<ISchedule> = ({movie}) => {
     let addSeances: ISeance[] = [];
     
     const filterMovies = () => {
-        // Проверка "Фильм на выбранном языке и есть ли субтитры?"
+        // Проверка "Фильм с субтитрами?"
+        if (searchLanguage.includes('SUB') && !movie.isSUB) return;
+
+        // Проверка "Фильм на выбранном языке?"
         if (!searchLanguage.length ||
-            (searchLanguage.includes('SUB') && movie.isSUB) ||
+            (searchLanguage.join(',') === 'SUB') ||
             (searchLanguage.length && searchLanguage.includes(movie.language))) i = 1;
         else return;
 
-        // Проверка "Фильм на в выбранном формате?"
+         // Проверка "Фильм в выбранном формате?"
         if ((!searchVideo.includes('2D') && !searchVideo.includes('3D')) ||
-            (movie.video === '2D' && searchVideo.includes('2D')) ||
-            (movie.video === '2D' && !searchVideo.includes('2D') && (searchVideo.includes('IMAX') || searchVideo.includes('ScreenX'))) ||
-            (movie.video === '3D' && searchVideo.includes('3D')) ||
-            (movie.video === '3D' && !searchVideo.includes('3D') && (searchVideo.includes('IMAX') || searchVideo.includes('ScreenX')))) i = 1;
+            (searchVideo.includes('2D') && movie.video === '2D') ||
+            (searchVideo.includes('3D') && movie.video === '3D')) i = 1;
         else return;
 
         // Проверка "Есть ли сеансы в выбранную дату?"
@@ -63,21 +64,19 @@ const Schedule:FC<ISchedule> = ({movie}) => {
         }
 
         // Проверка "Есть ли сеансы на IMAX или ScreenX?"
-        if (!searchVideo.includes(movie.video)) {
-            if (searchVideo.includes('IMAX') && searchVideo.includes('ScreenX')) {
-                const arrScreenX = filteredMovie.filter(item => item.room === '5');
-                const arrIMAX = filteredMovie.filter(item => item.room === '6');
-                filteredMovie = [...arrScreenX, ...arrIMAX];
-                return;
-            }
-            if (searchVideo.includes('ScreenX')) {
-                fixSeances = filteredMovie.filter(item => item.room === '5');
-                filteredMovie = [...fixSeances];
-            } 
-            if (searchVideo.includes('IMAX')) {
-                fixSeances = filteredMovie.filter(item => item.room === '6');
-                filteredMovie = [...fixSeances];
-            }
+        if (searchVideo.includes('IMAX') && searchVideo.includes('ScreenX')) {
+            const arrScreenX = filteredMovie.filter(item => item.room === '5');
+            const arrIMAX = filteredMovie.filter(item => item.room === '6');
+            filteredMovie = [...arrScreenX, ...arrIMAX];
+            return;
+        }
+        if (searchVideo.includes('ScreenX')) {
+            fixSeances = filteredMovie.filter(item => item.room === '5');
+            filteredMovie = [...fixSeances];
+        } 
+        if (searchVideo.includes('IMAX')) {
+            fixSeances = filteredMovie.filter(item => item.room === '6');
+            filteredMovie = [...fixSeances];
         }
     }
     filterMovies();

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import SlideBar from './SlideBar'
 import { StyledLogoSmall, StyledLogoBig } from './styled'
 import './Header.css'
@@ -14,6 +14,7 @@ import search from "src/icons/search.png"
 import account from "src/icons/account.png"
 
 const Header = () => {
+    const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
     const [clickMenu, setClickMenu] = useState(false);
 
@@ -40,7 +41,7 @@ const Header = () => {
             <div className="header__wrapper">
                 <div className="header__content">
                     <img src={menu} alt="menu" className='header__menu' onClick={() => setClickMenu(true)} />
-                    <div className="header__logo">
+                    <div className="header__logo" onClick={() => navigate('/')}>
                         {isScrolled
                             ? <StyledLogoSmall logo={logoSmall} logo_pink={logoSmall_pink} />
                             : <StyledLogoBig logo={logoBig} logo_pink={logoBig_pink} />
