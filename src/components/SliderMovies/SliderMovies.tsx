@@ -8,37 +8,84 @@ import { IMovie } from 'src/interfaces';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import './SliderMovies.css';
+import NotFind from '../NotFind';
 
 const SliderMovies = () => {
     return (
     <>
         <Swiper
             speed={1000}
-            slidesPerView={4}
-            spaceBetween={70}
-            slidesPerGroup={4}
+            slidesPerView={4.6}
+            slidesPerGroup={3}
+            centeredSlides={true}
             loop={true}
             navigation={true}
+            breakpoints={{
+                1200: {
+                    // для разрешения больше 1200px
+                    spaceBetween: 60,
+                },
+                1024: {
+                    centeredSlides: true,
+                    slidesPerView: 4.6,
+                    spaceBetween: 30,
+                },
+                900: {
+                    centeredSlides: false,
+                    slidesPerView: 3.6,
+                    spaceBetween: 20,
+                },
+                720: {
+                    centeredSlides: false,
+                    slidesPerView: 3.5,
+                    spaceBetween: 20,
+                },
+                600: {
+                    centeredSlides: false,
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                },
+                540: {
+                    centeredSlides: false,
+                    slidesPerView: 2.75,
+                    spaceBetween: 10,
+                },
+                500: {
+                    centeredSlides: false,
+                    slidesPerView: 2.5,
+                    spaceBetween: 10,
+                },
+                420: {
+                    centeredSlides: false,
+                    slidesPerView: 2.2,
+                    spaceBetween: 10,
+                },
+                0: {
+                    centeredSlides: false,
+                    slidesPerView: 2,
+                    spaceBetween: 10,
+                },
+            }}
             modules={[Autoplay, Navigation]}
             className="swiperMovies"
         >
             {arrMovies.map((card: IMovie, i: number) => (
+                <>
                 <SwiperSlide>
                     <div className="cards__item" key={i}>
-                        <MovieCard obj={card} />
+                        <MovieCard obj={card} page='main' />
                     </div>
                 </SwiperSlide>
-                
+                {i === arrMovies.length - 3 && 
+                    <SwiperSlide>
+                        <div>
+                            <NotFind />
+                        </div>
+                    </SwiperSlide>
+                }
+                </>
             ))}
-            {/* <SwiperSlide>Slide 1</SwiperSlide>
-            <SwiperSlide>Slide 2</SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-            <SwiperSlide>Slide 4</SwiperSlide>
-            <SwiperSlide>Slide 5</SwiperSlide>
-            <SwiperSlide>Slide 6</SwiperSlide>
-            <SwiperSlide>Slide 7</SwiperSlide>
-            <SwiperSlide>Slide 8</SwiperSlide>
-            <SwiperSlide>Slide 9</SwiperSlide> */}
+            
         </Swiper>
     </>
     )

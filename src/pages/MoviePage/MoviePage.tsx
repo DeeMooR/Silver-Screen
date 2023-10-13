@@ -63,7 +63,7 @@ const MoviePage = () => {
             <div className='moviePage'>
                 <div className={`moviePage__header ${isScrolled ? 'scrollHeader' : ''}`}>
                     <div className="header__wrapper">
-                        <img src={left} onClick={() => navigate('/afisha')} alt="left"/>
+                        <img src={left} onClick={() => navigate(-1)} alt="left"/>
                         <span>{movie.title}</span>
                     </div>
                 </div>

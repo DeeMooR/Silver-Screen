@@ -12,10 +12,14 @@ const PageTemplate:FC<IPageTemplate> = ({children, wrapper}) => {
     return (
         <div className='pageTemplate'>
             <Header />
-            <div className={wrapper ? 'pageTemplate__wrapper' : ''}>
+            {wrapper ? 
+                <div className='pageTemplate__wrapper'>
+                    <main>{children}</main>
+                </div>
+            :
                 <main>{children}</main>
-                <Footer />
-            </div>
+            }
+            <Footer />
         </div>
     )
 }

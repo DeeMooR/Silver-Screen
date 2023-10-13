@@ -22,7 +22,7 @@ const Afisha = () => {
     if (dateFromLocalStorage) setTodayDateStore(dateFromLocalStorage, dispatch);
     else setTodayDateStore(arrDate[0], dispatch);
     dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: '' });
-    
+
     const scrollPosition = useSelector(({ scrollAfisha }) => scrollAfisha);
     useEffect(() => {
         if (scrollPosition !== null) {
@@ -174,7 +174,7 @@ const Afisha = () => {
                 <div className='afisha__cards'>
                     {filteredMovies.map((card: IMovie, i: number) => (
                         <div className="cards__item" key={i}>
-                            <MovieCard obj={card} />
+                            <MovieCard obj={card} page='afisha' />
                         </div>
                     ))}
                     <div className={`cards__item 

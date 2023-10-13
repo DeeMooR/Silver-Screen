@@ -1,6 +1,8 @@
 .footer {
+  max-width: 1200px;
+  margin: 70px auto;
+  padding: 90px 15px 25px;
   color: rgba(255, 255, 255, 0.5);
-  padding: 90px 0 25px;
 }
 .footer .footer__icons {
   display: flex;

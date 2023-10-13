@@ -15,15 +15,4 @@ export const StyledImage = styled.div<{ image: string }>`
         filter: brightness(105%);
         transition: all 0.3s ease 0s;
     }
-
-    @media (max-width: 599.98px) {
-        width: 180px;
-        padding-bottom: 270px;
-        border-radius: 15px;
-    }
-    @media (max-width: 479.98px) {
-        margin: 0 auto;
-        width: 200px;
-        padding-bottom: 300px;
-    }
 `;

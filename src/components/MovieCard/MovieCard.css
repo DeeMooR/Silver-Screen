@@ -1,86 +1,112 @@
 .movieCard {
-    margin: 40px 0;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+  margin: 40px 0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
-.movieCard__age-lang {
-    margin: 36px 0 8px;
-    color: rgba(255, 255, 255, 0.35);
-    font-weight: 500;
+.movieCard .movieCard__info .movieCard__age-lang {
+  margin: 36px 0 8px;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 500;
 }
-.movieCard__title {
-    height: 110px;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1.1;
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.2s ease 0s;
-    cursor: pointer;
+.movieCard .movieCard__info .movieCard__title {
+  height: 110px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.2s ease 0s;
+  cursor: pointer;
 }
-.movieCard__title:hover {
-    color: #fff;
-    transition: all 0.2s ease 0s;
+.movieCard .movieCard__info .movieCard__title:hover {
+  color: #fff;
+  transition: all 0.2s ease 0s;
 }
-.movieCard__genres {
-    height: 50px;
-    margin: auto;
-    color: rgba(255, 255, 255, 0.35);
-    font-weight: 500;
-    line-height: 1.2;
+.movieCard .movieCard__info .movieCard__genres {
+  height: 55px;
+  margin: auto;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 @media (max-width: 599.98px) {
-    .movieCard {
-        flex-direction: row;
-        gap: 30px;
-        text-align: left;
-        position: relative;
-    }
-    .movieCard button {
-        margin: 20px 0 0;
-    }
-    .movieCard:after {
-        position: absolute;
-        content: '';
-        left: 0;
-        bottom: -40px;
-        width: 100%;
-        height: 1px;
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-    .movieCard__info {
-        width: 60%;
-    }
+  .movieCard .movieCard__image {
+    border-radius: 15px;
+  }
+  .movieCard .movieCard__info button {
+    margin: 20px auto 0;
+  }
+  .movieCard.movieCard-afisha {
+    flex-direction: row;
+    gap: 30px;
+    text-align: left;
+    position: relative;
+  }
+  .movieCard.movieCard-afisha:after {
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: -40px;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  .movieCard.movieCard-afisha .movieCard__image {
+    width: 180px;
+    padding-bottom: 270px;
+    border-radius: 15px;
+  }
+  .movieCard.movieCard-afisha .movieCard__info {
+    width: 60%;
+  }
+  .movieCard.movieCard-afisha .movieCard__info button {
+    margin: 20px 0 0;
+  }
 }
 @media (max-width: 479.98px) {
-    .movieCard {
-        flex-direction: column;
-        gap: 0;
-        text-align: center;
-    }
-    .movieCard__age-lang {
-        margin: 25px 0 8px;
-    }
-    .movieCard button {
-        margin: 20px auto 0;
-    }
-    .movieCard__info {
-        width: 100%;
-    }
+  .movieCard .movieCard__info .movieCard__age-lang {
+    margin: 25px 0 8px;
+  }
+  .movieCard.movieCard-main .movieCard__info .movieCard__title {
+    font-size: 22px;
+    height: 100px;
+  }
+  .movieCard.movieCard-afisha {
+    flex-direction: column;
+    gap: 0;
+    text-align: center;
+  }
+  .movieCard.movieCard-afisha .movieCard__image {
+    width: 200px;
+    padding-bottom: 300px;
+    margin: 0 auto;
+  }
+  .movieCard.movieCard-afisha .movieCard__info {
+    width: 100%;
+  }
+  .movieCard.movieCard-afisha .movieCard__info button {
+    margin: 20px auto 0;
+  }
+}
+@media (max-width: 419.98px) {
+  .movieCard.movieCard-main .movieCard__info .movieCard__title {
+    font-size: 20px;
+    height: 90px;
+  }
 }
 @media (max-width: 319.98px) {
-    .movieCard {
-        font-size: 14px;
-    }
-    .movieCard__title {
-        font-size: 20px;
-        height: 80px;
-    }
-    .movieCard__genres {
-        height: 40px;
-    }
-    .movieCard button {
-        margin: 13px auto 0;
-    }
+  .movieCard {
+    font-size: 14px;
+  }
+  .movieCard .movieCard__info .movieCard__title {
+    font-size: 20px;
+    height: 80px;
+  }
+  .movieCard .movieCard__info .movieCard__genres {
+    height: 40px;
+  }
+  .movieCard .movieCard__info button {
+    margin: 13px auto 0;
+  }
 }

@@ -59,8 +59,8 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-        </header>
             <SlideBar clickMenu={clickMenu} setClickMenu={setClickMenu} />
+        </header>
         </>
     )
 }

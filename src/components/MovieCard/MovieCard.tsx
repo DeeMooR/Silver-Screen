@@ -8,9 +8,10 @@ import { useDispatch } from 'react-redux'
 
 interface IMovieCard {
     obj: IMovie,
+    page: 'afisha' | 'main'
 }
 
-const MovieCard:FC<IMovieCard> = ({obj}) => {
+const MovieCard:FC<IMovieCard> = ({obj, page}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -19,9 +20,11 @@ const MovieCard:FC<IMovieCard> = ({obj}) => {
         navigate(`/afisha/${obj.id}`);
     }
 
+    
+
     return (
-        <div className='movieCard'>
-            <StyledImage image={obj.image} onClick={moveNewPage}></StyledImage>
+        <div className={`movieCard movieCard-${page}`}>
+            <StyledImage image={obj.image} className='movieCard__image' onClick={moveNewPage}></StyledImage>
             <article className='movieCard__info'>
                 <p className='movieCard__age-lang'>{obj.age}+ / {obj.language}</p>
                 <h2 className='movieCard__title' onClick={moveNewPage}>{obj.title}</h2>
