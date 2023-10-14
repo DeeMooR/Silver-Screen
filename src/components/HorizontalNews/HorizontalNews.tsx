@@ -3,6 +3,7 @@ import './HorizontalNews.css'
 import { BackgroundImage } from './styled'
 import Button from '../Button'
 import { INews } from 'src/interfaces'
+import { useNavigate } from 'react-router-dom'
 
 interface IHorizontalNews {
     obj: INews,
@@ -10,6 +11,7 @@ interface IHorizontalNews {
 }
 
 const HorizontalNews:FC<IHorizontalNews> = ({obj, reverse}) => {
+    const navigate = useNavigate();
     return (
         <div className={`horizontalNews ${reverse ? 'reverse' : ''}`}>
             <BackgroundImage image={obj.background_image} />
@@ -19,7 +21,7 @@ const HorizontalNews:FC<IHorizontalNews> = ({obj, reverse}) => {
                         {obj.date && <div className="horizontalNews__date">{obj.date}</div>}
                         <div className="horizontalNews__title">{obj.title}</div>
                         <div className="horizontalNews__description">{obj.description}</div>
-                        <Button color='red'>Подробнее</Button>
+                        <Button color='red' handleClick={() => navigate(`${obj.link}`)}>Подробнее</Button>
                     </div>
                     <div className="horizontalNews__image">
                         <img src={obj.image} alt="image" />

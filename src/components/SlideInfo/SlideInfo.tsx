@@ -25,7 +25,7 @@ const SlideInfo:FC<ISlideInfo> = ({slide}) => {
     }
 
     return (
-        <>
+        <div className={`slideInfo ${(!slide.idFilm && !slide.textButton) ? 'slideInfo__otherPage' : ''}`}>
             <img src={slide.image} className='slideInfo__image' />
             <div className='slideInfo__wrapper'>
                 <div className="slideInfo__description">
@@ -35,14 +35,16 @@ const SlideInfo:FC<ISlideInfo> = ({slide}) => {
                     <h2 className="slideInfo__title">
                         {filmTitle ? filmTitle : slide.title}
                     </h2>
-                    <div className="slideInfo__button">
-                        <Button color='red' handleClick={clickButton}>
-                            {slide.textButton ? slide.textButton : 'Купить билет'}
-                        </Button>
-                    </div>
+                    {(slide.idFilm || slide.textButton) &&
+                        <div className="slideInfo__button">
+                            <Button color='red' handleClick={clickButton}>
+                                {slide.textButton ? slide.textButton : 'Купить билет'}
+                            </Button>
+                        </div>
+                    }
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

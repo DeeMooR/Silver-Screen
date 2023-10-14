@@ -56,35 +56,10 @@
     border: 2px solid rgba(200, 199, 198);
 }
 
-.mySlide:before {
-        content: "";
-        position: absolute;
-        inset: 0px;
-        z-index: 2;
-        background: linear-gradient(78deg, rgb(9, 9, 10) 0%, rgb(9, 9, 10) 44%, rgba(9, 9, 10, 0) 60%, rgba(9, 9, 10, 0));
-}
-.mySlide:after {
-    content: "";
-    position: absolute;
-    inset: 0px;
-    z-index: 2;
-    background: linear-gradient(rgb(9, 9, 10) 0%, rgba(9, 9, 10, 0.6) 72px, rgba(9, 9, 10, 0) 170px, rgba(9, 9, 10, 0));
-}
-
-@media (max-width: 1199.98px) {
-    .mySlide:before {
-        background: linear-gradient(to right, rgb(9, 9, 10) 0px, rgb(9, 9, 10) 17%, rgba(9, 9, 10, 0.3) 80%, rgba(9, 9, 10, 0.3));
-    }
-}
 @media (max-width: 1023.98px) {
     .swiperPosters .swiper-button-prev,
     .swiperPosters .swiper-button-next {
         display: none;
-    }
-}
-@media (max-width: 767.98px) {
-    .mySlide:before {
-        background: linear-gradient(75deg, rgb(9, 9, 10) 0%, rgba(9, 9, 10, 0.5) 60%, rgba(9, 9, 10, 0.3));
     }
 }
 @media (max-width: 599.98px) {

@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Main from './pages/Main';
 import MoviePage from './pages/MoviePage';
+import Entertainment from './pages/Entertainment';
 import Afisha from './pages/Afisha';
 import { getArrDate, setTodayDateStore } from './helpers';
 
@@ -17,6 +18,7 @@ function App() {
                 <Route path='/' element={<Main />} />
                 <Route path='/afisha' element={<Afisha />} />
                 <Route path='/afisha/:id' element={<MoviePage />} />
+                <Route path='/entertainment' element={<Entertainment />} />
                 <Route path='*' element={<Navigate to='/afisha'/>} />
             </Routes>
             {/* {location.pathname === '/' && <Navigate to='/afisha' />} */}

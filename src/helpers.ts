@@ -49,7 +49,8 @@ export const arrAfishaNews: INews[] = [
         image: services,
         background_image: services,
         title: 'Услуги',
-        description: 'Бронируйте кинозалы, Media room и Party room или арендуйте кинопространство целиком – смотрите, празднуйте, обучайтесь с удовольствием!'
+        description: 'Бронируйте кинозалы, Media room и Party room или арендуйте кинопространство целиком – смотрите, празднуйте, обучайтесь с удовольствием!',
+        link: '/entertainment'
     },
     {
         id: 2,
@@ -57,11 +58,10 @@ export const arrAfishaNews: INews[] = [
         background_image: visa_background,
         title: 'Мир привилегий VISA',
         description: 'При оплате билетов в кинопространствах mooon и Silver Screen платежными карточками Visa вы получаете скидку!',
-        date: 'Акция'
+        date: 'Акция',
+        link: '/entertainment'
     }
 ]
-
-
 
 export const getTodayDate = () => {
     const currentDate = new Date();

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation, A11y } from 'swiper/modules';
-import SlideInfo from './SlideInfo';
+import SlideInfo from '../SlideInfo';
 import { arrSliderSwiper } from 'src/helpers';
 
 import 'swiper/css';
@@ -27,7 +27,7 @@ const SliderSwiper = () => {
             className="swiperPosters"
         >
             {arrSliderSwiper.map((item, index) => (
-                <SwiperSlide key={index} className='mySlide'>
+                <SwiperSlide key={index} >
                     <SlideInfo slide={item} />
                 </SwiperSlide>
             ))}
