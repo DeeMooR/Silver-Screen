@@ -3,16 +3,25 @@ import Button from 'src/components/Button'
 import { ISlide } from 'src/interfaces'
 import './SlideInfo.css'
 import { arrMovies } from 'src/helpers'
+import { useNavigate } from 'react-router-dom'
 
 interface ISlideInfo {
     slide: ISlide
 }
 
 const SlideInfo:FC<ISlideInfo> = ({slide}) => {
+    const navigate = useNavigate();
     let filmTitle, filmGenres;
+
     if (typeof slide.idFilm === 'number') {
         filmTitle = arrMovies[slide.idFilm].title;
         filmGenres = arrMovies[slide.idFilm].genres.join(', ') + ', ' + arrMovies[slide.idFilm].age + '+';
+    }
+
+    const clickButton = () => {
+        if (typeof slide.idFilm === 'number') {
+            navigate(`/afisha/${slide.idFilm}`, {state: {fromPage: 'main'}});
+        }
     }
 
     return (
@@ -27,7 +36,7 @@ const SlideInfo:FC<ISlideInfo> = ({slide}) => {
                         {filmTitle ? filmTitle : slide.title}
                     </h2>
                     <div className="slideInfo__button">
-                        <Button color='red'>
+                        <Button color='red' handleClick={clickButton}>
                             {slide.textButton ? slide.textButton : 'Купить билет'}
                         </Button>
                     </div>

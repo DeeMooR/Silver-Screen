@@ -78,8 +78,8 @@ const SliderMovies = () => {
         >
             {arrMovies.map((card: IMovie, i: number) => (
                 <>
-                <SwiperSlide>
-                    <div className="slide__item" key={i}>
+                <SwiperSlide key={i}>
+                    <div className="slide__item">
                         <MovieCard obj={card} page='main' />
                     </div>
                 </SwiperSlide>
@@ -91,8 +91,7 @@ const SliderMovies = () => {
                     </SwiperSlide>
                 }
                 </>
-            ))}
-            
+            ))} 
         </Swiper>
     </>
     )

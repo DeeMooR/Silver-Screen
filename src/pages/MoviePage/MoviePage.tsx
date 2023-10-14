@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Navigation from 'src/components/Navigation';
 import Schedule from 'src/components/Schedule';
 import Modal from 'src/components/Modal';
-import { arrMovies, setTodayDateStore } from 'src/helpers';
+import { arrMovies, getArrDate, setTodayDateStore } from 'src/helpers';
 import { StyledTrailer, BackgroundImage } from './styled'
 import { IMovie } from 'src/interfaces';
 import './MoviePage.css'
@@ -21,6 +21,16 @@ const MoviePage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     if (id) movie = arrMovies[+id];
+
+    const location = useLocation();
+    let fullFirstDate;
+    if (location.state.fromPage === 'main') {
+        fullFirstDate = getArrDate().find(item => {
+            if (movie && movie.schedule[0].date === item.split(', ')[1]) return true;
+            return false;
+        });
+    }
+    if (fullFirstDate) setTodayDateStore(fullFirstDate, dispatch);
 
     useEffect(() => {
         if (id) dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: id });

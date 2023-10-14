@@ -84,11 +84,17 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
         <div className='selectOption'>
             <div className="selectOption__text">
                 {type === 'date' ? (
-                    arrMoviesDates.map((item: string, i: number) => (
-                        <p className={`selectOption__item ${typeKey === item ? 'active' : ''}`} onClick={() => handleClickItem(i)} key={i}>
-                            {typeKey === item ? '✔ ' : ''}{formateDateItem(item)}
-                        </p>
-                    ))
+                    <>
+                    {arrMoviesDates.length ?
+                        arrMoviesDates.map((item: string, i: number) => (
+                            <p className={`selectOption__item ${typeKey === item ? 'active' : ''}`} onClick={() => handleClickItem(i)} key={i}>
+                                {typeKey === item ? '✔ ' : ''}{formateDateItem(item)}
+                            </p>
+                        ))
+                        : 
+                        <p className='selectOption__item'>Пусто</p>
+                    }
+                    </>
                 ) : (
                     <>
                     <p className='selectOption__title'>
