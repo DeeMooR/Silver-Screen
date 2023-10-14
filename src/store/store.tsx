@@ -11,7 +11,6 @@ const initialState = {
         audio: [],
         language: [],
     },
-    scrollAfisha: null,
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -47,12 +46,6 @@ const rootReducer = (state = initialState, action: any) => {
                     audio: [],
                     language: [],
                 }
-            };
-        }
-        case 'SET_SCROLL_AFISHA': {
-            return {
-                ...state,
-                scrollAfisha: action.payload
             };
         }
         default: return state;

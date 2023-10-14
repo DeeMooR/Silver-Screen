@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import SelectOption from './SelectOption';
-import { getArrDate, formateDateItem, getFullLanguage, setTodayDateStore } from 'src/helpers';
+import { getArrDate, formateDateItem, getFullLanguage } from 'src/helpers';
 import './NavigationItem.css'
 
 import arrow from "../../../icons/arrow-button.png"

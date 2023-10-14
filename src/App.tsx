@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Main from './pages/Main';
 import MoviePage from './pages/MoviePage';
 import Afisha from './pages/Afisha';
-import { getArrDate } from './helpers';
+import { getArrDate, setTodayDateStore } from './helpers';
 
 function App() {
     const location = useLocation();
+    const dispatch = useDispatch();
+    const searchDate = useSelector(({ search }) => search.date);
+    if (searchDate === '') setTodayDateStore(getArrDate()[0], dispatch);
     return (
         <>
             <Routes>

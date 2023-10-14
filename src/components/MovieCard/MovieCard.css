@@ -29,7 +29,6 @@
 }
 .movieCard .movieCard__info .movieCard__genres {
   height: 55px;
-  margin: auto;
   color: rgba(255, 255, 255, 0.35);
   font-weight: 500;
   line-height: 1.2;
@@ -122,8 +121,11 @@
   .movieCard.movieCard-afisha .movieCard__info {
     width: 60%;
   }
+  .movieCard.movieCard-afisha .movieCard__info .movieCard__title {
+    height: 90px;
+  }
   .movieCard.movieCard-afisha .movieCard__info button {
-    margin: 20px 0 0;
+    margin-left: 0;
   }
   .movieCard.movieCard-main .movieCard__info .movieCard__title {
     height: 23px;
@@ -156,7 +158,10 @@
   }
   .movieCard.movieCard-afisha .movieCard__info {
     width: 100%;
-    margin: 0 0 25px 0;
+    margin: 25px 0;
+  }
+  .movieCard.movieCard-afisha .movieCard__info .movieCard__title {
+    height: 82px;
   }
   .movieCard.movieCard-afisha .movieCard__info .movieCard__age-lang {
     margin: 0 0 8px 0;
@@ -169,20 +174,20 @@
   }
 }
 @media (max-width: 319.98px) {
-  .movieCard {
+  .movieCard.movieCard-afisha {
     font-size: 14px;
   }
-  .movieCard .movieCard__info .movieCard__title {
+  .movieCard.movieCard-afisha .movieCard__info .movieCard__title {
     font-size: 20px;
-    height: 90px;
+    height: 60px;
   }
-  .movieCard .movieCard__info .movieCard__genres {
-    height: 40px;
+  .movieCard.movieCard-afisha .movieCard__info .movieCard__genres {
+    height: 30px;
   }
-  .movieCard .movieCard__info button {
-    margin: 13px auto 0;
+  .movieCard.movieCard-afisha .movieCard__info button {
+    margin: 16px auto 0;
   }
-  .movieCard.movieCard-main {
+  .movieCard.movieCard-afisha.movieCard-main {
     margin: 15px 0 20px;
   }
 }

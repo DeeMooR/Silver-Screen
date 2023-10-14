@@ -27,7 +27,6 @@
         }
         .movieCard__genres {
             height: 55px;
-            margin: auto;
             color: rgba(255, 255, 255, 0.35);
             font-weight: 500;
             line-height: 1.2;
@@ -134,8 +133,11 @@
             }
             .movieCard__info {
                 width: 60%;
+                .movieCard__title {
+                    height: 90px;
+                }
                 button {
-                    margin: 20px 0 0;
+                    margin-left: 0;
                 }
             }
         }
@@ -175,7 +177,10 @@
             }
             .movieCard__info {
                 width: 100%;
-                margin: 0 0 25px 0;
+                margin: 25px 0;
+                .movieCard__title {
+                    height: 82px;
+                }
                 .movieCard__age-lang {
                     margin: 0 0 8px 0;
                 }
@@ -191,21 +196,23 @@
 }
 @media (max-width: 319.98px) {
     .movieCard {
-        font-size: 14px;
-        .movieCard__info {
-            .movieCard__title {
-                font-size: 20px;
-                height: 90px;
+        &.movieCard-afisha {
+            font-size: 14px;
+            .movieCard__info {
+                .movieCard__title {
+                    font-size: 20px;
+                    height: 60px;
+                }
+                .movieCard__genres {
+                    height: 30px;
+                }
+                button {
+                    margin: 16px auto 0;
+                }
             }
-            .movieCard__genres {
-                height: 40px;
+            &.movieCard-main {
+                margin: 15px 0 20px;
             }
-            button {
-                margin: 13px auto 0;
-            }
-        }
-        &.movieCard-main {
-            margin: 15px 0 20px;
         }
     }
 }

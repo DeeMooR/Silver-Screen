@@ -15,14 +15,29 @@ const SliderMovies = () => {
     <>
         <Swiper
             speed={1000}
-            slidesPerView={4.6}
             slidesPerGroup={3}
-            centeredSlides={true}
             loop={true}
             navigation={true}
             breakpoints={{
+                2000: {
+                    // для разрешения больше 2000px
+                    centeredSlides: true,
+                    slidesPerView: 6.5,
+                    spaceBetween: 50,
+                },
+                1600: {
+                    centeredSlides: true,
+                    slidesPerView: 5.8,
+                    spaceBetween: 50,
+                },
+                1400: {
+                    centeredSlides: true,
+                    slidesPerView: 5.4,
+                    spaceBetween: 50,
+                },
                 1200: {
-                    // для разрешения больше 1200px
+                    centeredSlides: true,
+                    slidesPerView: 5,
                     spaceBetween: 50,
                 },
                 1024: {
@@ -32,7 +47,7 @@ const SliderMovies = () => {
                 },
                 900: {
                     centeredSlides: false,
-                    slidesPerView: 3.6,
+                    slidesPerView: 3.7,
                     spaceBetween: 20,
                 },
                 720: {
@@ -64,14 +79,14 @@ const SliderMovies = () => {
             {arrMovies.map((card: IMovie, i: number) => (
                 <>
                 <SwiperSlide>
-                    <div className="cards__item" key={i}>
+                    <div className="slide__item" key={i}>
                         <MovieCard obj={card} page='main' />
                     </div>
                 </SwiperSlide>
-                {i === arrMovies.length - 3 && 
-                    <SwiperSlide>
+                {i === arrMovies.length - 4 && 
+                    <SwiperSlide className='slide__not-find'>
                         <div>
-                            <NotFind />
+                            <NotFind page='main' />
                         </div>
                     </SwiperSlide>
                 }

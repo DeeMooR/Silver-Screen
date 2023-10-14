@@ -5,7 +5,7 @@ import MovieCard from 'src/components/MovieCard'
 import NotFind from 'src/components/NotFind'
 import Navigation from 'src/components/Navigation'
 import { IMovie } from 'src/interfaces'
-import { arrMovies, getArrDate, setTodayDateStore } from 'src/helpers';
+import { arrMovies } from 'src/helpers';
 import './Afisha.css'
 
 const Afisha = () => {
@@ -15,21 +15,10 @@ const Afisha = () => {
     const searchVideo = useSelector(({ search }) => search.video);
     const searchAudio = useSelector(({ search }) => search.audio);
     let searchLanguage = useSelector(({ search }) => search.language);
-    const arrDate = getArrDate();
     const dispatch = useDispatch();
 
-    let dateFromLocalStorage = localStorage.getItem('date');
-    if (dateFromLocalStorage) setTodayDateStore(dateFromLocalStorage, dispatch);
-    else setTodayDateStore(arrDate[0], dispatch);
     dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: '' });
-
-    const scrollPosition = useSelector(({ scrollAfisha }) => scrollAfisha);
-    useEffect(() => {
-        if (scrollPosition !== null) {
-            console.log(scrollPosition)
-            window.scrollTo(0, scrollPosition);
-        }
-    }, []);
+    window.scrollTo({top: 0});
     
     let filteredMovies: IMovie[] = [];
     let filterOne: IMovie[];
@@ -182,7 +171,7 @@ const Afisha = () => {
                         ${filteredMovies.length % 3 === 0 && "center-3"}
                         ${filteredMovies.length % 2 === 0 && "center-2"}
                     `}>
-                        <NotFind />
+                        <NotFind page='afisha' />
                     </div>
                 </div>
             </div>

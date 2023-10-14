@@ -1,7 +1,6 @@
 import React, { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import ScheduleItem from './ScheduleItem/ScheduleItem';
-import { getAudio, setTodayDateStore } from 'src/helpers';
 import { IMovie, ISeance } from 'src/interfaces'
 import './Schedule.css'
 

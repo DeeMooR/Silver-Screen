@@ -5,10 +5,11 @@ interface IButton {
     children: ReactNode,
     color: 'red' | 'white',
     handleClick?: () => void,
-    isMin?: boolean
+    isMin?: boolean,
+    becomeSmall?: boolean
 }
 
-const Button:FC<IButton> = ({children, color, handleClick, isMin}) => {
+const Button:FC<IButton> = ({children, color, handleClick, isMin, becomeSmall}) => {
   return (
         <button
             type="button"
@@ -16,6 +17,7 @@ const Button:FC<IButton> = ({children, color, handleClick, isMin}) => {
                 custom-button 
                 border-${color} 
                 ${isMin ? "height-min" : ""}
+                ${becomeSmall ? "become-small" : ""}
             `}
             onClick={handleClick}
         >

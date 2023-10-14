@@ -17,7 +17,6 @@ const MovieCard:FC<IMovieCard> = ({obj, page}) => {
     const [buttonText, setButtonText] = useState(`${window.innerWidth < 900 ? 'Купить' : 'Купить билет'}`);
 
     const moveNewPage = () => {
-        dispatch({ type: "SET_SCROLL_AFISHA", payload: window.scrollY });
         navigate(`/afisha/${obj.id}`);
     }
   

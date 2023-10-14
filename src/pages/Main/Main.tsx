@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PageTemplate from 'src/components/PageTemplate'
 import HorizontalNews from 'src/components/HorizontalNews';
 import SliderSwiper from 'src/components/SliderSwiper';
@@ -7,11 +7,16 @@ import { BackgroundSlider } from './styled';
 import './Main.css'
 
 import slider_background from "src/icons/afisha_background.svg"
-import { arrAfishaNews } from 'src/helpers';
+import { arrAfishaNews, getArrDate, setTodayDateStore } from 'src/helpers';
 import { INews } from 'src/interfaces';
 import MainText from './MainText';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Main = () => {
+    const dispatch = useDispatch();
+    dispatch({ type: "CLEAR_SEARCH", payload: getArrDate()[0] });
+    window.scrollTo({top: 0});
 
     return (
         <PageTemplate>
@@ -25,7 +30,7 @@ const Main = () => {
                                 <a href="#" className='buttons__today active'>Сейчас в кино</a>
                                 <a href="#" className='buttons__soon'>Скоро</a>
                             </div>
-                            <a href="#" className='buttons__afisha'>Расписание сеансов</a>
+                            <Link to='/afisha' className='buttons__afisha'>Расписание сеансов</Link>
                         </div>
                         <hr className="afisha-main__line" />
                     </div>

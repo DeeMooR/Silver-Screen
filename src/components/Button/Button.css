@@ -33,3 +33,9 @@
         padding: 9px 18px;
     }
 }
+@media (max-width: 399.98px) {
+    .become-small {
+        font-size: 15px;
+        padding: 7px 12px;
+    }
+}

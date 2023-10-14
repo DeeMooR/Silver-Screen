@@ -45,7 +45,6 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
 
     const handleClickItem = (i: number) => {
         handleClick('');    // Скрывает slidebar после нажатия (1/2)
-        localStorage.setItem('date', arrMoviesDates[i]);
         dispatch({ type: "TOGGLE_NAV_ACTIVE", payload: '' });
         dispatch({ 
             type: "SET_SEARCH", 
