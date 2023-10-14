@@ -1,6 +1,6 @@
 import { format, addDays } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
-import { IMovie, ISlide } from "./interfaces";
+import { IMovie, INews, ISlide } from "./interfaces";
 
 import img0 from "src/icons/movies/Барби.jpeg"
 import img1 from "src/icons/movies/Неудержимые_4.jpeg"
@@ -35,9 +35,33 @@ import img106 from "src/icons/main_slidebar/Барби.jpg"
 import img107 from "src/icons/main_slidebar/Подарочная_карта.png"
 import img108 from "src/icons/main_slidebar/День_рождения.jpg"
 
+import services from "src/icons/afisha_services.jpg"
+import visa from "src/icons/afisha_visa.jpg"
+import visa_background from "src/icons/afisha_visa_background.png"
 
 const russianMonths = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const arrDaysOfWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
+
+
+export const arrAfishaNews: INews[] = [
+    {
+        id: 1,
+        image: services,
+        background_image: services,
+        title: 'Услуги',
+        description: 'Бронируйте кинозалы, Media room и Party room или арендуйте кинопространство целиком – смотрите, празднуйте, обучайтесь с удовольствием!'
+    },
+    {
+        id: 2,
+        image: visa,
+        background_image: visa_background,
+        title: 'Мир привилегий VISA',
+        description: 'При оплате билетов в кинопространствах mooon и Silver Screen платежными карточками Visa вы получаете скидку!',
+        date: 'Акция'
+    }
+]
+
+
 
 export const getTodayDate = () => {
     const currentDate = new Date();
