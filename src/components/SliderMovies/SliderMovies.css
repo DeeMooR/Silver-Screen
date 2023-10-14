@@ -58,40 +58,41 @@
         margin: -180px 30px 0 0;
     }
 }
-@media (max-width: 599.98px) {
+@media (max-width: 899.98px) {
     .swiperMovies .swiper-button-prev,
     .swiperMovies .swiper-button-next {
         padding: 40px 24px;
-        margin: -180px 0 0 20px;
+        margin: -120px 0 0 20px;
         border-radius: 24px;
         &:after {
             font-size: 30px;
         }
     }
     .swiperMovies .swiper-button-next {
-        margin: -180px 20px 0 0;
+        margin: -120px 20px 0 0;
+    }
+}
+@media (max-width: 599.98px) {
+    .swiperMovies .swiper-button-prev {
+        margin: -100px 0 0 20px;
+    }
+    .swiperMovies .swiper-button-next {
+        margin: -100px 20px 0 0;
+    }
+}
+@media (max-width: 539.98px) {
+    .swiperMovies .swiper-slide {
+        max-width: 200px;
     }
 }
 @media (max-width: 479.98px) {
     .swiperMovies .swiper-button-prev,
     .swiperMovies .swiper-button-next {
-        margin: -170px 0 0 20px;
-    }
-    .swiperMovies .swiper-button-next {
-        margin: -170px 20px 0 0;
+        display: none;
     }
 }
 @media (max-width: 399.98px) {
-    .swiperMovies .swiper-button-prev,
-    .swiperMovies .swiper-button-next {
-        padding: 34px 20px;
-        margin: -160px 0 0 20px;
-        border-radius: 20px;
-        &:after {
-            font-size: 25px;
-        }
-    }
-    .swiperMovies .swiper-button-next {
-        margin: -160px 20px 0 0;
+    .swiperMovies .swiper-slide {
+        max-width: 170px;
     }
 }

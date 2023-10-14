@@ -23,12 +23,12 @@ const SliderMovies = () => {
             breakpoints={{
                 1200: {
                     // для разрешения больше 1200px
-                    spaceBetween: 60,
+                    spaceBetween: 50,
                 },
                 1024: {
                     centeredSlides: true,
                     slidesPerView: 4.6,
-                    spaceBetween: 30,
+                    spaceBetween: 25,
                 },
                 900: {
                     centeredSlides: false,
@@ -48,21 +48,13 @@ const SliderMovies = () => {
                 540: {
                     centeredSlides: false,
                     slidesPerView: 2.75,
-                    spaceBetween: 10,
-                },
-                500: {
-                    centeredSlides: false,
-                    slidesPerView: 2.5,
-                    spaceBetween: 10,
-                },
-                420: {
-                    centeredSlides: false,
-                    slidesPerView: 2.2,
+                    slidesPerGroup: 3,
                     spaceBetween: 10,
                 },
                 0: {
                     centeredSlides: false,
-                    slidesPerView: 2,
+                    slidesPerView: 'auto',
+                    slidesPerGroup: 1,
                     spaceBetween: 10,
                 },
             }}

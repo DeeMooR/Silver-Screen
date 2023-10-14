@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { IMovie } from '../../interfaces'
 import { StyledImage } from './styled'
@@ -14,13 +14,22 @@ interface IMovieCard {
 const MovieCard:FC<IMovieCard> = ({obj, page}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [buttonText, setButtonText] = useState(`${window.innerWidth < 900 ? 'Купить' : 'Купить билет'}`);
 
     const moveNewPage = () => {
         dispatch({ type: "SET_SCROLL_AFISHA", payload: window.scrollY });
         navigate(`/afisha/${obj.id}`);
     }
+  
+    useEffect(() => {
+        const updateButtonText = () => {
+            if (window.innerWidth < 900) setButtonText('Купить');
+            else setButtonText('Купить билет');
+        };
 
-    
+        window.addEventListener('resize', updateButtonText);
+        return () => window.removeEventListener('resize', updateButtonText);
+    }, []);
 
     return (
         <div className={`movieCard movieCard-${page}`}>
@@ -29,7 +38,10 @@ const MovieCard:FC<IMovieCard> = ({obj, page}) => {
                 <p className='movieCard__age-lang'>{obj.age}+ / {obj.language}</p>
                 <h2 className='movieCard__title' onClick={moveNewPage}>{obj.title}</h2>
                 <p className='movieCard__genres'>{obj.genres.join(', ')}</p>
-                <Button color='red' handleClick={moveNewPage}>Купить билет</Button>
+                {page === 'afisha' 
+                ? <Button color='red' handleClick={moveNewPage}>Купить билет</Button>
+                : <Button color='red' handleClick={moveNewPage}>{buttonText}</Button>
+                }
             </article> 
         </div>
     )

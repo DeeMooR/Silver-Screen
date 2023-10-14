@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { StyledLogoBig, BackgroundSlideBar } from './../styled'
 import "./SlideBar.css"
 
@@ -17,14 +17,19 @@ interface ISlideBar {
 }
 
 const SlideBar:FC<ISlideBar> = ({ clickMenu, setClickMenu }) => {
-
+    const navigate = useNavigate();
+    
     const handleClick = () => {
         setClickMenu(false);
+    }
+    const logoClick = () => {
+        navigate('/');
+        handleClick();
     }
 
     return (
         <BackgroundSlideBar image={background} className={`slideBar ${clickMenu && 'show'}`} >
-            <div className="slideBar__logo" onClick={handleClick}>
+            <div className="slideBar__logo" onClick={logoClick}>
                 <StyledLogoBig logo={logoBig} logo_pink={logoBig_pink} />
             </div>
             <Link to='/' className="slideBar__item" onClick={handleClick}>Главная</Link>

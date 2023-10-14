@@ -73,9 +73,6 @@
   .footer .footer__icons .footer__payments {
     gap: 25px;
   }
-  .footer .footer__legal {
-    justify-content: center;
-  }
   .footer .footer__legal .links {
     gap: 15px;
   }
