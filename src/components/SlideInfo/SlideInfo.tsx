@@ -12,6 +12,7 @@ interface ISlideInfo {
 const SlideInfo:FC<ISlideInfo> = ({slide}) => {
     const navigate = useNavigate();
     let filmTitle, filmGenres;
+    const isMain = slide.idFilm || slide.textButton;
 
     if (typeof slide.idFilm === 'number') {
         filmTitle = arrMovies[slide.idFilm].title;
@@ -25,7 +26,7 @@ const SlideInfo:FC<ISlideInfo> = ({slide}) => {
     }
 
     return (
-        <div className={`slideInfo ${(!slide.idFilm && !slide.textButton) ? 'slideInfo__otherPage' : ''}`}>
+        <div className={`slideInfo slideInfo-${isMain ? 'main' : 'otherPage'}`}>
             <img src={slide.image} className='slideInfo__image' />
             <div className='slideInfo__wrapper'>
                 <div className="slideInfo__description">
@@ -35,7 +36,7 @@ const SlideInfo:FC<ISlideInfo> = ({slide}) => {
                     <h2 className="slideInfo__title">
                         {filmTitle ? filmTitle : slide.title}
                     </h2>
-                    {(slide.idFilm || slide.textButton) &&
+                    {isMain &&
                         <div className="slideInfo__button">
                             <Button color='red' handleClick={clickButton}>
                                 {slide.textButton ? slide.textButton : 'Купить билет'}

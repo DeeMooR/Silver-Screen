@@ -1,9 +1,13 @@
 .entertainment {
-    min-height: 1500px;
+    margin: -115px auto 0;
     .entertainment__main {
         width: 100%;
         height: 670px;
-        margin: -115px auto;
+    }
+    .entertainment__content {
+        .news__item {
+            width: 100%;
+        }
     }
 }
 @media (max-width: 599.98px) {

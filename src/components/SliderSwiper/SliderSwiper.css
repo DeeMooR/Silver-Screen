@@ -20,7 +20,7 @@
 }
 
 .swiperPosters .swiper-button-prev {
-    padding: 70px 70px 70px 30px;
+    padding: 70px 70px 70px calc((100vw - 1340px) / 2);
     margin: 0 0 0 15px;
     color: rgba(255, 255, 255, 0.6);
     transition: all 0.2s ease 0s;
@@ -30,7 +30,7 @@
     }
 }
 .swiperPosters .swiper-button-next {
-    padding: 70px 30px 70px 70px;
+    padding: 70px calc((100vw - 1340px) / 2) 70px 70px;
     margin: 0 15px 0 0;
     color: rgba(255, 255, 255, 0.6);
     transition: all 0.2s ease 0s;
@@ -56,6 +56,14 @@
     border: 2px solid rgba(200, 199, 198);
 }
 
+@media (max-width: 1349.98px) {
+    .swiperPosters .swiper-button-prev {
+        padding: 70px 70px 70px 25px;
+    }
+    .swiperPosters .swiper-button-next {
+        padding: 70px 25px 70px 70px;
+    }
+}
 @media (max-width: 1023.98px) {
     .swiperPosters .swiper-button-prev,
     .swiperPosters .swiper-button-next {

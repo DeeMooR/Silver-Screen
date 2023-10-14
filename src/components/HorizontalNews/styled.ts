@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export const BackgroundImage = styled.div<{ image: string }>`
+export const BackgroundImage = styled.div<{ image: string; page: string }>`
     position: absolute;
     inset: 0px;
-    background: url(${props  => props.image}) center center / 0px 0px no-repeat;
+    background: url(${props => props.image}) center center / 0px 0px no-repeat;
     overflow: hidden;
-    
+
     &:before {
         content: '';
         position: absolute;
@@ -15,10 +15,11 @@ export const BackgroundImage = styled.div<{ image: string }>`
         background-size: cover;
         filter: blur(20px);
     }
-    &:after {
+
+    ${props => (props.page === 'main' ? `&:after {
         content: '';
         position: absolute;
         inset: 0px;
         background: rgba(0, 0, 0, 0.7);
-    }
+    }` : '')}
 `;

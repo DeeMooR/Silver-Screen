@@ -26,6 +26,7 @@
                 }
                 button {
                     margin: 30px 0 0 0;
+                    padding: 11px 27px;
                 }
             }
             .horizontalNews__image {
@@ -48,6 +49,9 @@
             }
         }
     }
+    &.horizontalNews-other {
+        padding: 70px 0;
+    }
 }
 
 @media (max-width: 899.98px) {
@@ -68,7 +72,7 @@
                     padding: 0 20px;
                     img {
                         max-width: 400px;
-                        border-radius: 24px;
+                        border-radius: 18px;
                     }
                 }
             }
@@ -78,6 +82,9 @@
                 .horizontalNews__flex {
                     flex-direction: column-reverse;
                     gap: 45px;
+                    .horizontalNews__image {
+                        padding: 0 20px;
+                    }
                 }
             }
         }
@@ -93,7 +100,7 @@
                         font-size: 28px;
                     }
                     button {
-                        padding: 8px 18px;
+                        padding: 9px 24px;
                         margin: 26px 0;
                     }
                 }
@@ -117,22 +124,29 @@
 }
 @media (max-width: 479.98px) {
     .horizontalNews {
-        padding: 30px 0;
+        padding: 30px 0 40px;
         .horizontalNews__wrapper {
             .horizontalNews__flex {
+                .horizontalNews__info {
+                    button {
+                        padding: 7px 20px;
+                    }
+                }
                 .horizontalNews__image {
                     img {
                         min-width: 100%;
-                        border-radius: 18px;
                     }
                 }
             }
+        }
+        &.horizontalNews-other {
+            padding: 30px 0 40px;
         }
     }
 }
 @media (max-width: 399.98px) {
     .horizontalNews {
-        padding: 10px 0 30px;
+        padding: 10px 0 40px;
         .horizontalNews__wrapper {
             padding: 0 20px;
             .horizontalNews__flex {
@@ -143,6 +157,9 @@
                     }
                 }
             }
+        }
+        &.horizontalNews-other {
+            padding: 10px 0 40px;
         }
     }
 }

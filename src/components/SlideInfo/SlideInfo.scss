@@ -29,7 +29,7 @@
         bottom: 120px;
         width: 100%;
         max-width: 1200px;
-        padding: 0 30px 0 90px;
+        padding: 0 30px 0 calc((100vw - 1140px) / 2);
         z-index: 3;
         text-align: left;
         .slideInfo__description {
@@ -48,19 +48,12 @@
             }
         }
     }
-    &.slideInfo__otherPage {
+    &.slideInfo-otherPage {
         img {
             -o-object-fit: cover;
             object-fit: cover;
         }
         .slideInfo__wrapper {
-            position: relative;
-            top: 350px;
-            width: 100%;
-            max-width: 1200px;
-            padding: 0 30px;
-            margin: 0 auto;
-            z-index: 3;
             .slideInfo__description {
                 display: flex;
                 flex-direction: column-reverse;
@@ -81,6 +74,18 @@
     }
 }
 
+@media (max-width: 1319.98px) {
+    .slideInfo {
+        .slideInfo__wrapper {
+            padding: 0 30px 0 90px;
+        }
+        &.slideInfo-main {
+            .slideInfo__wrapper {
+                padding: 0 30px 0 90px;
+            }
+        }
+    }
+}
 @media (max-width: 1199.98px) {
     .slideInfo {
         &:before {
@@ -89,22 +94,33 @@
         .slideInfo__image {
             width: 85%;
         }
-        &.slideInfo__otherPage {
-            .slideInfo__wrapper {
-                top: 380px;
-            }
+        .slideInfo__wrapper {
+            padding: 0 30px;
         }
     }
 }
 @media (max-width: 1023.98px) {
     .slideInfo {
         .slideInfo__wrapper {
-            padding: 0 30px;
             .slideInfo__description {
                 .slideInfo__title {
                     line-height: 65px;
                     margin: 12px 0 2px 0;
                 }
+            }
+        }
+        &.slideInfo-main {
+            .slideInfo__wrapper {
+                padding: 0 30px;
+            }
+        }
+    }
+}
+@media (max-width: 899.98px) {
+    .slideInfo {
+        &.slideInfo-otherPage {
+            .slideInfo__wrapper {
+                bottom: 100px;
             }
         }
     }
@@ -129,11 +145,6 @@
                 }
             }
         }
-        &.slideInfo__otherPage {
-            .slideInfo__wrapper {
-                top: 410px;
-            }
-        }
     }
 }
 @media (max-width: 599.98px) {
@@ -151,9 +162,9 @@
                 }
             }
         }
-        &.slideInfo__otherPage {
+        &.slideInfo-otherPage {
             .slideInfo__wrapper {
-                top: 330px;
+                bottom: 80px;
                 .slideInfo__description {
                     max-width: 380px;
                     .slideInfo__title {
@@ -182,9 +193,9 @@
                 }
             }
         }
-        &.slideInfo__otherPage {
+        &.slideInfo-otherPage {
             .slideInfo__wrapper {
-                top: 270px;
+                bottom: 50px;
                 .slideInfo__description {
                     max-width: 350px;
                     .slideInfo__title {

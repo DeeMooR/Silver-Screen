@@ -7,14 +7,15 @@ import { useNavigate } from 'react-router-dom'
 
 interface IHorizontalNews {
     obj: INews,
+    page: 'main' | 'other'
     reverse?: boolean,
 }
 
-const HorizontalNews:FC<IHorizontalNews> = ({obj, reverse}) => {
+const HorizontalNews:FC<IHorizontalNews> = ({obj, page, reverse}) => {
     const navigate = useNavigate();
     return (
-        <div className={`horizontalNews ${reverse ? 'reverse' : ''}`}>
-            <BackgroundImage image={obj.background_image} />
+        <div className={`horizontalNews ${reverse ? 'reverse' : ''} horizontalNews-${page}`}>
+            <BackgroundImage image={obj.background_image} page={page} />
             <div className="horizontalNews__wrapper">
                 <div className="horizontalNews__flex">
                     <div className="horizontalNews__info">

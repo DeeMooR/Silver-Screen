@@ -1,27 +1,29 @@
 import React from 'react'
 import PageTemplate from 'src/components/PageTemplate'
 import SlideInfo from 'src/components/SlideInfo'
-import { SwiperSlide } from 'swiper/react'
+
+import { arrEntertainmentNews, mainEntertainment } from 'src/helpers'
 import { INews } from 'src/interfaces'
-
-import title_image from "src/icons/entertainment/entertainment_main.png"
-
+import HorizontalNews from 'src/components/HorizontalNews'
 import './Entertainment.css'
-import 'src/components/SliderSwiper/SliderSwiper.css'
 
 const Entertainment = () => {
-    const titleBlock = {
-        id: 1,
-        image: title_image,
-        title: 'Развлечения',
-        text: 'Смотрите концерты, пойте в караоке, отмечайте семейные праздники или играйте в видеоигры на большом экране'
-    }
-
+    window.scrollTo({top: 0});
     return (
         <PageTemplate>
             <div className='entertainment'>
                 <div className="entertainment__main">
-                    <SlideInfo slide={titleBlock} />
+                    <SlideInfo slide={mainEntertainment} />
+                </div>
+                <div className="entertainment__content">
+                    {arrEntertainmentNews.map((item: INews, index: number) => (
+                        <div className="news__item" key={index}>
+                            {index % 2 === 0
+                            ? <HorizontalNews obj={item} page='other' />
+                            : <HorizontalNews obj={item} page='other' reverse />
+                            }
+                        </div>
+                    ))}
                 </div>
             </div>
         </PageTemplate>

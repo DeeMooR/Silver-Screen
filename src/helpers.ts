@@ -35,6 +35,16 @@ import img106 from "src/icons/main_slidebar/Барби.jpg"
 import img107 from "src/icons/main_slidebar/Подарочная_карта.png"
 import img108 from "src/icons/main_slidebar/День_рождения.jpg"
 
+import entertainment_1 from "src/icons/entertainment/entertainment_1.jpg"
+import entertainment_2 from "src/icons/entertainment/entertainment_2.jpg"
+import entertainment_3 from "src/icons/entertainment/entertainment_3.jpg"
+import entertainment_4 from "src/icons/entertainment/entertainment_4.png"
+import entertainment_5 from "src/icons/entertainment/entertainment_5.jpg"
+import entertainment_bg1 from "src/icons/entertainment/entertainment_bg1.jpg"
+import entertainment_bg2 from "src/icons/entertainment/entertainment_bg2.jpg"
+import entertainment_bg3 from "src/icons/entertainment/entertainment_bg3.jpg"
+import title_image from "src/icons/entertainment/entertainment_main.png"
+
 import services from "src/icons/afisha_services.jpg"
 import visa from "src/icons/afisha_visa.jpg"
 import visa_background from "src/icons/afisha_visa_background.png"
@@ -42,6 +52,13 @@ import visa_background from "src/icons/afisha_visa_background.png"
 const russianMonths = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const arrDaysOfWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
 
+
+export const mainEntertainment = {
+    id: 1,
+    image: title_image,
+    title: 'Развлечения',
+    text: 'Смотрите концерты, пойте в караоке, отмечайте семейные праздники или играйте в видеоигры на большом экране'
+}
 
 export const arrAfishaNews: INews[] = [
     {
@@ -58,8 +75,45 @@ export const arrAfishaNews: INews[] = [
         background_image: visa_background,
         title: 'Мир привилегий VISA',
         description: 'При оплате билетов в кинопространствах mooon и Silver Screen платежными карточками Visa вы получаете скидку!',
-        date: 'Акция',
-        link: '/entertainment'
+        date: 'Акция'
+    }
+]
+
+export const arrEntertainmentNews: INews[] = [
+    {
+        id: 1,
+        image: entertainment_1,
+        background_image: entertainment_bg1,
+        title: 'Аренда кинопространства',
+        description: 'Смотрите, играйте, учитесь, отмечайте - весь кинозал в вашем распоряжении.'
+    },
+    {
+        id: 2,
+        image: entertainment_2,
+        background_image: entertainment_bg2,
+        title: 'Праздник в кино',
+        description: 'Ярко и необычно отпразднуйте День Рождения ваших маленьких героев',
+    },
+    {
+        id: 3,
+        image: entertainment_3,
+        background_image: entertainment_bg1,
+        title: 'Media room',
+        description: 'Современный зал с лазерным проектором Samsung Premiere c 4К разрешением и аудиосистемой с функцией объемного звука для компаний до 9 человек.',
+    },
+    {
+        id: 4,
+        image: entertainment_4,
+        background_image: entertainment_bg3,
+        title: 'Игровая комната - XPLAY',
+        description: 'Новейшие приставки и десятки видеоигр на выбор. Доступно только в mooon в ТРК Triniti (Гродно)',
+    },
+    {
+        id: 5,
+        image: entertainment_5,
+        background_image: entertainment_bg2,
+        title: 'Комната для вечеринок – Party Room',
+        description: 'Отдельная комната с большим экраном, удобными диванчиками, видеоиграми и караоке для незабываемого отдыха с друзьями и близкими. Доступно только в mooon в ТРК Triniti (Гродно)',
     }
 ]
 

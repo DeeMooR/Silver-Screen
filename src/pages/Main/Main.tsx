@@ -39,8 +39,8 @@ const Main = () => {
                 {arrAfishaNews.map((item: INews, index: number) => (
                     <div className="news__item" key={index}>
                         {index % 2 === 0
-                        ? <HorizontalNews obj={item} />
-                        : <HorizontalNews obj={item} reverse />
+                        ? <HorizontalNews obj={item} page='main' />
+                        : <HorizontalNews obj={item} page='main' reverse />
                         }
                     </div>
                 ))}
