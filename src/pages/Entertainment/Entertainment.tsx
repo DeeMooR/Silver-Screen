@@ -13,7 +13,7 @@ const Entertainment = () => {
         <PageTemplate>
             <div className='entertainment'>
                 <div className="entertainment__main">
-                    <SlideInfo slide={mainEntertainment} />
+                    <SlideInfo slide={mainEntertainment} reverse />
                 </div>
                 <div className="entertainment__content">
                     {arrEntertainmentNews.map((item: INews, index: number) => (

@@ -15,7 +15,7 @@ const HorizontalNews:FC<IHorizontalNews> = ({obj, page, reverse}) => {
     const navigate = useNavigate();
     return (
         <div className={`horizontalNews ${reverse ? 'reverse' : ''} horizontalNews-${page}`}>
-            <BackgroundImage image={obj.background_image} page={page} />
+            <BackgroundImage image={obj.background_image ? obj.background_image : obj.image} page={page} />
             <div className="horizontalNews__wrapper">
                 <div className="horizontalNews__flex">
                     <div className="horizontalNews__info">

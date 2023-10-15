@@ -33,7 +33,7 @@ export interface ISlide {
 export interface INews {
     id: number,
     image: string,
-    background_image: string,
+    background_image?: string,
     title: string,
     description: string,
     date?: string,

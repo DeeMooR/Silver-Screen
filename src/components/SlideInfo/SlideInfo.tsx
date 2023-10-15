@@ -6,13 +6,14 @@ import { arrMovies } from 'src/helpers'
 import { useNavigate } from 'react-router-dom'
 
 interface ISlideInfo {
-    slide: ISlide
+    slide: ISlide,
+    reverse?: boolean
 }
 
-const SlideInfo:FC<ISlideInfo> = ({slide}) => {
+const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
     const navigate = useNavigate();
     let filmTitle, filmGenres;
-    const isMain = slide.idFilm || slide.textButton;
+    const isMain = slide.idFilm || slide.idFilm === 0 || slide.textButton;
 
     if (typeof slide.idFilm === 'number') {
         filmTitle = arrMovies[slide.idFilm].title;
@@ -29,7 +30,7 @@ const SlideInfo:FC<ISlideInfo> = ({slide}) => {
         <div className={`slideInfo slideInfo-${isMain ? 'main' : 'otherPage'}`}>
             <img src={slide.image} className='slideInfo__image' />
             <div className='slideInfo__wrapper'>
-                <div className="slideInfo__description">
+                <div className={`slideInfo__description ${reverse ? 'description-reverse' : ''}`}>
                     <p className="slideInfo__genres">
                         {filmGenres ? filmGenres : slide.text}
                     </p>

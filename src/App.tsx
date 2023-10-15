@@ -6,6 +6,8 @@ import MoviePage from './pages/MoviePage';
 import Entertainment from './pages/Entertainment';
 import Afisha from './pages/Afisha';
 import { getArrDate, setTodayDateStore } from './helpers';
+import VisaPage from './pages/VisaPage';
+import NewsPage from './pages/NewsPage';
 
 function App() {
     const location = useLocation();
@@ -19,6 +21,8 @@ function App() {
                 <Route path='/afisha' element={<Afisha />} />
                 <Route path='/afisha/:id' element={<MoviePage />} />
                 <Route path='/entertainment' element={<Entertainment />} />
+                <Route path='/news' element={<NewsPage />} />
+                <Route path='/visa' element={<VisaPage />} />
                 <Route path='*' element={<Navigate to='/afisha'/>} />
             </Routes>
             {/* {location.pathname === '/' && <Navigate to='/afisha' />} */}

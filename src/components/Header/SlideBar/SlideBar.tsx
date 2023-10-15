@@ -34,8 +34,8 @@ const SlideBar:FC<ISlideBar> = ({ clickMenu, setClickMenu }) => {
             </div>
             <Link to='/' className="slideBar__item" onClick={handleClick}>Главная</Link>
             <Link to='/afisha' className="slideBar__item" onClick={handleClick}>Афиша</Link>
-            <Link to='/afisha/0' className="slideBar__item" onClick={handleClick}>Новости</Link>
-            <Link to='/afisha' className="slideBar__item" onClick={handleClick}>Акции</Link>
+            <Link to='/entertainment' className="slideBar__item" onClick={handleClick}>Услуги</Link>
+            <Link to='/news' className="slideBar__item" onClick={handleClick}>Новости</Link>
             <div className="slideBar__icons">
                 <img src={search} alt="search" className='slideBar__search' onClick={handleClick} />
                 <img src={account} alt="account" className='slideBar__account' onClick={handleClick} />

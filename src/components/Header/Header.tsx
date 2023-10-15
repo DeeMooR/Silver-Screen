@@ -50,8 +50,8 @@ const Header = () => {
                     <nav className='header__nav'>
                         <Link to='/'>Главная</Link>
                         <Link to='/afisha'>Афиша</Link>
-                        <Link to='/afisha/0'>Новости</Link>
-                        <Link to='/afisha'>Акции</Link>
+                        <Link to='/entertainment'>Услуги</Link>
+                        <Link to='/news'>Новости</Link>
                     </nav>
                     <div className="header__icons">
                         <img src={search} alt="search" />
