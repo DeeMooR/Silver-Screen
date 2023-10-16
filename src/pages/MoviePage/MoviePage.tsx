@@ -9,7 +9,7 @@ import { StyledTrailer, BackgroundImage } from './styled'
 import { IMovie } from 'src/interfaces';
 import './MoviePage.css'
 
-import left from "src/icons/left.png"
+import left from "src/icons/left.svg"
 import iconPlay from "src/icons/play.png"
 
 const MoviePage = () => {

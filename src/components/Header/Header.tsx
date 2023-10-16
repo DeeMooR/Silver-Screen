@@ -55,7 +55,7 @@ const Header = () => {
                     </nav>
                     <div className="header__icons">
                         <img src={search} alt="search" />
-                        <img src={account} alt="account" />
+                        <img src={account} onClick={() => navigate('/sign-in')} alt="account" />
                     </div>
                 </div>
             </div>

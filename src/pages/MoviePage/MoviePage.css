@@ -26,6 +26,11 @@
 .moviePage .moviePage__header .header__wrapper img {
   width: 25px;
   cursor: pointer;
+  opacity: 0.6;
+  transition: left 0.2s ease;
+}
+.moviePage .moviePage__header .header__wrapper img:hover {
+  opacity: 1;
 }
 .moviePage .moviePage__header .header__wrapper span {
   flex-grow: 1;

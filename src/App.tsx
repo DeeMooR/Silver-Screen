@@ -8,6 +8,7 @@ import Afisha from './pages/Afisha';
 import { getArrDate, setTodayDateStore } from './helpers';
 import VisaPage from './pages/VisaPage';
 import NewsPage from './pages/NewsPage';
+import SignInUp from './pages/SignInUp';
 
 function App() {
     const location = useLocation();
@@ -17,6 +18,8 @@ function App() {
     return (
         <>
             <Routes>
+                <Route path='/sign-in' element={<SignInUp page='Sign In' />} />
+                <Route path='/sign-up' element={<SignInUp page='Sign Up' />} />
                 <Route path='/' element={<Main />} />
                 <Route path='/afisha' element={<Afisha />} />
                 <Route path='/afisha/:id' element={<MoviePage />} />

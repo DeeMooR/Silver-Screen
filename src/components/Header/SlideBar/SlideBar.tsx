@@ -26,6 +26,10 @@ const SlideBar:FC<ISlideBar> = ({ clickMenu, setClickMenu }) => {
         navigate('/');
         handleClick();
     }
+    const accountClick = () => {
+        navigate('/sign-in');
+        handleClick();
+    }
 
     return (
         <BackgroundSlideBar image={background} className={`slideBar ${clickMenu && 'show'}`} >
@@ -38,7 +42,7 @@ const SlideBar:FC<ISlideBar> = ({ clickMenu, setClickMenu }) => {
             <Link to='/news' className="slideBar__item" onClick={handleClick}>Новости</Link>
             <div className="slideBar__icons">
                 <img src={search} alt="search" className='slideBar__search' onClick={handleClick} />
-                <img src={account} alt="account" className='slideBar__account' onClick={handleClick} />
+                <img src={account} alt="account" className='slideBar__account' onClick={accountClick} />
             </div>
             <img src={cross} className='slideBar__cross' onClick={() => setClickMenu(false)} alt="cross"  />
         </BackgroundSlideBar>
