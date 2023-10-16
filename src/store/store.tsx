@@ -11,6 +11,12 @@ const initialState = {
         audio: [],
         language: [],
     },
+    user: {
+        username: '',
+        email: '',
+        id: null,
+    },
+    isLoading: false,
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -46,6 +52,18 @@ const rootReducer = (state = initialState, action: any) => {
                     audio: [],
                     language: [],
                 }
+            };
+        }
+        case 'SET_USER':  {
+            return {
+                ...state,
+                user: action.payload
+            };
+        }
+        case 'SET_LOADING':  {
+            return {
+                ...state,
+                isLoading: !state.isLoading,
             };
         }
         default: return state;
