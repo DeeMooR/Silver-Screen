@@ -25,7 +25,7 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
 
     const clickButton = () => {
         if (page === 'Sign In') dispatch(SIGN_IN(navigate, email, password));
-        else dispatch(CREATE_USER({username: name, email, password}));
+        else dispatch(CREATE_USER(navigate, {username: name, email, password}));
     }
 
     return (

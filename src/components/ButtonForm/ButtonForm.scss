@@ -1,0 +1,42 @@
+.buttonForm {
+    width: 100%;
+    height: 52px;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(28, 156, 223);
+    border-radius: 10px;
+    transition: all 0.2s ease 0s;
+    &:hover {
+        background-color: rgb(212, 7, 84);
+        transition: all 0.3s ease 0s;
+    }
+    &.back {
+        width: 25%;
+        border-radius: 10px 0 0 10px;
+    }
+    &.withBack {
+        width: 75%;
+        border-radius: 0 10px 10px 0;
+    }
+}
+
+@media (max-width: 599.98px) {
+    .buttonForm {
+        &.back {
+            width: 30%;
+        }
+        &.withBack {
+            width: 70%;
+        }
+    }
+}
+@media (max-width: 399.98px) {
+    .buttonForm {
+        &.back {
+            width: 35%;
+        }
+        &.withBack {
+            width: 65%;
+        }
+    }
+}

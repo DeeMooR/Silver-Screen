@@ -21,7 +21,7 @@ const Input:FC<IInput> = ({title, placeholder, type, value, handleChange, forgot
             <p className='input__title'>{title}</p>
             <input className='input__input' type={type} placeholder={placeholder} value={value} onChange={(e) => changeInput(e)} />
             {forgot &&
-                <Link to='/sign-in' className='input__forgot'>Forgot password?</Link>
+                <Link to='/reset-password' className='input__forgot'>Forgot password?</Link>
             }
         </div>
     )
