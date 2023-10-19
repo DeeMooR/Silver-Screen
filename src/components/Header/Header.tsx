@@ -17,6 +17,7 @@ const Header = () => {
     const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
     const [clickMenu, setClickMenu] = useState(false);
+    const token = localStorage.getItem('access');
 
     useEffect(() => {
         const handleScroll = () => {
@@ -34,6 +35,11 @@ const Header = () => {
             document.body.style.overflow = 'auto';
         }
     }, [clickMenu]);
+
+    const clickAccount = () => {
+        if (token) navigate('/account');
+        else navigate('/sign-in');
+    }
 
     return (
         <>
@@ -55,7 +61,7 @@ const Header = () => {
                     </nav>
                     <div className="header__icons">
                         <img src={search} alt="search" />
-                        <img src={account} onClick={() => navigate('/sign-in')} alt="account" />
+                        <img src={account} onClick={clickAccount} alt="account" />
                     </div>
                 </div>
             </div>

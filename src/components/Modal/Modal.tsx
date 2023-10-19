@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { IMovie } from 'src/interfaces';
 import './Modal.css'
 
-import cross from "src/icons/cross.png"
+import cross from "src/icons/cross.svg"
 
 interface IModal {
     movie: IMovie,

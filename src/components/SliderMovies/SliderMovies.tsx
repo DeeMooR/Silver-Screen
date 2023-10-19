@@ -15,7 +15,6 @@ const SliderMovies = () => {
     <>
         <Swiper
             speed={1000}
-            slidesPerGroup={3}
             loop={true}
             navigation={true}
             breakpoints={{
@@ -23,54 +22,64 @@ const SliderMovies = () => {
                     // для разрешения больше 2000px
                     centeredSlides: true,
                     slidesPerView: 6.5,
+                    slidesPerGroup: 4,
                     spaceBetween: 50,
                 },
                 1600: {
                     centeredSlides: true,
                     slidesPerView: 5.8,
+                    slidesPerGroup: 4,
                     spaceBetween: 50,
                 },
                 1400: {
                     centeredSlides: true,
                     slidesPerView: 5.4,
+                    slidesPerGroup: 4,
                     spaceBetween: 50,
                 },
                 1200: {
                     centeredSlides: true,
                     slidesPerView: 5,
+                    slidesPerGroup: 4,
                     spaceBetween: 50,
                 },
                 1024: {
                     centeredSlides: true,
                     slidesPerView: 4.6,
+                    slidesPerGroup: 3,
                     spaceBetween: 25,
                 },
                 900: {
                     centeredSlides: false,
                     slidesPerView: 3.7,
+                    slidesPerGroup: 3,
                     spaceBetween: 20,
                 },
                 720: {
                     centeredSlides: false,
                     slidesPerView: 3.5,
+                    slidesPerGroup: 3,
                     spaceBetween: 20,
                 },
                 600: {
                     centeredSlides: false,
                     slidesPerView: 3,
+                    slidesPerGroup: 3,
                     spaceBetween: 20,
                 },
                 540: {
                     centeredSlides: false,
                     slidesPerView: 2.75,
-                    slidesPerGroup: 3,
+                    slidesPerGroup: 2,
                     spaceBetween: 10,
+                    speed: 800
                 },
                 0: {
                     centeredSlides: false,
                     slidesPerView: 'auto',
                     slidesPerGroup: 1,
                     spaceBetween: 10,
+                    speed: 700
                 },
             }}
             modules={[Autoplay, Navigation]}

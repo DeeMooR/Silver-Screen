@@ -7,6 +7,7 @@ import Navigation from 'src/components/Navigation'
 import { IMovie } from 'src/interfaces'
 import { arrMovies } from 'src/helpers';
 import './Afisha.css'
+import TitleWithSwitch from 'src/components/TitleWithSwitch'
 
 const Afisha = () => {
     let searchDate = useSelector(({ search }) => search.date);
@@ -150,13 +151,7 @@ const Afisha = () => {
     return (
         <PageTemplate wrapper>
             <div className='afisha'>
-                <div className='afisha__header'>
-                    <h2>Афиша кино</h2>
-                    <div>
-                        <a href="#" className='today active'>Сейчас в кино</a>
-                        <a href="#" className='soon'>Скоро</a>
-                    </div>
-                </div>
+                <TitleWithSwitch title='Афиша кино' switch_1='Сейчас в кино' switch_2='Скоро' active='1' />
                 <div className='afisha__navigation'>
                     <Navigation />
                 </div>

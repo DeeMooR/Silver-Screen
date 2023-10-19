@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react'
 import './PageFormTemplate.css'
 import { BackgroundImage } from './styled'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import background from "src/icons/sign_background.png"
 import left from "src/icons/left.svg"
@@ -13,13 +13,17 @@ interface IPageFormTemplate {
 
 const PageFormTemplate:FC<IPageFormTemplate> = ({children, page}) => {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const clickLeft = () => {
+        if (location.state && location.state.fromPage === 'account') navigate('/');
+        else navigate(-1);
+    }
     return (
         <div className='pageFormTemplate'>
-             {localStorage.getItem('access') &&
-                <div className="pageFormTemplate__left" onClick={() => navigate(-1)}>
-                    <img src={left} alt="left" />
-                </div>
-            }
+            <div className="pageFormTemplate__left" onClick={clickLeft}>
+                <img src={left} alt="left" />
+            </div>
             <BackgroundImage image={background} />
             <div className="pageFormTemplate__form">
                 <p className={`pageFormTemplate__title ${page === 'Sign Up' ? 'title-small' : ''}`}>{page}</p>

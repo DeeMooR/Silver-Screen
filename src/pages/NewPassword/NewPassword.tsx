@@ -20,7 +20,7 @@ const NewPassword = () => {
     const { uid, token } = useParams();
 
     const clickButton = () => {
-        if (uid && token) dispatch(RESET_PASSWORD_CONFIRM(navigate, uid, token, password));
+        if (uid && token && password === confirmPassword) dispatch(RESET_PASSWORD_CONFIRM(navigate, uid, token, password));
     }
 
     return (

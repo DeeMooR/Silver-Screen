@@ -17,12 +17,11 @@ export const CREATE_USER = (navigate: any, userData: IUser) => {
                         "Content-Type": "application/json",
                     },
                 }
-            ).then(() => {
-                console.log(activate);
-                navigate("/sign-up/check-email");
-            });
+            )
+            if (activate.ok) navigate("/sign-up/check-email");
+            else navigate("/sign-up/error-check-email");
         } catch (err) {
-            navigate("/sign-up/error-check-email");
+            console.log(err);
         } finally {
             dispatch({ type: "SET_LOADING" });
         }
@@ -43,12 +42,11 @@ export const ACTIVATE_USER = (navigate: any, uid: string, token: string) => {
                         "Content-Type": "application/json",
                     },
                 }
-            ).then(() => {
-                console.log(response);
-                navigate("/success");
-            });
+            );
+            if (response.ok) navigate("/success");
+            else navigate("/no-success");
         } catch (err) {
-            navigate("/no-success");
+            console.log(err);
         } finally {
             dispatch({ type: "SET_LOADING" });
         }
@@ -103,12 +101,10 @@ export const RESET_PASSWORD = (navigate: any, email: string) => {
                     },
                 }
             )
-            .then((data) => {
-                console.log(data);
-                navigate("/reset-password/check-email");
-            })
+            if (response.ok) navigate("/reset-password/check-email");
+            else navigate("/reset-password/error-check-email");
         } catch (err) {
-            navigate("/reset-password/error-check-email");
+            console.log(err);
         } finally {
             dispatch({ type: "SET_LOADING" });
         }
@@ -129,12 +125,11 @@ export const RESET_PASSWORD_CONFIRM = (navigate: any, uid: string, token: string
                         "Content-Type": "application/json",
                     },
                 }
-            ).then((data) => {
-                console.log(data);
-                navigate("/new-password/success");
-            });
+            )
+            if (response.ok) navigate("/new-password/success");
+            else navigate("/new-password/no-success");
         } catch (err) {
-            navigate("/new-password/no-success");
+            console.log(err);
         } finally {
             dispatch({ type: "SET_LOADING" });
         }

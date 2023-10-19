@@ -16,6 +16,7 @@ import CheckEmail from './pages/CheckEmail/CheckEmail';
 import ResetPassword from './pages/ResetPassword';
 import NewPasswordSuccess from './pages/NewPasswordSuccess';
 import NewPassword from './pages/NewPassword/NewPassword';
+import Account from './pages/Account';
 
 function App() {
     const location = useLocation();
@@ -23,16 +24,18 @@ function App() {
     const dispatch = useDispatch();
     const token = localStorage.getItem('access');
 
-    fetch("https://studapi.teachmeskills.by/auth/users/me/", {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },  
-    })
-    .then((response) => response.json())
-    .then((userData) => {
-        console.log(userData)
-        dispatch({ type: "SET_USER", payload: userData });
-    });
+    if (token) {
+        fetch("https://studapi.teachmeskills.by/auth/users/me/", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },  
+        })
+        .then((response) => response.json())
+        .then((userData) => {
+            console.log(userData)
+            dispatch({ type: "SET_USER", payload: userData });
+        });
+    }
 
     const startTokenRefreshTimer = () => {
         if (token) {
@@ -46,7 +49,6 @@ function App() {
                 localStorage.removeItem('access');
             }
         }
-        // else navigate("/sign-in");
     };
 
     if (token) {
@@ -88,6 +90,7 @@ function App() {
                 <Route path='/new-password/success' element={<NewPasswordSuccess success={true} />} />
                 <Route path='/new-password/no-success' element={<NewPasswordSuccess success={false} />} />
 
+                <Route path='/account' element={<Account />} />
                 <Route path='/' element={<Main />} />
                 <Route path='/afisha' element={<Afisha />} />
                 <Route path='/afisha/:id' element={<MoviePage />} />
@@ -96,7 +99,6 @@ function App() {
                 <Route path='/visa' element={<VisaPage />} />
                 <Route path='*' element={<Navigate to='/main'/>} />
             </Routes>
-            {/* {location.pathname === '/' && <Navigate to='/afisha' />} */}
         </>
     );
 }

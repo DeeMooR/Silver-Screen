@@ -85,7 +85,7 @@
         max-width: 200px;
     }
 }
-@media (max-width: 479.98px) {
+@media (max-width: 539.98px) {
     .swiperMovies .swiper-button-prev,
     .swiperMovies .swiper-button-next {
         display: none;
