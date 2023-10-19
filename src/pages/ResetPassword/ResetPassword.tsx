@@ -15,16 +15,18 @@ const ResetPassword = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
+    const [modal, setModal] = useState(<div/>);
 
     const clickButtonBack = () => {
         navigate(-1);
     }
     const clickButtonReset = () => {
-        dispatch(RESET_PASSWORD(navigate, email));
+        dispatch(RESET_PASSWORD(navigate, email, setModal));
     }
 
     return (
         <PageFormTemplate page='Reset password'>
+            {modal}
             <div className='resetPassword'>
                 <p className='resetPassword__text'>You will receive an email with a link to reset your password!</p>
                 <div className="resetPassword__input">

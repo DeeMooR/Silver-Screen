@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import './NewPassword.css'
 import Input from 'src/components/Input'
 import Button from 'src/components/Button'
@@ -17,18 +17,28 @@ const NewPassword = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const [isMismatch, setIsMismatch] = useState(false);
+    const [modal, setModal] = useState(<div/>);
     const { uid, token } = useParams();
 
     const clickButton = () => {
-        if (uid && token && password === confirmPassword) dispatch(RESET_PASSWORD_CONFIRM(navigate, uid, token, password));
+        if (password !== confirmPassword) {
+            setIsMismatch(true);
+            return;
+        }
+        if (uid && token) dispatch(RESET_PASSWORD_CONFIRM(navigate, uid, token, password, setModal));
     }
+    useEffect(() => {
+        setIsMismatch(false);
+    },[password, confirmPassword])
 
     return (
         <PageFormTemplate page='New password'>
+            {modal}
             <div className='newPassword'>
                 <div className="newPassword__inputs">
-                    <Input title='Password' type='password' placeholder='Your password' value={password} handleChange={setPassword} />
-                    <Input title='Confirm password' type='password' placeholder='Confirm password' value={confirmPassword} handleChange={setConfirmPassword} />
+                    <Input title='Password' type='password' placeholder='Your password' value={password} handleChange={setPassword} defect={isMismatch} />
+                    <Input title='Confirm password' type='password' placeholder='Confirm password' value={confirmPassword} handleChange={setConfirmPassword} defect={isMismatch} />
                 </div>
                 <ButtonForm handleClick={clickButton}>Set password</ButtonForm>
             </div>

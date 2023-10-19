@@ -15,6 +15,9 @@
   background-color: #323537;
   color: rgba(255, 255, 255, 0.8);
 }
+.input .input__input.defect {
+  background-color: rgba(188, 27, 40, 0.35);
+}
 .input .input__forgot {
   display: block;
   margin: 8px 0 0 0;

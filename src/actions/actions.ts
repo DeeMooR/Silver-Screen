@@ -2,8 +2,10 @@ import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { IUser } from "src/interfaces";
 import instance from "src/axiosConfig";
+import ModalSuccess from "src/components/ModalSuccess";
+import { modalShowMessege } from "src/helpersModal";
 
-export const CREATE_USER = (navigate: any, userData: IUser) => {
+export const CREATE_USER = (navigate: any, userData: IUser, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
         console.log(userData)
@@ -19,7 +21,7 @@ export const CREATE_USER = (navigate: any, userData: IUser) => {
                 }
             )
             if (activate.ok) navigate("/sign-up/check-email");
-            else navigate("/sign-up/error-check-email");
+            else modalShowMessege(setModal, false);
         } catch (err) {
             console.log(err);
         } finally {
@@ -53,7 +55,7 @@ export const ACTIVATE_USER = (navigate: any, uid: string, token: string) => {
     };
 };
 
-export const SIGN_IN = (navigate: any, email: string, password: string) => {
+export const SIGN_IN = (navigate: any, email: string, password: string, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
 
@@ -75,6 +77,8 @@ export const SIGN_IN = (navigate: any, email: string, password: string) => {
                     console.log({access, refresh});
                     localStorage.setItem("access", access);
                     localStorage.setItem("refresh", refresh);
+                } else {
+                    modalShowMessege(setModal, false);
                 }
             });
         } catch (err) {
@@ -85,7 +89,7 @@ export const SIGN_IN = (navigate: any, email: string, password: string) => {
     };
 };
 
-export const RESET_PASSWORD = (navigate: any, email: string) => {
+export const RESET_PASSWORD = (navigate: any, email: string, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
         console.log('ku')
@@ -102,7 +106,7 @@ export const RESET_PASSWORD = (navigate: any, email: string) => {
                 }
             )
             if (response.ok) navigate("/reset-password/check-email");
-            else navigate("/reset-password/error-check-email");
+            else modalShowMessege(setModal, false);
         } catch (err) {
             console.log(err);
         } finally {
@@ -111,7 +115,7 @@ export const RESET_PASSWORD = (navigate: any, email: string) => {
     };
 };
 
-export const RESET_PASSWORD_CONFIRM = (navigate: any, uid: string, token: string, new_password: string) => {
+export const RESET_PASSWORD_CONFIRM = (navigate: any, uid: string, token: string, new_password: string, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
 
@@ -127,9 +131,35 @@ export const RESET_PASSWORD_CONFIRM = (navigate: any, uid: string, token: string
                 }
             )
             if (response.ok) navigate("/new-password/success");
-            else navigate("/new-password/no-success");
+            else modalShowMessege(setModal, false);
         } catch (err) {
             console.log(err);
+        } finally {
+            dispatch({ type: "SET_LOADING" });
+        }
+    };
+};
+
+export const RESET_PASSWORD_IN_ACCOUNT = (token: string, new_password: string, current_password: string, setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        dispatch({ type: "SET_LOADING" });
+
+        try {
+            const response = await fetch(
+                "https://studapi.teachmeskills.by/auth/users/set_password/",
+                {
+                method: "POST",
+                body: JSON.stringify({ new_password, current_password }),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                }
+            );
+            if (response.ok) modalShowMessege(setModal, true);
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
         } finally {
             dispatch({ type: "SET_LOADING" });
         }

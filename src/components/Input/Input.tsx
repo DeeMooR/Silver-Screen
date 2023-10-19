@@ -8,10 +8,11 @@ interface IInput {
     type: 'text' | 'email' | 'password',
     value: string,
     handleChange: (e: any) => void,
-    forgot?: boolean
+    forgot?: boolean,
+    defect?: boolean
 }
 
-const Input:FC<IInput> = ({title, placeholder, type, value, handleChange, forgot}) => {
+const Input:FC<IInput> = ({title, placeholder, type, value, handleChange, forgot, defect}) => {
     const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         handleChange(e.currentTarget.value)
     }
@@ -19,7 +20,7 @@ const Input:FC<IInput> = ({title, placeholder, type, value, handleChange, forgot
     return (
         <div className='input'>
             <p className='input__title'>{title}</p>
-            <input className='input__input' type={type} placeholder={placeholder} value={value} onChange={(e) => changeInput(e)} />
+            <input className={`input__input ${defect ? 'defect' : ''}`} type={type} placeholder={placeholder} value={value} onChange={(e) => changeInput(e)} />
             {forgot &&
                 <Link to='/reset-password' className='input__forgot'>Forgot password?</Link>
             }

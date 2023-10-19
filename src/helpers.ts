@@ -59,10 +59,10 @@ import news_10 from "src/icons/news/news_10.jpg"
 import services from "src/icons/afisha_services.jpg"
 import visa from "src/icons/afisha_visa.jpg"
 import visa_background from "src/icons/afisha_visa_background.png"
+import ModalSuccess from "./components/ModalSuccess";
 
 const russianMonths = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const arrDaysOfWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
-
 
 export const mainEntertainment = {
     id: 1,

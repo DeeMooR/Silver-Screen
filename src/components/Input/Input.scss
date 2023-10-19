@@ -13,6 +13,9 @@
         line-height: 20px;
         background-color: #323537;
         color: rgba(255,255,255,0.8);
+        &.defect {
+            background-color: rgba(188,27,40, 0.35);
+        }
     }
     .input__forgot {
         display: block;

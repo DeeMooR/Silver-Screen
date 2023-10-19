@@ -2,19 +2,25 @@ import React, { useEffect, useState } from 'react'
 import PageTemplate from 'src/components/PageTemplate';
 import './Account.css'
 import InputNotActive from 'src/components/InputNotActive';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Input from 'src/components/Input';
 import Button from 'src/components/Button';
 import TitleWithSwitch from 'src/components/TitleWithSwitch';
 import ModalSuccess from 'src/components/ModalSuccess';
 import { useNavigate } from 'react-router-dom';
+import { RESET_PASSWORD_IN_ACCOUNT } from 'src/actions/actions';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 
 const Account = () => {
+    const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
     let name = useSelector(({ user }) => user.username);
     let email = useSelector(({ user }) => user.email);
-    const accessToken = localStorage.getItem('access');
+    let token = localStorage.getItem('access') || 'err';
+
     const [modal, setModal] = useState(<div/>);
+    const [isMismatch, setIsMismatch] = useState(false);
 
     const [current_password, setCurrentPassword] = useState('');
     const [new_password, setNewPassword] = useState('');
@@ -34,39 +40,18 @@ const Account = () => {
         navigate('/sign-in', {state: {fromPage: 'account'}});
     }
     const clickSave = async () => {
-        if (new_password !== confirm_new_password) {
-            setModal(<ModalSuccess isSuccess={false} />);
-            setTimeout(() => {
-                setModal(<div/>);
-            }, 3400);
-            return;
-        }
-        try {
-            const response = await fetch(
-                "https://studapi.teachmeskills.by/auth/users/set_password/",
-                {
-                method: "POST",
-                body: JSON.stringify({ new_password, current_password }),
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${accessToken}`
-                },
-                }
-            );
-            if (response.ok) setModal(<ModalSuccess isSuccess />);
-            else setModal(<ModalSuccess isSuccess={false} />);
-            setTimeout(() => {
-                setModal(<div/>);
-            }, 3400);
-        } catch (err) {
-          console.log(err);
-        }
+        if (new_password !== confirm_new_password) setIsMismatch(true);
+        else dispatch(RESET_PASSWORD_IN_ACCOUNT(token, new_password, current_password, setModal));
     };
+
+    useEffect(() => {
+        setIsMismatch(false);
+    },[new_password, confirm_new_password])
 
     return (
         <PageTemplate wrapper>
+            {modal}
             <div className='account'>
-                {modal}
                 <TitleWithSwitch title='Аккаунт' switch_1='Профиль' switch_2='Мои билеты' active='1' />
                 <div className="profile">
                     <p className='profile-section__title'>Учётная запись</p>
@@ -80,17 +65,17 @@ const Account = () => {
                             <Input title='Текущий пароль' type='password' placeholder='Ваш пароль' value={current_password} handleChange={setCurrentPassword} />
                         </div>
                         <div className="password-profile__right">
-                            <Input title='Новый пароль' type='password' placeholder='Новый пароль' value={new_password} handleChange={setNewPassword} />
-                            <Input title='Подтвердите пароль' type='password' placeholder='Подтвердите пароль' value={confirm_new_password} handleChange={setConfirmNewPassword} />
+                            <Input title='Новый пароль' type='password' placeholder='Новый пароль' value={new_password} handleChange={setNewPassword} defect={isMismatch} />
+                            <Input title='Подтвердите пароль' type='password' placeholder='Подтвердите пароль' value={confirm_new_password} handleChange={setConfirmNewPassword} defect={isMismatch} />
                         </div>
                     </div>
                     <div className="profile__buttons">
+                        <div className="profile__exit">
+                            <Button color='red' handleClick={clickExit}>Выйти из аккауанта</Button>
+                        </div>
                         <div className="profile__calnel-save">
                             <Button color='white' handleClick={clickCancel}>Отмена</Button>
                             <Button color='red' handleClick={clickSave}>Сохранить</Button>
-                        </div>
-                        <div className="profile__exit">
-                            <Button color='red' handleClick={clickExit}>Выйти из аккауанта</Button>
                         </div>
                     </div>
                 </div>
@@ -100,7 +85,3 @@ const Account = () => {
 }
 
 export default Account
-function dispatch(arg0: { type: string; }) {
-    throw new Error('Function not implemented.');
-}
-

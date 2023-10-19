@@ -79,7 +79,7 @@ function App() {
                 <Route path='/success' element={<SuccessOrNot success />} />
                 <Route path='/no-success' element={<SuccessOrNot success={false} />} />
                 <Route path='/sign-up/check-email' element={<CheckEmail success={true} messege='register' />} />
-                <Route path='/sign-up/error-check-email' element={<CheckEmail success={false} messege='register' />} />
+                {/* <Route path='/sign-up/error-check-email' element={<CheckEmail success={false} messege='register' />} /> */}
                 <Route path='/activate/:uid/:token' element={<ActivateUser />} />
 
                 <Route path='/reset-password' element={<ResetPassword />} />

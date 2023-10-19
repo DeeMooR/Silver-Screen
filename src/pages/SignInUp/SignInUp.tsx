@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import './SignInUp.css'
 import Input from 'src/components/Input'
 import Button from 'src/components/Button'
@@ -10,6 +10,7 @@ import { AnyAction } from 'redux'
 import { CREATE_USER, SIGN_IN } from 'src/actions/actions'
 import PageFormTemplate from 'src/components/PageFormTemplate'
 import ButtonForm from 'src/components/ButtonForm'
+import ModalSuccess from 'src/components/ModalSuccess'
 
 interface ISignInUp {
     page: 'Sign In' | 'Sign Up'
@@ -22,23 +23,48 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    
+    const [isEmptyName, setIsEmptyName] = useState(false);
+    const [isEmptyEmail, setIsEmptyEmail] = useState(false);
+    const [isMismatch, setIsMismatch] = useState(false);
+
+    const [modal, setModal] = useState(<div/>);
 
     const clickButton = () => {
-        if (page === 'Sign In') dispatch(SIGN_IN(navigate, email, password));
-        else dispatch(CREATE_USER(navigate, {username: name, email, password}));
+        if (page === 'Sign Up' && (password !== confirmPassword || password === '' || confirmPassword === '')) setIsMismatch(true);
+        if (page === 'Sign In' && password === '') setIsMismatch(true);
+        if (page === 'Sign In' && password !== '') setIsMismatch(false);    // если после красного password в Sign Up перейти в Sign In и нажать на button
+        if (name === '') setIsEmptyName(true);
+        if (email === '') setIsEmptyEmail(true);
+        
+        if (page === 'Sign In' && email !== '' && password !== '') dispatch(SIGN_IN(navigate, email, password, setModal));
+        if (page === 'Sign Up' && name !== '' && email !== '' && password !== '' && confirmPassword !== '' && password === confirmPassword) {
+            dispatch(CREATE_USER(navigate, {username: name, email, password}, setModal));
+        }
     }
+
+    useEffect(() => {
+        setIsMismatch(false);
+    },[password, confirmPassword])
+    useEffect(() => {
+        setIsEmptyName(false);
+    },[name])
+    useEffect(() => {
+        setIsEmptyEmail(false);
+    },[email])
 
     return (
         <PageFormTemplate page={page}>
+            {modal}
             <div className={`sign ${page === 'Sign In' ? 'signIn' : 'signUp' }`}>
                 <div className="sign__inputs">
                     {page === 'Sign Up' &&
-                        <Input title='Name' type='text' placeholder='Your name' value={name} handleChange={setName} />
+                        <Input title='Name' type='text' placeholder='Your name' value={name} handleChange={setName} defect={isEmptyName} />
                     }
-                    <Input title='Email' type='email' placeholder='Your email' value={email} handleChange={setEmail} />
-                    <Input title='Password' type='password' placeholder='Your password' value={password} handleChange={setPassword} forgot={page === 'Sign In' ? true : false} />
+                    <Input title='Email' type='email' placeholder='Your email' value={email} handleChange={setEmail} defect={isEmptyEmail} />
+                    <Input title='Password' type='password' placeholder='Your password' value={password} handleChange={setPassword} forgot={page === 'Sign In' ? true : false} defect={isMismatch} />
                     {page === 'Sign Up' &&
-                        <Input title='Confirm password' type='password' placeholder='Confirm password' value={confirmPassword} handleChange={setConfirmPassword} />
+                        <Input title='Confirm password' type='password' placeholder='Confirm password' value={confirmPassword} handleChange={setConfirmPassword} defect={isMismatch} />
                     }
                 </div>
                 <ButtonForm handleClick={clickButton}>{page}</ButtonForm>
