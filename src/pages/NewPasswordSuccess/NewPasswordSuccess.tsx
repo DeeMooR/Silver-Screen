@@ -4,18 +4,12 @@ import ButtonForm from 'src/components/ButtonForm'
 import { useNavigate } from 'react-router-dom'
 import './NewPasswordSuccess.css'
 
-interface INewPasswordSuccess {
-    success: boolean,
-}
-
-const NewPasswordSuccess:FC<INewPasswordSuccess> = ({success}) => {
+const NewPasswordSuccess = () => {
     const navigate = useNavigate();
     return (
-        <PageFormTemplate page={`${success ? 'Success' : 'Error'}`}>
+        <PageFormTemplate page='Success'>
             <div className='newPasswordSuccess'>
-                <p className='newPasswordSuccess__text'>
-                    {success ? 'The password was successfully changed' : 'The password has not been changed'}
-                </p>
+                <p className='newPasswordSuccess__text'>The password was successfully changed</p>
                 <ButtonForm handleClick={() => navigate('/sign-in')}>Go to Sign In</ButtonForm>
             </div>
         </PageFormTemplate>

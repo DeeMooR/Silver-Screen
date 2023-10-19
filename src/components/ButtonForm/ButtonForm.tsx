@@ -3,15 +3,14 @@ import './ButtonForm.css'
 
 interface IButtonForm {
     children: ReactNode,
-    handleClick?: () => void,
-    size?: 'back' | 'withBack'
+    handleClick?: () => void
 }
 
-const ButtonForm:FC<IButtonForm> = ({children, handleClick, size}) => {
+const ButtonForm:FC<IButtonForm> = ({children, handleClick}) => {
     return (
         <button
             type="button"
-            className={`buttonForm ${size ? size : ''}`} 
+            className='buttonForm'
             onClick={handleClick}
         >
             {children}

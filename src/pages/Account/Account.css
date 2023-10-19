@@ -35,7 +35,51 @@
   display: flex;
   justify-content: space-between;
 }
-.account .profile .profile__buttons .profile__calnel-save {
+.account .profile .profile__buttons .profile__cancel-save {
   display: flex;
   gap: 20px;
+}
+
+@media (max-width: 599.98px) {
+  .account .profile .profile__name-email {
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+  }
+  .account .profile .profile__password {
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+    margin: 0 0 35px 0;
+  }
+  .account .profile .profile__password .password-profile__left {
+    width: 100%;
+  }
+  .account .profile .profile__password .password-profile__right {
+    width: 100%;
+  }
+  .account .profile .profile__buttons {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 25px;
+  }
+  .account .profile .profile__buttons .profile__cancel-save {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+  }
+  .account .profile .profile__buttons .profile__cancel-save .custom-button {
+    margin: 0;
+  }
+}
+@media (max-width: 399.98px) {
+  .account .profile .profile__password {
+    margin: 0 0 25px 0;
+  }
+  .account .profile .profile__buttons {
+    gap: 15px;
+  }
+  .account .profile .profile__buttons .profile__cancel-save {
+    gap: 25px;
+  }
 }

@@ -31,14 +31,14 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
     const [modal, setModal] = useState(<div/>);
 
     const clickButton = () => {
+        if (page === 'Sign Up' && name === '') setIsEmptyName(true);
         if (page === 'Sign Up' && (password !== confirmPassword || password === '' || confirmPassword === '')) setIsMismatch(true);
         if (page === 'Sign In' && password === '') setIsMismatch(true);
         if (page === 'Sign In' && password !== '') setIsMismatch(false);    // если после красного password в Sign Up перейти в Sign In и нажать на button
-        if (name === '') setIsEmptyName(true);
         if (email === '') setIsEmptyEmail(true);
         
         if (page === 'Sign In' && email !== '' && password !== '') dispatch(SIGN_IN(navigate, email, password, setModal));
-        if (page === 'Sign Up' && name !== '' && email !== '' && password !== '' && confirmPassword !== '' && password === confirmPassword) {
+        if (page === 'Sign Up' && name !== '' && email !== '' && password !== '' && password === confirmPassword) {
             dispatch(CREATE_USER(navigate, {username: name, email, password}, setModal));
         }
     }

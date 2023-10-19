@@ -73,7 +73,7 @@ const Account = () => {
                         <div className="profile__exit">
                             <Button color='red' handleClick={clickExit}>Выйти из аккауанта</Button>
                         </div>
-                        <div className="profile__calnel-save">
+                        <div className="profile__cancel-save">
                             <Button color='white' handleClick={clickCancel}>Отмена</Button>
                             <Button color='red' handleClick={clickSave}>Сохранить</Button>
                         </div>

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import './ResetPassword.css'
 import Input from 'src/components/Input'
 import Button from 'src/components/Button'
@@ -15,14 +15,19 @@ const ResetPassword = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
+    const [isEmptyEmail, setIsEmptyEmail] = useState(false);
     const [modal, setModal] = useState(<div/>);
 
-    const clickButtonBack = () => {
-        navigate(-1);
-    }
-    const clickButtonReset = () => {
+    const clickButton = () => {
+        if (email === '') {
+            setIsEmptyEmail(true);
+            return;
+        }
         dispatch(RESET_PASSWORD(navigate, email, setModal));
     }
+    useEffect(() => {
+        setIsEmptyEmail(false);
+    },[email])
 
     return (
         <PageFormTemplate page='Reset password'>
@@ -30,12 +35,9 @@ const ResetPassword = () => {
             <div className='resetPassword'>
                 <p className='resetPassword__text'>You will receive an email with a link to reset your password!</p>
                 <div className="resetPassword__input">
-                    <Input title='Email' type='email' placeholder='Your email' value={email} handleChange={setEmail} />
+                    <Input title='Email' type='email' placeholder='Your email' value={email} handleChange={setEmail} defect={isEmptyEmail} />
                 </div>
-                <div className="resetPassword__buttons">
-                    <ButtonForm handleClick={clickButtonBack} size='back'>Back</ButtonForm>
-                    <ButtonForm handleClick={clickButtonReset} size='withBack'>Reset</ButtonForm>
-                </div>
+                <ButtonForm handleClick={clickButton}>Reset</ButtonForm>
             </div>
         </PageFormTemplate>
     )

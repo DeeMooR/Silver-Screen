@@ -78,26 +78,22 @@ function App() {
                 <Route path='/sign-up' element={<SignInUp page='Sign Up' />} />
                 <Route path='/success' element={<SuccessOrNot success />} />
                 <Route path='/no-success' element={<SuccessOrNot success={false} />} />
-                <Route path='/sign-up/check-email' element={<CheckEmail success={true} messege='register' />} />
-                {/* <Route path='/sign-up/error-check-email' element={<CheckEmail success={false} messege='register' />} /> */}
+                <Route path='/sign-up/check-email' element={<CheckEmail messege='register' />} />
                 <Route path='/activate/:uid/:token' element={<ActivateUser />} />
 
                 <Route path='/reset-password' element={<ResetPassword />} />
-                <Route path='/reset-password/check-email' element={<CheckEmail success={true} messege='reset password' />} />
-                <Route path='/reset-password/error-check-email' element={<CheckEmail success={false} messege='reset password' />} />
-
+                <Route path='/reset-password/check-email' element={<CheckEmail messege='reset password' />} />
                 <Route path='/password/reset/confirm/:uid/:token' element={<NewPassword />} />
-                <Route path='/new-password/success' element={<NewPasswordSuccess success={true} />} />
-                <Route path='/new-password/no-success' element={<NewPasswordSuccess success={false} />} />
+                <Route path='/new-password/success' element={<NewPasswordSuccess />} />
 
-                <Route path='/account' element={<Account />} />
                 <Route path='/' element={<Main />} />
                 <Route path='/afisha' element={<Afisha />} />
                 <Route path='/afisha/:id' element={<MoviePage />} />
                 <Route path='/entertainment' element={<Entertainment />} />
                 <Route path='/news' element={<NewsPage />} />
                 <Route path='/visa' element={<VisaPage />} />
-                <Route path='*' element={<Navigate to='/main'/>} />
+                <Route path='/account' element={<Account />} />
+                <Route path='*' element={<Navigate to='/'/>} />
             </Routes>
         </>
     );
