@@ -13,6 +13,12 @@ interface IHorizontalNews {
 
 const HorizontalNews:FC<IHorizontalNews> = ({obj, page, reverse}) => {
     const navigate = useNavigate();
+
+    const clickButton = () => {
+        if (obj.link) navigate(`${obj.link}`);
+        else navigate('/page404');
+    }
+
     return (
         <div className={`horizontalNews ${reverse ? 'reverse' : ''} horizontalNews-${page}`}>
             <BackgroundImage image={obj.background_image ? obj.background_image : obj.image} page={page} />
@@ -22,7 +28,7 @@ const HorizontalNews:FC<IHorizontalNews> = ({obj, page, reverse}) => {
                         {obj.date && <div className="horizontalNews__date">{obj.date}</div>}
                         <div className="horizontalNews__title">{obj.title}</div>
                         <div className="horizontalNews__description">{obj.description}</div>
-                        <Button color='red' handleClick={() => navigate(`${obj.link}`)}>Подробнее</Button>
+                        <Button color='red' handleClick={clickButton}>Подробнее</Button>
                     </div>
                     <div className="horizontalNews__image">
                         <img src={obj.image} alt="image" />

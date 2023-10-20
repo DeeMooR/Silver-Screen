@@ -5,9 +5,11 @@ import MovieCard from 'src/components/MovieCard'
 import NotFind from 'src/components/NotFind'
 import Navigation from 'src/components/Navigation'
 import { IMovie } from 'src/interfaces'
-import { arrMovies } from 'src/helpers';
+import { arrAfishaNews, arrEntertainmentNews, arrMovies } from 'src/helpers';
 import './Afisha.css'
 import TitleWithSwitch from 'src/components/TitleWithSwitch'
+import { Link } from 'react-router-dom'
+import HorizontalNews from 'src/components/HorizontalNews'
 
 const Afisha = () => {
     let searchDate = useSelector(({ search }) => search.date);
@@ -149,26 +151,35 @@ const Afisha = () => {
     filterMovies();
     
     return (
-        <PageTemplate wrapper>
+        <PageTemplate>
             <div className='afisha'>
-                <TitleWithSwitch title='Афиша кино' switch_1='Сейчас в кино' switch_2='Скоро' active='1' />
-                <div className='afisha__navigation'>
-                    <Navigation />
-                </div>
-                <div className='afisha__cards'>
-                    {filteredMovies.map((card: IMovie, i: number) => (
-                        <div className="cards__item" key={i}>
-                            <MovieCard obj={card} page='afisha' />
+                <div className="afisha__wrapper">
+                    <TitleWithSwitch title='Афиша кино' switch_1='Сейчас в кино' switch_2='Скоро' active='1' />
+                    <div className='afisha__navigation'>
+                        <Navigation />
+                    </div>
+                    <div className='afisha__cards'>
+                        {filteredMovies.map((card: IMovie, i: number) => (
+                            <div className="cards__item" key={i}>
+                                <MovieCard obj={card} page='afisha' />
+                            </div>
+                        ))}
+                        <div className={`cards__item 
+                            ${filteredMovies.length % 4 === 0 && "center-4"}
+                            ${filteredMovies.length % 3 === 0 && "center-3"}
+                            ${filteredMovies.length % 2 === 0 && "center-2"}
+                        `}>
+                            <NotFind page='afisha' />
                         </div>
-                    ))}
-                    <div className={`cards__item 
-                        ${filteredMovies.length % 4 === 0 && "center-4"}
-                        ${filteredMovies.length % 3 === 0 && "center-3"}
-                        ${filteredMovies.length % 2 === 0 && "center-2"}
-                    `}>
-                        <NotFind page='afisha' />
+                    </div>
+                    <div className="afisha__text">
+                        <p>Кинопространства mooon и Silver Screen представляет Вам киноафишу всех фильмов, идущих в нашей <Link to='/'>сети кинотеатров</Link>.</p>
+                        <p>Наша киноафиша познакомит Вас с премьерами мировой киноиндустрии, расскажет о новинках кино для детей и взрослых и пригласит на показ любимых ретроспективных картин. Предлагаем Вам насладиться лучшими моментами вышедших в прокат фильмов, ознакомиться с трейлерами и полной информацией о кинолентах: продолжительности, рейтинге, создателях, актерском составе.</p>
+                        <p>Мы предлагаем Вам ознакомиться с киноафишей на нашем сайте, посмотреть, что идет в кино в Минске и в Гродно сегодня и купить билеты онлайн в кинотеатры Silver Screen и mooon, не выходя из дома.</p>
+                        <p>Доставьте себе удовольствие от просмотра своих любимых фильмов! Ждем Вас у нас в кинопространствах mooon и Silver Screen!</p>
                     </div>
                 </div>
+                <HorizontalNews obj={arrAfishaNews} page='main' reverse />
             </div>
         </PageTemplate>
     );

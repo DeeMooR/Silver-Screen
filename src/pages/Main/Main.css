@@ -23,6 +23,11 @@
 .main .main__afisha .afisha-main__wrapper .afisha-main__buttons .buttons__left a {
   padding: 0 0 27px;
   color: rgba(144, 144, 143, 0.8);
+  transition: all 0.2s ease 0s;
+}
+.main .main__afisha .afisha-main__wrapper .afisha-main__buttons .buttons__left a:hover {
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease 0s;
 }
 .main .main__afisha .afisha-main__wrapper .afisha-main__buttons .buttons__left a.active {
   position: relative;
@@ -38,6 +43,11 @@
 }
 .main .main__afisha .afisha-main__wrapper .afisha-main__buttons .buttons__afisha {
   color: rgba(255, 255, 255, 0.8);
+  transition: all 0.2s ease 0s;
+}
+.main .main__afisha .afisha-main__wrapper .afisha-main__buttons .buttons__afisha:hover {
+  color: rgb(212, 7, 84);
+  transition: all 0.3s ease 0s;
 }
 .main .main__afisha .afisha-main__wrapper .afisha-main__line {
   height: 1px;

@@ -4,7 +4,7 @@ import Input from 'src/components/Input'
 import Button from 'src/components/Button'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import { RESET_PASSWORD, RESET_PASSWORD_CONFIRM } from 'src/actions/actions'
@@ -19,6 +19,7 @@ const NewPassword = () => {
 
     const [isMismatch, setIsMismatch] = useState(false);
     const [modal, setModal] = useState(<div/>);
+    const isLoading = useSelector(({isLoading}) => isLoading);
     const { uid, token } = useParams();
 
     const clickButton = () => {
@@ -35,13 +36,19 @@ const NewPassword = () => {
     return (
         <PageFormTemplate page='New password'>
             {modal}
-            <div className='newPassword'>
-                <div className="newPassword__inputs">
-                    <Input title='Password' type='password' placeholder='Your password' value={password} handleChange={setPassword} defect={isMismatch} />
-                    <Input title='Confirm password' type='password' placeholder='Confirm password' value={confirmPassword} handleChange={setConfirmPassword} defect={isMismatch} />
+            {isLoading ? (
+                <div className="loader">
+                    <div className="loader__element"></div>
                 </div>
-                <ButtonForm handleClick={clickButton}>Set password</ButtonForm>
-            </div>
+            ) : (
+                <div className='newPassword'>
+                    <div className="newPassword__inputs">
+                        <Input title='Password' type='password' placeholder='Your password' value={password} handleChange={setPassword} defect={isMismatch} />
+                        <Input title='Confirm password' type='password' placeholder='Confirm password' value={confirmPassword} handleChange={setConfirmPassword} defect={isMismatch} />
+                    </div>
+                    <ButtonForm handleClick={clickButton}>Set password</ButtonForm>
+                </div>
+            )}
         </PageFormTemplate>
     )
 }

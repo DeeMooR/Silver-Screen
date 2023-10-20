@@ -4,7 +4,7 @@ import Input from 'src/components/Input'
 import Button from 'src/components/Button'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import { CREATE_USER, SIGN_IN } from 'src/actions/actions'
@@ -29,6 +29,7 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
     const [isMismatch, setIsMismatch] = useState(false);
 
     const [modal, setModal] = useState(<div/>);
+    const isLoading = useSelector(({isLoading}) => isLoading);
 
     const clickButton = () => {
         if (page === 'Sign Up' && name === '') setIsEmptyName(true);
@@ -56,23 +57,29 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
     return (
         <PageFormTemplate page={page}>
             {modal}
-            <div className={`sign ${page === 'Sign In' ? 'signIn' : 'signUp' }`}>
-                <div className="sign__inputs">
-                    {page === 'Sign Up' &&
-                        <Input title='Name' type='text' placeholder='Your name' value={name} handleChange={setName} defect={isEmptyName} />
-                    }
-                    <Input title='Email' type='email' placeholder='Your email' value={email} handleChange={setEmail} defect={isEmptyEmail} />
-                    <Input title='Password' type='password' placeholder='Your password' value={password} handleChange={setPassword} forgot={page === 'Sign In' ? true : false} defect={isMismatch} />
-                    {page === 'Sign Up' &&
-                        <Input title='Confirm password' type='password' placeholder='Confirm password' value={confirmPassword} handleChange={setConfirmPassword} defect={isMismatch} />
+            {isLoading ? (
+                <div className="loader">
+                    <div className="loader__element"></div>
+                </div>
+            ) : (
+                <div className={`sign ${page === 'Sign In' ? 'signIn' : 'signUp' }`}>
+                    <div className="sign__inputs">
+                        {page === 'Sign Up' &&
+                            <Input title='Name' type='text' placeholder='Your name' value={name} handleChange={setName} defect={isEmptyName} />
+                        }
+                        <Input title='Email' type='email' placeholder='Your email' value={email} handleChange={setEmail} defect={isEmptyEmail} />
+                        <Input title='Password' type='password' placeholder='Your password' value={password} handleChange={setPassword} forgot={page === 'Sign In' ? true : false} defect={isMismatch} />
+                        {page === 'Sign Up' &&
+                            <Input title='Confirm password' type='password' placeholder='Confirm password' value={confirmPassword} handleChange={setConfirmPassword} defect={isMismatch} />
+                        }
+                    </div>
+                    <ButtonForm handleClick={clickButton}>{page}</ButtonForm>
+                    {page === 'Sign In'
+                    ? <p className='sign__have-account'>Don’t have an account? <Link to='/sign-up'>Sign Up</Link></p>
+                    : <p className='sign__have-account'>Already have an account? <Link to='/sign-in'>Sign In</Link></p>
                     }
                 </div>
-                <ButtonForm handleClick={clickButton}>{page}</ButtonForm>
-                {page === 'Sign In'
-                ? <p className='sign__have-account'>Don’t have an account? <Link to='/sign-up'>Sign Up</Link></p>
-                : <p className='sign__have-account'>Already have an account? <Link to='/sign-in'>Sign In</Link></p>
-                }
-            </div>
+            )}
         </PageFormTemplate>
     )
 }

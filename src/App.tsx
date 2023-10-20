@@ -17,6 +17,8 @@ import ResetPassword from './pages/ResetPassword';
 import NewPasswordSuccess from './pages/NewPasswordSuccess';
 import NewPassword from './pages/NewPassword/NewPassword';
 import Account from './pages/Account';
+import Page404 from './pages/Page404/Page404';
+import PresentCard from './pages/PresentCard';
 
 function App() {
     const location = useLocation();
@@ -93,7 +95,10 @@ function App() {
                 <Route path='/news' element={<NewsPage />} />
                 <Route path='/visa' element={<VisaPage />} />
                 <Route path='/account' element={<Account />} />
-                <Route path='*' element={<Navigate to='/'/>} />
+                <Route path='/presentcard' element={<PresentCard />} />
+
+                <Route path='/page404' element={<Page404 />} />
+                <Route path='*' element={<Navigate to='/page404'/>} />
             </Routes>
         </>
     );

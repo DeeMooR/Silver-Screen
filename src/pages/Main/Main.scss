@@ -18,6 +18,11 @@
                     a {
                         padding: 0 0 27px;
                         color: rgba(144, 144, 143, 0.8);
+                        transition: all 0.2s ease 0s;
+                        &:hover {
+                            color: rgba(255, 255, 255, 0.8);
+                            transition: all 0.3s ease 0s;
+                        }
                         &.active {
                             position: relative;
                             color: rgba(255, 255, 255, 0.8);
@@ -34,6 +39,11 @@
                 }
                 .buttons__afisha {
                     color: rgba(255, 255, 255, 0.8);
+                    transition: all 0.2s ease 0s;
+                    &:hover {
+                        color: rgb(212, 7, 84);
+                        transition: all 0.3s ease 0s;
+                    }
                 }
             }
             .afisha-main__line {

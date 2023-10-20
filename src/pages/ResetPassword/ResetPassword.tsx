@@ -4,7 +4,7 @@ import Input from 'src/components/Input'
 import Button from 'src/components/Button'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import { RESET_PASSWORD } from 'src/actions/actions'
@@ -16,7 +16,9 @@ const ResetPassword = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [isEmptyEmail, setIsEmptyEmail] = useState(false);
+    
     const [modal, setModal] = useState(<div/>);
+    const isLoading = useSelector(({isLoading}) => isLoading);
 
     const clickButton = () => {
         if (email === '') {
@@ -32,13 +34,19 @@ const ResetPassword = () => {
     return (
         <PageFormTemplate page='Reset password'>
             {modal}
-            <div className='resetPassword'>
-                <p className='resetPassword__text'>You will receive an email with a link to reset your password!</p>
-                <div className="resetPassword__input">
-                    <Input title='Email' type='email' placeholder='Your email' value={email} handleChange={setEmail} defect={isEmptyEmail} />
+            {isLoading ? (
+                <div className="loader">
+                    <div className="loader__element"></div>
                 </div>
-                <ButtonForm handleClick={clickButton}>Reset</ButtonForm>
-            </div>
+            ) : (
+                <div className='resetPassword'>
+                    <p className='resetPassword__text'>You will receive an email with a link to reset your password!</p>
+                    <div className="resetPassword__input">
+                        <Input title='Email' type='email' placeholder='Your email' value={email} handleChange={setEmail} defect={isEmptyEmail} />
+                    </div>
+                    <ButtonForm handleClick={clickButton}>Reset</ButtonForm>
+                </div>
+            )}
         </PageFormTemplate>
     )
 }

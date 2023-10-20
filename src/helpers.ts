@@ -1,6 +1,6 @@
 import { format, addDays } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
-import { IMovie, INews, ISlide } from "./interfaces";
+import { IGiftCard, IMovie, INews, ISlide } from "./interfaces";
 
 import img0 from "src/icons/movies/Барби.jpeg"
 import img1 from "src/icons/movies/Неудержимые_4.jpeg"
@@ -59,10 +59,52 @@ import news_10 from "src/icons/news/news_10.jpg"
 import services from "src/icons/afisha_services.jpg"
 import visa from "src/icons/afisha_visa.jpg"
 import visa_background from "src/icons/afisha_visa_background.png"
-import ModalSuccess from "./components/ModalSuccess";
+
+import afisha_news from "src/icons/afisha_news.jpg"
+
+import presentcard_1 from "src/icons/presentcard/presentcard_1.png"
+import presentcard_2 from "src/icons/presentcard/presentcard_2.png"
+import presentcard_3 from "src/icons/presentcard/presentcard_3.png"
+import presentcard_4 from "src/icons/presentcard/presentcard_4.png"
+import presentcard_5 from "src/icons/presentcard/presentcard_5.png"
+import presentcard_6 from "src/icons/presentcard/presentcard_6.png"
+import presentcard_main from "src/icons/presentcard/presentcard_main.jpg"
 
 const russianMonths = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const arrDaysOfWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
+
+export const arrGiftCarts: IGiftCard[] = [
+    {
+        id: 1,
+        image: presentcard_1,
+        cost: 50
+    },
+    {
+        id: 2,
+        image: presentcard_2,
+        cost: 50
+    },
+    {
+        id: 3,
+        image: presentcard_3,
+        cost: 100
+    },
+    {
+        id: 4,
+        image: presentcard_4,
+        cost: 100
+    },
+    {
+        id: 5,
+        image: presentcard_5,
+        cost: 150
+    },
+    {
+        id: 6,
+        image: presentcard_6,
+        cost: 150
+    }
+]
 
 export const mainEntertainment = {
     id: 1,
@@ -76,8 +118,14 @@ export const mainVisa = {
     title: 'Мир привилегий VISA',
     text: 'АКЦИЯ'
 }
+export const arrPresentCard = {
+    id: 1,
+    image: presentcard_main,
+    title: 'Подарочная карта',
+    text: 'Вдохновляющие премьеры, трогательные театральные постановки, детские праздники или просто новый вкус свежего попкорна!'
+}
 
-export const arrAfishaNews: INews[] = [
+export const arrMainNews: INews[] = [
     {
         id: 1,
         image: services,
@@ -95,6 +143,13 @@ export const arrAfishaNews: INews[] = [
         link: '/visa'
     }
 ]
+
+export const arrAfishaNews: INews = {
+    id: 1,
+    image: afisha_news,
+    title: 'Подарочные карты',
+    description: 'Подарочные карты — лучший способ дарить кино!'
+}
 
 export const arrEntertainmentNews: INews[] = [
     {

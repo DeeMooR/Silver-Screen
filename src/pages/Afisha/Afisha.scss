@@ -1,23 +1,43 @@
 .afisha {
-    .afisha__navigation {
-        padding: 40px 0 0 0;
-    }
-    .afisha__cards {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        .cards__item {
-            width: 270px;
-            padding: 0 10px;
-            margin: 0 auto;
+    .afisha__wrapper {
+        max-width: 1200px;
+        padding: 0 30px;
+        margin: 70px auto 0;
+        .afisha__navigation {
+            padding: 40px 0 0 0;
         }
-        .cards__item.center-4 {
-            grid-column: span 4;
+        .afisha__cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            .cards__item {
+                width: 270px;
+                padding: 0 10px;
+                margin: 0 auto;
+            }
+            .cards__item.center-4 {
+                grid-column: span 4;
+            }
+        }
+        .afisha__text {
+            margin: 60px 0;
+            p {
+                line-height: 26px;
+                margin: 0 0 16px 0;
+                a {
+                    color: rgb(28, 156, 223);
+                    transition: all 0.2s ease 0s;
+                    &:hover {
+                        color: rgb(212, 7, 84);
+                        transition: all 0.3s ease 0s;
+                    }
+                }
+            }
         }
     }
 }
 
 @media (max-width: 1199.98px) {
-    .afisha .afisha__cards {
+    .afisha .afisha__wrapper .afisha__cards {
         .cards__item {
             width: 240px;
         }
@@ -26,7 +46,7 @@
 }
 
 @media (max-width: 1023.98px) {
-    .afisha {
+    .afisha .afisha__wrapper {
         .afisha__cards {
             grid-template-columns: repeat(3, 1fr);
             .cards__item {
@@ -42,14 +62,14 @@
     }
 }
 @media (max-width: 899.98px) {
-    .afisha .afisha__cards {
+    .afisha .afisha__wrapper .afisha__cards {
         .cards__item {
             width: 235px;
         }
     }
 }
 @media (max-width: 767.98px) {
-    .afisha {
+    .afisha .afisha__wrapper {
         .afisha__cards {
             grid-template-columns: repeat(2, 1fr);
             .cards__item {
@@ -65,7 +85,7 @@
     }
 }
 @media (max-width: 599.98px) {
-    .afisha {
+    .afisha .afisha__wrapper {
         .afisha__navigation {
             padding: 45px 0 0 0;
         }

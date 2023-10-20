@@ -14,6 +14,7 @@ import mastercard from "../../icons/mastercard.svg"
 import unionpay from "../../icons/unionpay.svg"
 import belcard from "../../icons/belcard.svg"
 import assist from "../../icons/assist.svg"
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
     return (
@@ -36,8 +37,8 @@ const Footer = () => {
             <div className="footer__legal">
                 <p className='copyright'>© 2018–2023 ООО «Кино маяк»</p>
                 <div className='links'>
-                    <a href="#">Публичная оферта</a>
-                    <a href="#">Соглашение с пользователем</a>
+                    <Link to='/page404'>Публичная оферта</Link>
+                    <Link to='/page404'>Соглашение с пользователем</Link>
                 </div>
             </div>
             <p className='footer__registry'>Зарегистрировано решением Минского районного исполнительного комитета от 13.11.2014 г. в Едином государственном регистре юридических лиц и индивидуальных предпринимателей за №192376313. УНП 192376313, юридический адрес: 220114, г. Минск, ул. П. Мстиславца, д.11, пом. 5, часть пом. 5-11 Интернет-магазин silverscreen.by. Режим работы: круглосуточно. Дата регистрации в Торговом реестре: 01.12.2020 г.</p>

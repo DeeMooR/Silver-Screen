@@ -24,6 +24,7 @@ const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
         if (typeof slide.idFilm === 'number') {
             navigate(`/afisha/${slide.idFilm}`, {state: {fromPage: 'main'}});
         }
+        else navigate('/page404');
     }
 
     return (

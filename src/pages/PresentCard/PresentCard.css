@@ -1,0 +1,66 @@
+.presentCard {
+  margin: -115px auto 0;
+}
+.presentCard .presentCard__main {
+  width: 100%;
+  height: 670px;
+}
+.presentCard .presentCard__wrapper {
+  max-width: 1200px;
+  padding: 30px 30px 0;
+  margin: 0 auto;
+}
+.presentCard .presentCard__wrapper .presentCard__this {
+  font-size: 18px;
+  line-height: 26px;
+  text-align: center;
+  margin: 0 0 30px 0;
+}
+.presentCard .presentCard__wrapper .presentCard__table {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__cards {
+  width: 100%;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__cards .presentCard__item {
+  width: 100%;
+  height: auto;
+  margin: 0 0 18px 0;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__cards .presentCard__item:last-child {
+  margin: 0;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket {
+  min-width: 350px;
+  border: 1px dashed rgb(71, 71, 74);
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 1023.98px) {
+  .presentCard .presentCard__wrapper .presentCard__table {
+    flex-direction: column;
+  }
+  .presentCard .presentCard__wrapper .presentCard__table .presentCard__basket {
+    min-width: 0;
+    min-height: 50px;
+  }
+}
+@media (max-width: 599.98px) {
+  .presentCard .presentCard__main {
+    height: 570px;
+  }
+}
+@media (max-width: 479.98px) {
+  .presentCard .presentCard__main {
+    height: 470px;
+  }
+  .presentCard .presentCard__wrapper .presentCard__this {
+    font-size: 16px;
+    line-height: 23px;
+  }
+}

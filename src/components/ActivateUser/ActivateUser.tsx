@@ -17,8 +17,8 @@ const ActivateUser = () => {
 
     return (
         <PageFormTemplate page='Activating'>
-            <div className='success'>
-                <p className='success__text'>Activation will end soon</p>
+            <div className="loader">
+                <div className="loader__element"></div>
             </div>
         </PageFormTemplate>
     )

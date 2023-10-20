@@ -7,7 +7,7 @@ import { BackgroundSlider } from './styled';
 import './Main.css'
 
 import slider_background from "src/icons/afisha_background.svg"
-import { arrAfishaNews, getArrDate, setTodayDateStore } from 'src/helpers';
+import { arrMainNews, getArrDate, setTodayDateStore } from 'src/helpers';
 import { INews } from 'src/interfaces';
 import MainText from './MainText';
 import { useDispatch } from 'react-redux';
@@ -36,7 +36,7 @@ const Main = () => {
                     </div>
                     <SliderMovies />
                 </BackgroundSlider>
-                {arrAfishaNews.map((item: INews, index: number) => (
+                {arrMainNews.map((item: INews, index: number) => (
                     <div className="news__item" key={index}>
                         {index % 2 === 0
                         ? <HorizontalNews obj={item} page='main' />

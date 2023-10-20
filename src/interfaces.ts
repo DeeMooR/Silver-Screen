@@ -45,3 +45,9 @@ export interface IUser {
     email: string,
     password: string
 }
+
+export interface IGiftCard {
+    id: number,
+    image: string,
+    cost: number
+}
