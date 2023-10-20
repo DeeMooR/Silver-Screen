@@ -19,7 +19,9 @@ const initialState = {
     },
     giftCards: [],
     giftSelect: [],
+    myCards: [],
     isLoading: false,
+    isLoadingPage: false,
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -115,10 +117,28 @@ const rootReducer = (state = initialState, action: any) => {
                 giftSelect: [],
             };
         }
+        case 'SET_MY_CARDS':  {
+            return {
+                ...state,
+                myCards: action.payload
+            };
+        }
+        case 'CLEAR_MY_CARDS':  {
+            return {
+                ...state,
+                myCards: []
+            };
+        }
         case 'SET_LOADING': {
             return {
                 ...state,
                 isLoading: !state.isLoading,
+            };
+        }
+        case 'SET_LOADING_PAGE': {
+            return {
+                ...state,
+                isLoadingPage: !state.isLoadingPage,
             };
         }
         default: return state;

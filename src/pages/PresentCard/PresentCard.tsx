@@ -19,9 +19,10 @@ import ModalPay from 'src/components/ModalPay'
 const PresentCard = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    const arrGiftCarts: IDataGiftCard[] = useSelector(({ giftCards }) => giftCards);
+    const arrGiftCards: IDataGiftCard[] = useSelector(({ giftCards }) => giftCards);
     const arrGiftSelect: IDataGiftSelect[] = useSelector(({ giftSelect }) => giftSelect);
     const isLoading = useSelector(({isLoading}) => isLoading);
+    const isLoadingPage = useSelector(({isLoadingPage}) => isLoadingPage);
     const [modal, setModal] = useState(<div/>);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const token = localStorage.getItem('access');
@@ -50,7 +51,13 @@ const PresentCard = () => {
 
     useEffect(() => {
         dispatch({ type: "CLEAR_GIFT_SELECT" });
-        dispatch(GET_GIFT_CARDS(setModal));
+
+        const fetchData = async () => {
+            dispatch({ type: "SET_LOADING_PAGE" });
+            if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
+            dispatch({ type: "SET_LOADING_PAGE" });
+        };
+        if (!arrGiftCards.length) fetchData();
     },[])
 
     return (
@@ -62,45 +69,51 @@ const PresentCard = () => {
                 </div>
                 <div className="presentCard__wrapper">
                     <p className="presentCard__this">Электронная подарочная карта кинопространств mooon и Silver Screen - это лучшая возможность в пару кликов получить online-подарок, который подарит приятные эмоции другу, коллеге или близкому вам человеку</p>
-                        <div className={`presentCard__table ${isLoading ? 'loading' : ''}`}>
-                            {isLoading &&
-                                <div className="loader">
-                                    <div className="loader__element"></div>
-                                </div>
-                            }
-                            <div className="presentCard__cards">
-                                {arrGiftCarts.map((item: IDataGiftCard) => (
-                                    <div className="cards__item" key={item.id}>
-                                        <GiftCard obj={item} />
-                                    </div>
-                                ))}
+                        {isLoadingPage ? (
+                            <div className="loader">
+                                <div className="loader__element"></div>
                             </div>
-                            <div className={`presentCard__basket ${!arrGiftSelect.length ? 'empty' : ''}`}>
-                                {arrGiftSelect.length ?
-                                    <>
-                                    <p className='presentCard-basket__title'>Корзина</p>
-                                    <div className="basket__items">
-                                        {arrGiftSelect.map((item: IDataGiftSelect, index: number) => (
-                                            <div className="basket__item" key={index}>
-                                                <BasketCard obj={item} />
-                                            </div>
-                                        ))}
+                        ) : (
+                            <div className={`presentCard__table ${isLoading ? 'loading' : ''}`}>
+                                {isLoading &&
+                                    <div className="loader">
+                                        <div className="loader__element"></div>
                                     </div>
-                                    <div className='presentCard-basket__total'>
-                                        <span className='total__text'>Итого:</span>
-                                        <span className='total__sum'>{totalCost} BYN</span>
-                                    </div>
-                                    {token 
-                                    ? <Button color='red' fill handleClick={clickPay}>Подтвердить и перейти к оплате</Button>
-                                    : <Button color='red' fill handleClick={clickSignIn}>Войти в аккаунт</Button>
-                                    }
-                                    <p className='presentCard-basket__text'>Подтверждая приобретение данной карты вы принимаете условия и соглашаетесь с <Link to='/page404'>Публичным договором купли-продажи подарочных карт</Link></p>
-                                    </>
-                                : 
-                                    <p>Корзина пуста</p>
                                 }
+                                <div className="presentCard__cards">
+                                    {arrGiftCards.map((item: IDataGiftCard) => (
+                                        <div className="cards__item" key={item.id}>
+                                            <GiftCard obj={item} />
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className={`presentCard__basket ${!arrGiftSelect.length ? 'empty' : ''}`}>
+                                    {arrGiftSelect.length ?
+                                        <>
+                                        <p className='presentCard-basket__title'>Корзина</p>
+                                        <div className="basket__items">
+                                            {arrGiftSelect.map((item: IDataGiftSelect, index: number) => (
+                                                <div className="basket__item" key={index}>
+                                                    <BasketCard obj={item} />
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className='presentCard-basket__total'>
+                                            <span className='total__text'>Итого:</span>
+                                            <span className='total__sum'>{totalCost} BYN</span>
+                                        </div>
+                                        {token 
+                                        ? <Button color='red' fill handleClick={clickPay}>Подтвердить и перейти к оплате</Button>
+                                        : <Button color='red' fill handleClick={clickSignIn}>Войти в аккаунт</Button>
+                                        }
+                                        <p className='presentCard-basket__text'>Подтверждая приобретение данной карты вы принимаете условия и соглашаетесь с <Link to='/page404'>Публичным договором купли-продажи подарочных карт</Link></p>
+                                        </>
+                                    : 
+                                        <p>Корзина пуста</p>
+                                    }
+                                </div>
                             </div>
-                        </div>
+                        )}
                     <PresentCardText />
                 </div>
                 <ModalPay isOpen={modalIsOpen} setIsOpen={setModalIsOpen} />

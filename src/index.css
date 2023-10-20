@@ -72,6 +72,7 @@ body::-webkit-scrollbar-thumb {
     justify-content: center;
     align-items: center;
     z-index: 10;
+    height: 50px;
 }
 .loader__element {
     width: 48px;
