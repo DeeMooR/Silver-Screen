@@ -207,7 +207,7 @@ export const ADD_GIFT_SELECT = (idCard: number, objForAPI: IDataGiftCard, objFor
     };
 };
 
-export const PAY_GIFT_SELECT = (arrMyCards: IDataMyCard[], setModal: (v: JSX.Element) => void) => {
+export const SEND_MY_CARDS = (arrMyCards: IDataMyCard[], setModal: (v: JSX.Element) => void) => {
     return async () => {
         try {
             arrMyCards.forEach(async (item) => {
@@ -225,6 +225,27 @@ export const PAY_GIFT_SELECT = (arrMyCards: IDataMyCard[], setModal: (v: JSX.Ele
             })
         } catch (err) {
           console.log(err);
+        }
+    };
+};
+
+export const GET_MY_CARDS = (setArrMyCards: (v: IDataMyCard[]) => void, setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        dispatch({ type: "SET_LOADING" });
+
+        try {
+            const response = await fetch(
+                'https://65158a65dc3282a6a3ce950f.mockapi.io/my_cards',
+            )
+            if (response.ok) {
+                const data = await response.json();
+                setArrMyCards(data);
+            } 
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        } finally {
+            dispatch({ type: "SET_LOADING" });
         }
     };
 };

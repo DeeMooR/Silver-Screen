@@ -250,6 +250,17 @@ export const getDateIn180 = () => {
     return formatDate(future);
 };
 
+export const compareEndToday = (end: string) => {
+    function parseDate(dateString: any) {
+        const parts = dateString.split(".");
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+    }
+    const dateToday = parseDate(getTodayDate());
+    const dateEnd = parseDate(end);
+    if (dateToday > dateEnd) return true;
+    return false;
+}
+
 export const getArrDate = () => {
     const datesArray: string[] = [];
     let currentDate = new Date();

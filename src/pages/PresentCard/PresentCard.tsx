@@ -8,7 +8,7 @@ import { IDataGiftCard, IDataGiftSelect, IDataMyCard } from 'src/interfaces'
 import GiftCard from 'src/components/GiftCard/GiftCard'
 import PresentCardText from './PresentCardText'
 import { useDispatch, useSelector } from 'react-redux'
-import { GET_GIFT_CARDS, PAY_GIFT_SELECT } from 'src/actions/actions'
+import { GET_GIFT_CARDS, SEND_MY_CARDS } from 'src/actions/actions'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import BasketCard from 'src/components/BasketCard'
@@ -45,7 +45,7 @@ const PresentCard = () => {
             }
             return objMyCard;
         })
-        dispatch(PAY_GIFT_SELECT(arrMyCards, setModal));
+        dispatch(SEND_MY_CARDS(arrMyCards, setModal));
     }
 
     useEffect(() => {

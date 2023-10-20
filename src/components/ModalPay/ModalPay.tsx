@@ -4,7 +4,6 @@ import './ModalPay.css'
 
 import cross from "src/icons/cross.svg"
 import { Link, useNavigate } from 'react-router-dom';
-import { GET_GIFT_CARDS } from 'src/actions/actions';
 import { useDispatch } from 'react-redux';
 
 interface IModalPay {

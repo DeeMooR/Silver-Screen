@@ -20,6 +20,8 @@ const Afisha = () => {
     let searchLanguage = useSelector(({ search }) => search.language);
     const dispatch = useDispatch();
 
+    const [activePage, setActivePage] = useState(1);
+
     dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: '' });
     window.scrollTo({top: 0});
     
@@ -154,7 +156,7 @@ const Afisha = () => {
         <PageTemplate>
             <div className='afisha'>
                 <div className="afisha__wrapper">
-                    <TitleWithSwitch title='Афиша кино' switch_1='Сейчас в кино' switch_2='Скоро' active='1' />
+                    <TitleWithSwitch title='Афиша кино' switch_1='Сейчас в кино' switch_2='Скоро' active={activePage} setActive={setActivePage} />
                     <div className='afisha__navigation'>
                         <Navigation />
                     </div>
