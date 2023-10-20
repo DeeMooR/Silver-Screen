@@ -28,6 +28,7 @@ export interface ISlide {
     title?: string,
     text?: string,
     textButton?: string,
+    link?: string
 }
 
 export interface INews {
@@ -46,8 +47,15 @@ export interface IUser {
     password: string
 }
 
-export interface IGiftCard {
+export interface IDataGiftCard {
     id: number,
     image: string,
+    cost: number,
+    amount: number
+}
+
+export interface IDataGiftSelect {
+    idCard: number,
+    number: number,
     cost: number
 }

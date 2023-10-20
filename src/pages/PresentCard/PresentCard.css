@@ -17,28 +17,95 @@
   margin: 0 0 30px 0;
 }
 .presentCard .presentCard__wrapper .presentCard__table {
+  position: relative;
   display: flex;
   justify-content: space-between;
-  gap: 18px;
+  gap: 22px;
+}
+.presentCard .presentCard__wrapper .presentCard__table.loading:before {
+  content: "";
+  position: absolute;
+  inset: 0px;
+  z-index: 2;
+  border-radius: 24px;
+  background-color: #27272A;
+  opacity: 0.5;
+}
+.presentCard .presentCard__wrapper .presentCard__table .loader {
+  position: absolute;
+  inset: 0px;
 }
 .presentCard .presentCard__wrapper .presentCard__table .presentCard__cards {
   width: 100%;
 }
-.presentCard .presentCard__wrapper .presentCard__table .presentCard__cards .presentCard__item {
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__cards .cards__item {
   width: 100%;
   height: auto;
   margin: 0 0 18px 0;
 }
-.presentCard .presentCard__wrapper .presentCard__table .presentCard__cards .presentCard__item:last-child {
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__cards .cards__item:last-child {
   margin: 0;
 }
 .presentCard .presentCard__wrapper .presentCard__table .presentCard__basket {
-  min-width: 350px;
+  max-width: 350px;
+  width: 100%;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket.empty {
   border: 1px dashed rgb(71, 71, 74);
   border-radius: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .presentCard-basket__title {
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 700;
+  margin: 20px 0 32px;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .basket__items {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .basket__items::-webkit-scrollbar {
+  width: 7px;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .basket__items::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .basket__items .basket__item {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .basket__items .basket__item:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .presentCard-basket__total {
+  margin: 20px 0 15px;
+  line-height: 26px;
+  text-align: center;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .presentCard-basket__total .total__text {
+  margin: 0 5px 0 0;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .presentCard-basket__total .total__sum {
+  font-size: 24px;
+  font-weight: 700;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket button {
+  width: 100%;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .presentCard-basket__text {
+  line-height: 26px;
+  padding: 27px;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .presentCard-basket__text a {
+  color: rgb(28, 156, 223);
+  transition: all 0.2s ease 0s;
+}
+.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .presentCard-basket__text a:hover {
+  color: rgb(212, 7, 84);
+  transition: all 0.3s ease 0s;
 }
 
 @media (max-width: 1023.98px) {
@@ -46,13 +113,17 @@
     flex-direction: column;
   }
   .presentCard .presentCard__wrapper .presentCard__table .presentCard__basket {
-    min-width: 0;
-    min-height: 50px;
+    padding: 0 20px;
+    max-width: 100%;
+    min-height: 60px;
   }
 }
 @media (max-width: 599.98px) {
   .presentCard .presentCard__main {
     height: 570px;
+  }
+  .presentCard .presentCard__wrapper .presentCard__table .presentCard__basket {
+    padding: 0;
   }
 }
 @media (max-width: 479.98px) {

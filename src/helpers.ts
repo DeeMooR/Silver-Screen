@@ -1,6 +1,6 @@
 import { format, addDays } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
-import { IGiftCard, IMovie, INews, ISlide } from "./interfaces";
+import { IMovie, INews, ISlide } from "./interfaces";
 
 import img0 from "src/icons/movies/Барби.jpeg"
 import img1 from "src/icons/movies/Неудержимые_4.jpeg"
@@ -25,15 +25,15 @@ import img19 from "src/icons/movies/Особняк_с_привидениями.j
 import img20 from "src/icons/movies/Создатель.jpeg"
 import img21 from "src/icons/movies/Смешарики_снимают_кино.jpeg"
 
-import img100 from "src/icons/main_slidebar/Создатель.jpg"
-import img101 from "src/icons/main_slidebar/Смешарики_снимают_кино.jpg"
-import img102 from "src/icons/main_slidebar/Мой_хатико.jpg"
-import img103 from "src/icons/main_slidebar/Призраки_в_Венеции.jpg"
-import img104 from "src/icons/main_slidebar/Дурные_деньги.jpg"
-import img105 from "src/icons/main_slidebar/Особняк_с_привидениями.jpg"
-import img106 from "src/icons/main_slidebar/Барби.jpg"
-import img107 from "src/icons/main_slidebar/Подарочная_карта.png"
-import img108 from "src/icons/main_slidebar/День_рождения.jpg"
+import img101 from "src/icons/main_slidebar/Создатель.jpg"
+import img102 from "src/icons/main_slidebar/Смешарики_снимают_кино.jpg"
+import img103 from "src/icons/main_slidebar/Мой_хатико.jpg"
+import img104 from "src/icons/main_slidebar/Призраки_в_Венеции.jpg"
+import img105 from "src/icons/main_slidebar/Дурные_деньги.jpg"
+import img106 from "src/icons/main_slidebar/Особняк_с_привидениями.jpg"
+import img107 from "src/icons/main_slidebar/Барби.jpg"
+import img108 from "src/icons/main_slidebar/Подарочная_карта.png"
+import img109 from "src/icons/main_slidebar/День_рождения.jpg"
 
 import entertainment_1 from "src/icons/entertainment/entertainment_1.jpg"
 import entertainment_2 from "src/icons/entertainment/entertainment_2.jpg"
@@ -73,42 +73,9 @@ import presentcard_main from "src/icons/presentcard/presentcard_main.jpg"
 const russianMonths = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const arrDaysOfWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
 
-export const arrGiftCarts: IGiftCard[] = [
-    {
-        id: 1,
-        image: presentcard_1,
-        cost: 50
-    },
-    {
-        id: 2,
-        image: presentcard_2,
-        cost: 50
-    },
-    {
-        id: 3,
-        image: presentcard_3,
-        cost: 100
-    },
-    {
-        id: 4,
-        image: presentcard_4,
-        cost: 100
-    },
-    {
-        id: 5,
-        image: presentcard_5,
-        cost: 150
-    },
-    {
-        id: 6,
-        image: presentcard_6,
-        cost: 150
-    }
-]
-
 export const mainEntertainment = {
     id: 1,
-    image: entertainment_main,
+    image: 'https://i.ibb.co/gTsqwGk/entertainment-main.png',
     title: 'Развлечения',
     text: 'Смотрите концерты, пойте в караоке, отмечайте семейные праздники или играйте в видеоигры на большом экране'
 }
@@ -120,7 +87,7 @@ export const mainVisa = {
 }
 export const arrPresentCard = {
     id: 1,
-    image: presentcard_main,
+    image: 'https://i.ibb.co/C0M7cYR/presentcard-main.jpg',
     title: 'Подарочная карта',
     text: 'Вдохновляющие премьеры, трогательные театральные постановки, детские праздники или просто новый вкус свежего попкорна!'
 }
@@ -148,46 +115,48 @@ export const arrAfishaNews: INews = {
     id: 1,
     image: afisha_news,
     title: 'Подарочные карты',
-    description: 'Подарочные карты — лучший способ дарить кино!'
+    description: 'Подарочные карты — лучший способ дарить кино!',
+    link: '/presentcard'
 }
 
 export const arrEntertainmentNews: INews[] = [
     {
         id: 1,
-        image: entertainment_1,
-        background_image: entertainment_bg1,
+        image: 'https://i.ibb.co/2nGnVwd/entertainment-1.jpg',
+        background_image: 'https://i.ibb.co/7k7wG5Z/entertainment-bg1.jpg',
         title: 'Аренда кинопространства',
         description: 'Смотрите, играйте, учитесь, отмечайте - весь кинозал в вашем распоряжении.'
     },
     {
         id: 2,
-        image: entertainment_2,
-        background_image: entertainment_bg2,
+        image: 'https://i.ibb.co/z2gjpfM/entertainment-2.jpg',
+        background_image: 'https://i.ibb.co/BrPftpS/entertainment-bg2.jpg',
         title: 'Праздник в кино',
         description: 'Ярко и необычно отпразднуйте День Рождения ваших маленьких героев',
     },
     {
         id: 3,
-        image: entertainment_3,
-        background_image: entertainment_bg1,
+        image: 'https://i.ibb.co/ChSNScB/entertainment-3.jpg',
+        background_image: 'https://i.ibb.co/7k7wG5Z/entertainment-bg1.jpg',
         title: 'Media room',
         description: 'Современный зал с лазерным проектором Samsung Premiere c 4К разрешением и аудиосистемой с функцией объемного звука для компаний до 9 человек.',
     },
     {
         id: 4,
-        image: entertainment_4,
-        background_image: entertainment_bg3,
+        image: 'https://i.ibb.co/71DBthb/entertainment-4.png',
+        background_image: 'https://i.ibb.co/ypPtz2v/entertainment-bg3.jpg',
         title: 'Игровая комната - XPLAY',
         description: 'Новейшие приставки и десятки видеоигр на выбор. Доступно только в mooon в ТРК Triniti (Гродно)',
     },
     {
         id: 5,
-        image: entertainment_5,
-        background_image: entertainment_bg2,
+        image: 'https://i.ibb.co/k1pJsXG/entertainment-5.jpg',
+        background_image: 'https://i.ibb.co/BrPftpS/entertainment-bg2.jpg',
         title: 'Комната для вечеринок – Party Room',
         description: 'Отдельная комната с большим экраном, удобными диванчиками, видеоиграми и караоке для незабываемого отдыха с друзьями и близкими. Доступно только в mooon в ТРК Triniti (Гродно)',
     }
 ]
+
 
 export const arrNewsPageNews: INews[] = [
     {
@@ -349,15 +318,15 @@ export const setTodayDateStore = (searchDate: string, dispatch: any) => {
 }
 
 export const arrSliderSwiper: ISlide[] = [
-    {id: 0, image: img100, idFilm: 20},
-    {id: 1, image: img101, idFilm: 21},
-    {id: 2, image: img102, idFilm: 16},
-    {id: 3, image: img103, idFilm: 17},
-    {id: 4, image: img104, idFilm: 18},
-    {id: 5, image: img105, idFilm: 19},
-    {id: 6, image: img106, idFilm: 0},
-    {id: 7, image: img107, title: 'Детский день рождения в кино', text: ' ', textButton: 'Отпраздновать в mooon'},
-    {id: 8, image: img108, title: 'Дарите радость от неожиданных эмоций!', text: 'Электронные подарочные карты mooon и silver screen', textButton: 'Подробнее'},
+    {id: 1, image: img101, idFilm: 20},
+    {id: 2, image: img102, idFilm: 21},
+    {id: 3, image: img103, idFilm: 16},
+    {id: 4, image: img104, idFilm: 17},
+    {id: 5, image: img105, idFilm: 18},
+    {id: 6, image: img106, idFilm: 19},
+    {id: 7, image: img107, idFilm: 0},
+    {id: 8, image: img108, title: 'Дарите радость от неожиданных эмоций!', text: 'Электронные подарочные карты mooon и silver screen', textButton: 'Подробнее', link: '/presentcard'},
+    {id: 9, image: img109, title: 'Детский день рождения в кино', text: ' ', textButton: 'Отпраздновать в mooon'},
 ]
 
 export const arrMovies: IMovie[] = [

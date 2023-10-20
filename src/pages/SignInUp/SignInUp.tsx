@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react'
 import './SignInUp.css'
 import Input from 'src/components/Input'
 import Button from 'src/components/Button'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
@@ -31,6 +31,9 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
     const [modal, setModal] = useState(<div/>);
     const isLoading = useSelector(({isLoading}) => isLoading);
 
+    const location = useLocation();
+    const fromPage = (location.state && location.state.fromPage) ? location.state.fromPage : '';
+
     const clickButton = () => {
         if (page === 'Sign Up' && name === '') setIsEmptyName(true);
         if (page === 'Sign Up' && (password !== confirmPassword || password === '' || confirmPassword === '')) setIsMismatch(true);
@@ -38,7 +41,7 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
         if (page === 'Sign In' && password !== '') setIsMismatch(false);    // если после красного password в Sign Up перейти в Sign In и нажать на button
         if (email === '') setIsEmptyEmail(true);
         
-        if (page === 'Sign In' && email !== '' && password !== '') dispatch(SIGN_IN(navigate, email, password, setModal));
+        if (page === 'Sign In' && email !== '' && password !== '') dispatch(SIGN_IN(navigate, email, password, fromPage, setModal));
         if (page === 'Sign Up' && name !== '' && email !== '' && password !== '' && password === confirmPassword) {
             dispatch(CREATE_USER(navigate, {username: name, email, password}, setModal));
         }

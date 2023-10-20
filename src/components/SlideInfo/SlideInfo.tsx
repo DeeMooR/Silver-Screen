@@ -13,18 +13,19 @@ interface ISlideInfo {
 const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
     const navigate = useNavigate();
     let filmTitle, filmGenres;
-    const isMain = slide.idFilm || slide.idFilm === 0 || slide.textButton;
+    const isMain = slide.idFilm || slide.textButton;
 
-    if (typeof slide.idFilm === 'number') {
+    if (slide.idFilm || slide.idFilm === 0) {
         filmTitle = arrMovies[slide.idFilm].title;
         filmGenres = arrMovies[slide.idFilm].genres.join(', ') + ', ' + arrMovies[slide.idFilm].age + '+';
     }
 
     const clickButton = () => {
-        if (typeof slide.idFilm === 'number') {
+        if (slide.idFilm) {
             navigate(`/afisha/${slide.idFilm}`, {state: {fromPage: 'main'}});
-        }
-        else navigate('/page404');
+        } else if (slide.link) {
+            navigate(slide.link);
+        } else navigate('/page404');
     }
 
     return (

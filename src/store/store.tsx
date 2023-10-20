@@ -1,6 +1,7 @@
 import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools} from 'redux-devtools-extension'
+import { IDataGiftCard, IDataGiftSelect } from 'src/interfaces';
 
 const initialState = {
     navActive: '',
@@ -16,6 +17,8 @@ const initialState = {
         email: '',
         id: null,
     },
+    giftCards: [],
+    giftSelect: [],
     isLoading: false,
 };
 
@@ -60,7 +63,59 @@ const rootReducer = (state = initialState, action: any) => {
                 user: action.payload
             };
         }
-        case 'SET_LOADING':  {
+        case 'SET_GIFT_CARDS':  {
+            return {
+                ...state,
+                giftCards: action.payload
+            };
+        }
+        case 'CHANGE_AMOUNT_GIFT_CARDS': {
+            const id = action.payload;
+            const i = state.giftCards.findIndex((card: IDataGiftCard) => card.id === id);   // индекс в массиве giftCards
+            if (i !== -1) {
+                const newGiftCards: IDataGiftCard[] = [...state.giftCards];
+                newGiftCards[i] = {
+                  ...newGiftCards[i],
+                  amount: newGiftCards[i].amount + 1,
+                };
+            
+                return {
+                    ...state,
+                    giftCards: newGiftCards,
+                };
+            }
+            return state;
+        }
+        case 'ADD_GIFT_SELECT': {
+            return {
+                ...state,
+                giftSelect: [
+                    ...state.giftSelect, 
+                    action.payload
+                ],
+            };
+        }
+        case 'REMOVE_GIFT_SELECT': {
+            const idCardRemove = action.payload;
+            const i = state.giftSelect.findIndex((item: IDataGiftSelect) => item.idCard === idCardRemove);
+            if (i !== -1) {
+                const newGiftSelect = [...state.giftSelect];
+                newGiftSelect.splice(i, 1);
+
+                return {
+                    ...state,
+                    giftSelect: newGiftSelect,
+                };
+            }
+            return state;
+        }
+        case 'CLEAR_GIFT_SELECT': {
+            return {
+                ...state,
+                giftSelect: [],
+            };
+        }
+        case 'SET_LOADING': {
             return {
                 ...state,
                 isLoading: !state.isLoading,
@@ -71,6 +126,7 @@ const rootReducer = (state = initialState, action: any) => {
 };
 
 const store = createStore(
+    //@ts-expect-error
     rootReducer, 
     composeWithDevTools(applyMiddleware(thunk))
 );
