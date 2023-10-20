@@ -1,11 +1,11 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { IDataGiftCard, IDataGiftSelect } from 'src/interfaces'
 import './GiftCard.css'
 
 import plus from "src/icons/plus.png"
 import minus from "src/icons/minus.png"
 import { ThunkDispatch } from 'redux-thunk'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { AnyAction } from 'redux'
 import { ADD_GIFT_SELECT } from 'src/actions/actions'
 
@@ -15,8 +15,13 @@ interface IGiftCard {
 
 const GiftCard:FC<IGiftCard> = ({obj}) => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
+    const arrGiftSelect = useSelector(({ giftSelect }) => giftSelect);
     const [amountSelect, setAmountSelect] = useState(0);
     const [modal, setModal] = useState(<div/>);
+  
+    useEffect(() => {
+        if (!arrGiftSelect.length) setAmountSelect(0);
+    }, [arrGiftSelect])
 
     const clickMinus = () => {
         if (amountSelect > 0) {

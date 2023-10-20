@@ -52,7 +52,7 @@ const Account = () => {
         <PageTemplate wrapper>
             {modal}
             <div className='account'>
-                <TitleWithSwitch title='Аккаунт' switch_1='Профиль' switch_2='Мои билеты' active='1' />
+                <TitleWithSwitch title='Аккаунт' switch_1='Профиль' switch_2='Мои покупки' active='1' />
                 <div className="profile">
                     <p className='profile-section__title'>Учётная запись</p>
                     <div className="profile__name-email">

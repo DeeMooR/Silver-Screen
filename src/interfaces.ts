@@ -59,3 +59,11 @@ export interface IDataGiftSelect {
     number: number,
     cost: number
 }
+
+export interface IDataMyCard {
+    numberCard: number,
+    idCard: number,
+    start: string,
+    end: string,
+    status: boolean
+}

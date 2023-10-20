@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import './PresentCard.css'
 import SlideInfo from 'src/components/SlideInfo'
-import { arrPresentCard } from 'src/helpers'
+import { arrPresentCard, getDateIn180, getTodayDate } from 'src/helpers'
 import PageTemplate from 'src/components/PageTemplate'
 import { BackgroundPresentCard } from './styled'
-import { IDataGiftCard, IDataGiftSelect } from 'src/interfaces'
+import { IDataGiftCard, IDataGiftSelect, IDataMyCard } from 'src/interfaces'
 import GiftCard from 'src/components/GiftCard/GiftCard'
 import PresentCardText from './PresentCardText'
 import { useDispatch, useSelector } from 'react-redux'
-import { GET_GIFT_CARDS } from 'src/actions/actions'
+import { GET_GIFT_CARDS, PAY_GIFT_SELECT } from 'src/actions/actions'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import BasketCard from 'src/components/BasketCard'
 import Button from 'src/components/Button'
 import { Link, useNavigate } from 'react-router-dom'
+import ModalPay from 'src/components/ModalPay'
 
 const PresentCard = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
@@ -22,6 +23,7 @@ const PresentCard = () => {
     const arrGiftSelect: IDataGiftSelect[] = useSelector(({ giftSelect }) => giftSelect);
     const isLoading = useSelector(({isLoading}) => isLoading);
     const [modal, setModal] = useState(<div/>);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const token = localStorage.getItem('access');
 
     const totalCost = arrGiftSelect.reduce((acc, item) => {
@@ -30,6 +32,20 @@ const PresentCard = () => {
 
     const clickSignIn = () => {
         navigate('/sign-in', {state: {fromPage: 'presentcard'}});
+    }
+    const clickPay = () => {
+        setModalIsOpen(true);
+        const arrMyCards: IDataMyCard[] = arrGiftSelect.map((item) => {
+            const objMyCard: IDataMyCard = {
+                numberCard: item.number,
+                idCard: item.idCard,
+                start: getTodayDate(),
+                end: getDateIn180(),
+                status: true
+            }
+            return objMyCard;
+        })
+        dispatch(PAY_GIFT_SELECT(arrMyCards, setModal));
     }
 
     useEffect(() => {
@@ -75,7 +91,7 @@ const PresentCard = () => {
                                         <span className='total__sum'>{totalCost} BYN</span>
                                     </div>
                                     {token 
-                                    ? <Button color='red' fill>Подтвердить и перейти к оплате</Button>
+                                    ? <Button color='red' fill handleClick={clickPay}>Подтвердить и перейти к оплате</Button>
                                     : <Button color='red' fill handleClick={clickSignIn}>Войти в аккаунт</Button>
                                     }
                                     <p className='presentCard-basket__text'>Подтверждая приобретение данной карты вы принимаете условия и соглашаетесь с <Link to='/page404'>Публичным договором купли-продажи подарочных карт</Link></p>
@@ -87,6 +103,7 @@ const PresentCard = () => {
                         </div>
                     <PresentCardText />
                 </div>
+                <ModalPay isOpen={modalIsOpen} setIsOpen={setModalIsOpen} />
             </div>
         </PageTemplate>
     )

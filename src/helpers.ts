@@ -230,17 +230,24 @@ export const arrNewsPageNews: INews[] = [
     }
 ]
 
-export const getTodayDate = () => {
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.getDate()} ${russianMonths[currentDate.getMonth()]}`;
+function formatDate(date: Date) {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    const formattedDate = `${day.toString().padStart(2, '0')}.${month.toString().padStart(2, '0')}.${year}`;
     return formattedDate;
+}
+
+export const getTodayDate = () => {
+    const today = new Date();
+    return formatDate(today);
 };
 
-export const getTomorrowDate = () => {
-    const currentDate = new Date();
-    const tomorrowDate = addDays(currentDate, 1);
-    const formattedDate = `${tomorrowDate.getDate()} ${russianMonths[tomorrowDate.getMonth()]}`;
-    return formattedDate;
+export const getDateIn180 = () => {
+    const future = new Date();
+    future.setDate(future.getDate() + 180);
+    return formatDate(future);
 };
 
 export const getArrDate = () => {

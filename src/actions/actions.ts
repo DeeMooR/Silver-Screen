@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { IDataGiftCard, IDataGiftSelect, IUser } from "src/interfaces";
+import { IDataGiftCard, IDataGiftSelect, IDataMyCard, IUser } from "src/interfaces";
 import instance from "src/axiosConfig";
 import ModalSuccess from "src/components/ModalSuccess";
 import { modalShowMessege } from "src/helpersModal";
@@ -203,6 +203,28 @@ export const ADD_GIFT_SELECT = (idCard: number, objForAPI: IDataGiftCard, objFor
           console.log(err);
         } finally {
             dispatch({ type: "SET_LOADING" });
+        }
+    };
+};
+
+export const PAY_GIFT_SELECT = (arrMyCards: IDataMyCard[], setModal: (v: JSX.Element) => void) => {
+    return async () => {
+        try {
+            arrMyCards.forEach(async (item) => {
+                const response = await fetch(
+                    'https://65158a65dc3282a6a3ce950f.mockapi.io/my_cards',
+                    {
+                        method: "POST",
+                        body: JSON.stringify(item),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                )
+                if (!response.ok) modalShowMessege(setModal, false);
+            })
+        } catch (err) {
+          console.log(err);
         }
     };
 };
