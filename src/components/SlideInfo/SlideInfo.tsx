@@ -13,16 +13,16 @@ interface ISlideInfo {
 const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
     const navigate = useNavigate();
     let filmTitle, filmGenres;
-    const isMain = slide.idFilm || slide.textButton;
+    const isMain = typeof slide.idFilm === 'number' || slide.textButton;
 
-    if (slide.idFilm || slide.idFilm === 0) {
+    if (typeof slide.idFilm === 'number') {
         filmTitle = arrMovies[slide.idFilm].title;
         filmGenres = arrMovies[slide.idFilm].genres.join(', ') + ', ' + arrMovies[slide.idFilm].age + '+';
     }
 
     const clickButton = () => {
-        if (slide.idFilm) {
-            navigate(`/afisha/${slide.idFilm}`, {state: {fromPage: 'main'}});
+        if (typeof slide.idFilm === 'number') {
+            navigate(`/afisha/${slide.idFilm}`, {state: {fromPage: '/main'}});
         } else if (slide.link) {
             navigate(slide.link);
         } else navigate('/page404');

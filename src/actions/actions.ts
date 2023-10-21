@@ -69,8 +69,9 @@ export const SIGN_IN = (navigate: any, email: string, password: string, fromPage
             .then((data) => data.json())
             .then(({access, refresh}) => {
                 if (access) {
-                    if (fromPage === 'presentcard') navigate('/presentcard');
-                    else navigate("/");
+                    console.log(fromPage)
+                    if (fromPage) navigate(`${fromPage}`);
+                    else navigate(-1);
                     console.log({access, refresh});
                     localStorage.setItem("access", access);
                     localStorage.setItem("refresh", refresh);

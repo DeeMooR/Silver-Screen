@@ -17,7 +17,7 @@ const MovieCard:FC<IMovieCard> = ({obj, page}) => {
     const [buttonText, setButtonText] = useState(`${window.innerWidth < 900 ? 'Купить' : 'Купить билет'}`);
 
     const moveNewPage = () => {
-        navigate(`/afisha/${obj.id}`, {state: {fromPage: `${page}`}});
+        navigate(`/afisha/${obj.id}`, {state: {fromPage: `/${page}`}});
     }
   
     useEffect(() => {

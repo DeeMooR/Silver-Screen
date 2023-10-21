@@ -47,7 +47,7 @@ const Account = () => {
     }
     const clickExit = () => {
         localStorage.removeItem('access');
-        navigate('/sign-in', {state: {fromPage: 'account'}});
+        navigate('/sign-in', {state: {fromPage: '/'}});
     }
     const clickSave = () => {
         if (new_password !== confirm_new_password) setIsMismatch(true);

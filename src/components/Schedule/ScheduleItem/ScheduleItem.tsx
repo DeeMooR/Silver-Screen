@@ -16,7 +16,7 @@ const ScheduleItem:FC<IScheduleItem> = ({video, seance}) => {
     const {id} = useParams<{id: string}>();
 
     const clickSeance = () => {
-        navigate(`/afisha/${id}/${searchDate}/${seance.room}/${seance.time}`);
+        navigate(`/buy-ticket/${id}/${searchDate}/${seance.room}/${seance.time}`);
     }
     
     return (

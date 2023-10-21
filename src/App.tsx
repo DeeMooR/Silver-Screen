@@ -92,7 +92,7 @@ function App() {
                 <Route path='/' element={<Main />} />
                 <Route path='/afisha' element={<Afisha />} />
                 <Route path='/afisha/:id' element={<MoviePage />} />
-                <Route path='/afisha/:id/:date/:room/:time' element={<BuyTicketPage />} />
+                <Route path='/buy-ticket/:id/:date/:room/:time' element={<BuyTicketPage />} />
                 <Route path='/entertainment' element={<Entertainment />} />
                 <Route path='/news' element={<NewsPage />} />
                 <Route path='/visa' element={<VisaPage />} />

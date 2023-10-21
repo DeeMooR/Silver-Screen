@@ -20,8 +20,10 @@ const MoviePage = () => {
     if (id) movie = arrMovies[+id];
 
     const location = useLocation();
+    const customBackStr = (!location.state || (location.state.fromPage !== 'main' && location.state.fromPage !== 'afisha')) ? '/' : '';
+    console.log(customBackStr)
     let fullFirstDate;
-    if (location.state.fromPage === 'main') {
+    if (location.state && location.state.fromPage === 'main') {
         fullFirstDate = getArrDate().find(item => {
             if (movie && movie.schedule[0].date === item.split(', ')[1]) return true;
             return false;
@@ -43,7 +45,7 @@ const MoviePage = () => {
     return (
         <>
         {movie &&
-            <PageMovieTemplate movie={movie}>
+            <PageMovieTemplate movie={movie} customBack={customBackStr}>
                 <div className='moviePage'>
                     <Navigation />
                     <div className="moviePage__content">

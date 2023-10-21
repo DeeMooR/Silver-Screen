@@ -32,7 +32,7 @@ const PresentCard = () => {
     }, 0);
 
     const clickSignIn = () => {
-        navigate('/sign-in', {state: {fromPage: 'presentcard'}});
+        navigate('/sign-in', {state: {fromPage: '/presentcard'}});
     }
     const clickPay = () => {
         setModalIsOpen(true);
@@ -50,6 +50,7 @@ const PresentCard = () => {
     }
 
     useEffect(() => {
+        window.scrollTo({top: 0});
         dispatch({ type: "CLEAR_GIFT_SELECT" });
 
         const fetchData = async () => {

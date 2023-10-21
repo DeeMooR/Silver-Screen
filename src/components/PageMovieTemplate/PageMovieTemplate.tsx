@@ -9,9 +9,10 @@ import { useNavigate } from 'react-router-dom'
 interface IPageMovieTemplate {
     children: ReactNode,
     movie: IMovie,
+    customBack?: string,
 }
 
-const PageMovieTemplate:FC<IPageMovieTemplate> = ({children, movie}) => {
+const PageMovieTemplate:FC<IPageMovieTemplate> = ({children, movie, customBack}) => {
     const navigate = useNavigate();
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -33,6 +34,11 @@ const PageMovieTemplate:FC<IPageMovieTemplate> = ({children, movie}) => {
             if (scrollBlock) scrollBlock.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    const clickBack = () => {
+        if (customBack) navigate(`${customBack}`);
+        else navigate(-1);
+    }
     
     return (
         <>
@@ -40,7 +46,7 @@ const PageMovieTemplate:FC<IPageMovieTemplate> = ({children, movie}) => {
             <div className='pageMovieTemplate'>
                 <div className={`pageMovieTemplate__header ${isScrolled ? 'scrollHeader' : ''}`}>
                     <div className="header__wrapper">
-                        <img src={left} onClick={() => navigate(-1)} alt="left"/>
+                        <img src={left} onClick={clickBack} alt="left"/>
                         <span>{movie.title}</span>
                     </div>
                 </div>

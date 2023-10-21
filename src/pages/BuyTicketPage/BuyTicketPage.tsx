@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './BuyTicketPage.css'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { IMovie, IRow } from 'src/interfaces';
 import { addDayOfWeek, arrMovies, arrRooms, arrSeatType, formateDateItem, getAudio, getTimePlusDuration } from 'src/helpers';
@@ -17,7 +17,9 @@ import Button from 'src/components/Button';
 
 const BuyTicketPage = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {id, date, room, time} = useParams<{id: string, date: string, room: string, time: string}>();
+    const token = localStorage.getItem('access');
 
     const newId = id || '';
     const newDate = date || '';
@@ -40,13 +42,22 @@ const BuyTicketPage = () => {
         }
         return types;
     }, []);
-
     const exampleImage = arrSeatType[0].image;
+
+    const fullURL = window.location.href;
+    const movieURL = '/afisha' + fullURL.split('buy-ticket')[1].split('/').slice(0, 2).join('/');
+    console.log(movieURL)
+
+    const clickSignIn = () => {
+        const fullURL = window.location.href
+        const url = fullURL.split('3000')[1];
+        navigate('/sign-in', {state: {fromPage: url}});
+    }
 
     return (
         <>
         {movie &&
-            <PageMovieTemplate movie={movie}>
+            <PageMovieTemplate movie={movie} customBack={movieURL}>
                 <div className='buyTicketPage'>
                     <div className="buyTicketPage__header">
                         <img src={movie.image} className='buyTicketPage__image' alt="poster" />
@@ -104,8 +115,11 @@ const BuyTicketPage = () => {
                                 ))}
                             </div>
                             <div className="buyTicketPage-basket__text">Скидки Red Carpet Club будут рассчитаны после выбора мест.<br/>Покупая билет(-ы), вы автоматически соглашаетесь с <Link to='/page404'>Правилами посещения кинотеатров</Link>.</div>
-                            <div className="buyTicketPage-basket__button">
-                                <Button color='grey'>Выберите места</Button>
+                            <div className="buyTicketPage-basket__button no-active">
+                                {token 
+                                ? <Button color='grey' className='no-active' fill >Выберите места</Button>
+                                : <Button color='red' fill handleClick={clickSignIn}>Войти в аккаунт</Button>
+                                }
                             </div>
                         </div>
                     </div>

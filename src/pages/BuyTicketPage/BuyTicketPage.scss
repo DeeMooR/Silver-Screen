@@ -147,7 +147,9 @@
             .buyTicketPage-basket__button {
                 button {
                     width: 100%;
-                    color: rgba(255, 255, 255, 0.35);
+                    &.no-active {
+                        cursor: default;
+                    }
                 }
             }
         }
@@ -174,7 +176,6 @@
                     z-index: 3;
                     button {
                         margin: 0;
-                        cursor: default;
                     }
                 }
             }

@@ -16,7 +16,7 @@ const PageFormTemplate:FC<IPageFormTemplate> = ({children, page}) => {
     const location = useLocation();
 
     const clickLeft = () => {
-        if (location.state && location.state.fromPage === 'account') navigate('/');
+        if (location.state && location.state.fromPage !== '/presentcard' && location.state.fromPage.slice(0, 11) !== '/buy-ticket') navigate('/');
         else navigate(-1);
     }
     return (
