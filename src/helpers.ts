@@ -1,6 +1,6 @@
 import { format, addDays } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
-import { IMovie, INews, IRoomSeat, ISlide } from "./interfaces";
+import { IMovie, INews, IRoom, ISeatType, ISlide } from "./interfaces";
 
 import img0 from "src/icons/movies/Барби.jpeg"
 import img1 from "src/icons/movies/Неудержимые_4.jpeg"
@@ -62,13 +62,8 @@ import visa_background from "src/icons/afisha_visa_background.png"
 
 import afisha_news from "src/icons/afisha_news.jpg"
 
-import presentcard_1 from "src/icons/presentcard/presentcard_1.png"
-import presentcard_2 from "src/icons/presentcard/presentcard_2.png"
-import presentcard_3 from "src/icons/presentcard/presentcard_3.png"
-import presentcard_4 from "src/icons/presentcard/presentcard_4.png"
-import presentcard_5 from "src/icons/presentcard/presentcard_5.png"
-import presentcard_6 from "src/icons/presentcard/presentcard_6.png"
-import presentcard_main from "src/icons/presentcard/presentcard_main.jpg"
+import single from "src/icons/single.png"
+import sofa from "src/icons/sofa.png"
 
 const russianMonths = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const arrDaysOfWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
@@ -366,64 +361,94 @@ export const arrSliderSwiper: ISlide[] = [
     {id: 9, image: img109, title: 'Детский день рождения в кино', text: ' ', textButton: 'Отпраздновать в mooon'},
 ]
 
-export const roomsSeats: IRoomSeat[] = [
+export const arrSeatType: ISeatType[] = [
+    {
+        type: 'single',
+        image: single,
+        imageSelect: single,
+        description: 'Одноместное комфортное широкое кресло с подстаканником.'
+    },
+    {
+        type: 'sofa',
+        image: sofa,
+        imageSelect: sofa,
+        description: 'Двухместные мягкие диванчики с подголовниками. Комфорт этого кресла моментально позволит вам расслабиться и почувствовать себя как дома. Цена указана за двойное место.'
+    }
+]
+
+export const arrRooms: IRoom[] = [
     {
         room: 1,
+        costSingle: 12,
+        costSofa: 28,
         rows: [
-            {idRow: 1, type: 'single', seats: 6},
-            {idRow: 2, type: 'single', seats: 6},
-            {idRow: 3, type: 'single', seats: 6},
-            {idRow: 4, type: 'single', seats: 6},
-            {idRow: 5, type: 'single', seats: 4},
-            {idRow: 6, type: 'single', seats: 4}
+            {idRow: 1, type: 'single', seats: 10},
+            {idRow: 2, type: 'single', seats: 10},
+            {idRow: 3, type: 'single', seats: 8},
+            {idRow: 4, type: 'single', seats: 8},
+            {idRow: 5, type: 'single', seats: 6},
+            {idRow: 6, type: 'single', seats: 6}
         ]
     },
     {
         room: 2,
+        costSingle: 12,
+        costSofa: 28,
         rows: [
-            {idRow: 1, type: 'single', seats: 6},
-            {idRow: 2, type: 'single', seats: 6},
-            {idRow: 3, type: 'single', seats: 6},
-            {idRow: 4, type: 'single', seats: 6},
-            {idRow: 5, type: 'single', seats: 4},
-            {idRow: 6, type: 'single', seats: 4}
+            {idRow: 1, type: 'single', seats: 10},
+            {idRow: 2, type: 'single', seats: 10},
+            {idRow: 3, type: 'single', seats: 8},
+            {idRow: 4, type: 'single', seats: 8},
+            {idRow: 5, type: 'single', seats: 6},
+            {idRow: 6, type: 'single', seats: 6}
         ]
     },
     {
         room: 3,
+        costSingle: 12,
+        costSofa: 28,
         rows: [
-            {idRow: 1, type: 'single', seats: 6},
-            {idRow: 2, type: 'single', seats: 6},
-            {idRow: 3, type: 'single', seats: 6},
-            {idRow: 4, type: 'single', seats: 6},
-            {idRow: 5, type: 'single', seats: 4},
-            {idRow: 6, type: 'single', seats: 4}
+            {idRow: 1, type: 'single', seats: 10},
+            {idRow: 2, type: 'single', seats: 10},
+            {idRow: 3, type: 'single', seats: 8},
+            {idRow: 4, type: 'single', seats: 8},
+            {idRow: 5, type: 'single', seats: 6},
+            {idRow: 6, type: 'single', seats: 6},
+            {idRow: 7, type: 'sofa', seats: 3}
         ]
     },
     {
         room: 4,
+        costSingle: 12,
+        costSofa: 28,
         rows: [
             {idRow: 1, type: 'single', seats: 10},
             {idRow: 2, type: 'single', seats: 10},
             {idRow: 3, type: 'single', seats: 8},
             {idRow: 4, type: 'single', seats: 8},
             {idRow: 5, type: 'single', seats: 6},
-            {idRow: 6, type: 'single', seats: 6}
+            {idRow: 6, type: 'single', seats: 6},
+            {idRow: 7, type: 'sofa', seats: 3}
         ]
     },
     {
         room: 5,
+        costSingle: 12,
+        costSofa: 28,
         rows: [
             {idRow: 1, type: 'single', seats: 10},
             {idRow: 2, type: 'single', seats: 10},
             {idRow: 3, type: 'single', seats: 8},
             {idRow: 4, type: 'single', seats: 8},
             {idRow: 5, type: 'single', seats: 6},
-            {idRow: 6, type: 'single', seats: 6}
+            {idRow: 6, type: 'single', seats: 6},
+            {idRow: 7, type: 'sofa', seats: 3}
         ]
     },
     {
         room: 6,
+        costSingle: 12,
+        costSofa: 28,
         rows: [
             {idRow: 1, type: 'single', seats: 10},
             {idRow: 2, type: 'single', seats: 10},
@@ -436,23 +461,24 @@ export const roomsSeats: IRoomSeat[] = [
 ]
 
 export const arrMovies: IMovie[] = [
-    {id: 0, image: img0, title: 'Барби', age: 12, language: 'RU', isSUB: true, genres: ['комедия', 'фэнтези', 'приключения'], video: '2D', duration: 120, 
+    {id: 0, image: img0, title: 'Барби', age: 12, language: 'RU', isSUB: true, genres: ['комедия', 'фэнтези', 'приключения'], video: '2D', duration: 120,
     description: 'Барби выгоняют из Барбиленда, потому что она не соответствует его нормам красоты. Тогда она начинает новую жизнь в реальном мире, где обнаруживает, что совершенства можно достичь только благодаря внутренней гармонии.',
     trailer: 'https://www.youtube.com/watch?v=w0m2C3lN1h8',
     schedule: [
         {
-            date: '21.10.2023',
+            date: '22.10.2023',
             seances: [
                 { 
                     room: 3,
                     time: '10:45',
                     places: [
+                        [0,1,1,1,1,1,1,1,1,0],
+                        [1,1,1,1,1,1,1,1,0,0],
+                        [0,1,1,1,1,1,1,0],
+                        [1,1,1,1,1,1,1,0],
+                        [1,1,1,1,1,0],
                         [0,1,1,1,1,0],
-                        [1,1,1,1,1,0],
-                        [0,1,1,1,1,1],
-                        [1,1,1,1,1,0],
-                        [1,1,1,0],
-                        [1,1,1,0],
+                        [1,1,0]
                     ]
                 },
                 { room: 5, time: '11:50' },
@@ -509,7 +535,7 @@ export const arrMovies: IMovie[] = [
         //     ]
         // },
     ]},
-    {id: 1, image: img1, title: 'Неудержимые 4', age: 18, language: 'RU', genres: ['комедия', 'экшн', 'боевик'], video: '2D', duration: 110, 
+    {id: 1, image: img1, title: 'Неудержимые 4', age: 18, language: 'RU', genres: ['комедия', 'экшн', 'боевик'], video: '2D', duration: 110,
     description: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.',
     trailer: 'https://www.youtube.com/watch?v=Oh6hSeN4Nag',
     schedule: [
@@ -572,7 +598,7 @@ export const arrMovies: IMovie[] = [
         //     ]
         // }
     ]},
-    {id: 2, image: img2, title: 'Оппенгеймер', age: 16, language: 'ENG', isSUB: true, genres: ['история', 'биография', 'драма'], video: '2D', duration: 185, 
+    {id: 2, image: img2, title: 'Оппенгеймер', age: 16, language: 'ENG', isSUB: true, genres: ['история', 'биография', 'драма'], video: '2D', duration: 185,
     description: 'История жизни американского физика Роберта Оппенгеймера, который стоял во главе первых разработок ядерного оружия.',
     trailer: 'https://www.youtube.com/watch?v=zU2vtD7npd0',
     schedule: [
@@ -637,7 +663,7 @@ export const arrMovies: IMovie[] = [
         //     ]
         // }
     ]},
-    {id: 3, image: img3, title: 'После. Навсегда', age: 16, language: 'RU', genres: ['мелодрама'], video: '3D', duration: 0, 
+    {id: 3, image: img3, title: 'После. Навсегда', age: 16, language: 'RU', genres: ['мелодрама'], video: '3D', duration: 0,
     description: '',
     trailer: '',
     schedule: [
@@ -647,7 +673,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 4, image: img4, title: 'Черепашки-ниндзя: Погром мутантов', age: 12, language: 'RU', genres: ['мультфильм', 'боевик', 'фантастика'], video: '3D', duration: 0, 
+    {id: 4, image: img4, title: 'Черепашки-ниндзя: Погром мутантов', age: 12, language: 'RU', genres: ['мультфильм', 'боевик', 'фантастика'], video: '3D', duration: 0,
     description: '',
     trailer: '',
     schedule: [
@@ -657,7 +683,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 5, image: img5, title: 'Элементарно', age: 6, language: 'RU', isSUB: true, genres: ['комедия', 'мультфильм', 'приключения'], video: '3D', duration: 105, 
+    {id: 5, image: img5, title: 'Элементарно', age: 6, language: 'RU', isSUB: true, genres: ['комедия', 'мультфильм', 'приключения'], video: '3D', duration: 105,
     description: 'В Городе Стихий обитатели огня, воды, земли и воздуха живут вместе. У сильной и вспыльчивой Эмбер завязывается дружба с расслабленным, плывущим по течению Уэйдом — дружба, которая бросит вызов её представлениям о мире вокруг.',
     trailer: '',
     schedule: [
@@ -667,7 +693,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 6, image: img6, title: 'Монстр и маги синих морей', age: 6, language: 'RU', genres: ['комедия', 'мультфильм', 'приключения'], video: '3D', duration: 0, 
+    {id: 6, image: img6, title: 'Монстр и маги синих морей', age: 6, language: 'RU', genres: ['комедия', 'мультфильм', 'приключения'], video: '3D', duration: 0,
     description: '',
     trailer: '',
     schedule: [
@@ -677,7 +703,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 7, image: img7, title: 'Искусство по понятиям', age: 18, language: 'RU', genres: ['триллер'], video: '2D', duration: 0, 
+    {id: 7, image: img7, title: 'Искусство по понятиям', age: 18, language: 'RU', genres: ['триллер'], video: '2D', duration: 0,
     description: '',
     trailer: '',
     schedule: [
@@ -687,7 +713,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 8, image: img8, title: 'Индиана Джонс и колесо судьбы', age: 12, language: 'RU', genres: ['боевик', 'приключения'], video: '3D', duration: 0, 
+    {id: 8, image: img8, title: 'Индиана Джонс и колесо судьбы', age: 12, language: 'RU', genres: ['боевик', 'приключения'], video: '3D', duration: 0,
     description: '',
     trailer: '',
     schedule: [
@@ -697,7 +723,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 9, image: img9, title: 'Дозор джунглей: Кругосветка', age: 6, language: 'RU', isSUB: true, genres: ['комедия', 'мультфильм', 'приключения'], video: '3D', duration: 0, 
+    {id: 9, image: img9, title: 'Дозор джунглей: Кругосветка', age: 6, language: 'RU', isSUB: true, genres: ['комедия', 'мультфильм', 'приключения'], video: '3D', duration: 0,
     description: '',
     trailer: '',
     schedule: [
@@ -707,7 +733,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 10, image: img10, title: 'Иван Семенов: Большой поход', age: 6, language: 'RU', genres: ['комедия'], video: '2D', duration: 90, 
+    {id: 10, image: img10, title: 'Иван Семенов: Большой поход', age: 6, language: 'RU', genres: ['комедия'], video: '2D', duration: 90,
     description: 'В жизни Ивана Семёнова — неутомимого фантазёра и неудержимого проказника — новая беда. Его школьная любовь — Танечка, чьей дружбы он добивался, уезжает учиться за границу. Иван, пытаясь остановить её отъезд, идёт на все возможные ухищрения: подкуп её родителей, предложение руки и сердца, и даже похищение! Но в результате добивается лишь одного — ему запрещают приближаться к ней. Теперь остановить переезд любимой Ивану поможет только чудо! И чудо это — Шаман, который исполняет любые желания.',
     trailer: 'https://www.youtube.com/watch?v=-MWFfzxzWgI',
     schedule: [
@@ -717,7 +743,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 11, image: img11, title: 'Синий Жук', age: 12, language: 'RU', genres: ['боевик', 'триллер', 'фантастика'], video: '3D', duration: 130, 
+    {id: 11, image: img11, title: 'Синий Жук', age: 12, language: 'RU', genres: ['боевик', 'триллер', 'фантастика'], video: '3D', duration: 130,
     description: 'Мексиканский подросток Хайме Рейес получает инопланетный костюм, который даёт ему суперсилы.',
     trailer: 'https://www.youtube.com/watch?v=aV_an1PcDXs',
     schedule: [
@@ -727,7 +753,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 12, image: img12, title: 'Дети шпионов: Армагеддон', age: 6, language: 'RU', genres: ['комедия', 'боевик', 'фантастика'], video: '2D', duration: 110, 
+    {id: 12, image: img12, title: 'Дети шпионов: Армагеддон', age: 6, language: 'RU', genres: ['комедия', 'боевик', 'фантастика'], video: '2D', duration: 110,
     description: 'Дети величайших в мире секретных агентов невольно помогают могущественному разработчику игр выпустить компьютерный вирус, который дает ему контроль над всеми технологиями, в результате чего они сами становятся шпионами, чтобы спасти своих родителей и весь мир.',
     trailer: 'https://www.youtube.com/watch?v=8NkgQ0Odiew',
     schedule: [
@@ -737,7 +763,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 13, image: img13, title: 'Великая ирония', age: 16, language: 'RU', genres: ['мелодрама', 'триллер', 'драма'], video: '2D', duration: 100, 
+    {id: 13, image: img13, title: 'Великая ирония', age: 16, language: 'RU', genres: ['мелодрама', 'триллер', 'драма'], video: '2D', duration: 100,
     description: 'Осенний Париж всегда особенно романтичен. Словно по иронии судьбы, успешная, но несчастная в браке Фанни сталкивается там со своим одноклассником, которого не видела много лет. Вспоминая беззаботную юность в Нью-Йорке, она решается на роман с обаятельным писателем, который терял от неё голову ещё в школьные годы. Но когда ревнивый муж начинает что-то подозревать, невинная интрижка постепенно превращается в порочную игру, ставкой в которой может быть сама жизнь.',
     trailer: 'https://www.youtube.com/watch?v=LrBznZYVOLM',
     schedule: [
@@ -747,7 +773,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 14, image: img14, title: 'Великий уравнитель 3', age: 18, language: 'RU', genres: ['криминал', 'боевик', 'триллер'], video: '2D', duration: 115, 
+    {id: 14, image: img14, title: 'Великий уравнитель 3', age: 18, language: 'RU', genres: ['криминал', 'боевик', 'триллер'], video: '2D', duration: 115,
     description: 'Покончив с работой тайного агента Роберт Макколл продолжает отстаивать правду в повседневной жизни и защищать тех, кто в этом нуждается. Находясь в Южной Италии он узнает, что его друзья оказались под влиянием местных криминальных авторитетов. Когда события обостряются, Макколл решает встать на защиту справедливости, вступив в борьбу с мафией.',
     trailer: 'https://www.youtube.com/watch?v=9miykCyQcmc',
     schedule: [
@@ -757,7 +783,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 15, image: img15, title: 'Леди Баг и Супер-Кот', age: 6, language: 'RU', genres: ['мультфильм', 'фэнтези', 'приключения'], video: '3D', duration: 110, 
+    {id: 15, image: img15, title: 'Леди Баг и Супер-Кот', age: 6, language: 'RU', genres: ['мультфильм', 'фэнтези', 'приключения'], video: '3D', duration: 110,
     description: 'В обыкновенной французской школе учатся девочка Маринетт и её одноклассник Андриан, в которого она влюблена. Казалось бы, классическая история первой любви, но… Эти ребята — совсем не те, за кого себя выдают. Когда миру угрожает опасность, Маринетт превращается в супергероиню Леди Баг, а Адриан — в Супер-Кота. Их невероятные способности помогают бороться со злом, но при этом никто из них не знает, кто на самом деле скрывается под маской.',
     trailer: 'https://www.youtube.com/watch?v=rY2OLeGYsdU',
     schedule: [
@@ -767,7 +793,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 16, image: img16, title: 'Мой Хатико', age: 12, language: 'RU', genres: ['семейный', 'драма'], video: '3D', duration: 135, 
+    {id: 16, image: img16, title: 'Мой Хатико', age: 12, language: 'RU', genres: ['семейный', 'драма'], video: '3D', duration: 135,
     description: 'Кто не знает Хатико? Однажды профессор подобрал на улице бездомного милого щенка. Несмотря на протесты семьи, он оставляет пушистика дома, и вскоре тот вырастает в доброго и преданного пса. Любовь к обаятельной собаке сближает членов семьи, добавляет ей тепла и уюта. История жизни профессора и преданного пса навсегда стала примером самой искренней дружбы.',
     trailer: 'https://www.youtube.com/watch?v=TsaJmJg9RIc',
     schedule: [
@@ -777,7 +803,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 17, image: img17, title: 'Призраки в Венеции', age: 16, language: 'RU', genres: ['детектив', 'драма', 'ужасы'], video: '2D', duration: 110, 
+    {id: 17, image: img17, title: 'Призраки в Венеции', age: 16, language: 'RU', genres: ['детектив', 'драма', 'ужасы'], video: '2D', duration: 110,
     description: 'Венеция. Вышедший на пенсию Эркюль Пуаро неохотно посещает спиритический сеанс, во время которого один из гостей оказывается убит. Бывший детектив берется за расследование.',
     trailer: 'https://www.youtube.com/watch?v=scT3B2iOTZ0',
     schedule: [
@@ -787,7 +813,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 18, image: img18, title: 'Дурные деньги', age: 18, language: 'RU', genres: ['комедия', 'биография', 'драма'], video: '2D', duration: 110, 
+    {id: 18, image: img18, title: 'Дурные деньги', age: 18, language: 'RU', genres: ['комедия', 'биография', 'драма'], video: '2D', duration: 110,
     description: 'Говорят, что миром правят деньги. А деньгами распоряжается Уолл-Стрит. И если на самом верху решили, что небольшая сеть магазинов видеоигр должна обанкротиться, то под это можно брать кредит в банке! Но однажды обычные люди сказали «нет» и дали бой мировым биржам. Геймеры, тик-токеры, домохозяйки и мелкие инвесторы принялись скупать акции и «сломали» Уолл-Стрит, попутно заработав дурные деньги! Эта абсолютно реальная история стала настоящим глобальным феноменом и доказала, что люди способны на все, если они объединятся.',
     trailer: 'https://www.youtube.com/watch?v=BqbyPQA4V70',
     schedule: [
@@ -797,7 +823,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 19, image: img19, title: 'Особняк с привидениями', age: 16, language: 'RU', genres: ['детектив', 'комедия', 'фэнтези'], video: '3D', duration: 130, 
+    {id: 19, image: img19, title: 'Особняк с привидениями', age: 16, language: 'RU', genres: ['детектив', 'комедия', 'фэнтези'], video: '3D', duration: 130,
     description: 'Мать-одиночка нанимает экстрасенса, священника и историка, чтобы они помогли изгнать нечистую силу из недавно купленного особняка.',
     trailer: 'https://www.youtube.com/watch?v=Oz2mdlgzSyA',
     schedule: [
@@ -807,7 +833,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 20, image: img20, title: 'Создатель', age: 16, language: 'ENG', isSUB: true, genres: ['боевик', 'фантастика', 'приключения'], video: '2D', duration: 135, 
+    {id: 20, image: img20, title: 'Создатель', age: 16, language: 'ENG', isSUB: true, genres: ['боевик', 'фантастика', 'приключения'], video: '2D', duration: 135,
     description: 'На фоне войны будущего между человечеством и силами искусственного интеллекта, Джошуа, закаленный в боях и бывший оперативный агент переживает исчезновение своей жены, и теперь ему предстоит найти и уничтожить Создателя — неуловимого архитектора, создавшего искусственный интеллект и таинственное оружие, способное положить конец войне и всему людскому роду.',
     trailer: 'https://www.youtube.com/watch?v=JEEQjpNT8BQ',
     schedule: [
@@ -817,7 +843,7 @@ export const arrMovies: IMovie[] = [
             ]
         }
     ]},
-    {id: 21, image: img21, title: 'Смешарики снимают кино', age: 6, language: 'RU', genres: ['мультфильм', 'приключения'], video: '3D', duration: 65, 
+    {id: 21, image: img21, title: 'Смешарики снимают кино', age: 6, language: 'RU', genres: ['мультфильм', 'приключения'], video: '3D', duration: 65,
     description: 'Смешарики снимают кино! И не просто кино, а целый сборник из нескольких короткометражных фильмов. В программе боевик и комедия, фантастика и фэнтези, мюзикл и немое кино. А также эльфы, феи, древние пророчества, мировое зло, Пин Бонд и роботы-дроиды. Хотите заглянуть на съёмочную площадку и увидеть, как создают киношедевры? Тогда поспешите – съёмочная группа Смешариков уже ждёт вас.',
     trailer: 'https://www.youtube.com/watch?v=5u7Pzv53eF4',
     schedule: [

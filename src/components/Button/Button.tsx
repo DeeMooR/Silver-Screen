@@ -3,7 +3,7 @@ import './Button.css'
 
 interface IButton {
     children: ReactNode,
-    color: 'red' | 'white',
+    color: 'red' | 'white' | 'grey',
     handleClick?: () => void,
     isMin?: boolean,
     becomeSmall?: boolean,

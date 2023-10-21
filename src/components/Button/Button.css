@@ -17,6 +17,9 @@
 .border-white {
     border: 2px solid #fff;
 }
+.border-grey {
+    border: 2px solid rgba(255, 255, 255, 0.35);
+}
 .height-min {
     padding: 5px 18px;
 }

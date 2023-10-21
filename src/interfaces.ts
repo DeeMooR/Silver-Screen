@@ -69,11 +69,22 @@ export interface IDataMyCard {
     status: boolean
 }
 
-export interface IRoomSeat {
+export interface IRoom {
     room: number,
-    rows: {
-        idRow: number,
-        type: string,
-        seats: number
-    }[]
+    costSingle: number,
+    costSofa: number,
+    rows: IRow[]
+}
+
+export interface IRow {
+    idRow: number,
+    type: string,
+    seats: number
+}
+
+export interface ISeatType {
+    type: string,
+    image: string,
+    imageSelect: string,
+    description: string
 }
