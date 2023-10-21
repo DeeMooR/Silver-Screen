@@ -1,6 +1,6 @@
 import { format, addDays } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
-import { IMovie, INews, ISlide } from "./interfaces";
+import { IMovie, INews, IRoomSeat, ISlide } from "./interfaces";
 
 import img0 from "src/icons/movies/Барби.jpeg"
 import img1 from "src/icons/movies/Неудержимые_4.jpeg"
@@ -230,7 +230,17 @@ export const arrNewsPageNews: INews[] = [
     }
 ]
 
-function formatDate(date: Date) {
+export const getTimePlusDuration = (date: string, duration: number) => {
+    const [hours, minutes] = date.split(':').map(Number); 
+    const newMinutes = minutes + duration;
+    const newHours = hours + Math.floor(newMinutes / 60);
+    const adjustedMinutes = newMinutes % 60;
+
+    const newTime = `${newHours.toString().padStart(2, '0')}:${adjustedMinutes.toString().padStart(2, '0')}`;
+    return newTime;
+}
+ 
+const getDatePoints = (date: Date) => {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
@@ -241,13 +251,13 @@ function formatDate(date: Date) {
 
 export const getTodayDate = () => {
     const today = new Date();
-    return formatDate(today);
+    return getDatePoints(today);
 };
 
 export const getDateIn180 = () => {
     const future = new Date();
     future.setDate(future.getDate() + 180);
-    return formatDate(future);
+    return getDatePoints(future);
 };
 
 export const compareEndToday = (end: string) => {
@@ -280,7 +290,16 @@ export const getArrDate = () => {
     return datesArray;
 }
 
-export function formateDateItem(item: string) {
+export const addDayOfWeek = (date: string) => {
+    const fullDate = getArrDate().find((item) => {
+        const itemPart = item.split(', ')[1];
+        return itemPart === date;
+    });
+    if (fullDate) return fullDate;
+    return 'err';
+}
+
+export const formateDateItem = (item: string) => {
     const [dayOfWeek, dateNumber] = item.split(', ');
     const [dayNum, monthIndex, year] = dateNumber.split('.');
     const month = russianMonths[Number(monthIndex) - 1];
@@ -347,196 +366,276 @@ export const arrSliderSwiper: ISlide[] = [
     {id: 9, image: img109, title: 'Детский день рождения в кино', text: ' ', textButton: 'Отпраздновать в mooon'},
 ]
 
+export const roomsSeats: IRoomSeat[] = [
+    {
+        room: 1,
+        rows: [
+            {idRow: 1, type: 'single', seats: 6},
+            {idRow: 2, type: 'single', seats: 6},
+            {idRow: 3, type: 'single', seats: 6},
+            {idRow: 4, type: 'single', seats: 6},
+            {idRow: 5, type: 'single', seats: 4},
+            {idRow: 6, type: 'single', seats: 4}
+        ]
+    },
+    {
+        room: 2,
+        rows: [
+            {idRow: 1, type: 'single', seats: 6},
+            {idRow: 2, type: 'single', seats: 6},
+            {idRow: 3, type: 'single', seats: 6},
+            {idRow: 4, type: 'single', seats: 6},
+            {idRow: 5, type: 'single', seats: 4},
+            {idRow: 6, type: 'single', seats: 4}
+        ]
+    },
+    {
+        room: 3,
+        rows: [
+            {idRow: 1, type: 'single', seats: 6},
+            {idRow: 2, type: 'single', seats: 6},
+            {idRow: 3, type: 'single', seats: 6},
+            {idRow: 4, type: 'single', seats: 6},
+            {idRow: 5, type: 'single', seats: 4},
+            {idRow: 6, type: 'single', seats: 4}
+        ]
+    },
+    {
+        room: 4,
+        rows: [
+            {idRow: 1, type: 'single', seats: 10},
+            {idRow: 2, type: 'single', seats: 10},
+            {idRow: 3, type: 'single', seats: 8},
+            {idRow: 4, type: 'single', seats: 8},
+            {idRow: 5, type: 'single', seats: 6},
+            {idRow: 6, type: 'single', seats: 6}
+        ]
+    },
+    {
+        room: 5,
+        rows: [
+            {idRow: 1, type: 'single', seats: 10},
+            {idRow: 2, type: 'single', seats: 10},
+            {idRow: 3, type: 'single', seats: 8},
+            {idRow: 4, type: 'single', seats: 8},
+            {idRow: 5, type: 'single', seats: 6},
+            {idRow: 6, type: 'single', seats: 6}
+        ]
+    },
+    {
+        room: 6,
+        rows: [
+            {idRow: 1, type: 'single', seats: 10},
+            {idRow: 2, type: 'single', seats: 10},
+            {idRow: 3, type: 'single', seats: 8},
+            {idRow: 4, type: 'single', seats: 8},
+            {idRow: 5, type: 'single', seats: 6},
+            {idRow: 6, type: 'single', seats: 6}
+        ]
+    }
+]
+
 export const arrMovies: IMovie[] = [
     {id: 0, image: img0, title: 'Барби', age: 12, language: 'RU', isSUB: true, genres: ['комедия', 'фэнтези', 'приключения'], video: '2D', duration: 120, 
     description: 'Барби выгоняют из Барбиленда, потому что она не соответствует его нормам красоты. Тогда она начинает новую жизнь в реальном мире, где обнаруживает, что совершенства можно достичь только благодаря внутренней гармонии.',
     trailer: 'https://www.youtube.com/watch?v=w0m2C3lN1h8',
     schedule: [
         {
-            date: '10.10.2023',
+            date: '21.10.2023',
             seances: [
-                { room: '3', time: '10:45' },
-                { room: '5', time: '11:50' },
-                { room: '2', time: '13:10' },
-                { room: '4', time: '14:35' },
-                { room: '1', time: '15:25' },
-                { room: '1', time: '17:15' },
-                { room: '6', time: '18:40' },
-                { room: '4', time: '19:10' },
-                { room: '3', time: '20:10' },
-                { room: '5', time: '21:30' },
+                { 
+                    room: 3,
+                    time: '10:45',
+                    places: [
+                        [0,1,1,1,1,0],
+                        [1,1,1,1,1,0],
+                        [0,1,1,1,1,1],
+                        [1,1,1,1,1,0],
+                        [1,1,1,0],
+                        [1,1,1,0],
+                    ]
+                },
+                { room: 5, time: '11:50' },
+                { room: 2, time: '13:10' },
+                { room: 4, time: '14:35' },
+                { room: 1, time: '15:25' },
+                { room: 1, time: '17:15' },
+                { room: 6, time: '18:40' },
+                { room: 4, time: '19:10' },
+                { room: 3, time: '20:10' },
+                { room: 5, time: '21:30' },
             ]
         },
-        {
-            date: '11.10.2023',
-            seances: [
-                { room: '1', time: '10:30' },
-                { room: '2', time: '11:45' },
-                { room: '3', time: '12:20' },
-                { room: '4', time: '14:55' },
-                { room: '5', time: '15:50' },
-                { room: '1', time: '17:40' },
-                { room: '3', time: '18:15' },
-                { room: '2', time: '19:25' },
-                { room: '6', time: '20:30' },
-            ]
-        },
-        {
-            date: '12.10.2023',
-            seances: [
-                { room: '4', time: '10:10' },
-                { room: '2', time: '11:35' },
-                { room: '3', time: '12:30' },
-                { room: '1', time: '14:45' },
-                { room: '5', time: '15:55' },
-                { room: '6', time: '17:20' },
-                { room: '1', time: '18:30' },
-                { room: '2', time: '19:50' },
-            ]
-        },
-        {
-            date: '13.10.2023',
-            seances: [
-                { room: '2', time: '10:15' },
-                { room: '3', time: '11:40' },
-                { room: '1', time: '12:10' },
-                { room: '4', time: '14:45' },
-                { room: '3', time: '15:50' },
-                { room: '1', time: '17:30' },
-                { room: '5', time: '18:20' },
-                { room: '2', time: '19:10' },
-                { room: '6', time: '20:20' },
-                { room: '4', time: '21:10' },
-            ]
-        },
+        // {
+        //     date: '11.10.2023',
+        //     seances: [
+        //         { room: 1, time: '10:30' },
+        //         { room: 2, time: '11:45' },
+        //         { room: 3, time: '12:20' },
+        //         { room: 4, time: '14:55' },
+        //         { room: 5, time: '15:50' },
+        //         { room: 1, time: '17:40' },
+        //         { room: 3, time: '18:15' },
+        //         { room: 2, time: '19:25' },
+        //         { room: 6, time: '20:30' },
+        //     ]
+        // },
+        // {
+        //     date: '12.10.2023',
+        //     seances: [
+        //         { room: 4, time: '10:10' },
+        //         { room: 2, time: '11:35' },
+        //         { room: 3, time: '12:30' },
+        //         { room: 1, time: '14:45' },
+        //         { room: 5, time: '15:55' },
+        //         { room: 6, time: '17:20' },
+        //         { room: 1, time: '18:30' },
+        //         { room: 2, time: '19:50' },
+        //     ]
+        // },
+        // {
+        //     date: '13.10.2023',
+        //     seances: [
+        //         { room: 2, time: '10:15' },
+        //         { room: 3, time: '11:40' },
+        //         { room: 1, time: '12:10' },
+        //         { room: 4, time: '14:45' },
+        //         { room: 3, time: '15:50' },
+        //         { room: 1, time: '17:30' },
+        //         { room: 5, time: '18:20' },
+        //         { room: 2, time: '19:10' },
+        //         { room: 6, time: '20:20' },
+        //         { room: 4, time: '21:10' },
+        //     ]
+        // },
     ]},
     {id: 1, image: img1, title: 'Неудержимые 4', age: 18, language: 'RU', genres: ['комедия', 'экшн', 'боевик'], video: '2D', duration: 110, 
     description: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.',
     trailer: 'https://www.youtube.com/watch?v=Oh6hSeN4Nag',
     schedule: [
-        {
-            date: '13.10.2023',
-            seances: [
-                { room: '1', time: '10:15' },
-                { room: '3', time: '11:40' },
-                { room: '4', time: '12:10' },
-                { room: '2', time: '14:30' },
-                { room: '6', time: '15:45' },
-                { room: '5', time: '17:20' },
-                { room: '4', time: '18:35' },
-            ]
-        },
-        {
-            date: '14.10.2023',
-            seances: [
-                { room: '2', time: '10:15' },
-                { room: '3', time: '11:40' },
-                { room: '1', time: '12:10' },
-                { room: '4', time: '14:45' },
-                { room: '3', time: '15:50' },
-                { room: '1', time: '17:30' },
-                { room: '5', time: '18:20' },
-                { room: '2', time: '19:10' },
-                { room: '6', time: '20:20' },
-                { room: '4', time: '20:50' },
-                { room: '5', time: '21:20' },
-            ]
-        },
-        {
-            date: '16.10.2023',
-            seances: [
-                { room: '1', time: '10:30' },
-                { room: '2', time: '11:45' },
-                { room: '3', time: '12:20' },
-                { room: '4', time: '14:55' },
-                { room: '5', time: '15:50' },
-                { room: '1', time: '17:40' },
-                { room: '3', time: '18:15' },
-                { room: '2', time: '19:25' },
-                { room: '6', time: '20:30' },
-                { room: '5', time: '21:10' },
-            ]
-        },
-        {
-            date: '18.10.2023',
-            seances: [
-                { room: '4', time: '10:10' },
-                { room: '2', time: '11:35' },
-                { room: '3', time: '12:30' },
-                { room: '1', time: '14:45' },
-                { room: '5', time: '15:55' },
-                { room: '6', time: '17:20' },
-                { room: '1', time: '18:30' },
-                { room: '2', time: '20:20' },
-                { room: '4', time: '21:10' },
-                { room: '3', time: '21:30' },
-            ]
-        }
+        // {
+        //     date: '13.10.2023',
+        //     seances: [
+        //         { room: 1, time: '10:15' },
+        //         { room: 3, time: '11:40' },
+        //         { room: 4, time: '12:10' },
+        //         { room: 2, time: '14:30' },
+        //         { room: 6, time: '15:45' },
+        //         { room: 5, time: '17:20' },
+        //         { room: 4, time: '18:35' },
+        //     ]
+        // },
+        // {
+        //     date: '14.10.2023',
+        //     seances: [
+        //         { room: 2, time: '10:15' },
+        //         { room: 3, time: '11:40' },
+        //         { room: 1, time: '12:10' },
+        //         { room: 4, time: '14:45' },
+        //         { room: 3, time: '15:50' },
+        //         { room: 1, time: '17:30' },
+        //         { room: 5, time: '18:20' },
+        //         { room: 2, time: '19:10' },
+        //         { room: 6, time: '20:20' },
+        //         { room: 4, time: '20:50' },
+        //         { room: 5, time: '21:20' },
+        //     ]
+        // },
+        // {
+        //     date: '16.10.2023',
+        //     seances: [
+        //         { room: 1, time: '10:30' },
+        //         { room: 2, time: '11:45' },
+        //         { room: 3, time: '12:20' },
+        //         { room: 4, time: '14:55' },
+        //         { room: 5, time: '15:50' },
+        //         { room: 1, time: '17:40' },
+        //         { room: 3, time: '18:15' },
+        //         { room: 2, time: '19:25' },
+        //         { room: 6, time: '20:30' },
+        //         { room: 5, time: '21:10' },
+        //     ]
+        // },
+        // {
+        //     date: '18.10.2023',
+        //     seances: [
+        //         { room: 4, time: '10:10' },
+        //         { room: 2, time: '11:35' },
+        //         { room: 3, time: '12:30' },
+        //         { room: 1, time: '14:45' },
+        //         { room: 5, time: '15:55' },
+        //         { room: 6, time: '17:20' },
+        //         { room: 1, time: '18:30' },
+        //         { room: 2, time: '20:20' },
+        //         { room: 4, time: '21:10' },
+        //         { room: 3, time: '21:30' },
+        //     ]
+        // }
     ]},
     {id: 2, image: img2, title: 'Оппенгеймер', age: 16, language: 'ENG', isSUB: true, genres: ['история', 'биография', 'драма'], video: '2D', duration: 185, 
     description: 'История жизни американского физика Роберта Оппенгеймера, который стоял во главе первых разработок ядерного оружия.',
     trailer: 'https://www.youtube.com/watch?v=zU2vtD7npd0',
     schedule: [
-        {
-            date: '14.10.2023',
-            seances: [
-                { room: '1', time: '10:15' },
-                { room: '2', time: '11:40' },
-                { room: '3', time: '12:10' },
-                { room: '4', time: '14:30' },
-                { room: '5', time: '15:45' },
-                { room: '6', time: '17:20' },
-                { room: '1', time: '18:35' },
-                { room: '2', time: '19:45' },
-                { room: '3', time: '20:55' },
-            ]
-        },
-        {
-            date: '15.10.2023',
-            seances: [
-                { room: '6', time: '10:30' },
-                { room: '4', time: '11:45' },
-                { room: '5', time: '12:20' },
-                { room: '3', time: '14:50' },
-                { room: '2', time: '15:55' },
-                { room: '4', time: '17:40' },
-                { room: '1', time: '18:15' },
-                { room: '3', time: '19:20' },
-                { room: '5', time: '20:30' },
-                { room: '6', time: '21:10' },
-            ]
-        },
-        {
-            date: '17.10.2023',
-            seances: [
-                { room: '1', time: '10:10' },
-                { room: '2', time: '11:35' },
-                { room: '4', time: '12:30' },
-                { room: '6', time: '14:45' },
-                { room: '3', time: '15:55' },
-                { room: '1', time: '17:20' },
-                { room: '2', time: '18:30' },
-                { room: '3', time: '19:40' },
-                { room: '4', time: '20:50' },
-                { room: '5', time: '21:10' },
-                { room: '6', time: '21:30' },
-            ]
-        },
-        {
-            date: '19.10.2023',
-            seances: [
-                { room: '3', time: '10:15' },
-                { room: '5', time: '11:40' },
-                { room: '1', time: '12:10' },
-                { room: '2', time: '14:30' },
-                { room: '3', time: '15:45' },
-                { room: '6', time: '17:20' },
-                { room: '4', time: '18:35' },
-                { room: '5', time: '19:45' },
-                { room: '2', time: '20:55' },
-                { room: '1', time: '21:10' },
-            ]
-        }
+        // {
+        //     date: '14.10.2023',
+        //     seances: [
+        //         { room: 1, time: '10:15' },
+        //         { room: 2, time: '11:40' },
+        //         { room: 3, time: '12:10' },
+        //         { room: 4, time: '14:30' },
+        //         { room: 5, time: '15:45' },
+        //         { room: 6, time: '17:20' },
+        //         { room: 1, time: '18:35' },
+        //         { room: 2, time: '19:45' },
+        //         { room: 3, time: '20:55' },
+        //     ]
+        // },
+        // {
+        //     date: '15.10.2023',
+        //     seances: [
+        //         { room: 6, time: '10:30' },
+        //         { room: 4, time: '11:45' },
+        //         { room: 5, time: '12:20' },
+        //         { room: 3, time: '14:50' },
+        //         { room: 2, time: '15:55' },
+        //         { room: 4, time: '17:40' },
+        //         { room: 1, time: '18:15' },
+        //         { room: 3, time: '19:20' },
+        //         { room: 5, time: '20:30' },
+        //         { room: 6, time: '21:10' },
+        //     ]
+        // },
+        // {
+        //     date: '17.10.2023',
+        //     seances: [
+        //         { room: 1, time: '10:10' },
+        //         { room: 2, time: '11:35' },
+        //         { room: 4, time: '12:30' },
+        //         { room: 6, time: '14:45' },
+        //         { room: 3, time: '15:55' },
+        //         { room: 1, time: '17:20' },
+        //         { room: 2, time: '18:30' },
+        //         { room: 3, time: '19:40' },
+        //         { room: 4, time: '20:50' },
+        //         { room: 5, time: '21:10' },
+        //         { room: 6, time: '21:30' },
+        //     ]
+        // },
+        // {
+        //     date: '19.10.2023',
+        //     seances: [
+        //         { room: 3, time: '10:15' },
+        //         { room: 5, time: '11:40' },
+        //         { room: 1, time: '12:10' },
+        //         { room: 2, time: '14:30' },
+        //         { room: 3, time: '15:45' },
+        //         { room: 6, time: '17:20' },
+        //         { room: 4, time: '18:35' },
+        //         { room: 5, time: '19:45' },
+        //         { room: 2, time: '20:55' },
+        //         { room: 1, time: '21:10' },
+        //     ]
+        // }
     ]},
     {id: 3, image: img3, title: 'После. Навсегда', age: 16, language: 'RU', genres: ['мелодрама'], video: '3D', duration: 0, 
     description: '',
@@ -553,7 +652,7 @@ export const arrMovies: IMovie[] = [
     trailer: '',
     schedule: [
         {
-            date: '14.10.2023',
+            date: '23.10.2023',
             seances: [
             ]
         }
@@ -675,8 +774,6 @@ export const arrMovies: IMovie[] = [
         {
             date: '13.10.2023',
             seances: [
-                { room: '4', time: '12:10' },
-                { room: '6', time: '15:45' },
             ]
         }
     ]},

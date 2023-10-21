@@ -45,15 +45,15 @@ const Schedule:FC<ISchedule> = ({movie}) => {
             for (const item of searchAudio) {
                 switch (item) {
                 case 'Dolby Digital':
-                    addSeances = scheduleDay.seances.filter(item => ['1', '2'].includes(item.room));
+                    addSeances = scheduleDay.seances.filter(item => [1, 2].includes(item.room));
                     filteredMovie.push(...addSeances);
                     break;
                 case 'Dolby Atmos':
-                    addSeances = scheduleDay.seances.filter(item => ['3', '4'].includes(item.room));
+                    addSeances = scheduleDay.seances.filter(item => [3, 4].includes(item.room));
                     filteredMovie.push(...addSeances);
                     break;
                 case 'Harman Kardon':
-                    addSeances = scheduleDay.seances.filter(item => ['5', '6'].includes(item.room));
+                    addSeances = scheduleDay.seances.filter(item => [5, 6].includes(item.room));
                     filteredMovie.push(...addSeances);
                     break;
                 }
@@ -64,17 +64,17 @@ const Schedule:FC<ISchedule> = ({movie}) => {
 
         // Проверка "Есть ли сеансы на IMAX или ScreenX?"
         if (searchVideo.includes('IMAX') && searchVideo.includes('ScreenX')) {
-            const arrScreenX = filteredMovie.filter(item => item.room === '5');
-            const arrIMAX = filteredMovie.filter(item => item.room === '6');
+            const arrScreenX = filteredMovie.filter(item => item.room === 5);
+            const arrIMAX = filteredMovie.filter(item => item.room === 6);
             filteredMovie = [...arrScreenX, ...arrIMAX];
             return;
         }
         if (searchVideo.includes('ScreenX')) {
-            fixSeances = filteredMovie.filter(item => item.room === '5');
+            fixSeances = filteredMovie.filter(item => item.room === 5);
             filteredMovie = [...fixSeances];
         } 
         if (searchVideo.includes('IMAX')) {
-            fixSeances = filteredMovie.filter(item => item.room === '6');
+            fixSeances = filteredMovie.filter(item => item.room === 6);
             filteredMovie = [...fixSeances];
         }
     }

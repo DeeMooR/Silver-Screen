@@ -62,7 +62,7 @@ const Afisha = () => {
                     addToFilterOne = filteredMovies.filter(movie => {
                         if (filterOne.some(item => item.title === movie.title)) return false;
                         let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                        if (scheduleDay) return scheduleDay.seances.some(oneSeance => ['1', '2'].includes(oneSeance.room));
+                        if (scheduleDay) return scheduleDay.seances.some(oneSeance => [1, 2].includes(oneSeance.room));
                         return false;
                     });
                     filterOne.push(...addToFilterOne);
@@ -71,7 +71,7 @@ const Afisha = () => {
                     addToFilterOne = filteredMovies.filter(movie => {
                         if (filterOne.some(item => item.title === movie.title)) return false;
                         let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                        if (scheduleDay) return scheduleDay.seances.some(oneSeance => ['3', '4'].includes(oneSeance.room));
+                        if (scheduleDay) return scheduleDay.seances.some(oneSeance => [3, 4].includes(oneSeance.room));
                         return false;
                     });
                     filterOne.push(...addToFilterOne);
@@ -80,7 +80,7 @@ const Afisha = () => {
                     addToFilterOne = filteredMovies.filter(movie => {
                         if (filterOne.some(item => item.title === movie.title)) return false;
                         let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                        if (scheduleDay) return scheduleDay.seances.some(oneSeance => ['5', '6'].includes(oneSeance.room));
+                        if (scheduleDay) return scheduleDay.seances.some(oneSeance => [5, 6].includes(oneSeance.room));
                         return false;
                     });
                     filterOne.push(...addToFilterOne);
@@ -100,7 +100,7 @@ const Afisha = () => {
                         addToFilterOne = filteredMovies.filter(movie => {
                             if (filterOne.some(item => item.title === movie.title)) return false;       // Если такой элемент уже был добавлен при IMAX, пропускаем его
                             let scheduleDay = movie.schedule.find(item => item.date == searchDate);     // Поиск массива сеансов в определённый день
-                            if (scheduleDay) return scheduleDay.seances.some(oneSeance => oneSeance.room === '5');   // Если хотя бы в одном сеансе есть ScreenX вернёт true
+                            if (scheduleDay) return scheduleDay.seances.some(oneSeance => oneSeance.room === 5);   // Если хотя бы в одном сеансе есть ScreenX вернёт true
                             return false;
                         });              
                         filterOne.push(...addToFilterOne);
@@ -109,7 +109,7 @@ const Afisha = () => {
                         addToFilterOne = filteredMovies.filter(movie => {
                             if (filterOne.some(item => item.title === movie.title)) return false;
                             let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                            if (scheduleDay) return scheduleDay.seances.some(oneSeance => oneSeance.room === '6');
+                            if (scheduleDay) return scheduleDay.seances.some(oneSeance => oneSeance.room === 6);
                             return false;
                         });
                         filterOne.push(...addToFilterOne);

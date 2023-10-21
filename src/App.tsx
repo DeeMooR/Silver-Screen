@@ -19,6 +19,7 @@ import NewPassword from './pages/NewPassword/NewPassword';
 import Account from './pages/Account';
 import Page404 from './pages/Page404/Page404';
 import PresentCard from './pages/PresentCard';
+import BuyTicketPage from './pages/BuyTicketPage';
 
 function App() {
     const location = useLocation();
@@ -91,6 +92,7 @@ function App() {
                 <Route path='/' element={<Main />} />
                 <Route path='/afisha' element={<Afisha />} />
                 <Route path='/afisha/:id' element={<MoviePage />} />
+                <Route path='/afisha/:id/:date/:room/:time' element={<BuyTicketPage />} />
                 <Route path='/entertainment' element={<Entertainment />} />
                 <Route path='/news' element={<NewsPage />} />
                 <Route path='/visa' element={<VisaPage />} />

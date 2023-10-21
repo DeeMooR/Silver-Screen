@@ -17,8 +17,9 @@ export interface IMovie {
 }
 
 export interface ISeance {
-    room: string,
-    time: string
+    room: number,
+    time: string,
+    places?: number[][]
 }
 
 export interface ISlide {
@@ -66,4 +67,13 @@ export interface IDataMyCard {
     start: string,
     end: string,
     status: boolean
+}
+
+export interface IRoomSeat {
+    room: number,
+    rows: {
+        idRow: number,
+        type: string,
+        seats: number
+    }[]
 }
