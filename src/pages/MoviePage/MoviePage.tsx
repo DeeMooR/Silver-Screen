@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Navigation from 'src/components/Navigation';
 import Schedule from 'src/components/Schedule';
 import Modal from 'src/components/Modal';

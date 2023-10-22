@@ -11,7 +11,7 @@ interface ISelectOption {
 const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
     const [clickCheckbox, setClickCheckbox] = useState<string[]>([]);
 
-    const typeKey = useSelector(({ search }) => search[type]);
+    const typeKey = useSelector(({store}) => store.search[type]);
     const dispatch = useDispatch();
     useEffect(() => {
         setClickCheckbox(typeKey);
@@ -22,7 +22,7 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
     const arrShortLang: string[] = getArrSelect('shortLang');
 
 
-    const idMovie = useSelector(({ idActiveMoviePage }) => idActiveMoviePage);
+    const idMovie = useSelector(({store}) => store.idActiveMoviePage);
     let movie = arrMovies[idMovie];
     let arrMoviesDates: string[] = [];
 

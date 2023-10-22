@@ -11,16 +11,17 @@ import { Link } from 'react-router-dom';
 
 const AccountBuy = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const arrGiftCards: IDataGiftCard[] = useSelector(({ giftCards }) => giftCards);
-    const arrMyCards: IDataMyCard[] = useSelector(({ myCards }) => myCards);
-    const isLoadingPage = useSelector(({isLoadingPage}) => isLoadingPage);
+    const arrGiftCards: IDataGiftCard[] = useSelector(({store}) => store.giftCards);
+    const arrMyCards: IDataMyCard[] = useSelector(({store}) => store.myCards);
+    const userId = useSelector(({store}) => store.user.id);
+    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const [modal, setModal] = useState(<div/>);
 
     useEffect(() => {
         const fetchData = async () => {
             window.scrollTo({ top: 0 });
             dispatch({ type: "SET_LOADING_PAGE" });
-            if (!arrMyCards.length) await dispatch(GET_MY_CARDS(setModal));
+            if (!arrMyCards.length) await dispatch(GET_MY_CARDS(userId, setModal));
             if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
             dispatch({ type: "SET_LOADING_PAGE" });
         };

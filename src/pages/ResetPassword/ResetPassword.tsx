@@ -18,7 +18,7 @@ const ResetPassword = () => {
     const [isEmptyEmail, setIsEmptyEmail] = useState(false);
     
     const [modal, setModal] = useState(<div/>);
-    const isLoading = useSelector(({isLoading}) => isLoading);
+    const isLoading = useSelector(({store}) => store.isLoading);
 
     const clickButton = () => {
         if (email === '') {

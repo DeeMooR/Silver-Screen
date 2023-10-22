@@ -10,12 +10,14 @@ import { AnyAction } from 'redux'
 import { ADD_GIFT_SELECT } from 'src/actions/actions'
 
 interface IGiftCard {
-    obj: IDataGiftCard
+    obj: IDataGiftCard,
+    arrGiftCards: IDataGiftCard[]
 }
 
-const GiftCard:FC<IGiftCard> = ({obj}) => {
+const GiftCard:FC<IGiftCard> = ({obj, arrGiftCards}) => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const arrGiftSelect = useSelector(({ giftSelect }) => giftSelect);
+
+    const arrGiftSelect = useSelector(({store}) => store.giftSelect);
     const [amountSelect, setAmountSelect] = useState(0);
     const [modal, setModal] = useState(<div/>);
   
@@ -31,13 +33,21 @@ const GiftCard:FC<IGiftCard> = ({obj}) => {
     }
     const clickPlus = () => {
         setAmountSelect(amountSelect + 1);
-        const objForAPI = {...obj, amount: obj.amount + 1};
         const objForGiftSelect: IDataGiftSelect = {
             idCard: obj.id,
             number: obj.amount + 1,
             cost: obj.cost
         };
-        dispatch(ADD_GIFT_SELECT(obj.id, objForAPI, objForGiftSelect, setModal));
+        const arrWithNewAmount = arrGiftCards.map((item) => {
+            if (item.id === obj.id) {
+              return {
+                ...item,
+                amount: item.amount + 1,
+              };
+            }
+            return item;
+          });
+        dispatch(ADD_GIFT_SELECT(arrWithNewAmount, objForGiftSelect, setModal));
     }
 
     return (

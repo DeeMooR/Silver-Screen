@@ -29,7 +29,7 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
     const [isMismatch, setIsMismatch] = useState(false);
 
     const [modal, setModal] = useState(<div/>);
-    const isLoading = useSelector(({isLoading}) => isLoading);
+    const isLoading = useSelector(({store}) => store.isLoading);
 
     const location = useLocation();
     const fromPage = (location.state && location.state.fromPage) ? location.state.fromPage : '';

@@ -88,3 +88,9 @@ export interface ISeatType {
     imageSelect: string,
     description: string
 }
+
+export interface IUserBuy {
+    id: number,
+    cards: [],
+    movies: []
+}

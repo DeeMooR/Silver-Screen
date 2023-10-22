@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { IDataGiftCard, IDataGiftSelect, IDataMyCard, IUser } from "src/interfaces";
+import { IDataGiftCard, IDataGiftSelect, IDataMyCard, IUser, IUserBuy } from "src/interfaces";
 import instance from "src/axiosConfig";
 import ModalSuccess from "src/components/ModalSuccess";
 import { modalShowMessege } from "src/helpersModal";
@@ -166,10 +166,11 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
         
         try {
             const response = await fetch(
-                "https://65158a65dc3282a6a3ce950f.mockapi.io/gift_cards"
+                "https://jsonblob.com/api/jsonBlob/1165575060923998208"     // gift_cards
             )
             if (response.ok) {
                 const data = await response.json();
+                console.log(data)
                 dispatch({ type: "SET_GIFT_CARDS", payload: data });
             } 
             else modalShowMessege(setModal, false);
@@ -179,20 +180,19 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
     };
 };
 
-export const ADD_GIFT_SELECT = (idCard: number, objForAPI: IDataGiftCard, objForGiftSelect: IDataGiftSelect, setModal: (v: JSX.Element) => void) => {
+export const ADD_GIFT_SELECT = (arrWithNewAmount: IDataGiftCard[], objForGiftSelect: IDataGiftSelect, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
 
         try {
-            console.log(idCard)
-            await dispatch({ type: "CHANGE_AMOUNT_GIFT_CARDS", payload: idCard });
+            await dispatch({ type: "SET_GIFT_CARDS", payload: arrWithNewAmount });
             const response = await fetch(
-                `https://65158a65dc3282a6a3ce950f.mockapi.io/gift_cards/${idCard}`,
+                'https://jsonblob.com/api/jsonBlob/1165575060923998208',        // gift_cards
                 {
                     method: "PUT",
-                    body: JSON.stringify(objForAPI),
+                    body: JSON.stringify(arrWithNewAmount),
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
                 }
             )
@@ -206,38 +206,91 @@ export const ADD_GIFT_SELECT = (idCard: number, objForAPI: IDataGiftCard, objFor
     };
 };
 
-export const SEND_MY_CARDS = (arrMyCards: IDataMyCard[], setModal: (v: JSX.Element) => void) => {
+export const SEND_MY_CARDS = (userId: number, addArrMyCards: IDataMyCard[], setModal: (v: JSX.Element) => void) => {
     return async () => {
+        let newArrUsers, userIsExist = false;
         try {
-            arrMyCards.forEach(async (item) => {
-                const response = await fetch(
-                    'https://65158a65dc3282a6a3ce950f.mockapi.io/my_cards',
-                    {
-                        method: "POST",
-                        body: JSON.stringify(item),
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
+            let response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165611207637196800'        // users
+            )
+            if (response.ok) {
+                const arrUsers = await response.json();
+                newArrUsers = arrUsers.map((objUser: IUserBuy) => {
+                    if (objUser.id === userId) {
+                        userIsExist = true;
+                        return {
+                            ...objUser,
+                            cards: [...objUser.cards, ...addArrMyCards],
+                        };
                     }
-                )
-                if (!response.ok) modalShowMessege(setModal, false);
-            })
+                    return objUser;
+                });
+                if (!userIsExist) newArrUsers = [...arrUsers, { id: userId, cards: addArrMyCards, movies: [] }];
+            } 
+            else modalShowMessege(setModal, false);
+
+            response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165611207637196800',        // users
+                {
+                    method: "PUT",
+                    body: JSON.stringify(newArrUsers),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }
+            )
         } catch (err) {
           console.log(err);
         }
     };
 };
 
-export const GET_MY_CARDS = (setModal: (v: JSX.Element) => void) => {
+export const GET_MY_CARDS = (userId: number, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
 
         try {
             const response = await fetch(
-                'https://65158a65dc3282a6a3ce950f.mockapi.io/my_cards',
+                'https://jsonblob.com/api/jsonBlob/1165611207637196800'        // users
             )
             if (response.ok) {
-                const data = await response.json();
-                dispatch({ type: "SET_MY_CARDS", payload: data });
+                const arrUsers = await response.json();
+                const objUser = arrUsers.find((item: IUserBuy) => item.id === userId)
+                if (objUser) dispatch({ type: "SET_MY_CARDS", payload: objUser.cards });
+            } 
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+
+export const GET_ENTERTAINMENT_NEWS = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165629616420675584'        // entertainment_news
+            )
+            if (response.ok) {
+                const arrEntertainmentNews = await response.json();
+                dispatch({ type: "SET_ENTERTAINMENT_NEWS", payload: arrEntertainmentNews });
+            } 
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_NEWSPAGE_NEWS = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165630283029798912'        // newsPage_news
+            )
+            if (response.ok) {
+                const arrNewsPageNews = await response.json();
+                dispatch({ type: "SET_NEWSPAGE_NEWS", payload: arrNewsPageNews });
             } 
             else modalShowMessege(setModal, false);
         } catch (err) {

@@ -6,7 +6,7 @@ import calendar from "../../icons/calendar.png"
 import video from "../../icons/video.png"
 import audio from "../../icons/audio.png"
 import language from "../../icons/language.png"
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const Navigation = () => {
     const [navActive, setNavActive] = useState('');

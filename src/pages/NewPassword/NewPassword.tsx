@@ -19,7 +19,7 @@ const NewPassword = () => {
 
     const [isMismatch, setIsMismatch] = useState(false);
     const [modal, setModal] = useState(<div/>);
-    const isLoading = useSelector(({isLoading}) => isLoading);
+    const isLoading = useSelector(({store}) => store.isLoading);
     const { uid, token } = useParams();
 
     const clickButton = () => {

@@ -9,10 +9,10 @@ interface ISchedule {
 }
 
 const Schedule:FC<ISchedule> = ({movie}) => {
-    const searchDate = useSelector(({ search }) => search.date).split(', ')[1];
-    const searchVideo = useSelector(({ search }) => search.video);
-    const searchAudio = useSelector(({ search }) => search.audio);
-    const searchLanguage = useSelector(({ search }) => search.language);
+    const searchDate = useSelector(({store}) => store.search.date).split(', ')[1];
+    const searchVideo = useSelector(({store}) => store.search.video);
+    const searchAudio = useSelector(({store}) => store.search.audio);
+    const searchLanguage = useSelector(({store}) => store.search.language);
 
     let i = 0;
     let filteredMovie: ISeance[] = [];

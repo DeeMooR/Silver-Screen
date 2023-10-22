@@ -13,7 +13,7 @@ const NotFind:FC<INotFind> = ({page}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [searchFilled, setSearchFilled] = useState(false);
-    const search = useSelector(({ search }) => search);
+    const search = useSelector(({store}) => store.search);
 
     const arrDate = getArrDate();
     const indexArrDay = arrDate.indexOf(search.date);

@@ -12,7 +12,7 @@ interface IScheduleItem {
 
 const ScheduleItem:FC<IScheduleItem> = ({video, seance}) => {
     const navigate = useNavigate();
-    const searchDate = useSelector(({ search }) => search.date).split(', ')[1];
+    const searchDate = useSelector(({store}) => store.search.date).split(', ')[1];
     const {id} = useParams<{id: string}>();
 
     const clickSeance = () => {

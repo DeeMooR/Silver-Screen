@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Main from './pages/Main';
@@ -72,7 +72,7 @@ function App() {
         startTokenRefreshTimer();
     }, []);
 
-    const searchDate = useSelector(({ search }) => search.date);
+    const searchDate = useSelector(({store}) => store.search.date);
     if (searchDate === '') setTodayDateStore(getArrDate()[0], dispatch);
     return (
         <>

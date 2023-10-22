@@ -8,7 +8,7 @@ import Button from 'src/components/Button';
 import TitleWithSwitch from 'src/components/TitleWithSwitch';
 import ModalSuccess from 'src/components/ModalSuccess';
 import { useNavigate } from 'react-router-dom';
-import { GET_MY_CARDS, RESET_PASSWORD_IN_ACCOUNT } from 'src/actions/actions';
+import { RESET_PASSWORD_IN_ACCOUNT } from 'src/actions/actions';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { IDataMyCard } from 'src/interfaces';
@@ -17,8 +17,8 @@ import AccountBuy from './AccountBuy/AccountBuy';
 const Account = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    let name = useSelector(({ user }) => user.username);
-    let email = useSelector(({ user }) => user.email);
+    let name = useSelector(({store}) => store.user.username);
+    let email = useSelector(({store}) => store.user.email);
     let token = localStorage.getItem('access') || 'err';
 
     const [modal, setModal] = useState(<div/>);

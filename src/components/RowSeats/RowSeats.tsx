@@ -11,7 +11,7 @@ interface IRowSeats {
 }
 
 const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow}) => {
-    const userId = useSelector(({ user }) => user.id);
+    const userId = useSelector(({store}) => store.user.id);
     const objRoom = arrRooms.find((item) => item.room === room);              // объект room: room, costSingle, costSofa, rows
     const objRow = objRoom?.rows.find((item) => item.idRow === indexRow + 1);   // объект row:  idRow, type, seats
     const objType = arrSeatType.find((item) => item.type === objRow?.type);        // объект type: type, image, description

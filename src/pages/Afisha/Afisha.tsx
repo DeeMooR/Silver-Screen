@@ -5,19 +5,19 @@ import MovieCard from 'src/components/MovieCard'
 import NotFind from 'src/components/NotFind'
 import Navigation from 'src/components/Navigation'
 import { IMovie } from 'src/interfaces'
-import { arrAfishaNews, arrEntertainmentNews, arrMovies } from 'src/helpers';
+import { arrAfishaNews, arrMovies } from 'src/helpers';
 import './Afisha.css'
 import TitleWithSwitch from 'src/components/TitleWithSwitch'
 import { Link } from 'react-router-dom'
 import HorizontalNews from 'src/components/HorizontalNews'
 
 const Afisha = () => {
-    let searchDate = useSelector(({ search }) => search.date);
+    let searchDate = useSelector(({store}) => store.search.date);
     if (searchDate) searchDate = searchDate.split(', ')[1]
 
-    const searchVideo = useSelector(({ search }) => search.video);
-    const searchAudio = useSelector(({ search }) => search.audio);
-    let searchLanguage = useSelector(({ search }) => search.language);
+    const searchVideo = useSelector(({store}) => store.search.video);
+    const searchAudio = useSelector(({store}) => store.search.audio);
+    let searchLanguage = useSelector(({store}) => store.search.language);
     const dispatch = useDispatch();
 
     const [activePage, setActivePage] = useState(1);

@@ -1,5 +1,4 @@
 import { format, addDays } from "date-fns";
-import { useDispatch, useSelector } from "react-redux";
 import { IMovie, INews, IRoom, ISeatType, ISlide } from "./interfaces";
 
 import img0 from "src/icons/movies/Барби.jpeg"
@@ -34,16 +33,6 @@ import img106 from "src/icons/main_slidebar/Особняк_с_привидени
 import img107 from "src/icons/main_slidebar/Барби.jpg"
 import img108 from "src/icons/main_slidebar/Подарочная_карта.png"
 import img109 from "src/icons/main_slidebar/День_рождения.jpg"
-
-import entertainment_1 from "src/icons/entertainment/entertainment_1.jpg"
-import entertainment_2 from "src/icons/entertainment/entertainment_2.jpg"
-import entertainment_3 from "src/icons/entertainment/entertainment_3.jpg"
-import entertainment_4 from "src/icons/entertainment/entertainment_4.png"
-import entertainment_5 from "src/icons/entertainment/entertainment_5.jpg"
-import entertainment_bg1 from "src/icons/entertainment/entertainment_bg1.jpg"
-import entertainment_bg2 from "src/icons/entertainment/entertainment_bg2.jpg"
-import entertainment_bg3 from "src/icons/entertainment/entertainment_bg3.jpg"
-import entertainment_main from "src/icons/entertainment/entertainment_main.png"
 
 import news_1 from "src/icons/news/news_1.jpg"
 import news_2 from "src/icons/news/news_2.jpg"
@@ -114,116 +103,116 @@ export const arrAfishaNews: INews = {
     link: '/presentcard'
 }
 
-export const arrEntertainmentNews: INews[] = [
-    {
-        id: 1,
-        image: 'https://i.ibb.co/2nGnVwd/entertainment-1.jpg',
-        background_image: 'https://i.ibb.co/7k7wG5Z/entertainment-bg1.jpg',
-        title: 'Аренда кинопространства',
-        description: 'Смотрите, играйте, учитесь, отмечайте - весь кинозал в вашем распоряжении.'
-    },
-    {
-        id: 2,
-        image: 'https://i.ibb.co/z2gjpfM/entertainment-2.jpg',
-        background_image: 'https://i.ibb.co/BrPftpS/entertainment-bg2.jpg',
-        title: 'Праздник в кино',
-        description: 'Ярко и необычно отпразднуйте День Рождения ваших маленьких героев',
-    },
-    {
-        id: 3,
-        image: 'https://i.ibb.co/ChSNScB/entertainment-3.jpg',
-        background_image: 'https://i.ibb.co/7k7wG5Z/entertainment-bg1.jpg',
-        title: 'Media room',
-        description: 'Современный зал с лазерным проектором Samsung Premiere c 4К разрешением и аудиосистемой с функцией объемного звука для компаний до 9 человек.',
-    },
-    {
-        id: 4,
-        image: 'https://i.ibb.co/71DBthb/entertainment-4.png',
-        background_image: 'https://i.ibb.co/ypPtz2v/entertainment-bg3.jpg',
-        title: 'Игровая комната - XPLAY',
-        description: 'Новейшие приставки и десятки видеоигр на выбор. Доступно только в mooon в ТРК Triniti (Гродно)',
-    },
-    {
-        id: 5,
-        image: 'https://i.ibb.co/k1pJsXG/entertainment-5.jpg',
-        background_image: 'https://i.ibb.co/BrPftpS/entertainment-bg2.jpg',
-        title: 'Комната для вечеринок – Party Room',
-        description: 'Отдельная комната с большим экраном, удобными диванчиками, видеоиграми и караоке для незабываемого отдыха с друзьями и близкими. Доступно только в mooon в ТРК Triniti (Гродно)',
-    }
-]
+// export const arrEntertainmentNews: INews[] = [
+//     {
+//         id: 1,
+//         image: 'https://i.ibb.co/2nGnVwd/entertainment-1.jpg',
+//         background_image: 'https://i.ibb.co/7k7wG5Z/entertainment-bg1.jpg',
+//         title: 'Аренда кинопространства',
+//         description: 'Смотрите, играйте, учитесь, отмечайте - весь кинозал в вашем распоряжении.'
+//     },
+//     {
+//         id: 2,
+//         image: 'https://i.ibb.co/z2gjpfM/entertainment-2.jpg',
+//         background_image: 'https://i.ibb.co/BrPftpS/entertainment-bg2.jpg',
+//         title: 'Праздник в кино',
+//         description: 'Ярко и необычно отпразднуйте День Рождения ваших маленьких героев',
+//     },
+//     {
+//         id: 3,
+//         image: 'https://i.ibb.co/ChSNScB/entertainment-3.jpg',
+//         background_image: 'https://i.ibb.co/7k7wG5Z/entertainment-bg1.jpg',
+//         title: 'Media room',
+//         description: 'Современный зал с лазерным проектором Samsung Premiere c 4К разрешением и аудиосистемой с функцией объемного звука для компаний до 9 человек.',
+//     },
+//     {
+//         id: 4,
+//         image: 'https://i.ibb.co/71DBthb/entertainment-4.png',
+//         background_image: 'https://i.ibb.co/ypPtz2v/entertainment-bg3.jpg',
+//         title: 'Игровая комната - XPLAY',
+//         description: 'Новейшие приставки и десятки видеоигр на выбор. Доступно только в mooon в ТРК Triniti (Гродно)',
+//     },
+//     {
+//         id: 5,
+//         image: 'https://i.ibb.co/k1pJsXG/entertainment-5.jpg',
+//         background_image: 'https://i.ibb.co/BrPftpS/entertainment-bg2.jpg',
+//         title: 'Комната для вечеринок – Party Room',
+//         description: 'Отдельная комната с большим экраном, удобными диванчиками, видеоиграми и караоке для незабываемого отдыха с друзьями и близкими. Доступно только в mooon в ТРК Triniti (Гродно)',
+//     }
+// ]
 
 
-export const arrNewsPageNews: INews[] = [
-    {
-        id: 1,
-        image: news_1,
-        title: 'Обновление детского кинопространства mooon Kids в ТРЦ Palazzo!',
-        description: 'В кинопространстве mooon в ТРЦ Palazzo обновился детский кинозал и игровая зона BNB Kids. Партнером проекта выступил БНБ-Банк.'
-    },
-    {
-        id: 2,
-        image: news_2,
-        title: 'Кинопикники в городе',
-        description: 'Свежий воздух, любимые фильмы, вкусная еда и яркие развлечения - все это включает в себя проект летнего кинотеатра под открытым небом "Кинопикники в городе".',
-        date: '05 июля 2023'
-    },
-    {
-        id: 3,
-        image: news_3,
-        title: 'В кинопространстве mooon в ТРЦ Dana Mall открылся детский кинозал MTB Kids by Visa',
-        description: 'Детский кинозал и игровая зона открылись 1 июня в кинопространстве mooon в Dana Mall. Спонсорами детского пространства стали сразу два известных финансовых бренда – МТБанк и Visa.',
-        date: '02 июня 2023'
-    },
-    {
-        id: 4,
-        image: news_4,
-        title: 'Яркие выходные в Media room со скидкой до 30%',
-        description: 'Хотите просмотреть любимый фильм или сериал, фото со свадьбы или спортивную онлайн трансляцию? Значит вам в Media room!',
-        date: '04 апреля 2023'
-    },
-    {
-        id: 5,
-        image: news_5,
-        title: 'Что посмотреть кино в апреле',
-        description: 'Апрель порадует киноманов своим разнообразием: экшены, спорт, добрые мультфильмы и первый фильм, снятый в космосе!',
-        date: '04 апреля 2023'
-    },
-    {
-        id: 6,
-        image: news_6,
-        title: 'mooon+ — проект для самой искушенной публики',
-        description: 'Прямые трансляции спектаклей, лекции, яркие балетные поставки, зрелищные спортивные события – все это ждет вас в апреле на большом экране в кинопространствах mooon.',
-        date: '04 апреля 2023'
-    },
-    {
-        id: 7,
-        image: news_7,
-        title: 'Открытие кинопространства mooon в ТРЦ Palazzo',
-        description: '4 августа открылось кинопространство под новым брендом mooon в ТРЦ Palazzo.',
-        date: '04 августа 2022'
-    },
-    {
-        id: 8,
-        image: news_8,
-        title: 'Открытие первого в Беларуси кинозала с кроватями',
-        description: '4 августа в составе нового кинопространства mooon в ТРЦ Palazzo откроется уникальный и единственный в Беларуси кинозал с самыми настоящими кроватями.',
-        date: '02 августа 2022'
-    },
-    {
-        id: 9,
-        image: news_9,
-        title: 'NICE PRICE',
-        description: 'Лето приятно проводить вместе с Silver Screen и mooon!',
-        date: '12 июля 2022'
-    },
-    {
-        id: 10,
-        image: news_10,
-        title: 'KIDS DAY в Silver Screen',
-        description: 'В Международный день защиты детей любой билет на сеансы в Silver Screen и mooon по детской цене – 7 BYN!',
-        date: '27 мая 2022'
-    }
-]
+// export const arrNewsPageNews: INews[] = [
+//     {
+//         id: 1,
+//         image: news_1,
+//         title: 'Обновление детского кинопространства mooon Kids в ТРЦ Palazzo!',
+//         description: 'В кинопространстве mooon в ТРЦ Palazzo обновился детский кинозал и игровая зона BNB Kids. Партнером проекта выступил БНБ-Банк.'
+//     },
+//     {
+//         id: 2,
+//         image: news_2,
+//         title: 'Кинопикники в городе',
+//         description: 'Свежий воздух, любимые фильмы, вкусная еда и яркие развлечения - все это включает в себя проект летнего кинотеатра под открытым небом "Кинопикники в городе".',
+//         date: '05 июля 2023'
+//     },
+//     {
+//         id: 3,
+//         image: news_3,
+//         title: 'В кинопространстве mooon в ТРЦ Dana Mall открылся детский кинозал MTB Kids by Visa',
+//         description: 'Детский кинозал и игровая зона открылись 1 июня в кинопространстве mooon в Dana Mall. Спонсорами детского пространства стали сразу два известных финансовых бренда – МТБанк и Visa.',
+//         date: '02 июня 2023'
+//     },
+//     {
+//         id: 4,
+//         image: news_4,
+//         title: 'Яркие выходные в Media room со скидкой до 30%',
+//         description: 'Хотите просмотреть любимый фильм или сериал, фото со свадьбы или спортивную онлайн трансляцию? Значит вам в Media room!',
+//         date: '04 апреля 2023'
+//     },
+//     {
+//         id: 5,
+//         image: news_5,
+//         title: 'Что посмотреть кино в апреле',
+//         description: 'Апрель порадует киноманов своим разнообразием: экшены, спорт, добрые мультфильмы и первый фильм, снятый в космосе!',
+//         date: '04 апреля 2023'
+//     },
+//     {
+//         id: 6,
+//         image: news_6,
+//         title: 'mooon+ — проект для самой искушенной публики',
+//         description: 'Прямые трансляции спектаклей, лекции, яркие балетные поставки, зрелищные спортивные события – все это ждет вас в апреле на большом экране в кинопространствах mooon.',
+//         date: '04 апреля 2023'
+//     },
+//     {
+//         id: 7,
+//         image: news_7,
+//         title: 'Открытие кинопространства mooon в ТРЦ Palazzo',
+//         description: '4 августа открылось кинопространство под новым брендом mooon в ТРЦ Palazzo.',
+//         date: '04 августа 2022'
+//     },
+//     {
+//         id: 8,
+//         image: news_8,
+//         title: 'Открытие первого в Беларуси кинозала с кроватями',
+//         description: '4 августа в составе нового кинопространства mooon в ТРЦ Palazzo откроется уникальный и единственный в Беларуси кинозал с самыми настоящими кроватями.',
+//         date: '02 августа 2022'
+//     },
+//     {
+//         id: 9,
+//         image: news_9,
+//         title: 'NICE PRICE',
+//         description: 'Лето приятно проводить вместе с Silver Screen и mooon!',
+//         date: '12 июля 2022'
+//     },
+//     {
+//         id: 10,
+//         image: news_10,
+//         title: 'KIDS DAY в Silver Screen',
+//         description: 'В Международный день защиты детей любой билет на сеансы в Silver Screen и mooon по детской цене – 7 BYN!',
+//         date: '27 мая 2022'
+//     }
+// ]
 
 export const getTimePlusDuration = (date: string, duration: number) => {
     const [hours, minutes] = date.split(':').map(Number); 

@@ -9,7 +9,7 @@ interface IAccountBuyCard {
 }
 
 const AccountBuyCard:FC<IAccountBuyCard> = ({obj}) => {
-    const arrGiftCards: IDataGiftCard[] = useSelector(({ giftCards }) => giftCards);
+    const arrGiftCards: IDataGiftCard[] = useSelector(({store}) => store.giftCards);
 
     const findObj = arrGiftCards.find((item) => obj.idCard === item.id);
     const image = (findObj) ? findObj.image : '';

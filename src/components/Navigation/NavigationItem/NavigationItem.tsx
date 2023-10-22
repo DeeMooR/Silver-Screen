@@ -15,8 +15,8 @@ interface INavigationItem {
 }
 
 const NavigationItem:FC<INavigationItem> = ({icon, text, type, navActive, handleClick}) => {
-    const searchDate = useSelector(({ search }) => search.date);
-    let searchArr = useSelector(({ search }) => search[type]);
+    const searchDate = useSelector(({store}) => store.search.date);
+    let searchArr = useSelector(({store}) => store.search[type]);
 
     if (type === 'language') {
         searchArr = searchArr.map((item: string) => getFullLanguage(item))

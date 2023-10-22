@@ -19,10 +19,11 @@ import ModalPay from 'src/components/ModalPay'
 const PresentCard = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    const arrGiftCards: IDataGiftCard[] = useSelector(({ giftCards }) => giftCards);
-    const arrGiftSelect: IDataGiftSelect[] = useSelector(({ giftSelect }) => giftSelect);
-    const isLoading = useSelector(({isLoading}) => isLoading);
-    const isLoadingPage = useSelector(({isLoadingPage}) => isLoadingPage);
+    const userId = useSelector(({store}) => store.user.id);
+    const arrGiftCards: IDataGiftCard[] = useSelector(({store}) => store.giftCards);
+    const arrGiftSelect: IDataGiftSelect[] = useSelector(({store}) => store.giftSelect);
+    const isLoading = useSelector(({store}) => store.isLoading);
+    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const [modal, setModal] = useState(<div/>);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const token = localStorage.getItem('access');
@@ -36,7 +37,7 @@ const PresentCard = () => {
     }
     const clickPay = () => {
         setModalIsOpen(true);
-        const arrMyCards: IDataMyCard[] = arrGiftSelect.map((item) => {
+        const addArrMyCards: IDataMyCard[] = arrGiftSelect.map((item) => {
             const objMyCard: IDataMyCard = {
                 numberCard: item.number,
                 idCard: item.idCard,
@@ -46,7 +47,7 @@ const PresentCard = () => {
             }
             return objMyCard;
         })
-        dispatch(SEND_MY_CARDS(arrMyCards, setModal));
+        dispatch(SEND_MY_CARDS(userId, addArrMyCards, setModal));
     }
 
     useEffect(() => {
@@ -84,7 +85,7 @@ const PresentCard = () => {
                                 <div className="presentCard__cards">
                                     {arrGiftCards.map((item: IDataGiftCard) => (
                                         <div className="cards__item" key={item.id}>
-                                            <GiftCard obj={item} />
+                                            <GiftCard obj={item} arrGiftCards={arrGiftCards} />
                                         </div>
                                     ))}
                                 </div>
