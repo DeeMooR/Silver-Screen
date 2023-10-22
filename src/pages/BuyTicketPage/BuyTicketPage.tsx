@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './BuyTicketPage.css'
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { IMovie, IRow } from 'src/interfaces';
-import { addDayOfWeek, arrMovies, arrRooms, arrSeatType, formateDateItem, getAudio, getTimePlusDuration } from 'src/helpers';
+import { useDispatch, useSelector } from 'react-redux';
+import { IMovie, IRow, ISeatType } from 'src/interfaces';
+import { addDayOfWeek, arrMovies, arrRooms, formateDateItem, getAudio, getTimePlusDuration } from 'src/helpers';
 import PageMovieTemplate from 'src/components/PageMovieTemplate';
 import ModalAge18 from 'src/components/ModalAge18';
 
@@ -14,13 +14,19 @@ import screen from "src/icons/screen.png"
 import RowSeats from 'src/components/RowSeats';
 import SeatTypeInfo from 'src/components/SeatTypeInfo';
 import Button from 'src/components/Button';
+import { GET_SEAT_TYPES } from 'src/actions/actions';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 
 const BuyTicketPage = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
+    const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
+    const exampleImage = arrSeatTypes[0].image;
+    const [modal, setModal] = useState(<div/>);
+
     const {id, date, room, time} = useParams<{id: string, date: string, room: string, time: string}>();
     const token = localStorage.getItem('access');
-
     const newId = id || '';
     const newDate = date || '';
     const newRoom = room || '';
@@ -42,7 +48,6 @@ const BuyTicketPage = () => {
         }
         return types;
     }, []);
-    const exampleImage = arrSeatType[0].image;
 
     const fullURL = window.location.href;
     const movieURL = '/afisha' + fullURL.split('buy-ticket')[1].split('/').slice(0, 2).join('/');
@@ -54,8 +59,20 @@ const BuyTicketPage = () => {
         navigate('/sign-in', {state: {fromPage: url}});
     }
 
+    
+    useEffect(() => {
+        window.scrollTo({top: 0});
+        const fetchData = async () => {
+            dispatch({ type: "SET_LOADING_PAGE" });
+            if (!arrSeatTypes.length) await dispatch(GET_SEAT_TYPES(setModal));
+            dispatch({ type: "SET_LOADING_PAGE" });
+        };
+        fetchData();
+    },[])
+
     return (
         <>
+        {modal}
         {movie &&
             <PageMovieTemplate movie={movie} customBack={movieURL}>
                 <div className='buyTicketPage'>

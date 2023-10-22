@@ -24,35 +24,12 @@ import img19 from "src/icons/movies/Особняк_с_привидениями.j
 import img20 from "src/icons/movies/Создатель.jpeg"
 import img21 from "src/icons/movies/Смешарики_снимают_кино.jpeg"
 
-import img101 from "src/icons/main_slidebar/Создатель.jpg"
-import img102 from "src/icons/main_slidebar/Смешарики_снимают_кино.jpg"
-import img103 from "src/icons/main_slidebar/Мой_хатико.jpg"
-import img104 from "src/icons/main_slidebar/Призраки_в_Венеции.jpg"
-import img105 from "src/icons/main_slidebar/Дурные_деньги.jpg"
-import img106 from "src/icons/main_slidebar/Особняк_с_привидениями.jpg"
-import img107 from "src/icons/main_slidebar/Барби.jpg"
-import img108 from "src/icons/main_slidebar/Подарочная_карта.png"
-import img109 from "src/icons/main_slidebar/День_рождения.jpg"
-
-import news_1 from "src/icons/news/news_1.jpg"
-import news_2 from "src/icons/news/news_2.jpg"
-import news_3 from "src/icons/news/news_3.jpg"
-import news_4 from "src/icons/news/news_4.jpg"
-import news_5 from "src/icons/news/news_5.png"
-import news_6 from "src/icons/news/news_6.png"
-import news_7 from "src/icons/news/news_7.png"
-import news_8 from "src/icons/news/news_8.png"
-import news_9 from "src/icons/news/news_9.jpg"
-import news_10 from "src/icons/news/news_10.jpg"
-
 import services from "src/icons/afisha_services.jpg"
 import visa from "src/icons/afisha_visa.jpg"
 import visa_background from "src/icons/afisha_visa_background.png"
 
 import afisha_news from "src/icons/afisha_news.jpg"
 
-import single from "src/icons/single.png"
-import sofa from "src/icons/sofa.png"
 
 const russianMonths = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const arrDaysOfWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
@@ -103,116 +80,6 @@ export const arrAfishaNews: INews = {
     link: '/presentcard'
 }
 
-// export const arrEntertainmentNews: INews[] = [
-//     {
-//         id: 1,
-//         image: 'https://i.ibb.co/2nGnVwd/entertainment-1.jpg',
-//         background_image: 'https://i.ibb.co/7k7wG5Z/entertainment-bg1.jpg',
-//         title: 'Аренда кинопространства',
-//         description: 'Смотрите, играйте, учитесь, отмечайте - весь кинозал в вашем распоряжении.'
-//     },
-//     {
-//         id: 2,
-//         image: 'https://i.ibb.co/z2gjpfM/entertainment-2.jpg',
-//         background_image: 'https://i.ibb.co/BrPftpS/entertainment-bg2.jpg',
-//         title: 'Праздник в кино',
-//         description: 'Ярко и необычно отпразднуйте День Рождения ваших маленьких героев',
-//     },
-//     {
-//         id: 3,
-//         image: 'https://i.ibb.co/ChSNScB/entertainment-3.jpg',
-//         background_image: 'https://i.ibb.co/7k7wG5Z/entertainment-bg1.jpg',
-//         title: 'Media room',
-//         description: 'Современный зал с лазерным проектором Samsung Premiere c 4К разрешением и аудиосистемой с функцией объемного звука для компаний до 9 человек.',
-//     },
-//     {
-//         id: 4,
-//         image: 'https://i.ibb.co/71DBthb/entertainment-4.png',
-//         background_image: 'https://i.ibb.co/ypPtz2v/entertainment-bg3.jpg',
-//         title: 'Игровая комната - XPLAY',
-//         description: 'Новейшие приставки и десятки видеоигр на выбор. Доступно только в mooon в ТРК Triniti (Гродно)',
-//     },
-//     {
-//         id: 5,
-//         image: 'https://i.ibb.co/k1pJsXG/entertainment-5.jpg',
-//         background_image: 'https://i.ibb.co/BrPftpS/entertainment-bg2.jpg',
-//         title: 'Комната для вечеринок – Party Room',
-//         description: 'Отдельная комната с большим экраном, удобными диванчиками, видеоиграми и караоке для незабываемого отдыха с друзьями и близкими. Доступно только в mooon в ТРК Triniti (Гродно)',
-//     }
-// ]
-
-
-// export const arrNewsPageNews: INews[] = [
-//     {
-//         id: 1,
-//         image: news_1,
-//         title: 'Обновление детского кинопространства mooon Kids в ТРЦ Palazzo!',
-//         description: 'В кинопространстве mooon в ТРЦ Palazzo обновился детский кинозал и игровая зона BNB Kids. Партнером проекта выступил БНБ-Банк.'
-//     },
-//     {
-//         id: 2,
-//         image: news_2,
-//         title: 'Кинопикники в городе',
-//         description: 'Свежий воздух, любимые фильмы, вкусная еда и яркие развлечения - все это включает в себя проект летнего кинотеатра под открытым небом "Кинопикники в городе".',
-//         date: '05 июля 2023'
-//     },
-//     {
-//         id: 3,
-//         image: news_3,
-//         title: 'В кинопространстве mooon в ТРЦ Dana Mall открылся детский кинозал MTB Kids by Visa',
-//         description: 'Детский кинозал и игровая зона открылись 1 июня в кинопространстве mooon в Dana Mall. Спонсорами детского пространства стали сразу два известных финансовых бренда – МТБанк и Visa.',
-//         date: '02 июня 2023'
-//     },
-//     {
-//         id: 4,
-//         image: news_4,
-//         title: 'Яркие выходные в Media room со скидкой до 30%',
-//         description: 'Хотите просмотреть любимый фильм или сериал, фото со свадьбы или спортивную онлайн трансляцию? Значит вам в Media room!',
-//         date: '04 апреля 2023'
-//     },
-//     {
-//         id: 5,
-//         image: news_5,
-//         title: 'Что посмотреть кино в апреле',
-//         description: 'Апрель порадует киноманов своим разнообразием: экшены, спорт, добрые мультфильмы и первый фильм, снятый в космосе!',
-//         date: '04 апреля 2023'
-//     },
-//     {
-//         id: 6,
-//         image: news_6,
-//         title: 'mooon+ — проект для самой искушенной публики',
-//         description: 'Прямые трансляции спектаклей, лекции, яркие балетные поставки, зрелищные спортивные события – все это ждет вас в апреле на большом экране в кинопространствах mooon.',
-//         date: '04 апреля 2023'
-//     },
-//     {
-//         id: 7,
-//         image: news_7,
-//         title: 'Открытие кинопространства mooon в ТРЦ Palazzo',
-//         description: '4 августа открылось кинопространство под новым брендом mooon в ТРЦ Palazzo.',
-//         date: '04 августа 2022'
-//     },
-//     {
-//         id: 8,
-//         image: news_8,
-//         title: 'Открытие первого в Беларуси кинозала с кроватями',
-//         description: '4 августа в составе нового кинопространства mooon в ТРЦ Palazzo откроется уникальный и единственный в Беларуси кинозал с самыми настоящими кроватями.',
-//         date: '02 августа 2022'
-//     },
-//     {
-//         id: 9,
-//         image: news_9,
-//         title: 'NICE PRICE',
-//         description: 'Лето приятно проводить вместе с Silver Screen и mooon!',
-//         date: '12 июля 2022'
-//     },
-//     {
-//         id: 10,
-//         image: news_10,
-//         title: 'KIDS DAY в Silver Screen',
-//         description: 'В Международный день защиты детей любой билет на сеансы в Silver Screen и mooon по детской цене – 7 BYN!',
-//         date: '27 мая 2022'
-//     }
-// ]
 
 export const getTimePlusDuration = (date: string, duration: number) => {
     const [hours, minutes] = date.split(':').map(Number); 
@@ -337,33 +204,6 @@ export const setTodayDateStore = (searchDate: string, dispatch: any) => {
         }
     });
 }
-
-export const arrSliderSwiper: ISlide[] = [
-    {id: 1, image: img101, idFilm: 20},
-    {id: 2, image: img102, idFilm: 21},
-    {id: 3, image: img103, idFilm: 16},
-    {id: 4, image: img104, idFilm: 17},
-    {id: 5, image: img105, idFilm: 18},
-    {id: 6, image: img106, idFilm: 19},
-    {id: 7, image: img107, idFilm: 0},
-    {id: 8, image: img108, title: 'Дарите радость от неожиданных эмоций!', text: 'Электронные подарочные карты mooon и silver screen', textButton: 'Подробнее', link: '/presentcard'},
-    {id: 9, image: img109, title: 'Детский день рождения в кино', text: ' ', textButton: 'Отпраздновать в mooon'},
-]
-
-export const arrSeatType: ISeatType[] = [
-    {
-        type: 'single',
-        image: single,
-        imageSelect: single,
-        description: 'Одноместное комфортное широкое кресло с подстаканником.'
-    },
-    {
-        type: 'sofa',
-        image: sofa,
-        imageSelect: sofa,
-        description: 'Двухместные мягкие диванчики с подголовниками. Комфорт этого кресла моментально позволит вам расслабиться и почувствовать себя как дома. Цена указана за двойное место.'
-    }
-]
 
 export const arrRooms: IRoom[] = [
     {

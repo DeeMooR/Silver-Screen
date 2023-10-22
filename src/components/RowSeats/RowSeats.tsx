@@ -1,8 +1,9 @@
 import React, { FC } from 'react'
 import './RowSeats.css'
-import { arrRooms, arrSeatType } from 'src/helpers'
+import { arrRooms } from 'src/helpers'
 import { useSelector } from 'react-redux'
 import { SeatImage } from './styled'
+import { ISeatType } from 'src/interfaces'
 
 interface IRowSeats {
     arrRow: number[],
@@ -11,10 +12,11 @@ interface IRowSeats {
 }
 
 const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow}) => {
+    const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
     const userId = useSelector(({store}) => store.user.id);
     const objRoom = arrRooms.find((item) => item.room === room);              // объект room: room, costSingle, costSofa, rows
     const objRow = objRoom?.rows.find((item) => item.idRow === indexRow + 1);   // объект row:  idRow, type, seats
-    const objType = arrSeatType.find((item) => item.type === objRow?.type);        // объект type: type, image, description
+    const objType = arrSeatTypes.find((item: ISeatType) => item.type === objRow?.type);        // объект type: type, image, description
 
     console.log(arrRow)
     return (

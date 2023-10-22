@@ -2,14 +2,16 @@ import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation, A11y } from 'swiper/modules';
 import SlideInfo from '../SlideInfo';
-import { arrSliderSwiper } from 'src/helpers';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import './SliderSwiper.css';
+import { ISlide } from 'src/interfaces';
+import { useSelector } from 'react-redux';
 
 const SliderSwiper = () => {
+    const arrSliderSwiper: ISlide[] = useSelector(({storePages}) => storePages.sliderSwiper);
     return (
     <>
         <Swiper 

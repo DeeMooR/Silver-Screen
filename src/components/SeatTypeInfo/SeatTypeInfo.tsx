@@ -1,13 +1,15 @@
 import React, { FC } from 'react'
 import './SeatTypeInfo.css'
-import { arrSeatType } from 'src/helpers';
+import { ISeatType } from 'src/interfaces';
+import { useSelector } from 'react-redux';
 
 interface ISeatTypeInfo {
     typeAndCost: {type: string, cost: number}
 }
 
 const SeatTypeInfo:FC<ISeatTypeInfo> = ({typeAndCost}) => {
-    const objType = arrSeatType.find((item) => item.type === typeAndCost.type); 
+    const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
+    const objType = arrSeatTypes.find((item: ISeatType) => item.type === typeAndCost.type); 
     
     return (
         <>

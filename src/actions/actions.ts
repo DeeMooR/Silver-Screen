@@ -298,3 +298,37 @@ export const GET_NEWSPAGE_NEWS = (setModal: (v: JSX.Element) => void) => {
         }
     };
 };
+
+export const GET_SEAT_TYPES = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165667470173659136'        // seat_types
+            )
+            if (response.ok) {
+                const arrSeatTypes = await response.json();
+                dispatch({ type: "SET_SEAT_TYPES", payload: arrSeatTypes });
+            } 
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_SLIDER_SWIPER = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165670168029683712'        // slider_swiper
+            )
+            if (response.ok) {
+                const arrSliderSwiper = await response.json();
+                dispatch({ type: "SET_SLIDER_SWIPER", payload: arrSliderSwiper });
+            } 
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
