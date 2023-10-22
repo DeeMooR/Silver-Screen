@@ -12,6 +12,7 @@ import { GET_NEWSPAGE_NEWS } from 'src/actions/actions'
 const NewsPage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const arrNewsPageNews: INews[] = useSelector(({storePages}) => storePages.newsPageNews);
+    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const [modal, setModal] = useState(<div/>);
 
     useEffect(() => {
@@ -27,7 +28,11 @@ const NewsPage = () => {
     return (
         <>
         {modal}
-        {arrNewsPageNews && 
+        {isLoadingPage ? (
+            <div className="loaderPage">
+                <div className="loaderPage__element"></div>
+            </div>
+        ) : (
             <PageTemplate>
                 <div className='newsPage'>
                     <h1 className='newsPage__title'>Новости</h1>
@@ -41,7 +46,7 @@ const NewsPage = () => {
                     ))}
                 </div>
             </PageTemplate>
-        }
+        )}
         </>
     )
 }

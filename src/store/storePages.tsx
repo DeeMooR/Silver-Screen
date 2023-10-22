@@ -6,7 +6,14 @@ const initialState = {
     entertainmentNews: [],
     newsPageNews: [],
     sliderSwiper: [],
-    seatTypes: []
+    seatTypes: [],
+    mainNews: [],
+    afishaNews: [],
+    mainVisa: {},
+    mainEntertainment: {},
+    mainPresentCard: {},
+    arrRooms: [],
+    arrMovies: []
 };
 
 const rootReducerPages = (state = initialState, action: any) => {
@@ -33,6 +40,48 @@ const rootReducerPages = (state = initialState, action: any) => {
             return {
                 ...state,
                 seatTypes: action.payload,
+            };
+        }
+        case 'SET_MAIN_NEWS': {
+            return {
+                ...state,
+                mainNews: action.payload,
+            };
+        }
+        case 'SET_AFISHA_NEWS': {
+            return {
+                ...state,
+                afishaNews: action.payload,
+            };
+        }
+        case 'SET_MAIN_VISA': {
+            return {
+                ...state,
+                mainVisa: action.payload,
+            };
+        }
+        case 'SET_MAIN_ENTERTAINMENT': {
+            return {
+                ...state,
+                mainEntertainment: action.payload,
+            };
+        }
+        case 'SET_MAIN_PRESENT_CARD': {
+            return {
+                ...state,
+                mainPresentCard: action.payload,
+            };
+        }
+        case 'SET_ROOMS': {
+            return {
+                ...state,
+                arrRooms: action.payload,
+            };
+        }
+        case 'SET_MOVIES': {
+            return {
+                ...state,
+                arrMovies: action.payload,
             };
         }
         default: return state;

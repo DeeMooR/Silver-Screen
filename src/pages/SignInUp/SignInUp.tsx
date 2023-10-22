@@ -11,6 +11,7 @@ import { CREATE_USER, SIGN_IN } from 'src/actions/actions'
 import PageFormTemplate from 'src/components/PageFormTemplate'
 import ButtonForm from 'src/components/ButtonForm'
 import ModalSuccess from 'src/components/ModalSuccess'
+import { IMovie } from 'src/interfaces'
 
 interface ISignInUp {
     page: 'Sign In' | 'Sign Up'
@@ -19,6 +20,9 @@ interface ISignInUp {
 const SignInUp:FC<ISignInUp> = ({page}) => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrMovieIsFilled = (arrMovies.length) ? true : false;
+    
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -41,7 +45,7 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
         if (page === 'Sign In' && password !== '') setIsMismatch(false);    // если после красного password в Sign Up перейти в Sign In и нажать на button
         if (email === '') setIsEmptyEmail(true);
         
-        if (page === 'Sign In' && email !== '' && password !== '') dispatch(SIGN_IN(navigate, email, password, fromPage, setModal));
+        if (page === 'Sign In' && email !== '' && password !== '') dispatch(SIGN_IN(navigate, email, password, fromPage, arrMovieIsFilled, setModal));
         if (page === 'Sign Up' && name !== '' && email !== '' && password !== '' && password === confirmPassword) {
             dispatch(CREATE_USER(navigate, {username: name, email, password}, setModal));
         }

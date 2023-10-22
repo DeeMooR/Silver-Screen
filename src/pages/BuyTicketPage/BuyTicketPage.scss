@@ -9,6 +9,7 @@
         display: flex;
         align-items: center;
         gap: 30px;
+        margin: 0 0 30px 0;
         .buyTicketPage__image {
             max-width: 60px;
             border-radius: 5px;
@@ -47,7 +48,6 @@
         }
     }
     .buyTicketPage__table {
-        margin: 30px 0 0 0;
         display: flex;
         gap: 40px;
         .buyTicketPage__hall {

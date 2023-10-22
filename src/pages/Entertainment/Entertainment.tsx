@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import PageTemplate from 'src/components/PageTemplate'
 import SlideInfo from 'src/components/SlideInfo'
 
-import { mainEntertainment } from 'src/helpers'
 import { INews } from 'src/interfaces'
 import HorizontalNews from 'src/components/HorizontalNews'
 import './Entertainment.css'
@@ -14,6 +13,8 @@ import { GET_ENTERTAINMENT_NEWS } from 'src/actions/actions'
 const Entertainment = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const arrEntertainmentNews: INews[] = useSelector(({storePages}) => storePages.entertainmentNews);
+    const mainEntertainment = useSelector(({storePages}) => storePages.mainEntertainment);
+    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const [modal, setModal] = useState(<div/>);
 
     useEffect(() => {
@@ -29,7 +30,11 @@ const Entertainment = () => {
     return (
         <>
         {modal}
-        {arrEntertainmentNews && 
+        {isLoadingPage ? (
+            <div className="loaderPage">
+                <div className="loaderPage__element"></div>
+            </div>
+        ) : (
             <PageTemplate>
                 <div className='entertainment'>
                     <div className="entertainment__main">
@@ -47,7 +52,7 @@ const Entertainment = () => {
                     </div>
                 </div>
             </PageTemplate>
-        }
+        )}
         </>
     )
 }

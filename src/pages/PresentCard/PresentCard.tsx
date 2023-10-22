@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './PresentCard.css'
 import SlideInfo from 'src/components/SlideInfo'
-import { arrPresentCard, getDateIn180, getTodayDate } from 'src/helpers'
+import { getDateIn180, getTodayDate } from 'src/helpers'
 import PageTemplate from 'src/components/PageTemplate'
 import { BackgroundPresentCard } from './styled'
 import { IDataGiftCard, IDataGiftSelect, IDataMyCard } from 'src/interfaces'
@@ -22,6 +22,7 @@ const PresentCard = () => {
     const userId = useSelector(({store}) => store.user.id);
     const arrGiftCards: IDataGiftCard[] = useSelector(({store}) => store.giftCards);
     const arrGiftSelect: IDataGiftSelect[] = useSelector(({store}) => store.giftSelect);
+    const mainPresentCard = useSelector(({storePages}) => storePages.mainPresentCard);
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const [modal, setModal] = useState(<div/>);
@@ -67,13 +68,13 @@ const PresentCard = () => {
             {modal}
             <div className='presentCard'>
                 <div className="presentCard__main">
-                    <SlideInfo slide={arrPresentCard} reverse />
+                    <SlideInfo slide={mainPresentCard} reverse />
                 </div>
                 <div className="presentCard__wrapper">
                     <p className="presentCard__this">Электронная подарочная карта кинопространств mooon и Silver Screen - это лучшая возможность в пару кликов получить online-подарок, который подарит приятные эмоции другу, коллеге или близкому вам человеку</p>
                         {isLoadingPage ? (
-                            <div className="loader">
-                                <div className="loader__element"></div>
+                            <div className="loaderPage">
+                                <div className="loaderPage__element"></div>
                             </div>
                         ) : (
                             <div className={`presentCard__table ${isLoading ? 'loading' : ''}`}>

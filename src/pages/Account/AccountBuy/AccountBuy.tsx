@@ -14,16 +14,16 @@ const AccountBuy = () => {
     const arrGiftCards: IDataGiftCard[] = useSelector(({store}) => store.giftCards);
     const arrMyCards: IDataMyCard[] = useSelector(({store}) => store.myCards);
     const userId = useSelector(({store}) => store.user.id);
-    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
+    const isLoading = useSelector(({store}) => store.isLoading);
     const [modal, setModal] = useState(<div/>);
 
     useEffect(() => {
         const fetchData = async () => {
             window.scrollTo({ top: 0 });
-            dispatch({ type: "SET_LOADING_PAGE" });
+            dispatch({ type: "SET_LOADING" });
             if (!arrMyCards.length) await dispatch(GET_MY_CARDS(userId, setModal));
             if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
-            dispatch({ type: "SET_LOADING_PAGE" });
+            dispatch({ type: "SET_LOADING" });
         };
         fetchData();
     },[])
@@ -32,7 +32,7 @@ const AccountBuy = () => {
         {modal}
         <div className='accountBuy'>
             <div className="accountBuy__title">Подарочные карты</div>
-            {isLoadingPage ? (
+            {isLoading ? (
                 <div className="loader">
                     <div className="loader__element"></div>
                 </div>

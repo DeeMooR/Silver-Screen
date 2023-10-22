@@ -51,7 +51,7 @@ export const ACTIVATE_USER = (navigate: any, uid: string, token: string) => {
     };
 };
 
-export const SIGN_IN = (navigate: any, email: string, password: string, fromPage: string, setModal: (v: JSX.Element) => void) => {
+export const SIGN_IN = (navigate: any, email: string, password: string, fromPage: string, arrMovieIsFilled: boolean, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
 
@@ -69,20 +69,26 @@ export const SIGN_IN = (navigate: any, email: string, password: string, fromPage
             .then((data) => data.json())
             .then(({access, refresh}) => {
                 if (access) {
-                    console.log(fromPage)
-                    if (fromPage) navigate(`${fromPage}`);
-                    else navigate(-1);
-                    console.log({access, refresh});
-                    localStorage.setItem("access", access);
-                    localStorage.setItem("refresh", refresh);
+                    const fetchData = async () => {
+                        if (!arrMovieIsFilled) {
+                            await dispatch(GET_MOVIES(setModal));
+                            await dispatch(GET_SLIDER_SWIPER(setModal));
+                        }
+                        if (fromPage) await navigate(`${fromPage}`);
+                        else await navigate(-1);
+                        console.log({access, refresh});
+                        localStorage.setItem("access", access);
+                        localStorage.setItem("refresh", refresh);
+                        dispatch({ type: "SET_LOADING" });
+                    };
+                    fetchData();
                 } else {
                     modalShowMessege(setModal, false);
+                    dispatch({ type: "SET_LOADING" });
                 }
             });
         } catch (err) {
             console.log(err);
-        } finally {
-            dispatch({ type: "SET_LOADING" });
         }
     };
 };
@@ -169,9 +175,9 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
                 "https://jsonblob.com/api/jsonBlob/1165575060923998208"     // gift_cards
             )
             if (response.ok) {
-                const data = await response.json();
-                console.log(data)
-                dispatch({ type: "SET_GIFT_CARDS", payload: data });
+                const arrGiftCards = await response.json();
+                await dispatch({ type: "SET_MAIN_PRESENT_CARD", payload: arrGiftCards.shift() });
+                dispatch({ type: "SET_GIFT_CARDS", payload: arrGiftCards });
             } 
             else modalShowMessege(setModal, false);
         } catch (err) {
@@ -273,6 +279,7 @@ export const GET_ENTERTAINMENT_NEWS = (setModal: (v: JSX.Element) => void) => {
             )
             if (response.ok) {
                 const arrEntertainmentNews = await response.json();
+                await dispatch({ type: "SET_MAIN_ENTERTAINMENT", payload: arrEntertainmentNews.shift() });
                 dispatch({ type: "SET_ENTERTAINMENT_NEWS", payload: arrEntertainmentNews });
             } 
             else modalShowMessege(setModal, false);
@@ -326,6 +333,91 @@ export const GET_SLIDER_SWIPER = (setModal: (v: JSX.Element) => void) => {
                 const arrSliderSwiper = await response.json();
                 dispatch({ type: "SET_SLIDER_SWIPER", payload: arrSliderSwiper });
             } 
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_MAIN_NEWS = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165681210336075776'        // main_news
+            )
+            if (response.ok) {
+                const arrMainNews = await response.json();
+                dispatch({ type: "SET_MAIN_NEWS", payload: arrMainNews });
+            } 
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_AFISHA_NEWS = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165682261688705024'        // afisha_news
+            )
+            if (response.ok) {
+                const arrAfishaNews = await response.json();
+                dispatch({ type: "SET_AFISHA_NEWS", payload: arrAfishaNews });
+            }
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_MAIN_VISA = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165726551970275328'        // main_visa
+            )
+            if (response.ok) {
+                const objMainVisa = await response.json();
+                dispatch({ type: "SET_MAIN_VISA", payload: objMainVisa });
+            }
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_ROOMS = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165737562819387392'        // rooms
+            )
+            if (response.ok) {
+                const arrRooms = await response.json();
+                dispatch({ type: "SET_ROOMS", payload: arrRooms });
+            }
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_MOVIES = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165743472891518976'        // main_movies
+            )
+            if (response.ok) {
+                const arrMovies = await response.json();
+                dispatch({ type: "SET_MOVIES", payload: arrMovies });
+            }
             else modalShowMessege(setModal, false);
         } catch (err) {
           console.log(err);

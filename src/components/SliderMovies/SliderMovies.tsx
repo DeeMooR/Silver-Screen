@@ -2,15 +2,16 @@ import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import MovieCard from '../MovieCard';
-import { arrMovies } from 'src/helpers';
 import { IMovie } from 'src/interfaces';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import './SliderMovies.css';
 import NotFind from '../NotFind';
+import { useSelector } from 'react-redux';
 
 const SliderMovies = () => {
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
     return (
     <>
         <Swiper

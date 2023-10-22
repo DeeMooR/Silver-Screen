@@ -67,12 +67,44 @@ body::-webkit-scrollbar-thumb {
 
 /* loader */
 
+.loaderPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+}
+.loaderPage__element {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 6px solid #FFF;
+    border-right: 6px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+.loaderPage__element::after {
+    content: '';  
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    border-bottom: 6px solid rgb(212, 7, 84);;
+    border-left: 6px solid transparent;
+}
+
 .loader {
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10;
     min-height: 50px;
+    margin: 30px 0;
 }
 .loader__element {
     width: 48px;

@@ -4,30 +4,54 @@ import PageTemplate from 'src/components/PageTemplate'
 import MovieCard from 'src/components/MovieCard'
 import NotFind from 'src/components/NotFind'
 import Navigation from 'src/components/Navigation'
-import { IMovie } from 'src/interfaces'
-import { arrAfishaNews, arrMovies } from 'src/helpers';
+import { IMovie, INews } from 'src/interfaces'
 import './Afisha.css'
 import TitleWithSwitch from 'src/components/TitleWithSwitch'
 import { Link } from 'react-router-dom'
 import HorizontalNews from 'src/components/HorizontalNews'
+import { ThunkDispatch } from 'redux-thunk'
+import { AnyAction } from 'redux'
+import { GET_AFISHA_NEWS, GET_MOVIES } from 'src/actions/actions'
 
 const Afisha = () => {
+    const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
+    const arrAfishaNews: INews[] = useSelector(({storePages}) => storePages.afishaNews);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const [modal, setModal] = useState(<div/>);
+    const isLoading = useSelector(({store}) => store.isLoading);
+    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
+    
     let searchDate = useSelector(({store}) => store.search.date);
     if (searchDate) searchDate = searchDate.split(', ')[1]
 
     const searchVideo = useSelector(({store}) => store.search.video);
     const searchAudio = useSelector(({store}) => store.search.audio);
     let searchLanguage = useSelector(({store}) => store.search.language);
-    const dispatch = useDispatch();
 
     const [activePage, setActivePage] = useState(1);
 
     dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: '' });
-    window.scrollTo({top: 0});
     
     let filteredMovies: IMovie[] = [];
     let filterOne: IMovie[];
     let addToFilterOne: IMovie[];
+
+    useEffect(() => {
+        window.scrollTo({top: 0});
+        const fetchData = async () => {
+            if (!arrMovies.length) {
+                await dispatch({ type: "SET_LOADING_PAGE" });
+                await dispatch(GET_MOVIES(setModal));
+                dispatch({ type: "SET_LOADING_PAGE" });
+            }
+            if (!arrAfishaNews.length) {
+                await dispatch({ type: "SET_LOADING" });
+                await dispatch(GET_AFISHA_NEWS(setModal));
+                dispatch({ type: "SET_LOADING" });
+            }
+        };
+        fetchData();
+    },[])
     
     const filterMovies = () => {
         // Фильтрация фильмов по параметру Date
@@ -153,37 +177,52 @@ const Afisha = () => {
     filterMovies();
     
     return (
-        <PageTemplate>
-            <div className='afisha'>
-                <div className="afisha__wrapper">
-                    <TitleWithSwitch title='Афиша кино' switch_1='Сейчас в кино' switch_2='Скоро' active={activePage} setActive={setActivePage} />
-                    <div className='afisha__navigation'>
-                        <Navigation />
-                    </div>
-                    <div className='afisha__cards'>
-                        {filteredMovies.map((card: IMovie, i: number) => (
-                            <div className="cards__item" key={i}>
-                                <MovieCard obj={card} page='afisha' />
+        <>
+        {modal}
+        {isLoadingPage ? (
+            <div className="loaderPage">
+                <div className="loaderPage__element"></div>
+            </div>
+        ) : (
+            <PageTemplate>
+                <div className='afisha'>
+                    <div className="afisha__wrapper">
+                        <TitleWithSwitch title='Афиша кино' switch_1='Сейчас в кино' switch_2='Скоро' active={activePage} setActive={setActivePage} />
+                        <div className='afisha__navigation'>
+                            <Navigation />
+                        </div>
+                        <div className='afisha__cards'>
+                            {filteredMovies.map((card: IMovie, i: number) => (
+                                <div className="cards__item" key={i}>
+                                    <MovieCard obj={card} page='afisha' />
+                                </div>
+                            ))}
+                            <div className={`cards__item 
+                                ${filteredMovies.length % 4 === 0 && "center-4"}
+                                ${filteredMovies.length % 3 === 0 && "center-3"}
+                                ${filteredMovies.length % 2 === 0 && "center-2"}
+                            `}>
+                                <NotFind page='afisha' />
                             </div>
-                        ))}
-                        <div className={`cards__item 
-                            ${filteredMovies.length % 4 === 0 && "center-4"}
-                            ${filteredMovies.length % 3 === 0 && "center-3"}
-                            ${filteredMovies.length % 2 === 0 && "center-2"}
-                        `}>
-                            <NotFind page='afisha' />
+                        </div>
+                        <div className="afisha__text">
+                            <p>Кинопространства mooon и Silver Screen представляет Вам киноафишу всех фильмов, идущих в нашей <Link to='/'>сети кинотеатров</Link>.</p>
+                            <p>Наша киноафиша познакомит Вас с премьерами мировой киноиндустрии, расскажет о новинках кино для детей и взрослых и пригласит на показ любимых ретроспективных картин. Предлагаем Вам насладиться лучшими моментами вышедших в прокат фильмов, ознакомиться с трейлерами и полной информацией о кинолентах: продолжительности, рейтинге, создателях, актерском составе.</p>
+                            <p>Мы предлагаем Вам ознакомиться с киноафишей на нашем сайте, посмотреть, что идет в кино в Минске и в Гродно сегодня и купить билеты онлайн в кинотеатры Silver Screen и mooon, не выходя из дома.</p>
+                            <p>Доставьте себе удовольствие от просмотра своих любимых фильмов! Ждем Вас у нас в кинопространствах mooon и Silver Screen!</p>
                         </div>
                     </div>
-                    <div className="afisha__text">
-                        <p>Кинопространства mooon и Silver Screen представляет Вам киноафишу всех фильмов, идущих в нашей <Link to='/'>сети кинотеатров</Link>.</p>
-                        <p>Наша киноафиша познакомит Вас с премьерами мировой киноиндустрии, расскажет о новинках кино для детей и взрослых и пригласит на показ любимых ретроспективных картин. Предлагаем Вам насладиться лучшими моментами вышедших в прокат фильмов, ознакомиться с трейлерами и полной информацией о кинолентах: продолжительности, рейтинге, создателях, актерском составе.</p>
-                        <p>Мы предлагаем Вам ознакомиться с киноафишей на нашем сайте, посмотреть, что идет в кино в Минске и в Гродно сегодня и купить билеты онлайн в кинотеатры Silver Screen и mooon, не выходя из дома.</p>
-                        <p>Доставьте себе удовольствие от просмотра своих любимых фильмов! Ждем Вас у нас в кинопространствах mooon и Silver Screen!</p>
-                    </div>
+                    {isLoading ? (
+                        <div className="loader">
+                            <div className="loader__element"></div>
+                        </div>
+                    ) : (
+                        <HorizontalNews obj={arrAfishaNews[0]} page='main' reverse />
+                    )}
                 </div>
-                <HorizontalNews obj={arrAfishaNews} page='main' reverse />
-            </div>
-        </PageTemplate>
+            </PageTemplate>
+        )}
+        </>
     );
 }
 

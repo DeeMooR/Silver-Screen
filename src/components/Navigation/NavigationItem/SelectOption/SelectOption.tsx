@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getArrDate, getArrSelect, formateDateItem, arrMovies } from 'src/helpers';
+import { getArrDate, getArrSelect, formateDateItem } from 'src/helpers';
 import './SelectOption.css'
+import { IMovie } from 'src/interfaces';
 
 interface ISelectOption {
     type: string,
@@ -9,6 +10,7 @@ interface ISelectOption {
 }
 
 const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
     const [clickCheckbox, setClickCheckbox] = useState<string[]>([]);
 
     const typeKey = useSelector(({store}) => store.search[type]);

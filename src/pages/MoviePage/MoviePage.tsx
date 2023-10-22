@@ -1,27 +1,47 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Navigation from 'src/components/Navigation';
 import Schedule from 'src/components/Schedule';
 import Modal from 'src/components/Modal';
-import { arrMovies, getArrDate, setTodayDateStore } from 'src/helpers';
+import { getArrDate, setTodayDateStore } from 'src/helpers';
 import { StyledTrailer } from './styled'
 import { IMovie } from 'src/interfaces';
 import './MoviePage.css'
 
 import iconPlay from "src/icons/play.png"
 import PageMovieTemplate from 'src/components/PageMovieTemplate';
+import { GET_MOVIES } from 'src/actions/actions';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 
 const MoviePage = () => {
+    const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const [isModal, setIsModal] = useState(false);
-    const {id} = useParams<{id: string}>();
-    let movie: IMovie | undefined;
-    const dispatch = useDispatch();
-    if (id) movie = arrMovies[+id];
+    let { id = '' } = useParams<{ id: string }>();
+
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const movie = arrMovies[+id] || null;
+    const [modal, setModal] = useState(<div/>);
+    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
+
+    useEffect(() => {
+        console.log('ku2')
+        if (id) dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: id });
+        const fetchData = async () => {
+            if (!arrMovies.length) {
+                console.log('ku')
+                await dispatch({ type: "SET_LOADING_PAGE" });
+                await dispatch(GET_MOVIES(setModal));
+                dispatch({ type: "SET_LOADING_PAGE" });
+            }
+        };
+        fetchData();
+    }, []);
+
 
     const location = useLocation();
-    const customBackStr = (!location.state || (location.state.fromPage !== 'main' && location.state.fromPage !== 'afisha')) ? '/' : '';
-    console.log(customBackStr)
+    const customBackStr = (!location.state || (location.state.fromPage !== '/' && location.state.fromPage !== '/afisha')) ? '/' : '';
     let fullFirstDate;
     if (location.state && location.state.fromPage === 'main') {
         fullFirstDate = getArrDate().find(item => {
@@ -30,13 +50,9 @@ const MoviePage = () => {
         });
     }
     if (fullFirstDate) setTodayDateStore(fullFirstDate, dispatch);
-
-    useEffect(() => {
-        if (id) dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: id });
-    }, []);
     
     let videoId, newDuration;
-    if (movie)  {
+    if (movie) {
         videoId = movie.trailer.split("v=")[1];
         newDuration = `${Math.floor(movie.duration / 60)} ч ${movie.duration % 60} мин`;
     }
@@ -44,7 +60,12 @@ const MoviePage = () => {
 
     return (
         <>
-        {movie &&
+        {modal}
+        {(isLoadingPage || !arrMovies.length) ? (
+            <div className="loaderPage">
+                <div className="loaderPage__element"></div>
+            </div>
+        ) : (
             <PageMovieTemplate movie={movie} customBack={customBackStr}>
                 <div className='moviePage'>
                     <Navigation />
@@ -73,7 +94,7 @@ const MoviePage = () => {
                 </div>
                 <Modal movie={movie} isModal={isModal} setIsModal={setIsModal} />
             </PageMovieTemplate>
-        }
+        )}
         </>
     )
 }

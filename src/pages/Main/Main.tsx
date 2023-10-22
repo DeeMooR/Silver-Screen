@@ -7,27 +7,46 @@ import { BackgroundSlider } from './styled';
 import './Main.css'
 
 import slider_background from "src/icons/afisha_background.svg"
-import { arrMainNews, getArrDate, setTodayDateStore } from 'src/helpers';
-import { INews, ISlide } from 'src/interfaces';
+import { getArrDate } from 'src/helpers';
+import { IMovie, INews, ISlide } from 'src/interfaces';
 import MainText from './MainText';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
-import { GET_SLIDER_SWIPER } from 'src/actions/actions';
+import { GET_MAIN_NEWS, GET_MOVIES, GET_SLIDER_SWIPER } from 'src/actions/actions';
 
 const Main = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const arrSliderSwiper: ISlide[] = useSelector(({storePages}) => storePages.sliderSwiper);
+    const arrMainNews: INews[] = useSelector(({storePages}) => storePages.mainNews);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+
+    const isLoading = useSelector(({store}) => store.isLoading);
+    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     dispatch({ type: "CLEAR_SEARCH", payload: getArrDate()[0] });
     const [modal, setModal] = useState(<div/>);
 
     useEffect(() => {
         window.scrollTo({top: 0});
         const fetchData = async () => {
-            dispatch({ type: "SET_LOADING_PAGE" });
-            if (!arrSliderSwiper.length) await dispatch(GET_SLIDER_SWIPER(setModal));
-            dispatch({ type: "SET_LOADING_PAGE" });
+            if (!arrMovies.length) {
+                await dispatch({ type: "SET_LOADING_PAGE" });
+                await dispatch(GET_MOVIES(setModal));
+                if (!arrSliderSwiper.length) await dispatch(GET_SLIDER_SWIPER(setModal));
+                await dispatch({ type: "SET_LOADING_PAGE" });
+
+                await dispatch({ type: "SET_LOADING" });
+                if (!arrMainNews.length) await dispatch(GET_MAIN_NEWS(setModal));
+                dispatch({ type: "SET_LOADING" });
+            } else {
+                await dispatch({ type: "SET_LOADING_PAGE" });
+                if (!arrSliderSwiper.length) await dispatch(GET_SLIDER_SWIPER(setModal));
+                await dispatch({ type: "SET_LOADING_PAGE" });
+                await dispatch({ type: "SET_LOADING" });
+                if (!arrMainNews.length) await dispatch(GET_MAIN_NEWS(setModal));
+                dispatch({ type: "SET_LOADING" });
+            }
         };
         fetchData();
     },[])
@@ -35,7 +54,11 @@ const Main = () => {
     return (
         <>
         {modal}
-        {arrSliderSwiper && 
+        {isLoadingPage ? (
+            <div className="loaderPage">
+                <div className="loaderPage__element"></div>
+            </div>
+        ) : (
             <PageTemplate>
                 <div className='main'>
                     <SliderSwiper />
@@ -53,18 +76,26 @@ const Main = () => {
                         </div>
                         <SliderMovies />
                     </BackgroundSlider>
-                    {arrMainNews.map((item: INews, index: number) => (
-                        <div className="news__item" key={index}>
-                            {index % 2 === 0
-                            ? <HorizontalNews obj={item} page='main' />
-                            : <HorizontalNews obj={item} page='main' reverse />
-                            }
+                    {isLoading ? (
+                        <div className="loader">
+                            <div className="loader__element"></div>
                         </div>
-                    ))}
+                    ) : (
+                        <>
+                        {arrMainNews.map((item: INews, index: number) => (
+                            <div className="news__item" key={index}>
+                                {index % 2 === 0
+                                ? <HorizontalNews obj={item} page='main' />
+                                : <HorizontalNews obj={item} page='main' reverse />
+                                }
+                            </div>
+                        ))}
+                        </>
+                    )}
                     <MainText />
                 </div>
             </PageTemplate>
-        }
+        )}
         </>
     )
 }

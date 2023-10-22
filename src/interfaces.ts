@@ -23,13 +23,14 @@ export interface ISeance {
 }
 
 export interface ISlide {
-    id: number,
+    id?: number,
     image: string,
     idFilm?: number,
     title?: string,
     text?: string,
     textButton?: string,
-    link?: string
+    link?: string,
+    type?: string
 }
 
 export interface INews {

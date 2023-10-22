@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import Button from 'src/components/Button'
-import { ISlide } from 'src/interfaces'
+import { IMovie, ISlide } from 'src/interfaces'
 import './SlideInfo.css'
-import { arrMovies } from 'src/helpers'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 interface ISlideInfo {
     slide: ISlide,
@@ -11,11 +11,12 @@ interface ISlideInfo {
 }
 
 const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
     const navigate = useNavigate();
     let filmTitle, filmGenres;
     const isMain = typeof slide.idFilm === 'number' || slide.textButton;
 
-    if (typeof slide.idFilm === 'number') {
+    if (arrMovies.length && typeof slide.idFilm === 'number') {
         filmTitle = arrMovies[slide.idFilm].title;
         filmGenres = arrMovies[slide.idFilm].genres.join(', ') + ', ' + arrMovies[slide.idFilm].age + '+';
     }
