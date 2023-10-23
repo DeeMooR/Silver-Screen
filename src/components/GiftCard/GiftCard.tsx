@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { IDataGiftCard, IDataGiftSelect } from 'src/interfaces'
+import { IDataGiftCard, IDataGiftSelect, ISlide } from 'src/interfaces'
 import './GiftCard.css'
 
 import plus from "src/icons/plus.png"
@@ -17,7 +17,7 @@ interface IGiftCard {
 const GiftCard:FC<IGiftCard> = ({obj, arrGiftCards}) => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
 
-    const arrGiftSelect = useSelector(({store}) => store.giftSelect);
+    const arrGiftSelect: IDataGiftSelect[] = useSelector(({store}) => store.giftSelect);
     const [amountSelect, setAmountSelect] = useState(0);
     const [modal, setModal] = useState(<div/>);
   
@@ -38,7 +38,7 @@ const GiftCard:FC<IGiftCard> = ({obj, arrGiftCards}) => {
             number: obj.amount + 1,
             cost: obj.cost
         };
-        const arrWithNewAmount = arrGiftCards.map((item) => {
+        let arrWithNewAmount = arrGiftCards.map((item) => {
             if (item.id === obj.id) {
               return {
                 ...item,
@@ -46,7 +46,7 @@ const GiftCard:FC<IGiftCard> = ({obj, arrGiftCards}) => {
               };
             }
             return item;
-          });
+        });
         dispatch(ADD_GIFT_SELECT(arrWithNewAmount, objForGiftSelect, setModal));
     }
 

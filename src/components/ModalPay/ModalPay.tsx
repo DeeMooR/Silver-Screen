@@ -8,10 +8,11 @@ import { useDispatch } from 'react-redux';
 
 interface IModalPay {
     isOpen: boolean,
-    setIsOpen: (value: boolean) => void
+    setIsOpen: (value: boolean) => void,
+    setIsOpenOther?: (value: boolean) => void
 }
 
-const ModalPay:FC<IModalPay> = ({isOpen, setIsOpen}) => {
+const ModalPay:FC<IModalPay> = ({isOpen, setIsOpen, setIsOpenOther}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ const ModalPay:FC<IModalPay> = ({isOpen, setIsOpen}) => {
 
     const clickCross = () => {
         dispatch({ type: "CLEAR_GIFT_SELECT" });
+        if(setIsOpenOther) setIsOpenOther(false);
         setIsOpen(false);
         setTimeout(() => {
             document.body.style.overflowY = 'auto';

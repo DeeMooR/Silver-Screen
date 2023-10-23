@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { IDataGiftCard, IDataGiftSelect, IDataMyCard, IUser, IUserBuy } from "src/interfaces";
+import { IDataGiftCard, IDataGiftSelect, IDataMyCard, IDataSeatSelect, ISeance, IUser, IUserBuy } from "src/interfaces";
 import instance from "src/axiosConfig";
 import ModalSuccess from "src/components/ModalSuccess";
 import { modalShowMessege } from "src/helpersModal";
@@ -171,13 +171,21 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         
         try {
-            const response = await fetch(
+            let response = await fetch(
                 "https://jsonblob.com/api/jsonBlob/1165575060923998208"     // gift_cards
             )
             if (response.ok) {
                 const arrGiftCards = await response.json();
-                await dispatch({ type: "SET_MAIN_PRESENT_CARD", payload: arrGiftCards.shift() });
                 dispatch({ type: "SET_GIFT_CARDS", payload: arrGiftCards });
+            } 
+            else modalShowMessege(setModal, false);
+             
+            response = await fetch(
+                "https://jsonblob.com/api/jsonBlob/1166102766954602496"     // presentcard_main
+            )
+            if (response.ok) {
+                const objMainPresentCard = await response.json();
+                await dispatch({ type: "SET_MAIN_PRESENT_CARD", payload: objMainPresentCard });
             } 
             else modalShowMessege(setModal, false);
         } catch (err) {
@@ -251,7 +259,7 @@ export const SEND_MY_CARDS = (userId: number, addArrMyCards: IDataMyCard[], setM
     };
 };
 
-export const GET_MY_CARDS = (userId: number, setModal: (v: JSX.Element) => void) => {
+export const GET_MY_CARDS_MOVIES = (userId: number, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
 
         try {
@@ -262,6 +270,7 @@ export const GET_MY_CARDS = (userId: number, setModal: (v: JSX.Element) => void)
                 const arrUsers = await response.json();
                 const objUser = arrUsers.find((item: IUserBuy) => item.id === userId)
                 if (objUser) dispatch({ type: "SET_MY_CARDS", payload: objUser.cards });
+                if (objUser) dispatch({ type: "SET_MY_MOVIES", payload: objUser.movies });
             } 
             else modalShowMessege(setModal, false);
         } catch (err) {
@@ -412,7 +421,7 @@ export const GET_MOVIES = (setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         try {
             const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165743472891518976'        // main_movies
+                'https://jsonblob.com/api/jsonBlob/1165743472891518976'        // movies
             )
             if (response.ok) {
                 const arrMovies = await response.json();
@@ -429,13 +438,218 @@ export const GET_SEANCES = (setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         try {
             const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165952932608073728'        // main_movies
+                'https://jsonblob.com/api/jsonBlob/1165952932608073728'        // seances
             )
             if (response.ok) {
                 const arrSeances = await response.json();
                 dispatch({ type: "SET_SEANCES", payload: arrSeances });
             }
             else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+
+export const GET_SEAT_SELECT = (userId: number, setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+
+        try {
+            const response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165611207637196800'        // users
+            )
+            if (response.ok) {
+                const arrUsers: IUserBuy[] = await response.json();
+                const objUser = arrUsers.find((item: IUserBuy) => item.id === userId)
+                console.log(userId)
+                if (objUser) dispatch({ type: "SET_SEAT_SELECT", payload: objUser.seatSelect });
+            } 
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const ADD_SEAT_SELECT = (userId: number, newArrSeances: ISeance[], objSeatSelect: IDataSeatSelect, setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        dispatch({ type: "SET_LOADING" });
+
+        try {
+            await dispatch({ type: "SET_SEANCES", payload: newArrSeances });
+            let response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165952932608073728',        // seances
+                {
+                    method: "PUT",
+                    body: JSON.stringify(newArrSeances),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }
+            )
+            console.log(objSeatSelect)
+            if (response.ok) await dispatch({ type: "ADD_SEAT_SELECT", payload: objSeatSelect });
+            else modalShowMessege(setModal, false);
+                
+
+            // Добавление в user
+            let newArrUsers, userIsExist = false;
+            response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165611207637196800'        // users
+            )
+            if (response.ok) {
+                const arrUsers = await response.json();
+                newArrUsers = arrUsers.map((objUser: IUserBuy) => {
+                    if (objUser.id === userId) {
+                        userIsExist = true;
+                        return {
+                            ...objUser,
+                            seatSelect: [...objUser.seatSelect, objSeatSelect],
+                        };
+                    }
+                    return objUser;
+                });
+                if (!userIsExist) newArrUsers = [...arrUsers, { id: userId, cards: [], seatSelect: [objSeatSelect], movies: [] }];
+            } 
+            else modalShowMessege(setModal, false);
+
+            response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165611207637196800',        // users
+                {
+                    method: "PUT",
+                    body: JSON.stringify(newArrUsers),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }
+            )
+        } catch (err) {
+          console.log(err);
+        } finally {
+            dispatch({ type: "SET_LOADING" });
+        }
+    };
+};
+
+export const REMOVE_SEAT_SELECT = (userId: number, newArrSeances: ISeance[], newSeatSelect: IDataSeatSelect[], setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        dispatch({ type: "SET_LOADING" });
+        
+        try {
+            let response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165952932608073728',        // seances
+                {
+                    method: "PUT",
+                    body: JSON.stringify(newArrSeances),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }
+            )
+            if (response.ok) {
+                await dispatch({ type: "SET_SEANCES", payload: newArrSeances });
+                await dispatch({ type: "SET_SEAT_SELECT", payload: newSeatSelect });
+            }
+            else modalShowMessege(setModal, false);
+
+
+            // Добавление в user
+
+            let newArrUsers;
+            response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165611207637196800'        // users
+            )
+            if (response.ok) {
+                const arrUsers = await response.json();
+                newArrUsers = arrUsers.map((objUser: IUserBuy) => {
+                    if (objUser.id === userId) {
+                        return {
+                            ...objUser,
+                            seatSelect: newSeatSelect,
+                        };
+                    }
+                    return objUser;
+                });
+            } 
+            else modalShowMessege(setModal, false);
+
+            response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165611207637196800',        // users
+                {
+                    method: "PUT",
+                    body: JSON.stringify(newArrUsers),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }
+            )
+        } catch (err) {
+          console.log(err);
+        } finally {
+            dispatch({ type: "SET_LOADING" });
+        }
+    };
+};
+
+export const SEND_MY_SEATS = (userId: number, arrSeatSelect: IDataSeatSelect[], setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        let newArrUsers, userIsExist = false;
+        try {
+            dispatch({ type: "CLEAR_SEAT_SELECT" });
+            let response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165611207637196800'        // users
+            )
+            if (response.ok) {
+                const arrUsers = await response.json();
+                newArrUsers = arrUsers.map((objUser: IUserBuy) => {
+                    if (objUser.id === userId) {
+                        userIsExist = true;
+                        return {
+                            ...objUser,
+                            seatSelect: [],
+                            movies: [...objUser.movies, ...arrSeatSelect],
+                        };
+                    }
+                    return objUser;
+                });
+                if (!userIsExist) newArrUsers = [...arrUsers, { id: userId, cards: [], seatSelect:[], movies: arrSeatSelect }];
+            } 
+            else modalShowMessege(setModal, false);
+
+            response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165611207637196800',        // users
+                {
+                    method: "PUT",
+                    body: JSON.stringify(newArrUsers),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }
+            )
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+
+export const GET_USER = (token: string) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+
+        try {
+            const response = await fetch(
+                'https://studapi.teachmeskills.by/auth/users/me/',
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },  
+                }
+            )
+            if (response.ok) {
+                const userData = await response.json();
+                dispatch({ type: "SET_USER", payload: userData });
+            }
         } catch (err) {
           console.log(err);
         }

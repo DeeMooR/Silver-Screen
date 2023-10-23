@@ -63,35 +63,6 @@
   font-weight: 700;
   margin: 20px 0 32px;
 }
-.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .basket__items {
-  max-height: 300px;
-  overflow-y: auto;
-}
-.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .basket__items::-webkit-scrollbar {
-  width: 7px;
-}
-.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .basket__items::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-}
-.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .basket__items .basket__item {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-}
-.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .basket__items .basket__item:last-child {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-}
-.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .presentCard-basket__total {
-  margin: 20px 0 15px;
-  line-height: 26px;
-  text-align: center;
-}
-.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .presentCard-basket__total .total__text {
-  margin: 0 5px 0 0;
-}
-.presentCard .presentCard__wrapper .presentCard__table .presentCard__basket .presentCard-basket__total .total__sum {
-  font-size: 24px;
-  font-weight: 700;
-}
 .presentCard .presentCard__wrapper .presentCard__table .presentCard__basket button {
   width: 100%;
 }

@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import './AccountBuy.css'
 import { IDataGiftCard, IDataMyCard } from 'src/interfaces'
-import { GET_GIFT_CARDS, GET_MY_CARDS } from 'src/actions/actions';
+import { GET_GIFT_CARDS, GET_MY_CARDS_MOVIES } from 'src/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
@@ -21,7 +21,7 @@ const AccountBuy = () => {
         const fetchData = async () => {
             window.scrollTo({ top: 0 });
             dispatch({ type: "SET_LOADING" });
-            if (!arrMyCards.length) await dispatch(GET_MY_CARDS(userId, setModal));
+            if (!arrMyCards.length) await dispatch(GET_MY_CARDS_MOVIES(userId, setModal));
             if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
             dispatch({ type: "SET_LOADING" });
         };

@@ -15,6 +15,7 @@ import BasketCard from 'src/components/BasketCard'
 import Button from 'src/components/Button'
 import { Link, useNavigate } from 'react-router-dom'
 import ModalPay from 'src/components/ModalPay'
+import Basket from 'src/components/Basket'
 
 const PresentCard = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
@@ -28,10 +29,6 @@ const PresentCard = () => {
     const [modal, setModal] = useState(<div/>);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const token = localStorage.getItem('access');
-
-    const totalCost = arrGiftSelect.reduce((acc, item) => {
-        return acc + item.cost;
-    }, 0);
 
     const clickSignIn = () => {
         navigate('/sign-in', {state: {fromPage: '/presentcard'}});
@@ -94,17 +91,7 @@ const PresentCard = () => {
                                     {arrGiftSelect.length ?
                                         <>
                                         <p className='presentCard-basket__title'>Корзина</p>
-                                        <div className="basket__items">
-                                            {arrGiftSelect.map((item: IDataGiftSelect, index: number) => (
-                                                <div className="basket__item" key={index}>
-                                                    <BasketCard obj={item} />
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <div className='presentCard-basket__total'>
-                                            <span className='total__text'>Итого:</span>
-                                            <span className='total__sum'>{totalCost} BYN</span>
-                                        </div>
+                                        <Basket type='card' setModal={setModal} />
                                         {token 
                                         ? <Button color='red' fill handleClick={clickPay}>Подтвердить и перейти к оплате</Button>
                                         : <Button color='red' fill handleClick={clickSignIn}>Войти в аккаунт</Button>

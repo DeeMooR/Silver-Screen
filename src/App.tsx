@@ -20,24 +20,26 @@ import Account from './pages/Account';
 import Page404 from './pages/Page404/Page404';
 import PresentCard from './pages/PresentCard';
 import BuyTicketPage from './pages/BuyTicketPage';
+import { GET_SEAT_SELECT, GET_USER } from './actions/actions';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import { IDataSeatSelect } from './interfaces';
 
 function App() {
+    const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const location = useLocation();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const token = localStorage.getItem('access');
 
+    const userId = useSelector(({store}) => store.user.id);
+    const [modal, setModal] = useState(<div/>);
+
     if (token) {
-        fetch("https://studapi.teachmeskills.by/auth/users/me/", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },  
-        })
-        .then((response) => response.json())
-        .then((userData) => {
-            console.log(userData)
-            dispatch({ type: "SET_USER", payload: userData });
-        });
+        const fetchData = async () => {
+            await dispatch(GET_USER(token));
+            await dispatch(GET_SEAT_SELECT(userId, setModal));
+        };
+        fetchData();
     }
 
     const startTokenRefreshTimer = () => {
@@ -92,7 +94,7 @@ function App() {
                 <Route path='/' element={<Main />} />
                 <Route path='/afisha' element={<Afisha />} />
                 <Route path='/afisha/:id' element={<MoviePage />} />
-                <Route path='/buy-ticket/:id/:date/:room/:time' element={<BuyTicketPage />} />
+                <Route path='/buy-ticket/:id/:date/:seance' element={<BuyTicketPage />} />
                 <Route path='/entertainment' element={<Entertainment />} />
                 <Route path='/news' element={<NewsPage />} />
                 <Route path='/visa' element={<VisaPage />} />

@@ -1,7 +1,7 @@
 import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools} from 'redux-devtools-extension'
-import { IDataGiftCard, IDataGiftSelect } from 'src/interfaces';
+import { IDataGiftCard, IDataGiftSelect, IDataSeatSelect } from 'src/interfaces';
 
 const initialState = {
     navActive: '',
@@ -19,7 +19,9 @@ const initialState = {
     },
     giftCards: [],
     giftSelect: [],
+    seatSelect: [],
     myCards: [],
+    myMovies: [],
     isLoading: false,
     isLoadingPage: false,
 };
@@ -127,6 +129,39 @@ const rootReducerMain = (state = initialState, action: any) => {
             return {
                 ...state,
                 myCards: []
+            };
+        }
+        case 'SET_MY_MOVIES':  {
+            return {
+                ...state,
+                myMovies: action.payload
+            };
+        }
+        case 'CLEAR_MY_MOVIES':  {
+            return {
+                ...state,
+                myMovies: []
+            };
+        }
+        case 'SET_SEAT_SELECT':  {
+            return {
+                ...state,
+                seatSelect: action.payload
+            };
+        }
+        case 'ADD_SEAT_SELECT': {
+            return {
+                ...state,
+                seatSelect: [
+                    ...state.seatSelect, 
+                    action.payload
+                ],
+            };
+        }
+        case 'CLEAR_SEAT_SELECT': {
+            return {
+                ...state,
+                seatSelect: [],
             };
         }
         case 'SET_LOADING': {

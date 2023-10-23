@@ -20,7 +20,7 @@ export interface ISeance {
     id: number,
     room: number,
     time: string,
-    places?: number[][]
+    places: number[][]
 }
 
 export interface ISlide {
@@ -94,5 +94,16 @@ export interface ISeatType {
 export interface IUserBuy {
     id: number,
     cards: [],
+    seatSelect: [],
     movies: []
+}
+
+export interface IDataSeatSelect {
+    idMovie: number,
+    date: string,
+    row: number,
+    column: number,
+    cost: number,
+    typeSeat: string,
+    idSeance: number
 }

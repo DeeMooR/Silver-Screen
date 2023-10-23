@@ -59,35 +59,6 @@
                     font-weight: 700;
                     margin: 20px 0 32px;
                 }
-                .basket__items {
-                    max-height: 300px;
-                    overflow-y: auto;
-                    &::-webkit-scrollbar {
-                        width: 7px;
-                    }
-                    &::-webkit-scrollbar-thumb {
-                        background-color: rgba(255, 255, 255, 0.2);
-                        border-radius: 10px;
-                    }
-                    .basket__item {
-                        border-top: 1px solid rgba(255, 255, 255, 0.15);
-                        &:last-child {
-                            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-                        }
-                    }
-                }
-                .presentCard-basket__total {
-                    margin: 20px 0 15px;
-                    line-height: 26px;
-                    text-align: center;
-                    .total__text {
-                        margin: 0 5px 0 0;
-                    }
-                    .total__sum {
-                        font-size: 24px;
-                        font-weight: 700;
-                    }
-                }
                 button {
                     width: 100%;
                 }
