@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react'
 import './BuyTicketPage.css'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { IMovie, IRoom, IRow, ISeatType } from 'src/interfaces';
+import { IMovie, IRoom, IRow, ISeance, ISeatType } from 'src/interfaces';
 import { addDayOfWeek, formateDateItem, getAudio, getTimePlusDuration } from 'src/helpers';
 import PageMovieTemplate from 'src/components/PageMovieTemplate';
-import ModalAge18 from 'src/components/ModalAge18';
 
 import location from "src/icons/location.png"
 import calendar from "src/icons/calendar.png"
@@ -14,15 +13,17 @@ import screen from "src/icons/screen.png"
 import RowSeats from 'src/components/RowSeats';
 import SeatTypeInfo from 'src/components/SeatTypeInfo';
 import Button from 'src/components/Button';
-import { GET_MOVIES, GET_ROOMS, GET_SEAT_TYPES } from 'src/actions/actions';
+import { GET_MOVIES, GET_ROOMS, GET_SEANCES, GET_SEAT_TYPES } from 'src/actions/actions';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
+import ModalTextButton from 'src/components/ModalTextButton';
 
 const BuyTicketPage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
     const {id = '', date, room, time} = useParams<{id: string, date: string, room: string, time: string}>();
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
     const movie = arrMovies[+id] || null;
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
@@ -31,6 +32,7 @@ const BuyTicketPage = () => {
     let exampleImage;
     if (arrSeatTypes.length) exampleImage = arrSeatTypes[0].image;
     const [modal, setModal] = useState(<div/>);
+    const [modalTextButtonIsOpen, setModalTextButtonIsOpen] = useState(false);
     
     const token = localStorage.getItem('access');
     const newId = id || '';
@@ -39,9 +41,11 @@ const BuyTicketPage = () => {
     const newTime = time || '';
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    console.log(modalIsOpen)
    
     const objDate = movie?.schedule.find((item) => item.date === date);
-    const objSeance = objDate?.seances.find((item) => item.room === +newRoom && item.time === time);
+    const allSeances = arrSeances.filter((seance) => objDate?.seances.includes(seance.id));
+    const objSeance = allSeances.find((item) => item.room === +newRoom && item.time === time);
     const objRoom = arrRooms.find((item) => item.room === +newRoom);       // объект room: room, costSingle, costSofa, rows
 
     const arrRoomSeatTypes = objRoom?.rows
@@ -71,6 +75,7 @@ const BuyTicketPage = () => {
             if (!arrMovies.length) {
                 await dispatch({ type: "SET_LOADING_PAGE" });
                 await dispatch(GET_MOVIES(setModal));
+                await dispatch(GET_SEANCES(setModal));
                 if (!arrRooms.length) await dispatch(GET_ROOMS(setModal));
                 if (!arrSeatTypes.length) await dispatch(GET_SEAT_TYPES(setModal));
                 dispatch({ type: "SET_LOADING_PAGE" });
@@ -125,7 +130,7 @@ const BuyTicketPage = () => {
                                 <img src={screen} className='buyTicketPage__screen' alt="screen" />
                                 <div className="buyTicketPage__seats">
                                     {objSeance?.places?.map((row: number[], i: number) => (
-                                        <RowSeats arrRow={row} room={+newRoom} indexRow={i} key={i} />
+                                        <RowSeats arrRow={row} room={+newRoom} indexRow={i} key={i} setModalIsOpen={setModalTextButtonIsOpen} />
                                     ))}
                                 </div>
                                 <div className='buyTicketPage__example'>
@@ -166,7 +171,10 @@ const BuyTicketPage = () => {
                     )}
                 </div>
                 {movie.age >= 18 &&
-                    <ModalAge18 isOpen={modalIsOpen} setIsOpen={setModalIsOpen} />
+                    <ModalTextButton isOpen={modalIsOpen} setIsOpen={setModalIsOpen} type='age18' />
+                }
+                {modalTextButtonIsOpen &&
+                    <ModalTextButton isOpen={modalIsOpen} setIsOpen={setModalIsOpen} setIsOpenOther={setModalTextButtonIsOpen} type='goSignIn' />
                 }
             </PageMovieTemplate>
         )}

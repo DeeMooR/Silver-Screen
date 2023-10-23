@@ -6,12 +6,12 @@ import Schedule from 'src/components/Schedule';
 import Modal from 'src/components/Modal';
 import { getArrDate, setTodayDateStore } from 'src/helpers';
 import { StyledTrailer } from './styled'
-import { IMovie } from 'src/interfaces';
+import { IMovie, ISeance } from 'src/interfaces';
 import './MoviePage.css'
 
 import iconPlay from "src/icons/play.png"
 import PageMovieTemplate from 'src/components/PageMovieTemplate';
-import { GET_MOVIES } from 'src/actions/actions';
+import { GET_MOVIES, GET_SEANCES } from 'src/actions/actions';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
@@ -21,24 +21,29 @@ const MoviePage = () => {
     let { id = '' } = useParams<{ id: string }>();
 
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
     const movie = arrMovies[+id] || null;
     const [modal, setModal] = useState(<div/>);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
 
     useEffect(() => {
-        console.log('ku2')
         if (id) dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: id });
         const fetchData = async () => {
-            if (!arrMovies.length) {
-                console.log('ku')
-                await dispatch({ type: "SET_LOADING_PAGE" });
-                await dispatch(GET_MOVIES(setModal));
-                dispatch({ type: "SET_LOADING_PAGE" });
+            if (!arrSeances.length) {
+                if (!arrMovies.length) {
+                    await dispatch({ type: "SET_LOADING_PAGE" });
+                    await dispatch(GET_MOVIES(setModal));
+                    await dispatch(GET_SEANCES(setModal));
+                    await dispatch({ type: "SET_LOADING_PAGE" });
+                } else {
+                    await dispatch({ type: "SET_LOADING_PAGE" });
+                    await dispatch(GET_SEANCES(setModal));
+                    await dispatch({ type: "SET_LOADING_PAGE" });
+                }
             }
         };
         fetchData();
     }, []);
-
 
     const location = useLocation();
     const customBackStr = (!location.state || (location.state.fromPage !== '/' && location.state.fromPage !== '/afisha')) ? '/' : '';

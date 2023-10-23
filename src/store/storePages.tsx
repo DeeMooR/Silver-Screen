@@ -13,7 +13,8 @@ const initialState = {
     mainEntertainment: {},
     mainPresentCard: {},
     arrRooms: [],
-    arrMovies: []
+    arrMovies: [],
+    arrSeances: []
 };
 
 const rootReducerPages = (state = initialState, action: any) => {
@@ -82,6 +83,12 @@ const rootReducerPages = (state = initialState, action: any) => {
             return {
                 ...state,
                 arrMovies: action.payload,
+            };
+        }
+        case 'SET_SEANCES': {
+            return {
+                ...state,
+                arrSeances: action.payload,
             };
         }
         default: return state;

@@ -4,19 +4,20 @@ import PageTemplate from 'src/components/PageTemplate'
 import MovieCard from 'src/components/MovieCard'
 import NotFind from 'src/components/NotFind'
 import Navigation from 'src/components/Navigation'
-import { IMovie, INews } from 'src/interfaces'
+import { IMovie, INews, ISeance } from 'src/interfaces'
 import './Afisha.css'
 import TitleWithSwitch from 'src/components/TitleWithSwitch'
 import { Link } from 'react-router-dom'
 import HorizontalNews from 'src/components/HorizontalNews'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { GET_AFISHA_NEWS, GET_MOVIES } from 'src/actions/actions'
+import { GET_AFISHA_NEWS, GET_MOVIES, GET_SEANCES } from 'src/actions/actions'
 
 const Afisha = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const arrAfishaNews: INews[] = useSelector(({storePages}) => storePages.afishaNews);
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
     const [modal, setModal] = useState(<div/>);
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
@@ -39,10 +40,17 @@ const Afisha = () => {
     useEffect(() => {
         window.scrollTo({top: 0});
         const fetchData = async () => {
-            if (!arrMovies.length) {
-                await dispatch({ type: "SET_LOADING_PAGE" });
-                await dispatch(GET_MOVIES(setModal));
-                dispatch({ type: "SET_LOADING_PAGE" });
+            if (!arrSeances.length) {
+                if (!arrMovies.length) {
+                    await dispatch({ type: "SET_LOADING_PAGE" });
+                    await dispatch(GET_MOVIES(setModal));
+                    await dispatch(GET_SEANCES(setModal));
+                    await dispatch({ type: "SET_LOADING_PAGE" });
+                } else {
+                    await dispatch({ type: "SET_LOADING_PAGE" });
+                    await dispatch(GET_SEANCES(setModal));
+                    await dispatch({ type: "SET_LOADING_PAGE" });
+                }
             }
             if (!arrAfishaNews.length) {
                 await dispatch({ type: "SET_LOADING" });
@@ -86,7 +94,8 @@ const Afisha = () => {
                     addToFilterOne = filteredMovies.filter(movie => {
                         if (filterOne.some(item => item.title === movie.title)) return false;
                         let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                        if (scheduleDay) return scheduleDay.seances.some(oneSeance => [1, 2].includes(oneSeance.room));
+                        const allSeances = arrSeances.filter((seance) => scheduleDay?.seances.includes(seance.id));
+                        if (allSeances) return allSeances.some(oneSeance => [1, 2].includes(oneSeance.room));
                         return false;
                     });
                     filterOne.push(...addToFilterOne);
@@ -95,7 +104,8 @@ const Afisha = () => {
                     addToFilterOne = filteredMovies.filter(movie => {
                         if (filterOne.some(item => item.title === movie.title)) return false;
                         let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                        if (scheduleDay) return scheduleDay.seances.some(oneSeance => [3, 4].includes(oneSeance.room));
+                        const allSeances = arrSeances.filter((seance) => scheduleDay?.seances.includes(seance.id));
+                        if (allSeances) return allSeances.some(oneSeance => [3, 4].includes(oneSeance.room));
                         return false;
                     });
                     filterOne.push(...addToFilterOne);
@@ -104,7 +114,8 @@ const Afisha = () => {
                     addToFilterOne = filteredMovies.filter(movie => {
                         if (filterOne.some(item => item.title === movie.title)) return false;
                         let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                        if (scheduleDay) return scheduleDay.seances.some(oneSeance => [5, 6].includes(oneSeance.room));
+                        const allSeances = arrSeances.filter((seance) => scheduleDay?.seances.includes(seance.id));
+                        if (allSeances) return allSeances.some(oneSeance => [5, 6].includes(oneSeance.room));
                         return false;
                     });
                     filterOne.push(...addToFilterOne);
@@ -122,9 +133,10 @@ const Afisha = () => {
                     switch (item) {
                     case 'ScreenX':
                         addToFilterOne = filteredMovies.filter(movie => {
-                            if (filterOne.some(item => item.title === movie.title)) return false;       // Если такой элемент уже был добавлен при IMAX, пропускаем его
-                            let scheduleDay = movie.schedule.find(item => item.date == searchDate);     // Поиск массива сеансов в определённый день
-                            if (scheduleDay) return scheduleDay.seances.some(oneSeance => oneSeance.room === 5);   // Если хотя бы в одном сеансе есть ScreenX вернёт true
+                            if (filterOne.some(item => item.title === movie.title)) return false;
+                            let scheduleDay = movie.schedule.find(item => item.date == searchDate);
+                            const allSeances = arrSeances.filter((seance) => scheduleDay?.seances.includes(seance.id));
+                            if (allSeances) return allSeances.some(oneSeance => oneSeance.room === 5);
                             return false;
                         });              
                         filterOne.push(...addToFilterOne);
@@ -133,7 +145,8 @@ const Afisha = () => {
                         addToFilterOne = filteredMovies.filter(movie => {
                             if (filterOne.some(item => item.title === movie.title)) return false;
                             let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                            if (scheduleDay) return scheduleDay.seances.some(oneSeance => oneSeance.room === 6);
+                            const allSeances = arrSeances.filter((seance) => scheduleDay?.seances.includes(seance.id));
+                            if (allSeances) return allSeances.some(oneSeance => oneSeance.room === 6);
                             return false;
                         });
                         filterOne.push(...addToFilterOne);

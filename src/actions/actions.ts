@@ -424,3 +424,20 @@ export const GET_MOVIES = (setModal: (v: JSX.Element) => void) => {
         }
     };
 };
+
+export const GET_SEANCES = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165952932608073728'        // main_movies
+            )
+            if (response.ok) {
+                const arrSeances = await response.json();
+                dispatch({ type: "SET_SEANCES", payload: arrSeances });
+            }
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};

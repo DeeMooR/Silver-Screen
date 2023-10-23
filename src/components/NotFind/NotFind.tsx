@@ -27,7 +27,8 @@ const NotFind:FC<INotFind> = ({page}) => {
     }, [search])
 
     const clearSearch = () => {
-        setTodayDateStore(arrDate[0], dispatch);
+        dispatch({ type: "CLEAR_SEARCH", payload: arrDate[0] });
+
     }
     const setNextDay = () => {
         if (indexArrDay !== arrDate.length - 1) setTodayDateStore(arrDate[indexArrDay + 1], dispatch);

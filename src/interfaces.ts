@@ -12,11 +12,12 @@ export interface IMovie {
     trailer: string,
     schedule: {
         date: string,
-        seances: ISeance[]
+        seances: number[]
     }[]
 }
 
 export interface ISeance {
+    id: number,
     room: number,
     time: string,
     places?: number[][]

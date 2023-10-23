@@ -13,11 +13,12 @@ const Schedule:FC<ISchedule> = ({movie}) => {
     const searchVideo = useSelector(({store}) => store.search.video);
     const searchAudio = useSelector(({store}) => store.search.audio);
     const searchLanguage = useSelector(({store}) => store.search.language);
+    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
 
     let i = 0;
     let filteredMovie: ISeance[] = [];
     let fixSeances: ISeance[] = [];
-    let addSeances: ISeance[] = [];
+    let addSeances: ISeance[];
     
     const filterMovies = () => {
         // Проверка "Фильм с субтитрами?"
@@ -45,21 +46,33 @@ const Schedule:FC<ISchedule> = ({movie}) => {
             for (const item of searchAudio) {
                 switch (item) {
                 case 'Dolby Digital':
-                    addSeances = scheduleDay.seances.filter(item => [1, 2].includes(item.room));
+                    addSeances = scheduleDay.seances
+                        .map(number => arrSeances.find(seance => seance.id === number))
+                        .filter(seance => {
+                            return (seance) ? [1, 2].includes(seance.room) : false;
+                        }) as ISeance[];
                     filteredMovie.push(...addSeances);
                     break;
                 case 'Dolby Atmos':
-                    addSeances = scheduleDay.seances.filter(item => [3, 4].includes(item.room));
+                    addSeances = scheduleDay.seances
+                        .map(number => arrSeances.find(seance => seance.id === number))
+                        .filter(seance => {
+                            return (seance) ? [3, 4].includes(seance.room) : false;
+                        }) as ISeance[];
                     filteredMovie.push(...addSeances);
                     break;
                 case 'Harman Kardon':
-                    addSeances = scheduleDay.seances.filter(item => [5, 6].includes(item.room));
+                    addSeances = scheduleDay.seances
+                        .map(number => arrSeances.find(seance => seance.id === number))
+                        .filter(seance => {
+                            return (seance) ? [5, 6].includes(seance.room) : false;
+                        }) as ISeance[];
                     filteredMovie.push(...addSeances);
                     break;
                 }
             }
         } else {
-            filteredMovie = scheduleDay.seances;
+            filteredMovie = arrSeances.filter((seance) => scheduleDay?.seances.includes(seance.id));
         }
 
         // Проверка "Есть ли сеансы на IMAX или ScreenX?"
@@ -78,8 +91,10 @@ const Schedule:FC<ISchedule> = ({movie}) => {
             filteredMovie = [...fixSeances];
         }
     }
-    filterMovies();
+    if (arrSeances.length) filterMovies();
 
+
+    console.log(filteredMovie)
     return (
         <>
         {!filteredMovie.length ? (
