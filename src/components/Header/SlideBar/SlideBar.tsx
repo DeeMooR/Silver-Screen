@@ -8,7 +8,6 @@ import logoBig_pink from "src/icons/logo_big_pink.png"
 
 import background from "src/icons/slide_bar.svg"
 import cross from "src/icons/cross.svg"
-import search from "src/icons/search.png"
 import account from "src/icons/account.png"
 
 interface ISlideBar {
@@ -43,7 +42,6 @@ const SlideBar:FC<ISlideBar> = ({ clickMenu, setClickMenu }) => {
             <Link to='/entertainment' className="slideBar__item" onClick={handleClick}>Услуги</Link>
             <Link to='/news' className="slideBar__item" onClick={handleClick}>Новости</Link>
             <div className="slideBar__icons">
-                <img src={search} alt="search" className='slideBar__search' onClick={handleClick} />
                 <img src={account} alt="account" className='slideBar__account' onClick={accountClick} />
             </div>
             <img src={cross} className='slideBar__cross' onClick={() => setClickMenu(false)} alt="cross"  />

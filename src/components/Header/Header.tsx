@@ -10,7 +10,6 @@ import logoSmall from "src/icons/logo_small.png"
 import logoSmall_pink from "src/icons/logo_small_pink.png"
 
 import menu from "src/icons/menu.png"
-import search from "src/icons/search.png"
 import account from "src/icons/account.png"
 
 const Header = () => {
@@ -60,7 +59,6 @@ const Header = () => {
                         <Link to='/news'>Новости</Link>
                     </nav>
                     <div className="header__icons">
-                        <img src={search} alt="search" />
                         <img src={account} onClick={clickAccount} alt="account" />
                     </div>
                 </div>

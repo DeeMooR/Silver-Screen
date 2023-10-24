@@ -12,7 +12,7 @@ export const getTimePlusDuration = (date: string, duration: number) => {
     const newTime = `${newHours.toString().padStart(2, '0')}:${adjustedMinutes.toString().padStart(2, '0')}`;
     return newTime;
 }
- 
+
 const getDatePoints = (date: Date) => {
     const day = date.getDate();
     const month = date.getMonth() + 1;

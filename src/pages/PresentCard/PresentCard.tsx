@@ -106,7 +106,7 @@ const PresentCard = () => {
                         )}
                     <PresentCardText />
                 </div>
-                <ModalPay isOpen={modalIsOpen} setIsOpen={setModalIsOpen} />
+                <ModalPay isOpen={modalIsOpen} setIsOpen={setModalIsOpen} type='card' />
             </div>
         </PageTemplate>
     )

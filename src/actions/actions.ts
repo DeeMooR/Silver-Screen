@@ -592,12 +592,35 @@ export const REMOVE_SEAT_SELECT = (userId: number, newArrSeances: ISeance[], new
     };
 };
 
-export const SEND_MY_SEATS = (userId: number, arrSeatSelect: IDataSeatSelect[], setModal: (v: JSX.Element) => void) => {
+export const SEND_MY_SEATS = (userId: number, arrSeatSelect: IDataSeatSelect[], arrSeances: ISeance[], setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         let newArrUsers, userIsExist = false;
         try {
-            dispatch({ type: "CLEAR_SEAT_SELECT" });
+            arrSeatSelect.forEach((seat) => {
+                const { idSeance, row, column } = seat;
+                const seance = arrSeances.find((seance) => seance.id === idSeance);
+
+                if (seance) seance.places[row - 1][column - 1] = userId;
+            });
+            // массив arrSeances изменён
+            
+            await dispatch({ type: "CLEAR_SEAT_SELECT" });
+            await dispatch({ type: "SET_MY_MOVIES", payload: arrSeatSelect });
+            await dispatch({ type: "SET_SEANCES", payload: arrSeances });
+
             let response = await fetch(
+                'https://jsonblob.com/api/jsonBlob/1165952932608073728',        // seances
+                {
+                    method: "PUT",
+                    body: JSON.stringify(arrSeances),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }
+            )
+            if (!response.ok) modalShowMessege(setModal, false);
+            
+            response = await fetch(
                 'https://jsonblob.com/api/jsonBlob/1165611207637196800'        // users
             )
             if (response.ok) {

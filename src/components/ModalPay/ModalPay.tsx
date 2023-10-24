@@ -9,10 +9,11 @@ import { useDispatch } from 'react-redux';
 interface IModalPay {
     isOpen: boolean,
     setIsOpen: (value: boolean) => void,
-    setIsOpenOther?: (value: boolean) => void
+    setIsOpenOther?: (value: boolean) => void,
+    type: 'card' | 'seat'
 }
 
-const ModalPay:FC<IModalPay> = ({isOpen, setIsOpen, setIsOpenOther}) => {
+const ModalPay:FC<IModalPay> = ({isOpen, setIsOpen, setIsOpenOther, type}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -47,7 +48,7 @@ const ModalPay:FC<IModalPay> = ({isOpen, setIsOpen, setIsOpenOther}) => {
                     <img src={cross} className='modalPay__cross' onClick={() => clickCross()} alt="cross" />
                     <p className='modalPay__title'>Оплата прошла успешно</p>
                     <p className='modalPay__text'>Спасибо за покупку!</p>
-                    <p className='modalPay__text'>Вся необходимая информация о подарочной карте теперь доступна в вашем <a onClick={clickAccount}>личном кабинете</a>.</p>
+                    <p className='modalPay__text'>Вся необходимая информация {type === 'card' ? 'о подарочной карте' : 'o билете'} теперь доступна в вашем <a onClick={clickAccount}>личном кабинете</a>.</p>
                     <p className='modalPay__text'>Приятного просмотра!</p>
                 </div>
             </div>

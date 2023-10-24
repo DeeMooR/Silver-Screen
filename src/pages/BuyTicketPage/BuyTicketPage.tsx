@@ -95,8 +95,7 @@ const BuyTicketPage = () => {
 
     const clickPay = () => {
         setModalPayIsOpen(true);
-        dispatch(SEND_MY_SEATS(userId, arrSeatSelect, setModal));
-        // доделать
+        dispatch(SEND_MY_SEATS(userId, arrSeatSelect, arrSeances, setModal));
     }
 
     return (
@@ -198,9 +197,7 @@ const BuyTicketPage = () => {
                 {modalTextButtonIsOpen &&
                     <ModalTextButton isOpen={modalIsOpen} setIsOpen={setModalIsOpen} setIsOpenOther={setModalTextButtonIsOpen} type='goSignIn' />
                 }
-                {modalPayIsOpen &&
-                    <ModalPay isOpen={modalIsOpen} setIsOpen={setModalIsOpen} setIsOpenOther={setModalPayIsOpen} />
-                }
+                <ModalPay isOpen={modalPayIsOpen} setIsOpen={setModalPayIsOpen} type='seat' />
             </PageMovieTemplate>
         )}
         </>
