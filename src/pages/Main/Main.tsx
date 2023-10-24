@@ -18,6 +18,7 @@ import { GET_MAIN_NEWS, GET_MOVIES, GET_SLIDER_SWIPER } from 'src/actions/action
 
 const Main = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
+    const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
     const arrSliderSwiper: ISlide[] = useSelector(({storePages}) => storePages.sliderSwiper);
     const arrMainNews: INews[] = useSelector(({storePages}) => storePages.mainNews);
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
@@ -29,6 +30,7 @@ const Main = () => {
 
     useEffect(() => {
         window.scrollTo({top: 0});
+        dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: "already" });
         const fetchData = async () => {
             if (!arrMovies.length) {
                 await dispatch({ type: "SET_LOADING_PAGE" });
@@ -67,8 +69,14 @@ const Main = () => {
                             <h2 className="afisha-main__title">Афиша</h2>
                             <div className="afisha-main__buttons">
                                 <div className="buttons__left">
-                                    <a href="#" className='buttons__today active'>Сейчас в кино</a>
-                                    <a href="#" className='buttons__soon'>Скоро</a>
+                                    <a 
+                                        className={`buttons__today ${movieTypeSelect === 'already' ? 'active' : ''}`} 
+                                        onClick={() => dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'already' })}
+                                    >Сейчас в кино</a>
+                                    <a 
+                                        className={`buttons__soon ${movieTypeSelect === 'soon' ? 'active' : ''}`} 
+                                        onClick={() => dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'soon' })}
+                                    >Скоро</a>
                                 </div>
                                 <Link to='/afisha' className='buttons__afisha'>Расписание сеансов</Link>
                             </div>

@@ -1,4 +1,5 @@
 import { addDays } from "date-fns";
+import { IMovie } from "./interfaces";
 
 const russianMonths = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const arrDaysOfWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
@@ -47,7 +48,7 @@ export const compareEndToday = (end: string) => {
 export const getArrDate = () => {
     const datesArray: string[] = [];
     let currentDate = new Date();
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 7; i++) {
         let dayOfWeek = arrDaysOfWeek[+currentDate.getDay()];
         if (i === 0 ) dayOfWeek = 'сегодня';
         if (i === 1 ) dayOfWeek = 'завтра';
@@ -64,7 +65,13 @@ export const getArrDate = () => {
 }
 
 export const addDayOfWeek = (date: string) => {
-    const fullDate = getArrDate().find((item) => {
+    let fullDate = getArrDate().find((item) => {
+        const itemPart = item.split(', ')[1];
+        return itemPart === date;
+    });
+    if (fullDate) return fullDate;
+
+    fullDate = getArrSoonDatesWithWeek().find((item) => {
         const itemPart = item.split(', ')[1];
         return itemPart === date;
     });
@@ -116,7 +123,7 @@ export const getFullLanguage = (shortLang: string) => {
     }
 }
 
-export const setTodayDateStore = (searchDate: string, dispatch: any) => {
+export const setDateStore = (searchDate: string, dispatch: any) => {
     const arrDate = getArrDate();
     dispatch({ 
         type: "SET_SEARCH", 
@@ -125,4 +132,53 @@ export const setTodayDateStore = (searchDate: string, dispatch: any) => {
             data: searchDate
         }
     });
+}
+
+export const getArrDates7Days = () => {
+    const formatDate = (date: Date) => {
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        return `${day < 10 ? '0' : ''}${day}.${month < 10 ? '0' : ''}${month}.${year}`;
+    }
+      const today = new Date();
+      const arr = [formatDate(today)];
+    for (let i = 1; i <= 6; i++) {
+        const nextDate = new Date(today);
+        nextDate.setDate(today.getDate() + i);
+        arr.push(formatDate(nextDate));
+    }
+    return arr;
+}
+
+export const getArrMoviesShow = (arrMovies: IMovie[], movieTypeSelect: string) => {
+    if (movieTypeSelect === 'already') {
+        return arrMovies.filter(movie =>  {
+            return movie.schedule.some((item) => getArrDates7Days().includes(item.date));
+        });
+    } else {
+        return arrMovies.filter(movie =>  {
+            const bool = movie.schedule.some((item) => getArrDates7Days().includes(item.date));
+            return (bool) ? false : true;
+        });
+    }
+}
+  
+export const getArrSoonDatesWithWeek = () => {
+    const formatDate = (date: Date) => {
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}.${month}.${year}`;
+    }
+    const today = new Date();
+    const dateArray = [];
+    for (let i = 0; i < 6; i++) {
+        const futureDate = new Date(today);
+        futureDate.setDate(today.getDate() + 7 + i);
+        const dayOfWeek = arrDaysOfWeek[futureDate.getDay()];
+        const formattedDate = formatDate(futureDate);
+        dateArray.push(`${dayOfWeek}, ${formattedDate}`);
+    }
+    return dateArray;
 }

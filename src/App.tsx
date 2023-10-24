@@ -5,7 +5,7 @@ import Main from './pages/Main';
 import MoviePage from './pages/MoviePage';
 import Entertainment from './pages/Entertainment';
 import Afisha from './pages/Afisha';
-import { getArrDate, setTodayDateStore } from './helpers';
+import { getArrDate, setDateStore } from './helpers';
 import VisaPage from './pages/VisaPage';
 import NewsPage from './pages/NewsPage';
 import SignInUp from './pages/SignInUp';
@@ -75,7 +75,7 @@ function App() {
     }, []);
 
     const searchDate = useSelector(({store}) => store.search.date);
-    if (searchDate === '') setTodayDateStore(getArrDate()[0], dispatch);
+    if (searchDate === '') setDateStore(getArrDate()[0], dispatch);
     return (
         <>
             <Routes>

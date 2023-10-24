@@ -12,6 +12,7 @@ import HorizontalNews from 'src/components/HorizontalNews'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import { GET_AFISHA_NEWS, GET_MOVIES, GET_SEANCES } from 'src/actions/actions'
+import { getArrDate, getArrMoviesShow, getArrSoonDatesWithWeek, setDateStore } from 'src/helpers'
 
 const Afisha = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
@@ -22,20 +23,39 @@ const Afisha = () => {
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     
-    let searchDate = useSelector(({store}) => store.search.date);
-    if (searchDate) searchDate = searchDate.split(', ')[1]
+    const fullSearchDate = useSelector(({store}) => store.search.date);
+    const searchDate = fullSearchDate.split(', ')[1]
 
     const searchVideo = useSelector(({store}) => store.search.video);
     const searchAudio = useSelector(({store}) => store.search.audio);
     let searchLanguage = useSelector(({store}) => store.search.language);
 
-    const [activePage, setActivePage] = useState(1);
+
+    const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
+    const arrMoviesShow = getArrMoviesShow(arrMovies, movieTypeSelect);
+    const [activePage, setActivePage] = useState(0);
+    useEffect(() => {
+        if (movieTypeSelect === 'already') setActivePage(1);
+        else setActivePage(2);
+    },[])
+
+    useEffect(() => {
+        if (movieTypeSelect === 'already' && getArrSoonDatesWithWeek().includes(fullSearchDate)) {
+            setDateStore(getArrDate()[0], dispatch)
+            setActivePage(1);
+        }
+        if (movieTypeSelect === 'soon' && getArrDate().includes(fullSearchDate)) {
+            setDateStore(getArrSoonDatesWithWeek()[0], dispatch)
+            setActivePage(2);
+        }
+    },[movieTypeSelect])
 
     dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: '' });
     
     let filteredMovies: IMovie[] = [];
     let filterOne: IMovie[];
     let addToFilterOne: IMovie[];
+    
 
     useEffect(() => {
         window.scrollTo({top: 0});
@@ -63,7 +83,7 @@ const Afisha = () => {
     
     const filterMovies = () => {
         // Фильтрация фильмов по параметру Date
-        filteredMovies = arrMovies.filter(movie => {
+        filteredMovies = arrMoviesShow.filter(movie => {
             return movie.schedule.some(oneDay => oneDay.date === searchDate);
         })
 
@@ -210,7 +230,7 @@ const Afisha = () => {
                                     <MovieCard obj={card} page='afisha' />
                                 </div>
                             ))}
-                            <div className={`cards__item 
+                            <div className={`cards__item
                                 ${filteredMovies.length % 4 === 0 && "center-4"}
                                 ${filteredMovies.length % 3 === 0 && "center-3"}
                                 ${filteredMovies.length % 2 === 0 && "center-2"}

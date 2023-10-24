@@ -31,9 +31,9 @@ const AccountBuyCard:FC<IAccountBuyCard> = ({obj}) => {
                         <span className='accountBuyCard__start'>с: {obj.start}</span>
                         <span className='accountBuyCard__end'>до: {obj.end}</span>
                     </div>
-                    <p className={`accountBuyCard__status ${!obj.status ? 'used' : ''}`}>{obj.status ? 'Активен' : 'Не активен'}</p>
+                    <p className={`accountBuyCard__status ${!obj.status ? 'used' : ''}`}>{obj.status ? 'Активна' : 'Не активна'}</p>
                 </div>
-                <p className={`accountBuyCard__status ${!obj.status ? 'used' : ''}`}>{obj.status ? 'Активен' : 'Не активен'}</p>
+                <p className={`accountBuyCard__status ${!obj.status ? 'used' : ''}`}>{obj.status ? 'Активна' : 'Не активна'}</p>
             </div>
             
         </div>

@@ -17,6 +17,7 @@ const initialState = {
         email: '',
         id: null,
     },
+    movieTypeSelect: 'already', 
     giftCards: [],
     giftSelect: [],
     seatSelect: [],
@@ -65,6 +66,12 @@ const rootReducerMain = (state = initialState, action: any) => {
             return {
                 ...state,
                 user: action.payload
+            };
+        }
+        case 'SET_MOVIE_TYPE_SELECT':  {
+            return {
+                ...state,
+                movieTypeSelect: action.payload
             };
         }
         case 'SET_GIFT_CARDS':  {

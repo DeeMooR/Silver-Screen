@@ -34,6 +34,7 @@ const AccountBuy = () => {
         };
         fetchData();
     },[])
+    
     return (
         <>
         {modal}
@@ -46,7 +47,7 @@ const AccountBuy = () => {
             ) : (
                 <>
                 <p className='accountBuy__address'>Silver Screen в ТРЦ Arena city г. Минск, пр Победителей, 84</p>
-                {arrMyCards.length ? (
+                {arrMyMovies.length ? (
                     <div className="accountBuy__items">
                         {arrMyMovies.map((item, i) => (
                             <AccountBuyTicket obj={item} key={i} />

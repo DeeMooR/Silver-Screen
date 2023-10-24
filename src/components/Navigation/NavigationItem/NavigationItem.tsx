@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import SelectOption from './SelectOption';
-import { getArrDate, formateDateItem, getFullLanguage } from 'src/helpers';
+import { getArrDate, formateDateItem, getFullLanguage, getArrSoonDatesWithWeek } from 'src/helpers';
 import './NavigationItem.css'
 
 import arrow from "../../../icons/arrow-button.png"
@@ -17,6 +17,7 @@ interface INavigationItem {
 const NavigationItem:FC<INavigationItem> = ({icon, text, type, navActive, handleClick}) => {
     const searchDate = useSelector(({store}) => store.search.date);
     let searchArr = useSelector(({store}) => store.search[type]);
+    const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
 
     if (type === 'language') {
         searchArr = searchArr.map((item: string) => getFullLanguage(item))
