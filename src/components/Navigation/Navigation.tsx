@@ -3,7 +3,7 @@ import NavigationItem from './NavigationItem'
 import './Navigation.css'
 
 import calendar from "../../icons/calendar.png"
-import video from "../../icons/video.png"
+import video from "../../icons/video.svg"
 import audio from "../../icons/audio.png"
 import language from "../../icons/language.png"
 import { useDispatch } from 'react-redux'

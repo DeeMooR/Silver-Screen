@@ -8,17 +8,18 @@ import PageMovieTemplate from 'src/components/PageMovieTemplate';
 
 import location from "src/icons/location.png"
 import calendar from "src/icons/calendar.png"
-import video from "src/icons/video.png"
+import video from "src/icons/video.svg"
 import screen from "src/icons/screen.png"
 import RowSeats from 'src/components/RowSeats';
 import SeatTypeInfo from 'src/components/SeatTypeInfo';
 import Button from 'src/components/Button';
-import { GET_MOVIES, GET_ROOMS, GET_SEANCES, GET_SEAT_SELECT, GET_SEAT_TYPES, GET_USER, SEND_MY_SEATS } from 'src/actions/actions';
+import { GET_MOVIES, GET_ROOMS, GET_SEANCES, GET_SEAT_TYPES, SEND_MY_SEATS } from 'src/actions/actions';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import ModalTextButton from 'src/components/ModalTextButton';
 import Basket from 'src/components/Basket';
 import ModalPay from 'src/components/ModalPay';
+import After10pm from 'src/components/After10pm';
 
 const BuyTicketPage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
@@ -98,6 +99,9 @@ const BuyTicketPage = () => {
         dispatch(SEND_MY_SEATS(userId, arrSeatSelect, arrSeances, setModal));
     }
 
+    let timeEnd = '';
+    if (objSeance) timeEnd = getTimePlusDuration(objSeance?.time || '', movie.duration);
+
     return (
         <>
         {modal}
@@ -122,13 +126,14 @@ const BuyTicketPage = () => {
                                     <p>{formateDateItem(addDayOfWeek(newDate))} / {objSeance?.time} - {getTimePlusDuration(objSeance?.time || '', movie.duration)} </p>
                                 </div>
                                 <div className="flex__icon-text">
-                                    <img src={video} alt="video" />
+                                    <img src={video} className='icon_video' alt="video" />
                                     <p>{movie.video} / {getAudio(objSeance?.room || 1)} </p>
                                 </div>
                                 <div className="buyTicketPage-header__age">{movie.age}+</div>
                             </div>
                         </div>
                     </div>
+                    <After10pm timeEnd={timeEnd} />
                     <div className={`buyTicketPage__table ${isLoading ? 'loading' : ''}`}>
                         {isLoading &&
                             <div className="loader">

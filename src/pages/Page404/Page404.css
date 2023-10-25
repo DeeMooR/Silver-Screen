@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .page404 {
   width: 100vw;
   height: 100vh;
@@ -6,83 +7,76 @@
   justify-content: flex-end;
   align-items: center;
 }
-.page404 .page404__content {
+.page404 .page404__wrapper {
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+.page404 .page404__wrapper .page404__content {
   position: relative;
   z-index: 2;
-  max-width: 550px;
-  margin: 0 60px;
-  background: radial-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
-  padding: 40px;
+  max-width: 605px;
+  background: radial-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 80%);
   border-radius: 10px;
 }
-.page404 .page404__content .page404__title {
-  font-size: 60px;
-  font-weight: 500;
-  line-height: 65px;
-  color: #fff;
+.page404 .page404__wrapper .page404__content .page404__title {
+  font-size: 50px;
+  line-height: 60px;
+  font-weight: 700;
   margin: 0 0 35px 0;
 }
-.page404 .page404__content .page404__text {
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 30px;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0 0 40px 0;
-}
-.page404 .page404__content .page404__button {
-  display: block;
+.page404 .page404__wrapper .page404__content .page404__quote {
+  position: relative;
   font-size: 20px;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0 0 16px;
+  line-height: 30px;
+  font-weight: 400;
+  margin: 0 0 25px 0;
+  padding: 0 0 0 35px;
 }
-.page404 .page404__content .page404__button:hover {
-  color: #fff;
+.page404 .page404__wrapper .page404__content .page404__quote:before {
+  content: "«";
+  position: absolute;
+  color: rgba(212, 7, 84, 0.35);
+  left: 0px;
+  font-size: 50px;
+  line-height: 20px;
+}
+.page404 .page404__wrapper .page404__content .page404__quote:after {
+  content: "»";
+  color: rgba(212, 7, 84, 0.35);
+  font-size: 50px;
+  line-height: 20px;
+  vertical-align: top;
+  padding-left: 8px;
+}
+.page404 .page404__wrapper .page404__content .page404__film {
+  font-size: 16px;
+  line-height: 26px;
+  margin: 0 0 30px 35px;
+}
+.page404 .page404__wrapper .page404__content button {
+  margin-left: 0;
 }
 
-@media (max-width: 1199.98px) {
-  .page404 .page404__content {
-    margin: 0 20px;
-    padding: 40px;
+@media (max-width: 767.98px) {
+  .page404 .page404__wrapper .page404__content .page404__title {
+    font-size: 36px;
+    line-height: 44px;
+    margin: 0 0 25px 0;
   }
-}
-@media (max-width: 1023.98px) {
-  .page404 .page404__content {
-    margin: 0 auto;
-    max-width: 550px;
-    padding: 40px;
-    text-align: center;
-  }
-  .page404 .page404__content .page404__title {
-    font-size: 44px;
-    line-height: 60px;
-    max-width: 400px;
-    margin: 0 auto 35px;
-  }
-  .page404 .page404__content .page404__text {
-    margin: 0 0 64px 0;
-  }
-  .page404 .page404__content .page404__button {
-    font-size: 20px;
-    margin: 0 0 24px;
+  .page404 .page404__wrapper .page404__content .page404__quote {
+    font-size: 18px;
+    line-height: 27px;
   }
 }
 @media (max-width: 479.98px) {
-  .page404 .page404__content {
-    width: 100%;
-    padding: 40px 30px;
+  .page404 .page404__wrapper .page404__content .page404__title {
+    font-size: 32px;
+    line-height: 40px;
   }
-  .page404 .page404__content .page404__title {
-    font-size: 34px;
-    line-height: 45px;
-    max-width: 100%;
-  }
-  .page404 .page404__content .page404__text {
-    font-size: 20px;
-    line-height: 28px;
-    margin: 0 0 50px 0;
-  }
-  .page404 .page404__content .page404__button {
-    font-size: 20px;
-    margin: 0 0 20px;
+  .page404 .page404__wrapper .page404__content .page404__quote {
+    font-size: 16px;
+    line-height: 24px;
   }
 }

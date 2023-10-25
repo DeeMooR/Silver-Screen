@@ -33,7 +33,7 @@ const AccountBuyTicket:FC<IAccountBuyTicket> = ({obj}) => {
                             </p>
                         </div>
                         <div className="accountBuyTicket__middle">
-                            <p className='accountBuyTicket__seat'>{obj.row} ряд, {obj.column} место</p>
+                            <p className='accountBuyTicket__seat'>{obj.row} ряд, {obj.column} место / зал {objSeance.room}</p>
                             <p className='accountBuyTicket__type'>Тип места: <span>{obj.typeSeat}</span></p>
                         </div>
                         <p className='accountBuyTicket__cost'>{obj.cost} BYN</p>
