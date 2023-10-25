@@ -30,6 +30,9 @@
   font-weight: 500;
   margin: 0 0 11px 0;
 }
+.accountBuyTicket .accountBuyTicket__info .accountBuyTicket__text .accountBuyTicket__left .accountBuyTicket__date-time.alreadyStart {
+  color: #922132;
+}
 .accountBuyTicket .accountBuyTicket__info .accountBuyTicket__text .accountBuyTicket__left .accountBuyTicket__other span {
   margin: 0 12px 0 0;
 }

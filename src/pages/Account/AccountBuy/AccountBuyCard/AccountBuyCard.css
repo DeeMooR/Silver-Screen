@@ -15,6 +15,7 @@
   align-items: flex-end;
 }
 .accountBuyCard .accountBuyCard__info .accountBuyCard__cost-number {
+  min-width: 140px;
   display: flex;
   flex-direction: column;
   gap: 5px;

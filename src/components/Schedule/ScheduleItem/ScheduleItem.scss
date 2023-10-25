@@ -28,6 +28,13 @@
         font-size: 14px;
         color: rgba(255, 255, 255, 0.35);
     }
+    &.alreadyStart {
+        opacity: 0.5;
+        cursor: default;
+        &:hover {
+            border: 2px solid rgba(255, 255, 255, 0.15);
+        }
+    }
 }
 @media (max-width: 767.98px) {
     .scheduleItem {

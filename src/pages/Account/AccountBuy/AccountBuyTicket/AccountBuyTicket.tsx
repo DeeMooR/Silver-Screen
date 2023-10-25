@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react'
 import './AccountBuyTicket.css'
 import { IDataGiftCard, IDataGiftSelect, IDataMyCard, IDataSeatSelect, IMovie, ISeance } from 'src/interfaces'
 import { useSelector } from 'react-redux'
-import { compareEndToday, getAudio, getTimePlusDuration } from 'src/helpers'
+import { compareTimeNowStart, getAudio, getTimePlusDuration, getTodayDayMonthYear } from 'src/helpers'
 
 interface IAccountBuyTicket {
     obj: IDataSeatSelect
@@ -15,6 +15,9 @@ const AccountBuyTicket:FC<IAccountBuyTicket> = ({obj}) => {
     const objMovie = arrMovies.find((item) => item.id === obj.idMovie);
     const objSeance = arrSeances.find((item) => item.id === obj.idSeance);
 
+    let alreadyStart = false;
+    if (objSeance && getTodayDayMonthYear() === obj.date) alreadyStart = compareTimeNowStart(objSeance?.time);
+
     return (
         <>
         {objMovie && objSeance &&
@@ -24,7 +27,9 @@ const AccountBuyTicket:FC<IAccountBuyTicket> = ({obj}) => {
                     <p className='accountBuyTicket__title'>{objMovie.title}</p>
                     <div className="accountBuyTicket__text">
                         <div className="accountBuyTicket__left">
-                            <p className='accountBuyTicket__date-time'>{obj.date} / {objSeance.time} - {getTimePlusDuration(objSeance.time, objMovie.duration)}</p>
+                            <p className={`accountBuyTicket__date-time ${alreadyStart ? 'alreadyStart' : ''}`}>
+                                {obj.date} / {objSeance.time} - {getTimePlusDuration(objSeance.time, objMovie.duration)}
+                            </p>
                             <p className='accountBuyTicket__other'>
                                 <span>{objMovie.language}{objMovie.isSUB && ', SUB'}</span>
                                 <span>{objMovie.video}</span>

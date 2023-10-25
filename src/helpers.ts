@@ -34,7 +34,7 @@ export const getDateIn180 = () => {
     return getDatePoints(future);
 };
 
-export const compareEndToday = (end: string) => {
+export const compareDayNowEnd = (end: string) => {
     function parseDate(dateString: any) {
         const parts = dateString.split(".");
         return new Date(parts[2], parts[1] - 1, parts[0]);
@@ -43,6 +43,25 @@ export const compareEndToday = (end: string) => {
     const dateEnd = parseDate(end);
     if (dateToday > dateEnd) return true;
     return false;
+}
+    
+export const compareTimeNowStart = (strat: string) => {
+    const currentTime = new Date();
+    const [stratHours, stratMinutes] = strat.split(':').map(Number);
+    const currentHours = currentTime.getHours();
+    const currentMinutes = currentTime.getMinutes();
+    if (currentHours > stratHours || (currentHours === stratHours && currentMinutes >= stratMinutes)) {
+        return true;
+    }
+    return false;
+}
+
+export const getTodayDayMonthYear = () => {
+    let currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear();
+    return `${day}.${month}.${year}`;
 }
 
 export const getArrDate = () => {

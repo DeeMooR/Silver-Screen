@@ -20,67 +20,56 @@ const SliderMovies = () => {
     <>
         <Swiper
             speed={1000}
-            loop={true}
             navigation={true}
             breakpoints={{
                 2000: {
                     // для разрешения больше 2000px
-                    centeredSlides: true,
                     slidesPerView: 6.5,
                     slidesPerGroup: 4,
                     spaceBetween: 50,
                 },
                 1600: {
-                    centeredSlides: true,
                     slidesPerView: 5.8,
                     slidesPerGroup: 4,
                     spaceBetween: 50,
                 },
                 1400: {
-                    centeredSlides: true,
                     slidesPerView: 5.4,
                     slidesPerGroup: 4,
                     spaceBetween: 50,
                 },
                 1200: {
-                    centeredSlides: true,
                     slidesPerView: 5,
                     slidesPerGroup: 4,
                     spaceBetween: 50,
                 },
                 1024: {
-                    centeredSlides: true,
                     slidesPerView: 4.6,
                     slidesPerGroup: 3,
                     spaceBetween: 25,
                 },
                 900: {
-                    centeredSlides: false,
                     slidesPerView: 3.7,
                     slidesPerGroup: 3,
                     spaceBetween: 20,
                 },
                 720: {
-                    centeredSlides: false,
                     slidesPerView: 3.5,
                     slidesPerGroup: 3,
                     spaceBetween: 20,
                 },
                 600: {
-                    centeredSlides: false,
                     slidesPerView: 3,
                     slidesPerGroup: 3,
                     spaceBetween: 20,
                 },
                 540: {
-                    centeredSlides: false,
                     slidesPerView: 2.75,
                     slidesPerGroup: 2,
                     spaceBetween: 10,
                     speed: 800
                 },
                 0: {
-                    centeredSlides: false,
                     slidesPerView: 'auto',
                     slidesPerGroup: 1,
                     spaceBetween: 10,
@@ -97,7 +86,7 @@ const SliderMovies = () => {
                         <MovieCard obj={card} page='main' />
                     </div>
                 </SwiperSlide>
-                {i === arrMoviesShow.length - 4 && 
+                {i === arrMoviesShow.length - 1 && 
                     <SwiperSlide className='slide__not-find'>
                         <div>
                             <NotFind page='main' />

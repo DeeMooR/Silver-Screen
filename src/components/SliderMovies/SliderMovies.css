@@ -1,5 +1,6 @@
 .swiperMovies {
     width: 100%;
+    padding: 0 30px;
     margin: 25px auto 0;
 }
 
@@ -9,6 +10,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.swiper-button-disabled {
+    display: none;
 }
 
 .swiperMovies .swiper-slide img {
@@ -39,6 +44,9 @@
 }
 
 @media (max-width: 1199.98px) {
+    .swiperMovies {
+        padding: 0 15px;
+    }
     .swiperMovies .swiper-button-prev {
         margin: -180px 0 0 60px;
     }

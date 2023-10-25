@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import './AccountBuyCard.css'
 import { IDataGiftCard, IDataGiftSelect, IDataMyCard } from 'src/interfaces'
 import { useSelector } from 'react-redux'
-import { compareEndToday } from 'src/helpers'
+import { compareDayNowEnd } from 'src/helpers'
 
 interface IAccountBuyCard {
     obj: IDataMyCard
@@ -15,7 +15,7 @@ const AccountBuyCard:FC<IAccountBuyCard> = ({obj}) => {
     const image = (findObj) ? findObj.image : '';
     const cost = (findObj) ? findObj.cost : 0;
 
-    const toodayMoreEnd = compareEndToday(obj.end);
+    const toodayMoreEnd = compareDayNowEnd(obj.end);
     if (toodayMoreEnd) obj.status = false;
 
     return (

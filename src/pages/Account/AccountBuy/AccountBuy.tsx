@@ -34,6 +34,13 @@ const AccountBuy = () => {
         };
         fetchData();
     },[])
+
+    useEffect(() => {
+        arrMyMovies.reverse();
+    },[arrMyMovies])
+    useEffect(() => {
+        arrMyCards.reverse();
+    },[arrMyCards])
     
     return (
         <>
