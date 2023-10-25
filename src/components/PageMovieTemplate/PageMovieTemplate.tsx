@@ -10,9 +10,10 @@ interface IPageMovieTemplate {
     children: ReactNode,
     movie: IMovie,
     customBack?: string,
+    fromPage?: string
 }
 
-const PageMovieTemplate:FC<IPageMovieTemplate> = ({children, movie, customBack}) => {
+const PageMovieTemplate:FC<IPageMovieTemplate> = ({children, movie, customBack, fromPage}) => {
     const navigate = useNavigate();
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -36,7 +37,8 @@ const PageMovieTemplate:FC<IPageMovieTemplate> = ({children, movie, customBack})
     }, []);
 
     const clickBack = () => {
-        if (customBack) navigate(`${customBack}`);
+        if (fromPage) navigate(`${customBack}`, {state: {fromPage: fromPage}});
+        else if (customBack) navigate(`${customBack}`);
         else navigate(-1);
     }
     

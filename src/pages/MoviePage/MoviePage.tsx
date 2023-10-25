@@ -26,18 +26,20 @@ const MoviePage = () => {
     const movie = arrMovies[+id] || null;
     
     useEffect(() => {
-        const isAlready = movie?.schedule.some((item) => getArrDates7Days().includes(item.date));
-        if (searchDate === getArrDate()[0]) {
-            if (isAlready) {
-                dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'already' });
-                setDateStore(getArrDate()[0], dispatch);
-            } else {
-                dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'soon' });
-                setDateStore(getArrSoonDatesWithWeek()[0], dispatch);
+        if (movie) {
+            const isAlready = movie?.schedule.some((item) => getArrDates7Days().includes(item.date));
+            console.log(isAlready)
+            if (searchDate === getArrDate()[0]) {
+                if (isAlready) {
+                    dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'already' });
+                    setDateStore(getArrDate()[0], dispatch);
+                } else {
+                    dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'soon' });
+                    setDateStore(getArrSoonDatesWithWeek()[0], dispatch);
+                }
             }
         }
-    }, [])
-    
+    }, [movie])
 
     const [modal, setModal] = useState(<div/>);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
@@ -62,7 +64,12 @@ const MoviePage = () => {
     }, []);
 
     const location = useLocation();
-    const customBackStr = (!location.state || (location.state.fromPage !== '/' && location.state.fromPage !== '/afisha')) ? '/' : '';
+    let customBackStr;
+    if (location.state && location.state.fromPage === '/buy-ticket') customBackStr = '/afisha';
+    else if (!location.state) customBackStr = '/';
+    else customBackStr = '';
+
+
     let fullFirstDate;
     if (location.state && location.state.fromPage === 'main') {
         fullFirstDate = getArrDate().find(item => {

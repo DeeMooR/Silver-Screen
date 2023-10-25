@@ -106,7 +106,7 @@ const BuyTicketPage = () => {
                 <div className="loaderPage__element"></div>
             </div>
         ) : (
-            <PageMovieTemplate movie={movie} customBack={movieURL}>
+            <PageMovieTemplate movie={movie} customBack={movieURL} fromPage='/buy-ticket'>
                 <div className='buyTicketPage'>
                     <div className="buyTicketPage__header">
                         <img src={movie.image} className='buyTicketPage__image' alt="poster" />

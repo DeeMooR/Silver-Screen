@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Button'
-import { formateDateItem, getArrDate, setDateStore } from 'src/helpers';
+import { formateDateItem, getArrDate, getArrSoonDatesWithWeek, setDateStore } from 'src/helpers';
 import './NotFind.css'
 import { useNavigate } from 'react-router-dom';
 
@@ -16,14 +16,14 @@ const NotFind:FC<INotFind> = ({page}) => {
     const [searchFilled, setSearchFilled] = useState(false);
     const search = useSelector(({store}) => store.search);
 
-    const arrDate = getArrDate();
+    const arrDate = (movieTypeSelect === 'already') ? getArrDate() : getArrSoonDatesWithWeek();
     const indexArrDay = arrDate.indexOf(search.date);
     let showNextDay;
     if (indexArrDay !== arrDate.length - 1) showNextDay = formateDateItem(arrDate[indexArrDay + 1]);
     else showNextDay = formateDateItem(arrDate[0]);
     
     useEffect(() => {
-        if (search.date === getArrDate()[0] && !search.video.length && !search.audio.length && !search.language.length) setSearchFilled(false);
+        if ((search.date === getArrDate()[0] || search.date === getArrSoonDatesWithWeek()[0]) && !search.video.length && !search.audio.length && !search.language.length) setSearchFilled(false);
         else setSearchFilled(true);
     }, [search])
 
@@ -39,28 +39,22 @@ const NotFind:FC<INotFind> = ({page}) => {
         navigate('/afisha');
         dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: "soon" });
     }
-    const clickAlready = (withNavigate: boolean) => {
+    const clickAlready = () => {
+        navigate('/afisha');
         dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: "already" });
-        if (withNavigate) navigate('/afisha');
     }
 
     
     return (
         <div className={`not-find ${page === 'main' ? 'not-find-small' : ''}`}>
             <h2 className='not-find__text'>Не нашли фильм?</h2>
-            {page === 'main' ? ( 
-                <Button color='white' handleClick={() => clickAlready(true)} becomeSmall>Все фильмы</Button>
-            ) : (
-                movieTypeSelect === 'already' 
-                ? <Button color='white' handleClick={setNextDay}>{showNextDay}</Button>
-                : <Button color='white' handleClick={() => clickAlready(false)}>Сейчас в кино</Button>
-            )}
-            {movieTypeSelect === "already" &&
-                <Button
-                    color="white"
-                    becomeSmall={page === "main" && true}
-                    handleClick={clickSoon}
-                >Скоро в кино</Button>
+            {page === 'main' 
+            ? <Button color='white' handleClick={clickAlready} becomeSmall>Все фильмы</Button>
+            : <Button color='white' handleClick={setNextDay}>{showNextDay}</Button>
+            }
+            {movieTypeSelect === "already"
+            ? <Button color="white" becomeSmall={page === "main" && true} handleClick={clickSoon} >Скоро в кино</Button>
+            : page === 'afisha' && <Button color='white' handleClick={clickAlready}>Сейчас в кино</Button>
             }
             {searchFilled && 
                 <Button color='red' isMin handleClick={clearSearch}>Очистить фильтры</Button>
