@@ -43,3 +43,11 @@ CREATE TABLE gift_card (
     cost int not null,
     amount int not null,
 ) engine=MyISAM;
+
+CREATE TABLE seat_type (
+    id int primary key AUTO_INCREMENT,
+    type string varchar(64) not null unique,
+    image string varchar(64) not null,
+    image_select string varchar(64) not null,
+    description string varchar(200) not null,
+) engine=MyISAM;

@@ -1,25 +1,25 @@
 package com.example.backend.controller;
 
 import com.example.backend.entity.GiftCardEntity;
-import com.example.backend.entity.MyCardEntity;
+import com.example.backend.entity.SeatTypeEntity;
 import com.example.backend.exception.MyException;
 import com.example.backend.service.GiftCardService;
-import com.example.backend.service.MyCardService;
+import com.example.backend.service.SeatTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/gift_card")
-public class GiftCardController {
+@RequestMapping("/seat_type")
+public class SeatTypeController {
 
     @Autowired
-    private GiftCardService giftCardService;
+    private SeatTypeService seatTypeService;
 
     @PostMapping
-    public ResponseEntity addGiftCard(@RequestBody GiftCardEntity card) {
+    public ResponseEntity addSeatType(@RequestBody SeatTypeEntity seat_type) {
         try {
-            return ResponseEntity.ok(giftCardService.add(card));
+            return ResponseEntity.ok(seatTypeService.add(seat_type));
         } catch (MyException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -27,12 +27,10 @@ public class GiftCardController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity getOneGiftCard(@PathVariable int id) {
+    @GetMapping
+    public ResponseEntity getAllSeatType() {
         try {
-            return ResponseEntity.ok(giftCardService.getOne(id));
-        } catch (MyException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.ok(seatTypeService.getAll());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error");
         }
