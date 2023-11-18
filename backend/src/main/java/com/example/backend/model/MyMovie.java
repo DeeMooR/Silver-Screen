@@ -1,13 +1,16 @@
 package com.example.backend.model;
 
 import com.example.backend.entity.MyMovieEntity;
+import com.example.backend.entity.SeatTypeEntity;
+
+import java.util.List;
 
 public class MyMovie {
     private int id_movie;
     private int i_row;
     private int i_column;
     private int cost;
-    private String type_seat;
+    private SeatTypeEntity type;
     private int id_seance;
 
     public MyMovie() {
@@ -19,7 +22,7 @@ public class MyMovie {
         model.setRow(entity.getRow());
         model.setColumn(entity.getColumn());
         model.setCost(entity.getCost());
-        model.setTypeSeat(entity.getTypeSeat());
+        model.setType(entity.getType());
         model.setIdSeance(entity.getIdSeance());
         return model;
     }
@@ -36,8 +39,8 @@ public class MyMovie {
     public void setCost(int cost) {
         this.cost = cost;
     }
-    public void setTypeSeat(String type_seat) {
-        this.type_seat = type_seat;
+    public void setType(SeatTypeEntity type) {
+        this.type = type;
     }
     public void setIdSeance(int id_seance) {
         this.id_seance = id_seance;
@@ -55,8 +58,8 @@ public class MyMovie {
     public int getCost() {
         return cost;
     }
-    public String getTypeSeat() {
-        return type_seat;
+    public SeatTypeEntity getType() {
+        return type;
     }
     public int getIdSeance() {
         return id_seance;

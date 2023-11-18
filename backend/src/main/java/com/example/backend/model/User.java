@@ -1,7 +1,5 @@
 package com.example.backend.model;
 
-import com.example.backend.entity.MyMovieEntity;
-import com.example.backend.entity.MySeatSelectEntity;
 import com.example.backend.entity.UserEntity;
 
 import java.util.List;

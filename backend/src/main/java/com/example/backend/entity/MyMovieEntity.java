@@ -1,6 +1,7 @@
 package com.example.backend.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "my_movie")
@@ -12,8 +13,11 @@ public class MyMovieEntity {
     private int i_row;
     private int i_column;
     private int cost;
-    private String type_seat;
     private int id_seance;
+
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    private SeatTypeEntity type;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -37,11 +41,11 @@ public class MyMovieEntity {
     public void setCost(int cost) {
         this.cost = cost;
     }
-    public void setTypeSeat(String type_seat) {
-        this.type_seat = type_seat;
-    }
     public void setIdSeance(int id_seance) {
         this.id_seance = id_seance;
+    }
+    public void setType(SeatTypeEntity type) {
+        this.type = type;
     }
     public void setUser(UserEntity user) {
         this.user = user;
@@ -62,11 +66,11 @@ public class MyMovieEntity {
     public int getCost() {
         return cost;
     }
-    public String getTypeSeat() {
-        return type_seat;
-    }
     public int getIdSeance() {
         return id_seance;
+    }
+    public SeatTypeEntity getType() {
+        return type;
     }
     public UserEntity getUser() {
         return user;

@@ -1,24 +1,27 @@
-package com.example.backend.entity;
+package com.example.backend.model;
 
-import javax.persistence.*;
+import com.example.backend.entity.RoomEntity;
+import com.example.backend.entity.SeatTypeEntity;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "seat_type")
-public class SeatTypeEntity {
-    @Id
+public class SeatType {
     private String type;
     private String image;
     private String image_select;
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
-    private List<MyMovieEntity> myMovies;
+    public SeatType() {
+    }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
-    private List<RoomRowEntity> rows;
-
-    public SeatTypeEntity() {
+    public static SeatType toModel(SeatTypeEntity entity) {
+        SeatType model = new SeatType();
+        model.setType(entity.getType());
+        model.setImage(entity.getImage());
+        model.setImageSelect(entity.getImageSelect());
+        model.setDescription(entity.getDescription());
+        return model;
     }
 
     public void setType(String type) {
