@@ -10,7 +10,13 @@ import com.example.backend.repository.SeatTypeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static java.util.Arrays.stream;
 
 @Service
 public class RoomRowService {
@@ -38,8 +44,10 @@ public class RoomRowService {
         return RoomRow.toModel(roomRowRepo.save(room_row));
     }
 
-    public Iterable<RoomRowEntity> getAll() {
-        Iterable<RoomRowEntity> rooms = roomRowRepo.findAll();
-        return rooms;
+    public List<RoomRow> getAll() {
+        Iterable<RoomRowEntity> roomRowEntities = roomRowRepo.findAll();
+        return StreamSupport.stream(roomRowEntities.spliterator(), false)
+                .map(RoomRow::toModel)
+                .collect(Collectors.toList());
     }
 }
