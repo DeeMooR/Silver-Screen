@@ -21,10 +21,6 @@ public class GiftCardService {
     private GiftCardRepo giftCardRepo;
 
     public GiftCardEntity add(GiftCardEntity card) throws MyException {
-        Optional<GiftCardEntity> findCard = giftCardRepo.findById(card.getId());
-        if (findCard.isPresent()) {
-            throw new MyException("Такая карточка уже существует");
-        }
         return giftCardRepo.save(card);
     }
 

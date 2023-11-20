@@ -11,11 +11,11 @@ public class RoomRowEntity {
     private int seats;
 
     @ManyToOne
-    @JoinColumn(name = "type")
+    @JoinColumn(name = "type_id")
     private SeatTypeEntity type;
 
     @ManyToOne
-    @JoinColumn(name = "room")
+    @JoinColumn(name = "room_id")
     private RoomEntity room;
 
     public RoomRowEntity() {

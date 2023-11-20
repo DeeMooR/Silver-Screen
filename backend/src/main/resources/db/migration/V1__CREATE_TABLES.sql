@@ -37,17 +37,17 @@ CREATE TABLE my_movie (
 ) engine=MyISAM;
 
 CREATE TABLE gift_card (
-    id int primary key not null,
-    image string varchar(64) not null,
+    id int primary key AUTO_INCREMENT,
+    image varchar(64) not null,
     cost int not null,
     amount int not null,
 ) engine=MyISAM;
 
 CREATE TABLE seat_type (
-    type string varchar(64) primary key not null,
-    image string varchar(64) not null,
-    image_select string varchar(64) not null,
-    description string varchar(200) not null,
+    type varchar(64) primary key not null,
+    image varchar(64) not null,
+    image_select varchar(64) not null,
+    description varchar(200) not null,
 ) engine=MyISAM;
 
 CREATE TABLE room (
@@ -59,4 +59,22 @@ CREATE TABLE room (
 CREATE TABLE room_row (
     id int primary key AUTO_INCREMENT,
     seats int not null
+) engine=MyISAM;
+
+CREATE TABLE movie (
+    id int primary key AUTO_INCREMENT,
+    image varchar(64) not null,
+    title varchar(64) not null,
+    age int not null,
+    language varchar(4) not null,
+    sub boolean default false,
+    video varchar(4) not null,
+    duration int not null,
+    description varchar(500) not null,
+    trailer varchar(64) not null
+) engine=MyISAM;
+
+CREATE TABLE genre (
+    id int primary key AUTO_INCREMENT,
+    name varchar(64) not null
 ) engine=MyISAM;

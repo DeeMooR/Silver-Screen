@@ -7,6 +7,7 @@ import java.util.List;
 @Table(name = "gift_card")
 public class GiftCardEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String image;
     private int cost;
