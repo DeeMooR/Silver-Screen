@@ -1,12 +1,18 @@
 package com.example.backend.service;
 
 import com.example.backend.entity.GiftCardEntity;
+import com.example.backend.entity.UserEntity;
 import com.example.backend.exception.MyException;
+import com.example.backend.model.GiftCard;
+import com.example.backend.model.User;
 import com.example.backend.repository.GiftCardRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class GiftCardService {
@@ -22,11 +28,18 @@ public class GiftCardService {
         return giftCardRepo.save(card);
     }
 
-    public GiftCardEntity getOne(int id) throws MyException {
+    public GiftCard getOne(int id) throws MyException {
         Optional<GiftCardEntity> card = giftCardRepo.findById(id);
         if (!card.isPresent()) {
             throw new MyException("Карточка не найдена");
         }
-        return card.get();
+        return GiftCard.toModel(card.get());
+    }
+
+    public List<GiftCard> getAll() {
+        Iterable<GiftCardEntity> giftCardEntities = giftCardRepo.findAll();
+        return StreamSupport.stream(giftCardEntities.spliterator(), false)
+                .map(GiftCard::toModel)
+                .collect(Collectors.toList());
     }
 }

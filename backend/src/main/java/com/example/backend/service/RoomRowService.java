@@ -28,8 +28,8 @@ public class RoomRowService {
     @Autowired
     private SeatTypeRepo seatTypeRepo;
 
-    public RoomRow add(RoomRowEntity room_row, String room_id, String type_id) throws MyException {
-        Optional<RoomEntity> findRoom = roomRepo.findById(Integer.parseInt(room_id));
+    public RoomRow add(RoomRowEntity room_row, int room_id, String type_id) throws MyException {
+        Optional<RoomEntity> findRoom = roomRepo.findById(room_id);
         if (!findRoom.isPresent()) {
             throw new MyException("Ошибка в получение room");
         }

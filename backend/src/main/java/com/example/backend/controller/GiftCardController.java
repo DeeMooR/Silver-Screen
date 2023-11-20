@@ -37,4 +37,13 @@ public class GiftCardController {
             return ResponseEntity.badRequest().body("Error");
         }
     }
+
+    @GetMapping
+    public ResponseEntity getAllGiftCard() {
+        try {
+            return ResponseEntity.ok(giftCardService.getAll());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error");
+        }
+    }
 }

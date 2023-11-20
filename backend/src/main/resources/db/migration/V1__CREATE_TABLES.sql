@@ -13,7 +13,6 @@ CREATE TABLE user (
 
 CREATE TABLE my_card (
     id int primary key AUTO_INCREMENT,
-    id_card int not null,
     number_card int not null,
     start varchar(64) not null,
     end varchar(64) not null,
@@ -30,6 +29,7 @@ CREATE TABLE my_seat_select (
 CREATE TABLE my_movie (
     id int primary key AUTO_INCREMENT,
     id_movie int not null,
+    date varchar(64) not null,
     i_row int not null,
     i_column int not null,
     cost int not null,

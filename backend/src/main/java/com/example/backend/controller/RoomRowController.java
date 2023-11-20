@@ -15,12 +15,9 @@ public class RoomRowController {
     @Autowired
     private RoomRowService roomRowService;
 
-//    @PostMapping("/{room_id}/{type_id}")
-//    public ResponseEntity getOneUser(@PathVariable int id) {
-//
     @PostMapping
     public ResponseEntity addRoomRow(@RequestBody RoomRowEntity room_row,
-                                     @RequestHeader("room_id") String room_id,
+                                     @RequestHeader("room_id") int room_id,
                                      @RequestHeader("type_id") String type_id) {
         try {
             return ResponseEntity.ok(roomRowService.add(room_row, room_id, type_id));

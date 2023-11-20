@@ -37,4 +37,13 @@ public class RoomController {
             return ResponseEntity.badRequest().body("Error");
         }
     }
+
+    @GetMapping
+    public ResponseEntity getAllRoom() {
+        try {
+            return ResponseEntity.ok(roomService.getAll());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error");
+        }
+    }
 }

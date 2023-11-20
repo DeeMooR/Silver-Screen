@@ -10,6 +10,7 @@ public class MyMovieEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int id_movie;
+    private String date;
     private int i_row;
     private int i_column;
     private int cost;
@@ -29,19 +30,22 @@ public class MyMovieEntity {
     public void setId(int id) {
         this.id = id;
     }
-    public void setIdMovie(int id_movie) {
+    public void setId_movie(int id_movie) {
         this.id_movie = id_movie;
     }
-    public void setRow(int i_row) {
+    public void setDate(String date) {
+        this.date = date;
+    }
+    public void setI_row(int i_row) {
         this.i_row = i_row;
     }
-    public void setColumn(int i_column) {
+    public void setI_column(int i_column) {
         this.i_column = i_column;
     }
     public void setCost(int cost) {
         this.cost = cost;
     }
-    public void setIdSeance(int id_seance) {
+    public void setId_seance(int id_seance) {
         this.id_seance = id_seance;
     }
     public void setType(SeatTypeEntity type) {
@@ -54,19 +58,22 @@ public class MyMovieEntity {
     public int getId() {
         return id;
     }
-    public int getIdMovie() {
+    public int getId_movie() {
         return id_movie;
     }
-    public int getRow() {
+    public String getDate() {
+        return date;
+    }
+    public int getI_row() {
         return i_row;
     }
-    public int getColumn() {
+    public int getI_column() {
         return i_column;
     }
     public int getCost() {
         return cost;
     }
-    public int getIdSeance() {
+    public int getId_seance() {
         return id_seance;
     }
     public SeatTypeEntity getType() {

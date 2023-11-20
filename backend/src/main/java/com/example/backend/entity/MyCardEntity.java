@@ -10,7 +10,6 @@ public class MyCardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int id_card;
     private int number_card;
     private String start;
     private String end;
@@ -20,16 +19,17 @@ public class MyCardEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    @ManyToOne
+    @JoinColumn(name = "gift_card_id")
+    private GiftCardEntity gift_card;
+
     public MyCardEntity() {
     }
 
     public void setId(int id) {
         this.id = id;
     }
-    public void setIdCard(int id_card) {
-        this.id_card = id_card;
-    }
-    public void setNumberCard(int number_card) {
+    public void setNumber_card(int number_card) {
         this.number_card = number_card;
     }
     public void setStart(String start) {
@@ -44,14 +44,14 @@ public class MyCardEntity {
     public void setUser(UserEntity user) {
         this.user = user;
     }
+    public void setGift_card(GiftCardEntity gift_card) {
+        this.gift_card = gift_card;
+    }
 
     public int getId() {
         return id;
     }
-    public int getIdCard() {
-        return id_card;
-    }
-    public int getNumberCard() {
+    public int getNumber_card() {
         return number_card;
     }
     public String getStart() {
@@ -65,5 +65,8 @@ public class MyCardEntity {
     }
     public UserEntity getUser() {
         return user;
+    }
+    public GiftCardEntity getGift_card() {
+        return gift_card;
     }
 }

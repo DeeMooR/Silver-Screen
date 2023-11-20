@@ -11,7 +11,10 @@ import com.example.backend.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class RoomService {
@@ -33,5 +36,12 @@ public class RoomService {
             throw new MyException("Зал не найден");
         }
         return Room.toModel(room.get());
+    }
+
+    public List<Room> getAll() {
+        Iterable<RoomEntity> roomEntities = roomRepo.findAll();
+        return StreamSupport.stream(roomEntities.spliterator(), false)
+                .map(Room::toModel)
+                .collect(Collectors.toList());
     }
 }

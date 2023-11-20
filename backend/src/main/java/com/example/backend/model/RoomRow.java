@@ -8,6 +8,7 @@ import com.example.backend.entity.SeatTypeEntity;
 public class RoomRow {
     private int id;
     private int seats;
+    private int room;
     private String type;
 
     public RoomRow() {
@@ -17,6 +18,7 @@ public class RoomRow {
         RoomRow model = new RoomRow();
         model.setId(entity.getId());
         model.setSeats(entity.getSeats());
+        model.setRoom(entity.getRoom().getId());
         model.setType(entity.getType().getType());
         return model;
     }
@@ -27,6 +29,9 @@ public class RoomRow {
     public void setSeats(int seats) {
         this.seats = seats;
     }
+    public void setRoom(int room) {
+        this.room = room;
+    }
     public void setType(String type) {
         this.type = type;
     }
@@ -36,6 +41,9 @@ public class RoomRow {
     }
     public int getSeats() {
         return seats;
+    }
+    public int getRoom() {
+        return room;
     }
     public String getType() {
         return type;

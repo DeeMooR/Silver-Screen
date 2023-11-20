@@ -37,6 +37,16 @@ public class UserController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity getAllUser() {
+        try {
+            return ResponseEntity.ok(userService.getAll());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error");
+        }
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable int id) {
         try {
