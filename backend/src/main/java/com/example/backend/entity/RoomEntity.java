@@ -15,6 +15,9 @@ public class RoomEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
     private List<RoomRowEntity> rows;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
+    private List<SeanceEntity> seances;
+
     public RoomEntity() {
     }
 
@@ -30,6 +33,9 @@ public class RoomEntity {
     public void setRows(List<RoomRowEntity> rows) {
         this.rows = rows;
     }
+    public void setSeances(List<SeanceEntity> seances) {
+        this.seances = seances;
+    }
 
     public int getId() {
         return id;
@@ -42,5 +48,8 @@ public class RoomEntity {
     }
     public List<RoomRowEntity> getRows() {
         return rows;
+    }
+    public List<SeanceEntity> getSeances() {
+        return seances;
     }
 }

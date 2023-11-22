@@ -78,3 +78,40 @@ CREATE TABLE genre (
     id int primary key AUTO_INCREMENT,
     name varchar(64) not null
 ) engine=MyISAM;
+
+CREATE TABLE schedule (
+    id int primary key AUTO_INCREMENT,
+    date varchar(12) not null
+) engine=MyISAM;
+
+CREATE TABLE seance (
+    id int primary key AUTO_INCREMENT,
+    time varchar(5) not null
+) engine=MyISAM;
+
+CREATE TABLE slider (
+    id int primary key AUTO_INCREMENT,
+    image varchar(64) not null,
+    movie_id int,
+    title varchar(64),
+    text varchar(64),
+    text_button varchar(64),
+    link varchar(64)
+) engine=MyISAM;
+
+CREATE TABLE page_title (
+    page varchar(64) primary key not null,
+    image varchar(64) not null,
+    title varchar(64) not null,
+    text varchar(64) not null
+) engine=MyISAM;
+
+CREATE TABLE page_news (
+    id int primary key AUTO_INCREMENT,
+    image varchar(64) not null,
+    background_image varchar(64),
+    title varchar(64) not null,
+    description varchar(400) not null,
+    date varchar(64),
+    link varchar(64)
+) engine=MyISAM;

@@ -20,6 +20,7 @@ public class Movie {
     private String description;
     private String trailer;
     private List<String> genres;
+    private List<Schedule> schedules;
 
     public Movie() {
     }
@@ -37,6 +38,7 @@ public class Movie {
         model.setDescription(entity.getDescription());
         model.setTrailer(entity.getTrailer());
         model.setGenres(entity.getGenres().stream().map(genreEntity -> genreEntity.getName()).collect(Collectors.toList()));
+        model.setSchedules(entity.getSchedule().stream().map(Schedule::toModel).collect(Collectors.toList()));
         return model;
     }
 
@@ -73,6 +75,9 @@ public class Movie {
     public void setGenres(List<String> genres) {
         this.genres = genres;
     }
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
+    }
 
     public int getId() {
         return id;
@@ -106,5 +111,8 @@ public class Movie {
     }
     public List<String> getGenres() {
         return genres;
+    }
+    public List<Schedule> getSchedules() {
+        return schedules;
     }
 }

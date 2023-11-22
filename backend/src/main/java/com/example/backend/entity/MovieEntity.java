@@ -24,6 +24,9 @@ public class MovieEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
     private List<GenreEntity> genres;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
+    private List<ScheduleEntity> schedule;
+
     public MovieEntity() {
     }
 
@@ -60,6 +63,9 @@ public class MovieEntity {
     public void setGenres(List<GenreEntity> genres) {
         this.genres = genres;
     }
+    public void setSchedule(List<ScheduleEntity> schedule) {
+        this.schedule = schedule;
+    }
 
     public int getId() {
         return id;
@@ -93,5 +99,8 @@ public class MovieEntity {
     }
     public List<GenreEntity> getGenres() {
         return genres;
+    }
+    public List<ScheduleEntity> getSchedule() {
+        return schedule;
     }
 }
