@@ -9,12 +9,10 @@ public class MyMovieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int id_movie;
     private String date;
     private int i_row;
     private int i_column;
     private int cost;
-    private int id_seance;
 
     @ManyToOne
     @JoinColumn(name = "type_id")
@@ -24,14 +22,19 @@ public class MyMovieEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    private MovieEntity movie;
+
+    @ManyToOne
+    @JoinColumn(name = "seance_id")
+    private SeanceEntity seance;
+
     public MyMovieEntity() {
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-    public void setId_movie(int id_movie) {
-        this.id_movie = id_movie;
     }
     public void setDate(String date) {
         this.date = date;
@@ -45,21 +48,21 @@ public class MyMovieEntity {
     public void setCost(int cost) {
         this.cost = cost;
     }
-    public void setId_seance(int id_seance) {
-        this.id_seance = id_seance;
-    }
     public void setType(SeatTypeEntity type) {
         this.type = type;
     }
     public void setUser(UserEntity user) {
         this.user = user;
     }
+    public void setMovie(MovieEntity movie) {
+        this.movie = movie;
+    }
+    public void setSeance(SeanceEntity seance) {
+        this.seance = seance;
+    }
 
     public int getId() {
         return id;
-    }
-    public int getId_movie() {
-        return id_movie;
     }
     public String getDate() {
         return date;
@@ -73,13 +76,16 @@ public class MyMovieEntity {
     public int getCost() {
         return cost;
     }
-    public int getId_seance() {
-        return id_seance;
-    }
     public SeatTypeEntity getType() {
         return type;
     }
     public UserEntity getUser() {
         return user;
+    }
+    public MovieEntity getMovie() {
+        return movie;
+    }
+    public SeanceEntity getSeance() {
+        return seance;
     }
 }

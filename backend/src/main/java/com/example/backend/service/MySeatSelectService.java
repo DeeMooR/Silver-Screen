@@ -1,13 +1,11 @@
 package com.example.backend.service;
 
-import com.example.backend.entity.MyMovieEntity;
-import com.example.backend.entity.MySeatSelectEntity;
-import com.example.backend.entity.SeatTypeEntity;
-import com.example.backend.entity.UserEntity;
+import com.example.backend.entity.*;
 import com.example.backend.exception.MyException;
 import com.example.backend.model.MyMovie;
 import com.example.backend.model.MySeatSelect;
 import com.example.backend.repository.MySeatSelectRepo;
+import com.example.backend.repository.SeanceRepo;
 import com.example.backend.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,13 +22,22 @@ public class MySeatSelectService {
     private MySeatSelectRepo mySeatSelectRepo;
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private SeanceRepo seanceRepo;
 
-    public MySeatSelect add(MySeatSelectEntity seat, int user_id) throws MyException {
+    public MySeatSelect add(MySeatSelectEntity seat, int user_id, int seance_id) throws MyException {
         Optional<UserEntity> findUser = userRepo.findById(user_id);
         if (!findUser.isPresent()) {
             throw new MyException("Ошибка в получение user");
         }
         seat.setUser(findUser.get());
+
+        Optional<SeanceEntity> findSeance = seanceRepo.findById(seance_id);
+        if (!findSeance.isPresent()) {
+            throw new MyException("Ошибка в получение seance");
+        }
+        seat.setSeance(findSeance.get());
+
         return MySeatSelect.toModel(mySeatSelectRepo.save(seat));
     }
 

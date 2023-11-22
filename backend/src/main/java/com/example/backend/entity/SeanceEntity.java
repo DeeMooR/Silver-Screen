@@ -1,6 +1,7 @@
 package com.example.backend.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "seance")
@@ -18,6 +19,12 @@ public class SeanceEntity {
     @JoinColumn(name = "schedule_id")
     private ScheduleEntity schedule;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "seance")
+    private List<MyMovieEntity> myMovie;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "seance")
+    private List<MySeatSelectEntity> mySeatSelect;
+
     public SeanceEntity() {
     }
 
@@ -33,6 +40,12 @@ public class SeanceEntity {
     public void setSchedule(ScheduleEntity schedule) {
         this.schedule = schedule;
     }
+    public void setMyMovie(List<MyMovieEntity> myMovie) {
+        this.myMovie = myMovie;
+    }
+    public void setMySeatSelect(List<MySeatSelectEntity> mySeatSelect) {
+        this.mySeatSelect = mySeatSelect;
+    }
 
     public int getId() {
         return id;
@@ -45,5 +58,11 @@ public class SeanceEntity {
     }
     public ScheduleEntity getSchedule() {
         return schedule;
+    }
+    public List<MyMovieEntity> getMyMovie() {
+        return myMovie;
+    }
+    public List<MySeatSelectEntity> getMySeatSelect() {
+        return mySeatSelect;
     }
 }

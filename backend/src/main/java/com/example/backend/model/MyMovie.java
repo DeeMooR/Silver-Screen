@@ -1,37 +1,31 @@
 package com.example.backend.model;
 
 import com.example.backend.entity.MyMovieEntity;
-import com.example.backend.entity.SeatTypeEntity;
-
-import java.util.List;
 
 public class MyMovie {
-    private int id_movie;
     private String date;
     private int i_row;
     private int i_column;
     private int cost;
-    private int id_seance;
-    private String type;
+    private String type_id;
+    private int seance_id;
+    private int movie_id;
 
     public MyMovie() {
     }
 
     public static MyMovie toModel(MyMovieEntity entity) {
         MyMovie model = new MyMovie();
-        model.setId_movie(entity.getId_movie());
         model.setDate(entity.getDate());
         model.setI_row(entity.getI_row());
         model.setI_column(entity.getI_column());
         model.setCost(entity.getCost());
-        model.setId_seance(entity.getId_seance());
-        model.setType(entity.getType().getType());
+        model.setType_id(entity.getType().getType());
+        model.setSeance_id(entity.getSeance().getId());
+        model.setMovie_id(entity.getMovie().getId());
         return model;
     }
 
-    public void setId_movie(int id_movie) {
-        this.id_movie = id_movie;
-    }
     public void setDate(String date) {
         this.date = date;
     }
@@ -44,16 +38,16 @@ public class MyMovie {
     public void setCost(int cost) {
         this.cost = cost;
     }
-    public void setId_seance(int id_seance) {
-        this.id_seance = id_seance;
+    public void setType_id(String type_id) {
+        this.type_id = type_id;
     }
-    public void setType(String type) {
-        this.type = type;
+    public void setSeance_id(int seance_id) {
+        this.seance_id = seance_id;
+    }
+    public void setMovie_id(int movie_id) {
+        this.movie_id = movie_id;
     }
 
-    public int getId_movie() {
-        return id_movie;
-    }
     public String getDate() {
         return date;
     }
@@ -66,10 +60,13 @@ public class MyMovie {
     public int getCost() {
         return cost;
     }
-    public int getId_seance() {
-        return id_seance;
+    public String getType_id() {
+        return type_id;
     }
-    public String getType() {
-        return type;
+    public int getSeance_id() {
+        return seance_id;
+    }
+    public int getMovie_id() {
+        return movie_id;
     }
 }

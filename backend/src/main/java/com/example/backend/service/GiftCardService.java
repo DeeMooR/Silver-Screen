@@ -20,8 +20,8 @@ public class GiftCardService {
     @Autowired
     private GiftCardRepo giftCardRepo;
 
-    public GiftCardEntity add(GiftCardEntity card) throws MyException {
-        return giftCardRepo.save(card);
+    public GiftCard add(GiftCardEntity card) throws MyException {
+        return GiftCard.toModel(giftCardRepo.save(card));
     }
 
     public GiftCard getOne(int id) throws MyException {

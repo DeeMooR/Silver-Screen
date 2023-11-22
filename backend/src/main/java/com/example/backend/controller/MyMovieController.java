@@ -18,9 +18,11 @@ public class MyMovieController {
     @PostMapping
     public ResponseEntity addMyMovie(@RequestBody MyMovieEntity movie,
                                      @RequestHeader("user_id") int user_id,
-                                     @RequestHeader("type_id") String type_id) {
+                                     @RequestHeader("type_id") String type_id,
+                                     @RequestHeader("movie_id") int movie_id,
+                                     @RequestHeader("seance_id") int seance_id) {
         try {
-            return ResponseEntity.ok(myMovieService.add(movie, user_id, type_id));
+            return ResponseEntity.ok(myMovieService.add(movie, user_id, type_id, movie_id, seance_id));
         } catch (MyException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

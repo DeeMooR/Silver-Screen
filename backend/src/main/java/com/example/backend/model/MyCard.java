@@ -7,8 +7,7 @@ public class MyCard {
     private String start;
     private String end;
     private boolean status;
-    private int user;
-    private int gift_card;
+    private int gift_card_id;
 
     public MyCard() {
     }
@@ -19,8 +18,7 @@ public class MyCard {
         model.setStart(entity.getStart());
         model.setEnd(entity.getEnd());
         model.setStatus(entity.isStatus());
-        model.setUser(entity.getUser().getId());
-        model.setGift_card(entity.getGift_card().getId());
+        model.setGift_card_id(entity.getGift_card().getId());
         return model;
     }
 
@@ -36,11 +34,8 @@ public class MyCard {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    public void setUser(int user) {
-        this.user = user;
-    }
-    public void setGift_card(int gift_card) {
-        this.gift_card = gift_card;
+    public void setGift_card_id(int gift_card_id) {
+        this.gift_card_id = gift_card_id;
     }
 
     public int getNumber_card() {
@@ -55,10 +50,7 @@ public class MyCard {
     public boolean isStatus() {
         return status;
     }
-    public int getUser() {
-        return user;
-    }
-    public int getGift_card() {
-        return gift_card;
+    public int getGift_card_id() {
+        return gift_card_id;
     }
 }

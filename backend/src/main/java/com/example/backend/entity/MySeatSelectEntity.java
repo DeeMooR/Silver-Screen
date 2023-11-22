@@ -10,11 +10,14 @@ public class MySeatSelectEntity {
     private int id;
     private int i_row;
     private int i_column;
-    private int id_seance;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
+
+    @ManyToOne
+    @JoinColumn(name = "seance_id")
+    private SeanceEntity seance;
 
     public MySeatSelectEntity() {
     }
@@ -22,32 +25,32 @@ public class MySeatSelectEntity {
     public void setId(int id) {
         this.id = id;
     }
-    public void setRow(int i_row) {
+    public void setI_row(int i_row) {
         this.i_row = i_row;
     }
-    public void setColumn(int i_column) {
+    public void setI_column(int i_column) {
         this.i_column = i_column;
-    }
-    public void setIdSeance(int id_seance) {
-        this.id_seance = id_seance;
     }
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+    public void setSeance(SeanceEntity seance) {
+        this.seance = seance;
     }
 
     public int getId() {
         return id;
     }
-    public int getRow() {
+    public int getI_row() {
         return i_row;
     }
-    public int getColumn() {
+    public int getI_column() {
         return i_column;
-    }
-    public int getIdSeance() {
-        return id_seance;
     }
     public UserEntity getUser() {
         return user;
+    }
+    public SeanceEntity getSeance() {
+        return seance;
     }
 }
