@@ -112,3 +112,8 @@ CREATE TABLE page_news (
     date varchar(64),
     link varchar(64)
 ) engine=MyISAM;
+
+CREATE TABLE places (
+    id int primary key AUTO_INCREMENT,
+    numbers int[] not null
+) engine=MyISAM;

@@ -3,11 +3,15 @@ package com.example.backend.model;
 import com.example.backend.entity.ScheduleEntity;
 import com.example.backend.entity.SeanceEntity;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Seance {
     private int id;
     private String time;
     private int room_id;
     private int schedule_id;
+    private List<int[]> places;
 
     public Seance() {
     }
@@ -18,6 +22,7 @@ public class Seance {
         model.setTime(entity.getTime());
         model.setRoom_id(entity.getRoom().getId());
         model.setSchedule_id(entity.getSchedule().getId());
+        model.setPlaces(entity.getPlaces().stream().map(placesEntity -> placesEntity.getNumbers()).collect(Collectors.toList()));
         return model;
     }
 
@@ -33,6 +38,9 @@ public class Seance {
     public void setSchedule_id(int schedule_id) {
         this.schedule_id = schedule_id;
     }
+    public void setPlaces(List<int[]> places) {
+        this.places = places;
+    }
 
     public int getId() {
         return id;
@@ -45,5 +53,8 @@ public class Seance {
     }
     public int getSchedule_id() {
         return schedule_id;
+    }
+    public List<int[]> getPlaces() {
+        return places;
     }
 }

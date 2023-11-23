@@ -1,26 +1,24 @@
 package com.example.backend.controller;
 
-import com.example.backend.entity.ScheduleEntity;
-import com.example.backend.entity.SeanceEntity;
+import com.example.backend.entity.RoomRowEntity;
 import com.example.backend.exception.MyException;
-import com.example.backend.service.ScheduleService;
-import com.example.backend.service.SeanceService;
+import com.example.backend.service.PlacesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/seance")
-public class SeanceController {
+@RequestMapping("/places")
+public class PlacesController {
 
     @Autowired
-    private SeanceService seanceService;
+    private PlacesService placesService;
+
     @PostMapping
-    public ResponseEntity addSeance(@RequestBody SeanceEntity seance,
-                                    @RequestHeader("schedule_id") int schedule_id,
-                                    @RequestHeader("room_id") int room_id) {
+    public ResponseEntity addNumbers(@RequestBody int[] numbers,
+                                     @RequestHeader("seance_id") int seance_id) {
         try {
-            return ResponseEntity.ok(seanceService.add(seance, schedule_id, room_id));
+            return ResponseEntity.ok(placesService.add(numbers, seance_id));
         } catch (MyException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -29,9 +27,9 @@ public class SeanceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getOneSeance(@PathVariable int id) {
+    public ResponseEntity getOneNumbers(@PathVariable int id) {
         try {
-            return ResponseEntity.ok(seanceService.getOne(id));
+            return ResponseEntity.ok(placesService.getOne(id));
         } catch (MyException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
@@ -40,9 +38,9 @@ public class SeanceController {
     }
 
     @GetMapping
-    public ResponseEntity getAllSeance() {
+    public ResponseEntity getAllNumbers() {
         try {
-            return ResponseEntity.ok(seanceService.getAll());
+            return ResponseEntity.ok(placesService.getAll());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error");
         }

@@ -1,12 +1,10 @@
 package com.example.backend.service;
 
-import com.example.backend.entity.MovieEntity;
-import com.example.backend.entity.RoomEntity;
-import com.example.backend.entity.ScheduleEntity;
-import com.example.backend.entity.SeanceEntity;
+import com.example.backend.entity.*;
 import com.example.backend.exception.MyException;
 import com.example.backend.model.Schedule;
 import com.example.backend.model.Seance;
+import com.example.backend.model.User;
 import com.example.backend.repository.MovieRepo;
 import com.example.backend.repository.RoomRepo;
 import com.example.backend.repository.ScheduleRepo;
@@ -43,6 +41,14 @@ public class SeanceService {
         seance.setRoom(findRoom.get());
 
         return Seance.toModel(seanceRepo.save(seance));
+    }
+
+    public Seance getOne(int id) throws MyException {
+        Optional<SeanceEntity> seance = seanceRepo.findById(id);
+        if (!seance.isPresent()) {
+            throw new MyException("Сеанс не найден");
+        }
+        return Seance.toModel(seance.get());
     }
 
     public List<Seance> getAll() {

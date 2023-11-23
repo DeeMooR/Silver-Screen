@@ -25,6 +25,9 @@ public class SeanceEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "seance")
     private List<MySeatSelectEntity> mySeatSelect;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "seance")
+    private List<PlacesEntity> places;
+
     public SeanceEntity() {
     }
 
@@ -46,6 +49,9 @@ public class SeanceEntity {
     public void setMySeatSelect(List<MySeatSelectEntity> mySeatSelect) {
         this.mySeatSelect = mySeatSelect;
     }
+    public void setPlaces(List<PlacesEntity> places) {
+        this.places = places;
+    }
 
     public int getId() {
         return id;
@@ -64,5 +70,8 @@ public class SeanceEntity {
     }
     public List<MySeatSelectEntity> getMySeatSelect() {
         return mySeatSelect;
+    }
+    public List<PlacesEntity> getPlaces() {
+        return places;
     }
 }

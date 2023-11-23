@@ -5,6 +5,9 @@ import com.example.backend.entity.RoomEntity;
 import com.example.backend.entity.RoomRowEntity;
 import com.example.backend.entity.SeatTypeEntity;
 
+import java.lang.reflect.Field;
+import java.util.Optional;
+
 public class RoomRow {
     private int id;
     private int seats;
