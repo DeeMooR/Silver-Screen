@@ -33,7 +33,7 @@ CREATE TABLE my_movie (
     cost int not null
 ) engine=MyISAM;
 
-CREATE TABLE gift_card (
+CREATE TABLE card (
     id int primary key AUTO_INCREMENT,
     image varchar(64) not null,
     cost int not null,

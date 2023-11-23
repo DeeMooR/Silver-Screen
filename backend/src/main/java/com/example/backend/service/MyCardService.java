@@ -3,9 +3,7 @@ package com.example.backend.service;
 import com.example.backend.entity.*;
 import com.example.backend.exception.MyException;
 import com.example.backend.model.MyCard;
-import com.example.backend.model.MyMovie;
-import com.example.backend.model.User;
-import com.example.backend.repository.GiftCardRepo;
+import com.example.backend.repository.CardRepo;
 import com.example.backend.repository.MyCardRepo;
 import com.example.backend.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,26 +22,20 @@ public class MyCardService {
     @Autowired
     private UserRepo userRepo;
     @Autowired
-    private GiftCardRepo giftCardRepo;
+    private CardRepo cardRepo;
 
-    public MyCard add(MyCardEntity card, int userId) {
-        UserEntity user = userRepo.findById(userId).get();
-        card.setUser(user);
-        return MyCard.toModel(myCardRepo.save(card));
-    }
-
-    public MyCard add(MyCardEntity card, int user_id, int gift_card_id) throws MyException {
+    public MyCard add(MyCardEntity card, int user_id, int card_id) throws MyException {
         Optional<UserEntity> findUser = userRepo.findById(user_id);
         if (!findUser.isPresent()) {
             throw new MyException("Ошибка в получение user");
         }
         card.setUser(findUser.get());
 
-        Optional<GiftCardEntity> findGiftCard = giftCardRepo.findById(gift_card_id);
-        if (!findGiftCard.isPresent()) {
-            throw new MyException("Ошибка в получение gift_card");
+        Optional<CardEntity> findCard = cardRepo.findById(card_id);
+        if (!findCard.isPresent()) {
+            throw new MyException("Ошибка в получение card");
         }
-        card.setGift_card(findGiftCard.get());
+        card.setCard(findCard.get());
 
         return MyCard.toModel(myCardRepo.save(card));
     }

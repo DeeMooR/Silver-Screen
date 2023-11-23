@@ -6,6 +6,7 @@ import com.example.backend.entity.ScheduleEntity;
 import com.example.backend.exception.MyException;
 import com.example.backend.model.Genre;
 import com.example.backend.model.Schedule;
+import com.example.backend.modelShort.ScheduleShort;
 import com.example.backend.repository.GenreRepo;
 import com.example.backend.repository.MovieRepo;
 import com.example.backend.repository.ScheduleRepo;
@@ -25,13 +26,13 @@ public class ScheduleService {
     @Autowired
     private MovieRepo movieRepo;
 
-    public Schedule add(ScheduleEntity schedule, int movie_id) throws MyException {
+    public void add(ScheduleEntity schedule, int movie_id) throws MyException {
         Optional<MovieEntity> findMovie = movieRepo.findById(movie_id);
         if (!findMovie.isPresent()) {
             throw new MyException("Ошибка в получение movie");
         }
         schedule.setMovie(findMovie.get());
-        return Schedule.toModel(scheduleRepo.save(schedule));
+        scheduleRepo.save(schedule);
     }
 
     public List<Schedule> getAll() {

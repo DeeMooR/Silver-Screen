@@ -1,6 +1,9 @@
 package com.example.backend.model;
 
 import com.example.backend.entity.UserEntity;
+import com.example.backend.modelShort.MyCardShort;
+import com.example.backend.modelShort.MyMovieShort;
+import com.example.backend.modelShort.MySeatSelectShort;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,9 +11,9 @@ import java.util.stream.Collectors;
 public class User {
     private int id;
     private String username;
-    private List<MyCard> myCards;
-    private List<MyMovie> myMovies;
-    private List<MySeatSelect> mySeatSelect;
+    private List<MyCardShort> myCards;
+    private List<MyMovieShort> myMovies;
+    private List<MySeatSelectShort> mySeatSelect;
 
     public User() {
     }
@@ -19,9 +22,9 @@ public class User {
         User model = new User();
         model.setId(entity.getId());
         model.setUsername(entity.getUsername());
-        model.setMyCards(entity.getMyCards().stream().map(MyCard::toModel).collect(Collectors.toList()));
-        model.setMySeatSelect(entity.getMySeatSelect().stream().map(MySeatSelect::toModel).collect(Collectors.toList()));
-        model.setMyMovies(entity.getMyMovies().stream().map(MyMovie::toModel).collect(Collectors.toList()));
+        model.setMyCards(entity.getMyCards().stream().map(MyCardShort::toModel).collect(Collectors.toList()));
+        model.setMySeatSelect(entity.getMySeatSelect().stream().map(MySeatSelectShort::toModel).collect(Collectors.toList()));
+        model.setMyMovies(entity.getMyMovies().stream().map(MyMovieShort::toModel).collect(Collectors.toList()));
         return model;
     }
 
@@ -31,13 +34,13 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-    public void setMyCards(List<MyCard> myCards) {
+    public void setMyCards(List<MyCardShort> myCards) {
         this.myCards = myCards;
     }
-    public void setMyMovies(List<MyMovie> myMovies) {
+    public void setMyMovies(List<MyMovieShort> myMovies) {
         this.myMovies = myMovies;
     }
-    public void setMySeatSelect(List<MySeatSelect> mySeatSelect) {
+    public void setMySeatSelect(List<MySeatSelectShort> mySeatSelect) {
         this.mySeatSelect = mySeatSelect;
     }
 
@@ -47,13 +50,13 @@ public class User {
     public String getUsername() {
         return username;
     }
-    public List<MyCard> getMyCards() {
+    public List<MyCardShort> getMyCards() {
         return myCards;
     }
-    public List<MyMovie> getMyMovies() {
+    public List<MyMovieShort> getMyMovies() {
         return myMovies;
     }
-    public List<MySeatSelect> getMySeatSelect() {
+    public List<MySeatSelectShort> getMySeatSelect() {
         return mySeatSelect;
     }
 }

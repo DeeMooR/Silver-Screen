@@ -15,9 +15,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity registration(@RequestBody UserEntity user) {
+    public ResponseEntity addUser(@RequestBody UserEntity user) {
         try {
-            userService.registration(user);
+            userService.add(user);
             return ResponseEntity.ok("Пользователь успешно сохранён");
         } catch (MyException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

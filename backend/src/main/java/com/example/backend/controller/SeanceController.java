@@ -20,7 +20,8 @@ public class SeanceController {
                                     @RequestHeader("schedule_id") int schedule_id,
                                     @RequestHeader("room_id") int room_id) {
         try {
-            return ResponseEntity.ok(seanceService.add(seance, schedule_id, room_id));
+            seanceService.add(seance, schedule_id, room_id);
+            return ResponseEntity.ok("Сеанс сохранён");
         } catch (MyException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

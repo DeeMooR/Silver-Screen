@@ -19,7 +19,8 @@ public class SheduleController {
     public ResponseEntity addSchedule(@RequestBody ScheduleEntity schedule,
                                     @RequestHeader("movie_id") int movie_id) {
         try {
-            return ResponseEntity.ok(scheduleService.add(schedule, movie_id));
+            scheduleService.add(schedule, movie_id);
+            return ResponseEntity.ok("Дата показа фильма сохранена");
         } catch (MyException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

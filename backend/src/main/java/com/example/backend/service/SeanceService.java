@@ -27,7 +27,7 @@ public class SeanceService {
     @Autowired
     private RoomRepo roomRepo;
 
-    public Seance add(SeanceEntity seance, int schedule_id, int room_id) throws MyException {
+    public void add(SeanceEntity seance, int schedule_id, int room_id) throws MyException {
         Optional<ScheduleEntity> findSchedule = scheduleRepo.findById(schedule_id);
         if (!findSchedule.isPresent()) {
             throw new MyException("Ошибка в получение schedule");
@@ -40,7 +40,7 @@ public class SeanceService {
         }
         seance.setRoom(findRoom.get());
 
-        return Seance.toModel(seanceRepo.save(seance));
+        seanceRepo.save(seance);
     }
 
     public Seance getOne(int id) throws MyException {

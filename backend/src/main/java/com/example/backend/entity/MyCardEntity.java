@@ -1,7 +1,5 @@
 package com.example.backend.entity;
 
-import com.example.backend.model.User;
-
 import javax.persistence.*;
 
 @Entity
@@ -20,8 +18,8 @@ public class MyCardEntity {
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "gift_card_id")
-    private GiftCardEntity gift_card;
+    @JoinColumn(name = "card_id")
+    private CardEntity card;
 
     public MyCardEntity() {
     }
@@ -44,8 +42,8 @@ public class MyCardEntity {
     public void setUser(UserEntity user) {
         this.user = user;
     }
-    public void setGift_card(GiftCardEntity gift_card) {
-        this.gift_card = gift_card;
+    public void setCard(CardEntity card) {
+        this.card = card;
     }
 
     public int getId() {
@@ -66,7 +64,7 @@ public class MyCardEntity {
     public UserEntity getUser() {
         return user;
     }
-    public GiftCardEntity getGift_card() {
-        return gift_card;
+    public CardEntity getCard() {
+        return card;
     }
 }

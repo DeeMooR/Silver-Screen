@@ -1,9 +1,8 @@
-package com.example.backend.model;
+package com.example.backend.modelShort;
 
 import com.example.backend.entity.MyMovieEntity;
 
-public class MyMovie {
-    private int id;
+public class MyMovieShort {
     private String date;
     private int i_row;
     private int i_column;
@@ -11,14 +10,12 @@ public class MyMovie {
     private String type_id;
     private int seance_id;
     private int movie_id;
-    private int user_id;
 
-    public MyMovie() {
+    public MyMovieShort() {
     }
 
-    public static MyMovie toModel(MyMovieEntity entity) {
-        MyMovie model = new MyMovie();
-        model.setId(entity.getId());
+    public static MyMovieShort toModel(MyMovieEntity entity) {
+        MyMovieShort model = new MyMovieShort();
         model.setDate(entity.getDate());
         model.setI_row(entity.getI_row());
         model.setI_column(entity.getI_column());
@@ -26,13 +23,9 @@ public class MyMovie {
         model.setType_id(entity.getType().getType());
         model.setSeance_id(entity.getSeance().getId());
         model.setMovie_id(entity.getMovie().getId());
-        model.setUser_id(entity.getUser().getId());
         return model;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
     public void setDate(String date) {
         this.date = date;
     }
@@ -54,13 +47,7 @@ public class MyMovie {
     public void setMovie_id(int movie_id) {
         this.movie_id = movie_id;
     }
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
 
-    public int getId() {
-        return id;
-    }
     public String getDate() {
         return date;
     }
@@ -81,8 +68,5 @@ public class MyMovie {
     }
     public int getMovie_id() {
         return movie_id;
-    }
-    public int getUser_id() {
-        return user_id;
     }
 }

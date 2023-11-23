@@ -18,9 +18,9 @@ public class MyCardController {
     @PostMapping
     public ResponseEntity addMyCard(@RequestBody MyCardEntity card,
                                      @RequestHeader("user_id") int user_id,
-                                     @RequestHeader("gift_card_id") int gift_card_id) {
+                                     @RequestHeader("card_id") int card_id) {
         try {
-            return ResponseEntity.ok(myCardService.add(card, user_id, gift_card_id));
+            return ResponseEntity.ok(myCardService.add(card, user_id, card_id));
         } catch (MyException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

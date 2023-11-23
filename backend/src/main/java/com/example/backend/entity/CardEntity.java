@@ -1,24 +1,22 @@
-package com.example.backend.model;
+package com.example.backend.entity;
 
-import com.example.backend.entity.GiftCardEntity;
-import com.example.backend.entity.MyCardEntity;
+import javax.persistence.*;
+import java.util.List;
 
-public class GiftCard {
+@Entity
+@Table(name = "card")
+public class CardEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String image;
     private int cost;
     private int amount;
 
-    public GiftCard() {
-    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "card")
+    private List<MyCardEntity> myCards;
 
-    public static GiftCard toModel(GiftCardEntity entity) {
-        GiftCard model = new GiftCard();
-        model.setId(entity.getId());
-        model.setImage(entity.getImage());
-        model.setCost(entity.getCost());
-        model.setAmount(entity.getAmount());
-        return model;
+    public CardEntity() {
     }
 
     public void setId(int id) {
@@ -33,6 +31,9 @@ public class GiftCard {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+    public void setMyCards(List<MyCardEntity> myCards) {
+        this.myCards = myCards;
+    }
 
     public int getId() {
         return id;
@@ -45,5 +46,8 @@ public class GiftCard {
     }
     public int getAmount() {
         return amount;
+    }
+    public List<MyCardEntity> getMyCards() {
+        return myCards;
     }
 }

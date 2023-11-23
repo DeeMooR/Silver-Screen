@@ -1,9 +1,7 @@
 package com.example.backend.controller;
 
-import com.example.backend.entity.GiftCardEntity;
 import com.example.backend.entity.SeatTypeEntity;
 import com.example.backend.exception.MyException;
-import com.example.backend.service.GiftCardService;
 import com.example.backend.service.SeatTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
