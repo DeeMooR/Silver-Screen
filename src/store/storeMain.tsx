@@ -23,6 +23,7 @@ const initialState = {
     mySeatSelect: [],
     my_card: [],
     myMovie: [],
+    pageTitles: [],
     isLoading: false,
     isLoadingPage: false,
 };
@@ -171,6 +172,12 @@ const rootReducerMain = (state = initialState, action: any) => {
             return {
                 ...state,
                 mySeatSelect: [],
+            };
+        }
+        case 'SET_PAGE_TITLES':  {
+            return {
+                ...state,
+                pageTitles: action.payload
             };
         }
         case 'SET_LOADING': {

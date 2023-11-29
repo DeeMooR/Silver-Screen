@@ -1,8 +1,21 @@
-.newsPage .newsPage__title {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 30px;
+.newsPage {
+  margin: -115px auto 0;
 }
-.newsPage .news__item {
+.newsPage .newsPage__main {
   width: 100%;
+  height: 670px;
+}
+.newsPage .newsPage__content .news__item {
+  width: 100%;
+}
+
+@media (max-width: 599.98px) {
+  .newsPage .newsPage__main {
+    height: 570px;
+  }
+}
+@media (max-width: 479.98px) {
+  .newsPage .newsPage__main {
+    height: 470px;
+  }
 }

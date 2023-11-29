@@ -24,7 +24,6 @@ export interface ISeance {
 }
 
 export interface ISlide {
-    id: number,
     image: string,
     movie_id?: number,
     title?: string,
@@ -112,4 +111,11 @@ export interface IDataSeatSelect {
     cost: number,
     typeSeat: string,
     idSeance: number
+}
+
+export interface IPageTitle {
+    page: string,
+    image: string,
+    title: string,
+    text: string
 }

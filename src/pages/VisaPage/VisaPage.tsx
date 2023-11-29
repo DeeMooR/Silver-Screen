@@ -6,19 +6,22 @@ import './VisaPage.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { GET_MAIN_VISA } from 'src/actions/actions'
+import { GET_PAGE_TITLES } from 'src/actions/actions'
+import { IPageTitle } from 'src/interfaces'
 
 const VisaPage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
-    const mainVisa = useSelector(({storePages}) => storePages.mainVisa);
     const [modal, setModal] = useState(<div/>);
+
+    const arrPageTitle = useSelector(({store}) => store.pageTitles);
+    const pageTitle = arrPageTitle.find((item: IPageTitle) => item.page === "visa");
 
     useEffect(() => {
         window.scrollTo({top: 0});
         const fetchData = async () => {
             dispatch({ type: "SET_LOADING_PAGE" });
-            if (Object.keys(mainVisa).length === 0) await dispatch(GET_MAIN_VISA(setModal));
+            if (!arrPageTitle.length) await dispatch(GET_PAGE_TITLES(setModal));
             dispatch({ type: "SET_LOADING_PAGE" });
         };
         fetchData();
@@ -28,7 +31,7 @@ const VisaPage = () => {
     return (
         <>
         {modal}
-        {(isLoadingPage) ? (
+        {isLoadingPage || !pageTitle ? (
             <div className="loaderPage">
                 <div className="loaderPage__element"></div>
             </div>
@@ -36,7 +39,7 @@ const VisaPage = () => {
             <PageTemplate>
                 <div className='visaPage'>
                     <div className="visaPage__main">
-                        <SlideInfo slide={mainVisa} />
+                        <SlideInfo slide={pageTitle} />
                     </div>
                     <div className="visaPage__wrapper">
                         <div className="visaPage__content">

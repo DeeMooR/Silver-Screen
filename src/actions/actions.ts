@@ -186,17 +186,6 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
                 dispatch({ type: "SET_GIFT_CARD", payload: arrGiftCards });
             } 
             else modalShowMessege(setModal, false);
-              
-
-
-            response = await fetch(
-                "https://jsonblob.com/api/jsonBlob/1166102766954602496"     // presentcard_main
-            )
-            if (response.ok) {
-                const objMainPresentCard = await response.json();
-                await dispatch({ type: "SET_MAIN_PRESENT_CARD", payload: objMainPresentCard });
-            } 
-            else modalShowMessege(setModal, false);
         } catch (err) {
           console.log(err);
         }
@@ -206,8 +195,6 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
 // --------------------
 export const ADD_CARD_SELECT = (card_id: number, newCardSelect: IDataCardSelect, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-        dispatch({ type: "SET_LOADING" });
-
         try {
             await dispatch({ type: "INCREMENT_GIFT_CARD", payload: card_id });
             const response = await fetch(
@@ -224,8 +211,6 @@ export const ADD_CARD_SELECT = (card_id: number, newCardSelect: IDataCardSelect,
             else modalShowMessege(setModal, false);
         } catch (err) {
           console.log(err);
-        } finally {
-            dispatch({ type: "SET_LOADING" });
         }
     };
 };
@@ -281,7 +266,6 @@ export const GET_ENTERTAINMENT_NEWS = (setModal: (v: JSX.Element) => void) => {
             )
             if (response.ok) {
                 const arrEntertainmentNews = await response.json();
-                await dispatch({ type: "SET_MAIN_ENTERTAINMENT", payload: arrEntertainmentNews.shift() });
                 dispatch({ type: "SET_ENTERTAINMENT_NEWS", payload: arrEntertainmentNews });
             } 
             else modalShowMessege(setModal, false);
@@ -377,23 +361,6 @@ export const GET_AFISHA_NEWS = (setModal: (v: JSX.Element) => void) => {
     };
 };
 
-export const GET_MAIN_VISA = (setModal: (v: JSX.Element) => void) => {
-    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-        try {
-            const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165726551970275328'        // main_visa
-            )
-            if (response.ok) {
-                const objMainVisa = await response.json();
-                dispatch({ type: "SET_MAIN_VISA", payload: objMainVisa });
-            }
-            else modalShowMessege(setModal, false);
-        } catch (err) {
-          console.log(err);
-        }
-    };
-};
-
 export const GET_ROOMS = (setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         try {
@@ -456,7 +423,6 @@ export const GET_SEAT_SELECT = (userId: number, setModal: (v: JSX.Element) => vo
             if (response.ok) {
                 const arrUsers: IUser[] = await response.json();
                 const objUser = arrUsers.find((item: IUser) => item.id === userId)
-                console.log(userId)
                 if (objUser) dispatch({ type: "SET_MY_SEAT_SELECT", payload: objUser.my_seat_select });
             } 
             else modalShowMessege(setModal, false);
@@ -653,7 +619,6 @@ export const SEND_MY_SEATS = (userId: number, arrSeatSelect: IDataSeatSelect[], 
 
 export const GET_USER = (token: string) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-
         try {
             const response = await fetch(
                 'https://studapi.teachmeskills.by/auth/users/me/',
@@ -667,6 +632,23 @@ export const GET_USER = (token: string) => {
                 const userData = await response.json();
                 dispatch({ type: "SET_USER", payload: userData });
             }
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_PAGE_TITLES = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'http://localhost:8080/page_title'        // rooms
+            )
+            if (response.ok) {
+                const arrPageTitle = await response.json();
+                dispatch({ type: "SET_PAGE_TITLES", payload: arrPageTitle });
+            }
+            else modalShowMessege(setModal, false);
         } catch (err) {
           console.log(err);
         }

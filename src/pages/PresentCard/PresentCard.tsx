@@ -4,11 +4,11 @@ import SlideInfo from 'src/components/SlideInfo'
 import { getDateIn180, getTodayDate } from 'src/helpers'
 import PageTemplate from 'src/components/PageTemplate'
 import { BackgroundPresentCard } from './styled'
-import { ICard, IDataCardSelect, IDataMyCard, IAddMyCard } from 'src/interfaces'
+import { ICard, IDataCardSelect, IDataMyCard, IAddMyCard, IPageTitle } from 'src/interfaces'
 import GiftCard from 'src/components/GiftCard'
 import PresentCardText from './PresentCardText'
 import { useDispatch, useSelector } from 'react-redux'
-import { GET_GIFT_CARDS, ADD_MY_CARD } from 'src/actions/actions'
+import { GET_GIFT_CARDS, ADD_MY_CARD, GET_PAGE_TITLES } from 'src/actions/actions'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import BasketCard from 'src/components/BasketCard'
@@ -23,12 +23,14 @@ const PresentCard = () => {
     const userId = useSelector(({store}) => store.user.id);
     const arrGiftCards: ICard[] = useSelector(({store}) => store.card);
     const arrCardSelect: IDataCardSelect[] = useSelector(({store}) => store.cardSelect);
-    const mainPresentCard = useSelector(({storePages}) => storePages.mainPresentCard);
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const [modal, setModal] = useState(<div/>);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const token = localStorage.getItem('access');
+
+    const arrPageTitle = useSelector(({store}) => store.pageTitles);
+    const pageTitle = arrPageTitle.find((item: IPageTitle) => item.page === "presentcard");
 
     const clickSignIn = () => {
         navigate('/sign-in', {state: {fromPage: '/presentcard'}});
@@ -53,6 +55,7 @@ const PresentCard = () => {
         const fetchData = async () => {
             dispatch({ type: "SET_LOADING_PAGE" });
             if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
+            if (!arrPageTitle.length) await dispatch(GET_PAGE_TITLES(setModal));
             dispatch({ type: "SET_LOADING_PAGE" });
         };
         if (!arrGiftCards.length) fetchData();
@@ -61,17 +64,17 @@ const PresentCard = () => {
     return (
         <PageTemplate>
             {modal}
-            <div className='presentCard'>
-                <div className="presentCard__main">
-                    <SlideInfo slide={mainPresentCard} reverse />
+            {isLoadingPage || !pageTitle ? (
+                <div className="loaderPage">
+                    <div className="loaderPage__element"></div>
                 </div>
-                <div className="presentCard__wrapper">
-                    <p className="presentCard__this">Электронная подарочная карта кинопространств mooon и Silver Screen - это лучшая возможность в пару кликов получить online-подарок, который подарит приятные эмоции другу, коллеге или близкому вам человеку</p>
-                        {isLoadingPage ? (
-                            <div className="loaderPage">
-                                <div className="loaderPage__element"></div>
-                            </div>
-                        ) : (
+            ) : (
+                <div className='presentCard'>
+                    <div className="presentCard__main">
+                        <SlideInfo slide={pageTitle} reverse />
+                    </div>
+                    <div className="presentCard__wrapper">
+                        <p className="presentCard__this">Электронная подарочная карта кинопространств mooon и Silver Screen - это лучшая возможность в пару кликов получить online-подарок, который подарит приятные эмоции другу, коллеге или близкому вам человеку</p>
                             <div className={`presentCard__table ${isLoading ? 'loading' : ''}`}>
                                 {isLoading &&
                                     <div className="loader">
@@ -101,11 +104,11 @@ const PresentCard = () => {
                                     }
                                 </div>
                             </div>
-                        )}
-                    <PresentCardText />
+                        <PresentCardText />
+                    </div>
+                    <ModalPay isOpen={modalIsOpen} setIsOpen={setModalIsOpen} type='card' />
                 </div>
-                <ModalPay isOpen={modalIsOpen} setIsOpen={setModalIsOpen} type='card' />
-            </div>
+            )}
         </PageTemplate>
     )
 }

@@ -9,9 +9,6 @@ const initialState = {
     seatTypes: [],
     mainNews: [],
     afishaNews: [],
-    mainVisa: {},
-    mainEntertainment: {},
-    mainPresentCard: {},
     arrRooms: [],
     arrMovies: [],
     arrSeances: []
@@ -53,24 +50,6 @@ const rootReducerPages = (state = initialState, action: any) => {
             return {
                 ...state,
                 afishaNews: action.payload,
-            };
-        }
-        case 'SET_MAIN_VISA': {
-            return {
-                ...state,
-                mainVisa: action.payload,
-            };
-        }
-        case 'SET_MAIN_ENTERTAINMENT': {
-            return {
-                ...state,
-                mainEntertainment: action.payload,
-            };
-        }
-        case 'SET_MAIN_PRESENT_CARD': {
-            return {
-                ...state,
-                mainPresentCard: action.payload,
             };
         }
         case 'SET_ROOMS': {
