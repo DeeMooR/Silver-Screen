@@ -11,12 +11,11 @@ import { Link } from 'react-router-dom'
 import HorizontalNews from 'src/components/HorizontalNews'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { GET_AFISHA_NEWS, GET_MOVIES, GET_SEANCES } from 'src/actions/actions'
+import { GET_MOVIES, GET_NEWS, GET_SEANCES } from 'src/actions/actions'
 import { getArrDate, getArrMoviesShow, getArrSoonDatesWithWeek, setDateStore } from 'src/helpers'
 
 const Afisha = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const arrAfishaNews: INews[] = useSelector(({storePages}) => storePages.afishaNews);
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
     const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
     const [modal, setModal] = useState(<div/>);
@@ -30,6 +29,8 @@ const Afisha = () => {
     const searchAudio = useSelector(({store}) => store.search.audio);
     let searchLanguage = useSelector(({store}) => store.search.language);
 
+    const arrNews = useSelector(({store}) => store.news);
+    const pageNews = arrNews.filter((item: INews) => item.page === "afisha");
 
     const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
     const arrMoviesShow = getArrMoviesShow(arrMovies, movieTypeSelect);
@@ -72,9 +73,9 @@ const Afisha = () => {
                     await dispatch({ type: "SET_LOADING_PAGE" });
                 }
             }
-            if (!arrAfishaNews.length) {
+            if (!arrNews.length) {
                 await dispatch({ type: "SET_LOADING" });
-                await dispatch(GET_AFISHA_NEWS(setModal));
+                await dispatch(GET_NEWS(setModal));
                 dispatch({ type: "SET_LOADING" });
             }
         };
@@ -250,7 +251,7 @@ const Afisha = () => {
                             <div className="loader__element"></div>
                         </div>
                     ) : (
-                        <HorizontalNews obj={arrAfishaNews[0]} page='main' reverse />
+                        <HorizontalNews obj={pageNews[0]} page='main' reverse />
                     )}
                 </div>
             </PageTemplate>

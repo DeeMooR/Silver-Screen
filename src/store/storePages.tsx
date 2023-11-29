@@ -3,12 +3,8 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools} from 'redux-devtools-extension'
 
 const initialState = {
-    entertainmentNews: [],
-    newsPageNews: [],
     slider: [],
     seatTypes: [],
-    mainNews: [],
-    afishaNews: [],
     arrRooms: [],
     arrMovies: [],
     arrSeances: []
@@ -16,18 +12,6 @@ const initialState = {
 
 const rootReducerPages = (state = initialState, action: any) => {
     switch (action.type) {
-        case 'SET_ENTERTAINMENT_NEWS': {
-            return {
-                ...state,
-                entertainmentNews: action.payload,
-            };
-        }
-        case 'SET_NEWSPAGE_NEWS': {
-            return {
-                ...state,
-                newsPageNews: action.payload,
-            };
-        }
         case 'SET_SLIDER': {
             return {
                 ...state,
@@ -38,18 +22,6 @@ const rootReducerPages = (state = initialState, action: any) => {
             return {
                 ...state,
                 seatTypes: action.payload,
-            };
-        }
-        case 'SET_MAIN_NEWS': {
-            return {
-                ...state,
-                mainNews: action.payload,
-            };
-        }
-        case 'SET_AFISHA_NEWS': {
-            return {
-                ...state,
-                afishaNews: action.payload,
             };
         }
         case 'SET_ROOMS': {

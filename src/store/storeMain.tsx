@@ -24,6 +24,7 @@ const initialState = {
     my_card: [],
     myMovie: [],
     pageTitles: [],
+    news: [],
     isLoading: false,
     isLoadingPage: false,
 };
@@ -178,6 +179,12 @@ const rootReducerMain = (state = initialState, action: any) => {
             return {
                 ...state,
                 pageTitles: action.payload
+            };
+        }
+        case 'SET_NEWS':  {
+            return {
+                ...state,
+                news: action.payload
             };
         }
         case 'SET_LOADING': {

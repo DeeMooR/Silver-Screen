@@ -257,41 +257,6 @@ export const GET_MY_CARDS_MOVIES = (userId: number, setModal: (v: JSX.Element) =
     };
 };
 
-
-export const GET_ENTERTAINMENT_NEWS = (setModal: (v: JSX.Element) => void) => {
-    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-        try {
-            const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165629616420675584'        // entertainment_news
-            )
-            if (response.ok) {
-                const arrEntertainmentNews = await response.json();
-                dispatch({ type: "SET_ENTERTAINMENT_NEWS", payload: arrEntertainmentNews });
-            } 
-            else modalShowMessege(setModal, false);
-        } catch (err) {
-          console.log(err);
-        }
-    };
-};
-
-export const GET_NEWSPAGE_NEWS = (setModal: (v: JSX.Element) => void) => {
-    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-        try {
-            const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165630283029798912'        // newsPage_news
-            )
-            if (response.ok) {
-                const arrNewsPageNews = await response.json();
-                dispatch({ type: "SET_NEWSPAGE_NEWS", payload: arrNewsPageNews });
-            } 
-            else modalShowMessege(setModal, false);
-        } catch (err) {
-          console.log(err);
-        }
-    };
-};
-
 export const GET_SEAT_TYPES = (setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         try {
@@ -320,40 +285,6 @@ export const GET_SLIDER_SWIPER = (setModal: (v: JSX.Element) => void) => {
                 const arrSliderSwiper = await response.json();
                 dispatch({ type: "SET_SLIDER", payload: arrSliderSwiper });
             } 
-            else modalShowMessege(setModal, false);
-        } catch (err) {
-          console.log(err);
-        }
-    };
-};
-
-export const GET_MAIN_NEWS = (setModal: (v: JSX.Element) => void) => {
-    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-        try {
-            const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165681210336075776'        // main_news
-            )
-            if (response.ok) {
-                const arrMainNews = await response.json();
-                dispatch({ type: "SET_MAIN_NEWS", payload: arrMainNews });
-            } 
-            else modalShowMessege(setModal, false);
-        } catch (err) {
-          console.log(err);
-        }
-    };
-};
-
-export const GET_AFISHA_NEWS = (setModal: (v: JSX.Element) => void) => {
-    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-        try {
-            const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165682261688705024'        // afisha_news
-            )
-            if (response.ok) {
-                const arrAfishaNews = await response.json();
-                dispatch({ type: "SET_AFISHA_NEWS", payload: arrAfishaNews });
-            }
             else modalShowMessege(setModal, false);
         } catch (err) {
           console.log(err);
@@ -642,11 +573,28 @@ export const GET_PAGE_TITLES = (setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         try {
             const response = await fetch(
-                'http://localhost:8080/page_title'        // rooms
+                'http://localhost:8080/page_title'
             )
             if (response.ok) {
                 const arrPageTitle = await response.json();
                 dispatch({ type: "SET_PAGE_TITLES", payload: arrPageTitle });
+            }
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_NEWS = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'http://localhost:8080/page_news'
+            )
+            if (response.ok) {
+                const arrNews = await response.json();
+                dispatch({ type: "SET_NEWS", payload: arrNews });
             }
             else modalShowMessege(setModal, false);
         } catch (err) {

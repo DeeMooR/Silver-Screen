@@ -8,22 +8,23 @@ import './Entertainment.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { GET_ENTERTAINMENT_NEWS, GET_PAGE_TITLES } from 'src/actions/actions'
+import { GET_NEWS, GET_PAGE_TITLES } from 'src/actions/actions'
 
 const Entertainment = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const arrEntertainmentNews: INews[] = useSelector(({storePages}) => storePages.entertainmentNews);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const [modal, setModal] = useState(<div/>);
     
     const arrPageTitle = useSelector(({store}) => store.pageTitles);
+    const arrNews = useSelector(({store}) => store.news);
     const pageTitle = arrPageTitle.find((item: IPageTitle) => item.page === "entertainment");
+    const pageNews = arrNews.filter((item: INews) => item.page === "entertainment");
 
     useEffect(() => {
         window.scrollTo({top: 0});
         const fetchData = async () => {
             dispatch({ type: "SET_LOADING_PAGE" });
-            if (!arrEntertainmentNews.length) await dispatch(GET_ENTERTAINMENT_NEWS(setModal));
+            if (!arrNews.length) await dispatch(GET_NEWS(setModal));
             if (!arrPageTitle.length) await dispatch(GET_PAGE_TITLES(setModal));
             dispatch({ type: "SET_LOADING_PAGE" });
         };
@@ -44,7 +45,7 @@ const Entertainment = () => {
                         <SlideInfo slide={pageTitle} reverse />
                     </div>
                     <div className="entertainment__content">
-                        {arrEntertainmentNews.map((item: INews, index: number) => (
+                        {pageNews.map((item: INews, index: number) => (
                             <div className="news__item" key={index}>
                                 {index % 2 === 0
                                 ? <HorizontalNews obj={item} page='other' />

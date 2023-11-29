@@ -8,6 +8,7 @@ public class PageNewsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String page;
     private String image;
     private String background_image;
     private String title;
@@ -20,6 +21,9 @@ public class PageNewsEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+    public void setPage(String page) {
+        this.page = page;
     }
     public void setImage(String image) {
         this.image = image;
@@ -42,6 +46,9 @@ public class PageNewsEntity {
 
     public int getId() {
         return id;
+    }
+    public String getPage() {
+        return page;
     }
     public String getImage() {
         return image;

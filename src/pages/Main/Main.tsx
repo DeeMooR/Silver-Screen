@@ -14,13 +14,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
-import { GET_MAIN_NEWS, GET_MOVIES, GET_SLIDER_SWIPER } from 'src/actions/actions';
+import { GET_MOVIES, GET_NEWS, GET_SLIDER_SWIPER } from 'src/actions/actions';
 
 const Main = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
     const arrSliderSwiper: ISlide[] = useSelector(({storePages}) => storePages.slider);
-    const arrMainNews: INews[] = useSelector(({storePages}) => storePages.mainNews);
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
 
     const isLoading = useSelector(({store}) => store.isLoading);
@@ -28,6 +27,9 @@ const Main = () => {
     console.log(getArrDate()[0]);
     dispatch({ type: "CLEAR_SEARCH", payload: getArrDate()[0] });
     const [modal, setModal] = useState(<div/>);
+
+    const arrNews = useSelector(({store}) => store.news);
+    const pageNews = arrNews.filter((item: INews) => item.page === "main");
 
     useEffect(() => {
         window.scrollTo({top: 0});
@@ -40,14 +42,14 @@ const Main = () => {
                 await dispatch({ type: "SET_LOADING_PAGE" });
 
                 await dispatch({ type: "SET_LOADING" });
-                if (!arrMainNews.length) await dispatch(GET_MAIN_NEWS(setModal));
+                if (!arrNews.length) await dispatch(GET_NEWS(setModal));
                 dispatch({ type: "SET_LOADING" });
             } else {
                 await dispatch({ type: "SET_LOADING_PAGE" });
                 if (!arrSliderSwiper.length) await dispatch(GET_SLIDER_SWIPER(setModal));
                 await dispatch({ type: "SET_LOADING_PAGE" });
                 await dispatch({ type: "SET_LOADING" });
-                if (!arrMainNews.length) await dispatch(GET_MAIN_NEWS(setModal));
+                if (!arrNews.length) await dispatch(GET_NEWS(setModal));
                 dispatch({ type: "SET_LOADING" });
             }
         };
@@ -91,7 +93,7 @@ const Main = () => {
                         </div>
                     ) : (
                         <>
-                        {arrMainNews.map((item: INews, index: number) => (
+                        {pageNews.map((item: INews, index: number) => (
                             <div className="news__item" key={index}>
                                 {index % 2 === 0
                                 ? <HorizontalNews obj={item} page='main' />

@@ -32,16 +32,6 @@ export interface ISlide {
     link?: string
 }
 
-export interface INews {
-    id: number,
-    image: string,
-    background_image?: string,
-    title: string,
-    description: string,
-    date?: string,
-    link?: string,
-}
-
 export interface IUserTMS {
     username: string,
     email: string,
@@ -118,4 +108,15 @@ export interface IPageTitle {
     image: string,
     title: string,
     text: string
+}
+
+export interface INews {
+    id: number,
+    page: string,
+    image: string,
+    background_image?: string,
+    title: string,
+    description: string,
+    date?: string,
+    link?: string,
 }

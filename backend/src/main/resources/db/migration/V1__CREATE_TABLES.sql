@@ -104,6 +104,7 @@ CREATE TABLE page_title (
 
 CREATE TABLE page_news (
     id int primary key AUTO_INCREMENT,
+    page varchar(20) not null,
     image varchar(64) not null,
     background_image varchar(64),
     title varchar(64) not null,
