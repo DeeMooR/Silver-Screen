@@ -32,8 +32,8 @@ const Account = () => {
 
     useEffect(() => {
         window.scrollTo({top: 0});
-        dispatch({ type: "CLEAR_MY_CARDS" });
-        dispatch({ type: "CLEAR_MY_MOVIES" });
+        dispatch({ type: "CLEAR_MY_CARD" });
+        dispatch({ type: "CLEAR_MY_MOVIE" });
     },[])
 
     useEffect(() => {

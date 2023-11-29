@@ -13,7 +13,7 @@ interface IBasket {
 
 const Basket:FC<IBasket> = ({type, setModal}) => {
     const arrGiftSelect = useSelector(({store}) => store.giftSelect);
-    const arrSeatSelect = useSelector(({store}) => store.seatSelect);
+    const arrSeatSelect = useSelector(({store}) => store.mySeatSelect);
 
     const sumCards = arrGiftSelect.reduce((acc: number, item: IDataGiftSelect) => {
         return acc + item.cost;

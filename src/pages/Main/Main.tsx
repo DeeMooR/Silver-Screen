@@ -19,7 +19,7 @@ import { GET_MAIN_NEWS, GET_MOVIES, GET_SLIDER_SWIPER } from 'src/actions/action
 const Main = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
-    const arrSliderSwiper: ISlide[] = useSelector(({storePages}) => storePages.sliderSwiper);
+    const arrSliderSwiper: ISlide[] = useSelector(({storePages}) => storePages.slider);
     const arrMainNews: INews[] = useSelector(({storePages}) => storePages.mainNews);
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
 

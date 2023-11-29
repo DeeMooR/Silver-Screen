@@ -5,7 +5,7 @@ import { composeWithDevTools} from 'redux-devtools-extension'
 const initialState = {
     entertainmentNews: [],
     newsPageNews: [],
-    sliderSwiper: [],
+    slider: [],
     seatTypes: [],
     mainNews: [],
     afishaNews: [],
@@ -31,10 +31,10 @@ const rootReducerPages = (state = initialState, action: any) => {
                 newsPageNews: action.payload,
             };
         }
-        case 'SET_SLIDER_SWIPER': {
+        case 'SET_SLIDER': {
             return {
                 ...state,
-                sliderSwiper: action.payload,
+                slider: action.payload,
             };
         }
         case 'SET_SEAT_TYPES': {

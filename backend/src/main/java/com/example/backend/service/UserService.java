@@ -20,10 +20,7 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
-    public UserEntity add(UserEntity user) throws MyException {
-        if (userRepo.findByUsername(user.getUsername()) != null) {
-            throw new MyException("Пользователь с таким именем уже существует");
-        }
+    public UserEntity add(UserEntity user) {
         return userRepo.save(user);
     }
 

@@ -24,14 +24,13 @@ export interface ISeance {
 }
 
 export interface ISlide {
-    id?: number,
+    id: number,
     image: string,
-    idFilm?: number,
+    movie_id?: number,
     title?: string,
     text?: string,
-    textButton?: string,
-    link?: string,
-    type?: string
+    text_button?: string,
+    link?: string
 }
 
 export interface INews {
@@ -44,13 +43,13 @@ export interface INews {
     link?: string,
 }
 
-export interface IUser {
+export interface IUserTMS {
     username: string,
     email: string,
     password: string
 }
 
-export interface IDataGiftCard {
+export interface ICard {
     id: number,
     image: string,
     cost: number,
@@ -91,11 +90,11 @@ export interface ISeatType {
     description: string
 }
 
-export interface IUserBuy {
+export interface IUser {
     id: number,
-    cards: [],
-    seatSelect: [],
-    movies: []
+    my_card: [],
+    my_seat_select: [],
+    my_movie: []
 }
 
 export interface IDataSeatSelect {

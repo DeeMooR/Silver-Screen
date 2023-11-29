@@ -6,9 +6,7 @@ insert into hibernate_sequence values ( 1 );
 insert into hibernate_sequence values ( 1 );
 
 CREATE TABLE user (
-    id int primary key not null,
-   	username varchar(64) not null unique,
-   	password varchar(64) not null
+    id int primary key not null
 ) engine=MyISAM;
 
 CREATE TABLE my_card (
@@ -68,7 +66,8 @@ CREATE TABLE movie (
     video varchar(4) not null,
     duration int not null,
     description varchar(500) not null,
-    trailer varchar(64) not null
+    trailer varchar(64) not null,
+    genres String[] not null
 ) engine=MyISAM;
 
 CREATE TABLE genre (

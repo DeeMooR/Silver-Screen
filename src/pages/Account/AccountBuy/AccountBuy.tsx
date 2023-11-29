@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import './AccountBuy.css'
-import { IDataGiftCard, IDataMyCard, IDataSeatSelect, IMovie, ISeance } from 'src/interfaces'
+import { ICard, IDataMyCard, IDataSeatSelect, IMovie, ISeance } from 'src/interfaces'
 import { GET_GIFT_CARDS, GET_MOVIES, GET_MY_CARDS_MOVIES, GET_SEANCES } from 'src/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -12,9 +12,9 @@ import AccountBuyTicket from './AccountBuyTicket';
 
 const AccountBuy = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const arrGiftCards: IDataGiftCard[] = useSelector(({store}) => store.giftCards);
-    const arrMyCards: IDataMyCard[] = useSelector(({store}) => store.myCards);
-    const arrMyMovies: IDataSeatSelect[] = useSelector(({store}) => store.myMovies);
+    const arrGiftCards: ICard[] = useSelector(({store}) => store.giftCard);
+    const arrMyCards: IDataMyCard[] = useSelector(({store}) => store.myCard);
+    const arrMyMovies: IDataSeatSelect[] = useSelector(({store}) => store.myMovie);
     const userId = useSelector(({store}) => store.user.id);
     const isLoading = useSelector(({store}) => store.isLoading);
     const [modal, setModal] = useState(<div/>);

@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { IDataGiftCard, IDataGiftSelect } from 'src/interfaces'
+import { ICard, IDataGiftSelect } from 'src/interfaces'
 import './BasketCard.css'
 
 interface IBasketCard {

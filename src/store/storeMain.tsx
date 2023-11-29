@@ -1,7 +1,7 @@
 import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools} from 'redux-devtools-extension'
-import { IDataGiftCard, IDataGiftSelect, IDataSeatSelect } from 'src/interfaces';
+import { ICard, IDataGiftSelect, IDataSeatSelect } from 'src/interfaces';
 
 const initialState = {
     navActive: '',
@@ -18,11 +18,11 @@ const initialState = {
         id: null,
     },
     movieTypeSelect: 'already', 
-    giftCards: [],
+    giftCard: [],
     giftSelect: [],
-    seatSelect: [],
-    myCards: [],
-    myMovies: [],
+    mySeatSelect: [],
+    myCard: [],
+    myMovie: [],
     isLoading: false,
     isLoadingPage: false,
 };
@@ -74,17 +74,17 @@ const rootReducerMain = (state = initialState, action: any) => {
                 movieTypeSelect: action.payload
             };
         }
-        case 'SET_GIFT_CARDS':  {
+        case 'SET_GIFT_CARD':  {
             return {
                 ...state,
-                giftCards: action.payload
+                giftCard: action.payload
             };
         }
-        case 'CHANGE_AMOUNT_GIFT_CARDS': {
+        case 'CHANGE_AMOUNT_GIFT_CARD': {
             const id = action.payload;
-            const i = state.giftCards.findIndex((card: IDataGiftCard) => card.id === id);   // индекс в массиве giftCards
+            const i = state.giftCard.findIndex((card: ICard) => card.id === id);   // индекс в массиве giftCard
             if (i !== -1) {
-                const newGiftCards: IDataGiftCard[] = [...state.giftCards];
+                const newGiftCards: ICard[] = [...state.giftCard];
                 newGiftCards[i] = {
                   ...newGiftCards[i],
                   amount: newGiftCards[i].amount + 1,
@@ -92,7 +92,7 @@ const rootReducerMain = (state = initialState, action: any) => {
             
                 return {
                     ...state,
-                    giftCards: newGiftCards,
+                    giftCard: newGiftCards,
                 };
             }
             return state;
@@ -126,49 +126,49 @@ const rootReducerMain = (state = initialState, action: any) => {
                 giftSelect: [],
             };
         }
-        case 'SET_MY_CARDS':  {
+        case 'SET_MY_CARD':  {
             return {
                 ...state,
-                myCards: action.payload
+                myCard: action.payload
             };
         }
-        case 'CLEAR_MY_CARDS':  {
+        case 'CLEAR_MY_CARD':  {
             return {
                 ...state,
-                myCards: []
+                myCard: []
             };
         }
-        case 'SET_MY_MOVIES':  {
+        case 'SET_MY_MOVIE':  {
             return {
                 ...state,
-                myMovies: action.payload
+                myMovie: action.payload
             };
         }
-        case 'CLEAR_MY_MOVIES':  {
+        case 'CLEAR_MY_MOVIE':  {
             return {
                 ...state,
-                myMovies: []
+                myMovie: []
             };
         }
-        case 'SET_SEAT_SELECT':  {
+        case 'SET_MY_SEAT_SELECT':  {
             return {
                 ...state,
-                seatSelect: action.payload
+                mySeatSelect: action.payload
             };
         }
-        case 'ADD_SEAT_SELECT': {
+        case 'ADD_MY_SEAT_SELECT': {
             return {
                 ...state,
-                seatSelect: [
-                    ...state.seatSelect, 
+                mySeatSelect: [
+                    ...state.mySeatSelect, 
                     action.payload
                 ],
             };
         }
-        case 'CLEAR_SEAT_SELECT': {
+        case 'CLEAR_MY_SEAT_SELECT': {
             return {
                 ...state,
-                seatSelect: [],
+                mySeatSelect: [],
             };
         }
         case 'SET_LOADING': {

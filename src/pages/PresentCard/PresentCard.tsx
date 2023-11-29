@@ -4,7 +4,7 @@ import SlideInfo from 'src/components/SlideInfo'
 import { getDateIn180, getTodayDate } from 'src/helpers'
 import PageTemplate from 'src/components/PageTemplate'
 import { BackgroundPresentCard } from './styled'
-import { IDataGiftCard, IDataGiftSelect, IDataMyCard } from 'src/interfaces'
+import { ICard, IDataGiftSelect, IDataMyCard } from 'src/interfaces'
 import GiftCard from 'src/components/GiftCard/GiftCard'
 import PresentCardText from './PresentCardText'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,7 +21,7 @@ const PresentCard = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
     const userId = useSelector(({store}) => store.user.id);
-    const arrGiftCards: IDataGiftCard[] = useSelector(({store}) => store.giftCards);
+    const arrGiftCards: ICard[] = useSelector(({store}) => store.giftCard);
     const arrGiftSelect: IDataGiftSelect[] = useSelector(({store}) => store.giftSelect);
     const mainPresentCard = useSelector(({storePages}) => storePages.mainPresentCard);
     const isLoading = useSelector(({store}) => store.isLoading);
@@ -81,7 +81,7 @@ const PresentCard = () => {
                                     </div>
                                 }
                                 <div className="presentCard__cards">
-                                    {arrGiftCards.map((item: IDataGiftCard) => (
+                                    {arrGiftCards.map((item: ICard) => (
                                         <div className="cards__item" key={item.id}>
                                             <GiftCard obj={item} arrGiftCards={arrGiftCards} />
                                         </div>

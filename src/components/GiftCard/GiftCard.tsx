@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { IDataGiftCard, IDataGiftSelect, ISlide } from 'src/interfaces'
+import { ICard, IDataGiftSelect, ISlide } from 'src/interfaces'
 import './GiftCard.css'
 
 import plus from "src/icons/plus.png"
@@ -10,8 +10,8 @@ import { AnyAction } from 'redux'
 import { ADD_GIFT_SELECT } from 'src/actions/actions'
 
 interface IGiftCard {
-    obj: IDataGiftCard,
-    arrGiftCards: IDataGiftCard[]
+    obj: ICard,
+    arrGiftCards: ICard[]
 }
 
 const GiftCard:FC<IGiftCard> = ({obj, arrGiftCards}) => {

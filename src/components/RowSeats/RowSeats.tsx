@@ -3,7 +3,7 @@ import './RowSeats.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { SeatImage } from './styled'
 import { IDataSeatSelect, IRoom, ISeance, ISeatType } from 'src/interfaces'
-import { ADD_SEAT_SELECT, REMOVE_SEAT_SELECT } from 'src/actions/actions'
+import { ADD_MY_SEAT_SELECT, REMOVE_SEAT_SELECT } from 'src/actions/actions'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import { useParams } from 'react-router-dom'
@@ -24,7 +24,7 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
     const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.arrRooms);
     const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
     const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
-    const arrSeatSelect = useSelector(({store}) => store.seatSelect);
+    const arrSeatSelect = useSelector(({store}) => store.mySeatSelect);
     const userId = useSelector(({store}) => store.user.id);
     const token = localStorage.getItem('access');
 
@@ -62,7 +62,7 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
                 }
                 return seance;
             });
-            dispatch(ADD_SEAT_SELECT(userId, newArrSeances, objSeatSelect, setModal));
+            dispatch(ADD_MY_SEAT_SELECT(userId, newArrSeances, objSeatSelect, setModal));
         } else {
             const newSeatSelect = arrSeatSelect.filter((item: IDataSeatSelect) => {
                 return !(item.idSeance === newSeance && item.row === row && item.column === column);

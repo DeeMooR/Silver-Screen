@@ -1,7 +1,5 @@
 package com.example.backend.entity;
 
-import com.example.backend.model.Genre;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,9 +18,8 @@ public class MovieEntity {
     private int duration;
     private String description;
     private String trailer;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
-    private List<GenreEntity> genres;
+    @ElementCollection
+    private List<String> genres;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
     private List<ScheduleEntity> schedule;
@@ -63,7 +60,7 @@ public class MovieEntity {
     public void setTrailer(String trailer) {
         this.trailer = trailer;
     }
-    public void setGenres(List<GenreEntity> genres) {
+    public void setGenres(List<String> genres) {
         this.genres = genres;
     }
     public void setSchedule(List<ScheduleEntity> schedule) {
@@ -103,7 +100,7 @@ public class MovieEntity {
     public String getTrailer() {
         return trailer;
     }
-    public List<GenreEntity> getGenres() {
+    public List<String> getGenres() {
         return genres;
     }
     public List<ScheduleEntity> getSchedule() {

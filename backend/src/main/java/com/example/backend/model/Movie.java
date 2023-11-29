@@ -1,12 +1,9 @@
 package com.example.backend.model;
 
-import com.example.backend.entity.GenreEntity;
 import com.example.backend.entity.MovieEntity;
-import com.example.backend.entity.MyMovieEntity;
 import com.example.backend.modelShort.ScheduleShort;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Movie {
@@ -38,7 +35,7 @@ public class Movie {
         model.setDuration(entity.getDuration());
         model.setDescription(entity.getDescription());
         model.setTrailer(entity.getTrailer());
-        model.setGenres(entity.getGenres().stream().map(genreEntity -> genreEntity.getName()).collect(Collectors.toList()));
+        model.setGenres(entity.getGenres());
         model.setSchedule(entity.getSchedule().stream().map(ScheduleShort::toModel).collect(Collectors.toList()));
         return model;
     }

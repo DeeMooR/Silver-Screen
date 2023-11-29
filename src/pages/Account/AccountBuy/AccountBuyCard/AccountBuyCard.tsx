@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import './AccountBuyCard.css'
-import { IDataGiftCard, IDataGiftSelect, IDataMyCard } from 'src/interfaces'
+import { ICard, IDataGiftSelect, IDataMyCard } from 'src/interfaces'
 import { useSelector } from 'react-redux'
 import { compareDayNowEnd } from 'src/helpers'
 
@@ -9,7 +9,7 @@ interface IAccountBuyCard {
 }
 
 const AccountBuyCard:FC<IAccountBuyCard> = ({obj}) => {
-    const arrGiftCards: IDataGiftCard[] = useSelector(({store}) => store.giftCards);
+    const arrGiftCards: ICard[] = useSelector(({store}) => store.giftCard);
 
     const findObj = arrGiftCards.find((item) => obj.idCard === item.id);
     const image = (findObj) ? findObj.image : '';

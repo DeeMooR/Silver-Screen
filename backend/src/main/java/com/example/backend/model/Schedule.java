@@ -1,6 +1,5 @@
 package com.example.backend.model;
 
-import com.example.backend.entity.GenreEntity;
 import com.example.backend.entity.ScheduleEntity;
 import com.example.backend.modelShort.SeanceShort;
 

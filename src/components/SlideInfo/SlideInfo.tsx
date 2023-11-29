@@ -14,16 +14,20 @@ const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
     const navigate = useNavigate();
     let filmTitle, filmGenres;
-    const isMain = typeof slide.idFilm === 'number' || slide.textButton;
+    const isMovie = typeof slide.movie_id === 'number' && slide.movie_id !== 0;
+    const isMain = isMovie || slide.text_button;
+    console.log(isMovie);
+    console.log(isMain);
+    console.log(slide.movie_id);
 
-    if (arrMovies.length && typeof slide.idFilm === 'number') {
-        filmTitle = arrMovies[slide.idFilm].title;
-        filmGenres = arrMovies[slide.idFilm].genres.join(', ') + ', ' + arrMovies[slide.idFilm].age + '+';
+    if (arrMovies.length && slide.movie_id && isMovie) {
+        filmTitle = arrMovies[slide.movie_id].title;
+        filmGenres = arrMovies[slide.movie_id].genres.join(', ') + ', ' + arrMovies[slide.movie_id].age + '+';
     }
 
     const clickButton = () => {
-        if (typeof slide.idFilm === 'number') {
-            navigate(`/afisha/${slide.idFilm}`, {state: {fromPage: '/main'}});
+        if (isMovie) {
+            navigate(`/afisha/${slide.movie_id}`, {state: {fromPage: '/main'}});
         } else if (slide.link) {
             navigate(slide.link);
         } else navigate('/page404');
@@ -43,7 +47,7 @@ const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
                     {isMain &&
                         <div className="slideInfo__button">
                             <Button color='red' handleClick={clickButton}>
-                                {slide.textButton ? slide.textButton : 'Купить билет'}
+                                {slide.text_button ? slide.text_button : 'Купить билет'}
                             </Button>
                         </div>
                     }

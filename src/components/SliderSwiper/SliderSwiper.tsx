@@ -11,7 +11,7 @@ import { ISlide } from 'src/interfaces';
 import { useSelector } from 'react-redux';
 
 const SliderSwiper = () => {
-    const arrSliderSwiper: ISlide[] = useSelector(({storePages}) => storePages.sliderSwiper);
+    const arrSliderSwiper: ISlide[] = useSelector(({storePages}) => storePages.slider);
     return (
     <>
         <Swiper 

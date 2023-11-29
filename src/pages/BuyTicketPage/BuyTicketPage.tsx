@@ -33,7 +33,7 @@ const BuyTicketPage = () => {
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.arrRooms);
     const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
-    const arrSeatSelect: IDataSeatSelect[] = useSelector(({store}) => store.seatSelect);
+    const arrSeatSelect: IDataSeatSelect[] = useSelector(({store}) => store.mySeatSelect);
     let exampleImage;
     if (arrSeatTypes.length) exampleImage = arrSeatTypes[0].image;
     

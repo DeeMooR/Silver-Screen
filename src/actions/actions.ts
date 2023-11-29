@@ -1,11 +1,11 @@
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { IDataGiftCard, IDataGiftSelect, IDataMyCard, IDataSeatSelect, ISeance, IUser, IUserBuy } from "src/interfaces";
+import { ICard, IDataGiftSelect, IDataMyCard, IDataSeatSelect, ISeance, IUserTMS, IUser } from "src/interfaces";
 import instance from "src/axiosConfig";
 import ModalSuccess from "src/components/ModalSuccess";
 import { modalShowMessege } from "src/helpersModal";
 
-export const CREATE_USER = (navigate: any, userData: IUser, setModal: (v: JSX.Element) => void) => {
+export const CREATE_USER = (navigate: any, userData: IUserTMS, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
         console.log(userData)
@@ -172,11 +172,13 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
         
         try {
             let response = await fetch(
-                "https://jsonblob.com/api/jsonBlob/1165575060923998208"     // gift_cards
+                // "https://jsonblob.com/api/jsonBlob/1165575060923998208"     // gift_cards
+                "http://localhost:8080/card"
             )
             if (response.ok) {
                 const arrGiftCards = await response.json();
-                dispatch({ type: "SET_GIFT_CARDS", payload: arrGiftCards });
+                console.log(arrGiftCards);
+                dispatch({ type: "SET_GIFT_CARD", payload: arrGiftCards });
             } 
             else modalShowMessege(setModal, false);
              
@@ -194,12 +196,12 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
     };
 };
 
-export const ADD_GIFT_SELECT = (arrWithNewAmount: IDataGiftCard[], objForGiftSelect: IDataGiftSelect, setModal: (v: JSX.Element) => void) => {
+export const ADD_GIFT_SELECT = (arrWithNewAmount: ICard[], objForGiftSelect: IDataGiftSelect, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
 
         try {
-            await dispatch({ type: "SET_GIFT_CARDS", payload: arrWithNewAmount });
+            await dispatch({ type: "SET_GIFT_CARD", payload: arrWithNewAmount });
             const response = await fetch(
                 'https://jsonblob.com/api/jsonBlob/1165575060923998208',        // gift_cards
                 {
@@ -229,17 +231,17 @@ export const SEND_MY_CARDS = (userId: number, addArrMyCards: IDataMyCard[], setM
             )
             if (response.ok) {
                 const arrUsers = await response.json();
-                newArrUsers = arrUsers.map((objUser: IUserBuy) => {
+                newArrUsers = arrUsers.map((objUser: IUser) => {
                     if (objUser.id === userId) {
                         userIsExist = true;
                         return {
                             ...objUser,
-                            cards: [...objUser.cards, ...addArrMyCards],
+                            my_card: [...objUser.my_card, ...addArrMyCards],
                         };
                     }
                     return objUser;
                 });
-                if (!userIsExist) newArrUsers = [...arrUsers, { id: userId, cards: addArrMyCards, movies: [] }];
+                if (!userIsExist) newArrUsers = [...arrUsers, { id: userId, my_card: addArrMyCards, my_movie: [] }];
             } 
             else modalShowMessege(setModal, false);
 
@@ -268,9 +270,9 @@ export const GET_MY_CARDS_MOVIES = (userId: number, setModal: (v: JSX.Element) =
             )
             if (response.ok) {
                 const arrUsers = await response.json();
-                const objUser = arrUsers.find((item: IUserBuy) => item.id === userId)
-                if (objUser) dispatch({ type: "SET_MY_CARDS", payload: objUser.cards });
-                if (objUser) dispatch({ type: "SET_MY_MOVIES", payload: objUser.movies });
+                const objUser = arrUsers.find((item: IUser) => item.id === userId)
+                if (objUser) dispatch({ type: "SET_MY_CARD", payload: objUser.my_card });
+                if (objUser) dispatch({ type: "SET_MY_MOVIE", payload: objUser.my_movie });
             } 
             else modalShowMessege(setModal, false);
         } catch (err) {
@@ -336,11 +338,12 @@ export const GET_SLIDER_SWIPER = (setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         try {
             const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165670168029683712'        // slider_swiper
+                'https://jsonblob.com/api/jsonBlob/1165670168029683712'        // slider
+                // "http://localhost:8080/slider"
             )
             if (response.ok) {
                 const arrSliderSwiper = await response.json();
-                dispatch({ type: "SET_SLIDER_SWIPER", payload: arrSliderSwiper });
+                dispatch({ type: "SET_SLIDER", payload: arrSliderSwiper });
             } 
             else modalShowMessege(setModal, false);
         } catch (err) {
@@ -460,10 +463,10 @@ export const GET_SEAT_SELECT = (userId: number, setModal: (v: JSX.Element) => vo
                 'https://jsonblob.com/api/jsonBlob/1165611207637196800'        // users
             )
             if (response.ok) {
-                const arrUsers: IUserBuy[] = await response.json();
-                const objUser = arrUsers.find((item: IUserBuy) => item.id === userId)
+                const arrUsers: IUser[] = await response.json();
+                const objUser = arrUsers.find((item: IUser) => item.id === userId)
                 console.log(userId)
-                if (objUser) dispatch({ type: "SET_SEAT_SELECT", payload: objUser.seatSelect });
+                if (objUser) dispatch({ type: "SET_MY_SEAT_SELECT", payload: objUser.my_seat_select });
             } 
             else modalShowMessege(setModal, false);
         } catch (err) {
@@ -472,7 +475,7 @@ export const GET_SEAT_SELECT = (userId: number, setModal: (v: JSX.Element) => vo
     };
 };
 
-export const ADD_SEAT_SELECT = (userId: number, newArrSeances: ISeance[], objSeatSelect: IDataSeatSelect, setModal: (v: JSX.Element) => void) => {
+export const ADD_MY_SEAT_SELECT = (userId: number, newArrSeances: ISeance[], objSeatSelect: IDataSeatSelect, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
 
@@ -489,7 +492,7 @@ export const ADD_SEAT_SELECT = (userId: number, newArrSeances: ISeance[], objSea
                 }
             )
             console.log(objSeatSelect)
-            if (response.ok) await dispatch({ type: "ADD_SEAT_SELECT", payload: objSeatSelect });
+            if (response.ok) await dispatch({ type: "ADD_MY_SEAT_SELECT", payload: objSeatSelect });
             else modalShowMessege(setModal, false);
                 
 
@@ -500,17 +503,17 @@ export const ADD_SEAT_SELECT = (userId: number, newArrSeances: ISeance[], objSea
             )
             if (response.ok) {
                 const arrUsers = await response.json();
-                newArrUsers = arrUsers.map((objUser: IUserBuy) => {
+                newArrUsers = arrUsers.map((objUser: IUser) => {
                     if (objUser.id === userId) {
                         userIsExist = true;
                         return {
                             ...objUser,
-                            seatSelect: [...objUser.seatSelect, objSeatSelect],
+                            my_seat_select: [...objUser.my_seat_select, objSeatSelect],
                         };
                     }
                     return objUser;
                 });
-                if (!userIsExist) newArrUsers = [...arrUsers, { id: userId, cards: [], seatSelect: [objSeatSelect], movies: [] }];
+                if (!userIsExist) newArrUsers = [...arrUsers, { id: userId, my_card: [], my_seat_select: [objSeatSelect], my_movie: [] }];
             } 
             else modalShowMessege(setModal, false);
 
@@ -549,7 +552,7 @@ export const REMOVE_SEAT_SELECT = (userId: number, newArrSeances: ISeance[], new
             )
             if (response.ok) {
                 await dispatch({ type: "SET_SEANCES", payload: newArrSeances });
-                await dispatch({ type: "SET_SEAT_SELECT", payload: newSeatSelect });
+                await dispatch({ type: "SET_MY_SEAT_SELECT", payload: newSeatSelect });
             }
             else modalShowMessege(setModal, false);
 
@@ -562,11 +565,11 @@ export const REMOVE_SEAT_SELECT = (userId: number, newArrSeances: ISeance[], new
             )
             if (response.ok) {
                 const arrUsers = await response.json();
-                newArrUsers = arrUsers.map((objUser: IUserBuy) => {
+                newArrUsers = arrUsers.map((objUser: IUser) => {
                     if (objUser.id === userId) {
                         return {
                             ...objUser,
-                            seatSelect: newSeatSelect,
+                            my_seat_select: newSeatSelect,
                         };
                     }
                     return objUser;
@@ -604,8 +607,8 @@ export const SEND_MY_SEATS = (userId: number, arrSeatSelect: IDataSeatSelect[], 
             });
             // массив arrSeances изменён
             
-            await dispatch({ type: "CLEAR_SEAT_SELECT" });
-            await dispatch({ type: "SET_MY_MOVIES", payload: arrSeatSelect });
+            await dispatch({ type: "CLEAR_MY_SEAT_SELECT" });
+            await dispatch({ type: "SET_MY_MOVIE", payload: arrSeatSelect });
             await dispatch({ type: "SET_SEANCES", payload: arrSeances });
 
             let response = await fetch(
@@ -625,18 +628,18 @@ export const SEND_MY_SEATS = (userId: number, arrSeatSelect: IDataSeatSelect[], 
             )
             if (response.ok) {
                 const arrUsers = await response.json();
-                newArrUsers = arrUsers.map((objUser: IUserBuy) => {
+                newArrUsers = arrUsers.map((objUser: IUser) => {
                     if (objUser.id === userId) {
                         userIsExist = true;
                         return {
                             ...objUser,
-                            seatSelect: [],
-                            movies: [...objUser.movies, ...arrSeatSelect],
+                            my_seat_select: [],
+                            my_movie: [...objUser.my_movie, ...arrSeatSelect],
                         };
                     }
                     return objUser;
                 });
-                if (!userIsExist) newArrUsers = [...arrUsers, { id: userId, cards: [], seatSelect:[], movies: arrSeatSelect }];
+                if (!userIsExist) newArrUsers = [...arrUsers, { id: userId, my_card: [], my_seat_select:[], my_movie: arrSeatSelect }];
             } 
             else modalShowMessege(setModal, false);
 

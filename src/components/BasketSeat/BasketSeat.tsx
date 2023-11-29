@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { IDataGiftCard, IDataGiftSelect, IDataSeatSelect, IMovie, ISeance, ISeatType } from 'src/interfaces'
+import { ICard, IDataGiftSelect, IDataSeatSelect, IMovie, ISeance, ISeatType } from 'src/interfaces'
 import './BasketSeat.css'
 
 import cross from "src/icons/cross.svg"
@@ -18,7 +18,7 @@ const BasketSeat:FC<IBasketSeat> = ({obj, setModal}) => {
     const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
     const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
     const objSeatType = arrSeatTypes.find((item) => item.type === obj.typeSeat);
-    const arrSeatSelect: IDataSeatSelect[] = useSelector(({store}) => store.seatSelect);
+    const arrSeatSelect: IDataSeatSelect[] = useSelector(({store}) => store.mySeatSelect);
     const userId = useSelector(({store}) => store.user.id);
 
     const clickCross = () => {
