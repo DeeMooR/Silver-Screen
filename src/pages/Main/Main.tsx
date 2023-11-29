@@ -25,6 +25,7 @@ const Main = () => {
 
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
+    console.log(getArrDate()[0]);
     dispatch({ type: "CLEAR_SEARCH", payload: getArrDate()[0] });
     const [modal, setModal] = useState(<div/>);
 

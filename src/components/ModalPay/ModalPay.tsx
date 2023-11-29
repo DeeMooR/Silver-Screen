@@ -23,7 +23,7 @@ const ModalPay:FC<IModalPay> = ({isOpen, setIsOpen, setIsOpenOther, type}) => {
     }
 
     const clickCross = () => {
-        dispatch({ type: "CLEAR_GIFT_SELECT" });
+        dispatch({ type: "CLEAR_CARD_SELECT" });
         if(setIsOpenOther) setIsOpenOther(false);
         setIsOpen(false);
         setTimeout(() => {
@@ -35,7 +35,7 @@ const ModalPay:FC<IModalPay> = ({isOpen, setIsOpen, setIsOpenOther, type}) => {
         if (event.target === event.currentTarget) clickCross();
     };
     const clickAccount = () => {
-        dispatch({ type: "CLEAR_GIFT_SELECT" });
+        dispatch({ type: "CLEAR_CARD_SELECT" });
         document.body.style.overflowY = 'auto';
         document.body.style.padding = '0';
         navigate('/account');

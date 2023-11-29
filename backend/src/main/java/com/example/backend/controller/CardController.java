@@ -45,4 +45,15 @@ public class CardController {
             return ResponseEntity.badRequest().body("Error");
         }
     }
+
+    @PutMapping("/increment")
+    public ResponseEntity incrementOneCard(@RequestBody int id) {
+        try {
+            return ResponseEntity.ok(cardService.incrementOne(id));
+        } catch (MyException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error");
+        }
+    }
 }

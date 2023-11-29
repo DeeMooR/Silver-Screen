@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react'
 import './AccountBuyTicket.css'
-import { ICard, IDataGiftSelect, IDataMyCard, IDataSeatSelect, IMovie, ISeance } from 'src/interfaces'
+import { ICard, IDataCardSelect, IDataMyCard, IDataSeatSelect, IMovie, ISeance } from 'src/interfaces'
 import { useSelector } from 'react-redux'
 import { compareTimeNowStart, getAudio, getTimePlusDuration, getTodayDayMonthYear } from 'src/helpers'
 

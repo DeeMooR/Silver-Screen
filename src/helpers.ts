@@ -30,8 +30,8 @@ export const getTodayDate = () => {
 };
 
 export const getDateIn180 = () => {
-    const futureDate = today;
-    futureDate.setDate(futureDate.getDate() + 180);
+    const futureDate = new Date();
+    futureDate.setDate(today.getDate() + 180);
     return getDatePoints(futureDate);
 };
 

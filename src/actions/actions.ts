@@ -1,10 +1,11 @@
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { ICard, IDataGiftSelect, IDataMyCard, IDataSeatSelect, ISeance, IUserTMS, IUser } from "src/interfaces";
+import { ICard, IDataCardSelect, IDataMyCard, IDataSeatSelect, ISeance, IUserTMS, IUser, IAddMyCard } from "src/interfaces";
 import instance from "src/axiosConfig";
 import ModalSuccess from "src/components/ModalSuccess";
 import { modalShowMessege } from "src/helpersModal";
 
+// --------------------
 export const CREATE_USER = (navigate: any, userData: IUserTMS, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
@@ -30,6 +31,7 @@ export const CREATE_USER = (navigate: any, userData: IUserTMS, setModal: (v: JSX
     };
 };
 
+// --------------------
 export const ACTIVATE_USER = (navigate: any, uid: string, token: string) => {
     return async () => {
         try {
@@ -51,6 +53,7 @@ export const ACTIVATE_USER = (navigate: any, uid: string, token: string) => {
     };
 };
 
+// --------------------
 export const SIGN_IN = (navigate: any, email: string, password: string, fromPage: string, arrMovieIsFilled: boolean, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
@@ -93,6 +96,7 @@ export const SIGN_IN = (navigate: any, email: string, password: string, fromPage
     };
 };
 
+// --------------------
 export const RESET_PASSWORD = (navigate: any, email: string, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
@@ -119,6 +123,7 @@ export const RESET_PASSWORD = (navigate: any, email: string, setModal: (v: JSX.E
     };
 };
 
+// --------------------
 export const RESET_PASSWORD_CONFIRM = (navigate: any, uid: string, token: string, new_password: string, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
@@ -144,6 +149,7 @@ export const RESET_PASSWORD_CONFIRM = (navigate: any, uid: string, token: string
     };
 };
 
+// --------------------
 export const RESET_PASSWORD_IN_ACCOUNT = (token: string, new_password: string, current_password: string, setModal: (v: JSX.Element) => void) => {
     return async () => {
         try {
@@ -172,7 +178,6 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
         
         try {
             let response = await fetch(
-                // "https://jsonblob.com/api/jsonBlob/1165575060923998208"     // gift_cards
                 "http://localhost:8080/card"
             )
             if (response.ok) {
@@ -181,7 +186,9 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
                 dispatch({ type: "SET_GIFT_CARD", payload: arrGiftCards });
             } 
             else modalShowMessege(setModal, false);
-             
+              
+
+
             response = await fetch(
                 "https://jsonblob.com/api/jsonBlob/1166102766954602496"     // presentcard_main
             )
@@ -196,23 +203,24 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
     };
 };
 
-export const ADD_GIFT_SELECT = (arrWithNewAmount: ICard[], objForGiftSelect: IDataGiftSelect, setModal: (v: JSX.Element) => void) => {
+// --------------------
+export const ADD_CARD_SELECT = (card_id: number, newCardSelect: IDataCardSelect, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
 
         try {
-            await dispatch({ type: "SET_GIFT_CARD", payload: arrWithNewAmount });
+            await dispatch({ type: "INCREMENT_GIFT_CARD", payload: card_id });
             const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165575060923998208',        // gift_cards
+                "http://localhost:8080/card/increment",
                 {
                     method: "PUT",
-                    body: JSON.stringify(arrWithNewAmount),
+                    body: JSON.stringify(card_id),
                     headers: {
                         'Content-Type': 'application/json'
                     },
                 }
             )
-            if (response.ok) dispatch({ type: "ADD_GIFT_SELECT", payload: objForGiftSelect });
+            if (response.ok) dispatch({ type: "ADD_CARD_SELECT", payload: newCardSelect });
             else modalShowMessege(setModal, false);
         } catch (err) {
           console.log(err);
@@ -222,39 +230,22 @@ export const ADD_GIFT_SELECT = (arrWithNewAmount: ICard[], objForGiftSelect: IDa
     };
 };
 
-export const SEND_MY_CARDS = (userId: number, addArrMyCards: IDataMyCard[], setModal: (v: JSX.Element) => void) => {
+export const ADD_MY_CARD = (user_id: number, card_id: number, addMyCard: IAddMyCard, setModal: (v: JSX.Element) => void) => {
     return async () => {
-        let newArrUsers, userIsExist = false;
         try {
-            let response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165611207637196800'        // users
-            )
-            if (response.ok) {
-                const arrUsers = await response.json();
-                newArrUsers = arrUsers.map((objUser: IUser) => {
-                    if (objUser.id === userId) {
-                        userIsExist = true;
-                        return {
-                            ...objUser,
-                            my_card: [...objUser.my_card, ...addArrMyCards],
-                        };
-                    }
-                    return objUser;
-                });
-                if (!userIsExist) newArrUsers = [...arrUsers, { id: userId, my_card: addArrMyCards, my_movie: [] }];
-            } 
-            else modalShowMessege(setModal, false);
-
-            response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165611207637196800',        // users
+            const response = await fetch(
+                `http://localhost:8080/my_card`,
                 {
-                    method: "PUT",
-                    body: JSON.stringify(newArrUsers),
+                    method: "POST",
+                    body: JSON.stringify(addMyCard),
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'user_id': `${user_id}`,
+                        'card_id': `${card_id}`
                     },
                 }
             )
+            if (!response.ok) modalShowMessege(setModal, false);
         } catch (err) {
           console.log(err);
         }
@@ -266,13 +257,13 @@ export const GET_MY_CARDS_MOVIES = (userId: number, setModal: (v: JSX.Element) =
 
         try {
             const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165611207637196800'        // users
+                `http://localhost:8080/user/${userId}`
             )
             if (response.ok) {
-                const arrUsers = await response.json();
-                const objUser = arrUsers.find((item: IUser) => item.id === userId)
-                if (objUser) dispatch({ type: "SET_MY_CARD", payload: objUser.my_card });
-                if (objUser) dispatch({ type: "SET_MY_MOVIE", payload: objUser.my_movie });
+                const user = await response.json();
+                console.log(user.my_card)
+                dispatch({ type: "SET_MY_CARD", payload: user.my_card });
+                dispatch({ type: "SET_MY_MOVIE", payload: user.my_movie });
             } 
             else modalShowMessege(setModal, false);
         } catch (err) {

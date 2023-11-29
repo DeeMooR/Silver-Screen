@@ -12,8 +12,8 @@ import AccountBuyTicket from './AccountBuyTicket';
 
 const AccountBuy = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const arrGiftCards: ICard[] = useSelector(({store}) => store.giftCard);
-    const arrMyCards: IDataMyCard[] = useSelector(({store}) => store.myCard);
+    const arrGiftCards: ICard[] = useSelector(({store}) => store.card);
+    const arrMyCards: IDataMyCard[] = useSelector(({store}) => store.my_card);
     const arrMyMovies: IDataSeatSelect[] = useSelector(({store}) => store.myMovie);
     const userId = useSelector(({store}) => store.user.id);
     const isLoading = useSelector(({store}) => store.isLoading);
@@ -67,7 +67,7 @@ const AccountBuy = () => {
                 {arrMyCards.length ? (
                     <div className="accountBuy__items">
                         {arrMyCards.map((item) => (
-                            <AccountBuyCard obj={item} key={item.numberCard} />
+                            <AccountBuyCard obj={item} key={item.number_card} />
                         ))}
                     </div>
                 ) : (

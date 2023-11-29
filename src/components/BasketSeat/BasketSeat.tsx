@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { ICard, IDataGiftSelect, IDataSeatSelect, IMovie, ISeance, ISeatType } from 'src/interfaces'
+import { ICard, IDataCardSelect, IDataSeatSelect, IMovie, ISeance, ISeatType } from 'src/interfaces'
 import './BasketSeat.css'
 
 import cross from "src/icons/cross.svg"

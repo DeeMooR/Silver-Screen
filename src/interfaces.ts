@@ -56,15 +56,22 @@ export interface ICard {
     amount: number
 }
 
-export interface IDataGiftSelect {
-    idCard: number,
+export interface IDataCardSelect {
+    card_id: number,
     number: number,
     cost: number
 }
 
 export interface IDataMyCard {
-    numberCard: number,
-    idCard: number,
+    card_id: number,
+    number_card: number,
+    start: string,
+    end: string,
+    status: boolean
+}
+
+export interface IAddMyCard {
+    number_card: number,
     start: string,
     end: string,
     status: boolean

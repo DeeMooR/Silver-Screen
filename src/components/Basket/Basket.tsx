@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import './Basket.css'
 import { useSelector } from 'react-redux';
-import { IDataGiftSelect, IDataSeatSelect } from 'src/interfaces';
+import { IDataCardSelect, IDataSeatSelect } from 'src/interfaces';
 import BasketSeat from '../BasketSeat/BasketSeat';
 import BasketCard from '../BasketCard';
 
@@ -12,10 +12,10 @@ interface IBasket {
 }
 
 const Basket:FC<IBasket> = ({type, setModal}) => {
-    const arrGiftSelect = useSelector(({store}) => store.giftSelect);
+    const arrGiftSelect = useSelector(({store}) => store.cardSelect);
     const arrSeatSelect = useSelector(({store}) => store.mySeatSelect);
 
-    const sumCards = arrGiftSelect.reduce((acc: number, item: IDataGiftSelect) => {
+    const sumCards = arrGiftSelect.reduce((acc: number, item: IDataCardSelect) => {
         return acc + item.cost;
     }, 0);
     const sumSeats = arrSeatSelect.reduce((acc: number, item : IDataSeatSelect) => {
@@ -27,9 +27,9 @@ const Basket:FC<IBasket> = ({type, setModal}) => {
     return (
         <div className='basket'>
             <div className="basket__items">
-                {arr.map((item: IDataGiftSelect | IDataSeatSelect, index: number) => (
+                {arr.map((item: IDataCardSelect | IDataSeatSelect, index: number) => (
                     <div className="basket__item" key={index}>
-                        {type === 'card' && <BasketCard obj={item as IDataGiftSelect} />}
+                        {type === 'card' && <BasketCard obj={item as IDataCardSelect} />}
                         {type === 'seat' && <BasketSeat obj={item as IDataSeatSelect} setModal={setModal} />}
                         
                     </div>

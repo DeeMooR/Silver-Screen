@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 
 public class User {
     private int id;
-    private List<MyCardShort> myCards;
-    private List<MyMovieShort> myMovies;
-    private List<MySeatSelectShort> mySeatSelect;
+    private List<MyCardShort> my_card;
+    private List<MyMovieShort> my_movie;
+    private List<MySeatSelectShort> my_seat_select;
 
     public User() {
     }
@@ -20,35 +20,35 @@ public class User {
     public static User toModel(UserEntity entity) {
         User model = new User();
         model.setId(entity.getId());
-        model.setMyCards(entity.getMyCards().stream().map(MyCardShort::toModel).collect(Collectors.toList()));
-        model.setMySeatSelect(entity.getMySeatSelect().stream().map(MySeatSelectShort::toModel).collect(Collectors.toList()));
-        model.setMyMovies(entity.getMyMovies().stream().map(MyMovieShort::toModel).collect(Collectors.toList()));
+        model.setMy_card(entity.getMy_card().stream().map(MyCardShort::toModel).collect(Collectors.toList()));
+        model.setMy_movie(entity.getMy_movie().stream().map(MyMovieShort::toModel).collect(Collectors.toList()));
+        model.setMy_seat_select(entity.getMy_seat_select().stream().map(MySeatSelectShort::toModel).collect(Collectors.toList()));
         return model;
     }
 
     public void setId(int id) {
         this.id = id;
     }
-    public void setMyCards(List<MyCardShort> myCards) {
-        this.myCards = myCards;
+    public void setMy_card(List<MyCardShort> my_card) {
+        this.my_card = my_card;
     }
-    public void setMyMovies(List<MyMovieShort> myMovies) {
-        this.myMovies = myMovies;
+    public void setMy_movie(List<MyMovieShort> my_movie) {
+        this.my_movie = my_movie;
     }
-    public void setMySeatSelect(List<MySeatSelectShort> mySeatSelect) {
-        this.mySeatSelect = mySeatSelect;
+    public void setMy_seat_select(List<MySeatSelectShort> my_seat_select) {
+        this.my_seat_select = my_seat_select;
     }
 
     public int getId() {
         return id;
     }
-    public List<MyCardShort> getMyCards() {
-        return myCards;
+    public List<MyCardShort> getMy_card() {
+        return my_card;
     }
-    public List<MyMovieShort> getMyMovies() {
-        return myMovies;
+    public List<MyMovieShort> getMy_movie() {
+        return my_movie;
     }
-    public List<MySeatSelectShort> getMySeatSelect() {
-        return mySeatSelect;
+    public List<MySeatSelectShort> getMy_seat_select() {
+        return my_seat_select;
     }
 }

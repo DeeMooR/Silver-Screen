@@ -1,8 +1,10 @@
 package com.example.backend.service;
 
 import com.example.backend.entity.CardEntity;
+import com.example.backend.entity.MyCardEntity;
 import com.example.backend.exception.MyException;
 import com.example.backend.model.Card;
+import com.example.backend.model.MyCard;
 import com.example.backend.repository.CardRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,5 +37,15 @@ public class CardService {
         return StreamSupport.stream(cardEntities.spliterator(), false)
                 .map(Card::toModel)
                 .collect(Collectors.toList());
+    }
+
+    public Card incrementOne(int id) throws MyException {
+        Optional<CardEntity> findCard = cardRepo.findById(id);
+        if (!findCard.isPresent()) {
+            throw new MyException("Карточка не найдена");
+        }
+        CardEntity card = findCard.get();
+        card.setAmount(card.getAmount() + 1);
+        return Card.toModel(cardRepo.save(card));
     }
 }

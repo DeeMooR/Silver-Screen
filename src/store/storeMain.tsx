@@ -1,7 +1,7 @@
 import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools} from 'redux-devtools-extension'
-import { ICard, IDataGiftSelect, IDataSeatSelect } from 'src/interfaces';
+import { ICard, IDataCardSelect, IDataSeatSelect } from 'src/interfaces';
 
 const initialState = {
     navActive: '',
@@ -18,10 +18,10 @@ const initialState = {
         id: null,
     },
     movieTypeSelect: 'already', 
-    giftCard: [],
-    giftSelect: [],
+    card: [],
+    cardSelect: [],
     mySeatSelect: [],
-    myCard: [],
+    my_card: [],
     myMovie: [],
     isLoading: false,
     isLoadingPage: false,
@@ -77,14 +77,14 @@ const rootReducerMain = (state = initialState, action: any) => {
         case 'SET_GIFT_CARD':  {
             return {
                 ...state,
-                giftCard: action.payload
+                card: action.payload
             };
         }
-        case 'CHANGE_AMOUNT_GIFT_CARD': {
-            const id = action.payload;
-            const i = state.giftCard.findIndex((card: ICard) => card.id === id);   // индекс в массиве giftCard
+        case 'INCREMENT_GIFT_CARD':  {
+            const card_id = action.payload;
+            const i = state.card.findIndex((card: ICard) => card.id === card_id);   // индекс в массиве card
             if (i !== -1) {
-                const newGiftCards: ICard[] = [...state.giftCard];
+                const newGiftCards: ICard[] = [...state.card];
                 newGiftCards[i] = {
                   ...newGiftCards[i],
                   amount: newGiftCards[i].amount + 1,
@@ -92,50 +92,52 @@ const rootReducerMain = (state = initialState, action: any) => {
             
                 return {
                     ...state,
-                    giftCard: newGiftCards,
+                    card: newGiftCards,
                 };
             }
             return state;
         }
-        case 'ADD_GIFT_SELECT': {
+        case 'ADD_CARD_SELECT': {
             return {
                 ...state,
-                giftSelect: [
-                    ...state.giftSelect, 
+                cardSelect: [
+                    ...state.cardSelect, 
                     action.payload
                 ],
             };
         }
-        case 'REMOVE_GIFT_SELECT': {
-            const idCardRemove = action.payload;
-            const i = state.giftSelect.findIndex((item: IDataGiftSelect) => item.idCard === idCardRemove);
+        case 'REMOVE_CARD_SELECT': {
+            const card_id_remove = action.payload;
+            const i = state.cardSelect.findIndex((item: IDataCardSelect) => item.card_id === card_id_remove);
             if (i !== -1) {
-                const newGiftSelect = [...state.giftSelect];
-                newGiftSelect.splice(i, 1);
-
+                const newCardSelect = [...state.cardSelect];
+                newCardSelect.splice(i, 1);
                 return {
                     ...state,
-                    giftSelect: newGiftSelect,
+                    cardSelect: newCardSelect,
                 };
             }
             return state;
         }
-        case 'CLEAR_GIFT_SELECT': {
+        case 'CLEAR_CARD_SELECT': {
             return {
                 ...state,
-                giftSelect: [],
+                cardSelect: [],
             };
         }
+
+
         case 'SET_MY_CARD':  {
+            console.log(action.payload)
             return {
                 ...state,
-                myCard: action.payload
+                my_card: action.payload
             };
         }
         case 'CLEAR_MY_CARD':  {
             return {
                 ...state,
-                myCard: []
+                my_card: []
             };
         }
         case 'SET_MY_MOVIE':  {

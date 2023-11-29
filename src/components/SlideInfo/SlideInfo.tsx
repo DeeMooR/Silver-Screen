@@ -16,9 +16,6 @@ const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
     let filmTitle, filmGenres;
     const isMovie = typeof slide.movie_id === 'number' && slide.movie_id !== 0;
     const isMain = isMovie || slide.text_button;
-    console.log(isMovie);
-    console.log(isMain);
-    console.log(slide.movie_id);
 
     if (arrMovies.length && slide.movie_id && isMovie) {
         filmTitle = arrMovies[slide.movie_id].title;

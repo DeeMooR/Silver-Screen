@@ -4,11 +4,11 @@ import SlideInfo from 'src/components/SlideInfo'
 import { getDateIn180, getTodayDate } from 'src/helpers'
 import PageTemplate from 'src/components/PageTemplate'
 import { BackgroundPresentCard } from './styled'
-import { ICard, IDataGiftSelect, IDataMyCard } from 'src/interfaces'
-import GiftCard from 'src/components/GiftCard/GiftCard'
+import { ICard, IDataCardSelect, IDataMyCard, IAddMyCard } from 'src/interfaces'
+import GiftCard from 'src/components/GiftCard'
 import PresentCardText from './PresentCardText'
 import { useDispatch, useSelector } from 'react-redux'
-import { GET_GIFT_CARDS, SEND_MY_CARDS } from 'src/actions/actions'
+import { GET_GIFT_CARDS, ADD_MY_CARD } from 'src/actions/actions'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import BasketCard from 'src/components/BasketCard'
@@ -21,8 +21,8 @@ const PresentCard = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
     const userId = useSelector(({store}) => store.user.id);
-    const arrGiftCards: ICard[] = useSelector(({store}) => store.giftCard);
-    const arrGiftSelect: IDataGiftSelect[] = useSelector(({store}) => store.giftSelect);
+    const arrGiftCards: ICard[] = useSelector(({store}) => store.card);
+    const arrCardSelect: IDataCardSelect[] = useSelector(({store}) => store.cardSelect);
     const mainPresentCard = useSelector(({storePages}) => storePages.mainPresentCard);
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
@@ -35,22 +35,20 @@ const PresentCard = () => {
     }
     const clickPay = () => {
         setModalIsOpen(true);
-        const addArrMyCards: IDataMyCard[] = arrGiftSelect.map((item) => {
-            const objMyCard: IDataMyCard = {
-                numberCard: item.number,
-                idCard: item.idCard,
+        arrCardSelect.map((item) => {
+            const myCard: IAddMyCard = {
+                number_card: item.number,
                 start: getTodayDate(),
                 end: getDateIn180(),
                 status: true
             }
-            return objMyCard;
+            dispatch(ADD_MY_CARD(userId, item.card_id, myCard, setModal));
         })
-        dispatch(SEND_MY_CARDS(userId, addArrMyCards, setModal));
     }
 
     useEffect(() => {
         window.scrollTo({top: 0});
-        dispatch({ type: "CLEAR_GIFT_SELECT" });
+        dispatch({ type: "CLEAR_CARD_SELECT" });
 
         const fetchData = async () => {
             dispatch({ type: "SET_LOADING_PAGE" });
@@ -87,8 +85,8 @@ const PresentCard = () => {
                                         </div>
                                     ))}
                                 </div>
-                                <div className={`presentCard__basket ${!arrGiftSelect.length ? 'empty' : ''}`}>
-                                    {arrGiftSelect.length ?
+                                <div className={`presentCard__basket ${!arrCardSelect.length ? 'empty' : ''}`}>
+                                    {arrCardSelect.length ?
                                         <>
                                         <p className='presentCard-basket__title'>Корзина</p>
                                         <Basket type='card' setModal={setModal} />
