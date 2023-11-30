@@ -75,7 +75,7 @@ export const SIGN_IN = (navigate: any, email: string, password: string, fromPage
                     const fetchData = async () => {
                         if (!arrMovieIsFilled) {
                             await dispatch(GET_MOVIES(setModal));
-                            await dispatch(GET_SLIDER_SWIPER(setModal));
+                            await dispatch(GET_SLIDER(setModal));
                         }
                         if (fromPage) await navigate(`${fromPage}`);
                         else await navigate(-1);
@@ -261,7 +261,7 @@ export const GET_SEAT_TYPES = (setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         try {
             const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165667470173659136'        // seat_types
+                'http://localhost:8080/seat_type'
             )
             if (response.ok) {
                 const arrSeatTypes = await response.json();
@@ -274,16 +274,15 @@ export const GET_SEAT_TYPES = (setModal: (v: JSX.Element) => void) => {
     };
 };
 
-export const GET_SLIDER_SWIPER = (setModal: (v: JSX.Element) => void) => {
+export const GET_SLIDER = (setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         try {
             const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165670168029683712'        // slider
-                // "http://localhost:8080/slider"
+                "http://localhost:8080/slider"
             )
             if (response.ok) {
-                const arrSliderSwiper = await response.json();
-                dispatch({ type: "SET_SLIDER", payload: arrSliderSwiper });
+                const arrSlider = await response.json();
+                dispatch({ type: "SET_SLIDER", payload: arrSlider });
             } 
             else modalShowMessege(setModal, false);
         } catch (err) {
@@ -296,7 +295,7 @@ export const GET_ROOMS = (setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         try {
             const response = await fetch(
-                'https://jsonblob.com/api/jsonBlob/1165737562819387392'        // rooms
+                'http://localhost:8080/room'        // rooms
             )
             if (response.ok) {
                 const arrRooms = await response.json();

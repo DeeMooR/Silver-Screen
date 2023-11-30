@@ -28,9 +28,11 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
     const userId = useSelector(({store}) => store.user.id);
     const token = localStorage.getItem('access');
 
-    const objRoom = arrRooms.find((item) => item.room === room);              // объект room: room, costSingle, costSofa, rows
-    const objRow = objRoom?.rows.find((item) => item.idRow === indexRow + 1);   // объект row:  idRow, type, seats
-    const objType = arrSeatTypes.find((item: ISeatType) => item.type === objRow?.type);        // объект type: type, image, description
+    const objRoom = arrRooms.find((item) => item.id === room);                                    // объект room: room, cost_single, cost_sofa, rows
+    const objRow = objRoom?.rows[indexRow];                                                       // объект row: id, type, seats
+    const objType = arrSeatTypes.find((item: ISeatType) => item.type === objRow?.type_id);        // объект type: type, image, description
+
+    console.log(objRow)
 
     const clickSeat = (number: number, indexRow: number, indexColumn: number) => {
         if (number === 1 || number === userId || (number !== -userId && number < 0)) return;
@@ -47,7 +49,7 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
                 date: date || '',
                 row: row,
                 column: column,
-                cost: (objType?.type && objRoom) ? (objType.type === "single" ? objRoom.costSingle : objRoom.costSofa) : 0,
+                cost: (objType?.type && objRoom) ? (objType.type === "single" ? objRoom.cost_single : objRoom.cost_sofa) : 0,
                 typeSeat: objType?.type || '',
                 idSeance: newSeance
             }
@@ -89,7 +91,7 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
                 <p className='rowSeats__number'>{indexRow + 1}</p>
                 {arrRow.map((number, indexColumn) => (
                     <SeatImage
-                        image={(number === -userId && token) ? objType.imageSelect : objType.image}
+                        image={(number === -userId && token) ? objType.image_select : objType.image}
                         type={objType.type}
                         isEmpty={number === 0 ? true : false}
                         cursor={number === 0 || number == -userId ? 'pointer' : 'default'}

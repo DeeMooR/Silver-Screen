@@ -27,11 +27,17 @@ public class SeatTypeEntity {
     public void setImage(String image) {
         this.image = image;
     }
-    public void setImageSelect(String image_select) {
+    public void setImage_select(String image_select) {
         this.image_select = image_select;
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+    public void setMyMovies(List<MyMovieEntity> myMovies) {
+        this.myMovies = myMovies;
+    }
+    public void setRows(List<RoomRowEntity> rows) {
+        this.rows = rows;
     }
 
     public String getType() {
@@ -40,10 +46,16 @@ public class SeatTypeEntity {
     public String getImage() {
         return image;
     }
-    public String getImageSelect() {
+    public String getImage_select() {
         return image_select;
     }
     public String getDescription() {
         return description;
+    }
+    public List<MyMovieEntity> getMyMovies() {
+        return myMovies;
+    }
+    public List<RoomRowEntity> getRows() {
+        return rows;
     }
 }

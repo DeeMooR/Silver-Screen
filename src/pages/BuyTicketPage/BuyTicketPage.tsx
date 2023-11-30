@@ -50,14 +50,14 @@ const BuyTicketPage = () => {
     const objDate = movie?.schedule.find((item) => item.date === date);
     const allSeances = arrSeances.filter((seance) => objDate?.seances.includes(seance.id));
     const objSeance = allSeances.find((item) => item.id === +newSeance);
-    const objRoom = arrRooms.find((item) => item.room === objSeance?.room);       // объект room: room, costSingle, costSofa, rows
+    const objRoom = arrRooms.find((item) => item.id === objSeance?.room);       // объект room: id, cost_single, cost_sofa, rows
 
     const arrRoomSeatTypes = objRoom?.rows
         .reduce((types: { type: string; cost: number }[], item: IRow) => {
             console.log(types);
-            if (!types.some((typesItem) => typesItem.type === item.type)) {
-                if (item.type === "single") types.push({ type: "single", cost: objRoom?.costSingle });
-                if (item.type === "sofa") types.push({ type: "sofa", cost: objRoom?.costSofa });
+            if (!types.some((typesItem) => typesItem.type === item.type_id)) {
+                if (item.type_id === "single") types.push({ type: "single", cost: objRoom?.cost_single });
+                if (item.type_id === "sofa") types.push({ type: "sofa", cost: objRoom?.cost_sofa });
             }
             return types;
         }, [])
@@ -101,6 +101,8 @@ const BuyTicketPage = () => {
 
     let timeEnd = '';
     if (objSeance) timeEnd = getTimePlusDuration(objSeance?.time || '', movie.duration);
+
+    console.log(objSeance)
 
     return (
         <>

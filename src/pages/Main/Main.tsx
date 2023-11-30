@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
-import { GET_MOVIES, GET_NEWS, GET_SLIDER_SWIPER } from 'src/actions/actions';
+import { GET_MOVIES, GET_NEWS, GET_SLIDER } from 'src/actions/actions';
 
 const Main = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
@@ -38,7 +38,7 @@ const Main = () => {
             if (!arrMovies.length) {
                 await dispatch({ type: "SET_LOADING_PAGE" });
                 await dispatch(GET_MOVIES(setModal));
-                if (!arrSliderSwiper.length) await dispatch(GET_SLIDER_SWIPER(setModal));
+                if (!arrSliderSwiper.length) await dispatch(GET_SLIDER(setModal));
                 await dispatch({ type: "SET_LOADING_PAGE" });
 
                 await dispatch({ type: "SET_LOADING" });
@@ -46,7 +46,7 @@ const Main = () => {
                 dispatch({ type: "SET_LOADING" });
             } else {
                 await dispatch({ type: "SET_LOADING_PAGE" });
-                if (!arrSliderSwiper.length) await dispatch(GET_SLIDER_SWIPER(setModal));
+                if (!arrSliderSwiper.length) await dispatch(GET_SLIDER(setModal));
                 await dispatch({ type: "SET_LOADING_PAGE" });
                 await dispatch({ type: "SET_LOADING" });
                 if (!arrNews.length) await dispatch(GET_NEWS(setModal));

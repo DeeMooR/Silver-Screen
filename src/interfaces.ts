@@ -24,6 +24,7 @@ export interface ISeance {
 }
 
 export interface ISlide {
+    id: number,
     image: string,
     movie_id?: number,
     title?: string,
@@ -67,22 +68,22 @@ export interface IAddMyCard {
 }
 
 export interface IRoom {
-    room: number,
-    costSingle: number,
-    costSofa: number,
+    id: number,
+    cost_single: number,
+    cost_sofa: number,
     rows: IRow[]
 }
 
 export interface IRow {
-    idRow: number,
-    type: string,
+    id: number,
+    type_id: string,
     seats: number
 }
 
 export interface ISeatType {
     type: string,
     image: string,
-    imageSelect: string,
+    image_select: string,
     description: string
 }
 
