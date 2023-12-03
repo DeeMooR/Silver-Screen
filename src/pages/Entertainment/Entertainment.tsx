@@ -15,8 +15,8 @@ const Entertainment = () => {
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const [modal, setModal] = useState(<div/>);
     
-    const arrPageTitle = useSelector(({store}) => store.pageTitles);
-    const arrNews = useSelector(({store}) => store.news);
+    const arrPageTitle = useSelector(({storePages}) => storePages.pageTitles);
+    const arrNews = useSelector(({storePages}) => storePages.news);
     const pageTitle = arrPageTitle.find((item: IPageTitle) => item.page === "entertainment");
     const pageNews = arrNews.filter((item: INews) => item.page === "entertainment");
 

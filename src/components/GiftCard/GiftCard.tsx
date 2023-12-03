@@ -17,7 +17,7 @@ interface IGiftCard {
 const GiftCard:FC<IGiftCard> = ({obj, arrGiftCards}) => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
 
-    const arrGiftSelect: IDataCardSelect[] = useSelector(({store}) => store.cardSelect);
+    const arrGiftSelect: IDataCardSelect[] = useSelector(({storeUser}) => storeUser.card_select);
     const [amountSelect, setAmountSelect] = useState(0);
     const [modal, setModal] = useState(<div/>);
   

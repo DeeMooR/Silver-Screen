@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import './AccountBuy.css'
-import { ICard, IDataMyCard, IDataMyMovie, IDataSeatSelect, IMovie, ISeance } from 'src/interfaces'
-import { GET_GIFT_CARDS, GET_MOVIES, GET_MY_CARDS_MOVIES, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions';
+import { ICard, IDataMyCard, IDataMyMovie, IDataSeatSelect, IMovie, IRoom, ISeance } from 'src/interfaces'
+import { GET_GIFT_CARDS, GET_MOVIES, GET_MY_CARDS_MOVIES, GET_ROOMS, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
@@ -12,14 +12,15 @@ import AccountBuyTicket from './AccountBuyTicket';
 
 const AccountBuy = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const arrGiftCards: ICard[] = useSelector(({store}) => store.card);
-    const arrMyCards: IDataMyCard[] = useSelector(({store}) => store.my_card);
-    const arrMyMovies: IDataMyMovie[] = useSelector(({store}) => store.myMovie);
-    const userId = useSelector(({store}) => store.user.id);
+    const arrGiftCards: ICard[] = useSelector(({storePages}) => storePages.cards);
+    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
+    const arrMyCards: IDataMyCard[] = useSelector(({storeUser}) => storeUser.my_card);
+    const arrMyMovies: IDataMyMovie[] = useSelector(({storeUser}) => storeUser.my_movie);
+    const userId = useSelector(({storeUser}) => storeUser.user.id);
     const isLoading = useSelector(({store}) => store.isLoading);
     const [modal, setModal] = useState(<div/>);
 
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,6 +29,7 @@ const AccountBuy = () => {
             if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
             if (!arrMyCards.length) await dispatch(GET_MY_CARDS_MOVIES(userId, setModal));
             if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
+            if (!arrRooms.length) await dispatch(GET_ROOMS(setModal));
             dispatch({ type: "SET_LOADING" });
         };
         fetchData();

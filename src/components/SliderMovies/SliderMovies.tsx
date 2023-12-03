@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { getArrMoviesShow } from 'src/helpers';
 
 const SliderMovies = () => {
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
     const arrMoviesShow = getArrMoviesShow(arrMovies, movieTypeSelect)
 

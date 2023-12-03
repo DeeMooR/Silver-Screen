@@ -10,7 +10,7 @@ interface ISelectOption {
 }
 
 const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const [clickCheckbox, setClickCheckbox] = useState<string[]>([]);
     const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
     const searchDate = useSelector(({store}) => store.search.date);

@@ -15,11 +15,10 @@ const Schedule:FC<ISchedule> = ({movie}) => {
     const searchLanguage = useSelector(({store}) => store.search.language);
 
     let arrSeances: ISeance[] = [];
-
-    let i = 0;
-    let filteredMovie: ISeance[] = [];
     let fixSeances: ISeance[] = [];
     let addSeances: ISeance[];
+    let filteredMovie: ISeance[] = [];
+    let i = 0;
     
     const filterMovies = () => {
         // Проверка "Фильм с субтитрами?"

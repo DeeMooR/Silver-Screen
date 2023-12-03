@@ -1,11 +1,8 @@
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { ICard, IDataCardSelect, IDataMyCard, IDataSeatSelect, ISeance, IUserTMS, IUser, IAddMyCard, IDataMyMovie } from "src/interfaces";
-import instance from "src/axiosConfig";
-import ModalSuccess from "src/components/ModalSuccess";
+import { IDataCardSelect, IDataSeatSelect, IUserTMS, IAddMyCard, IDataMyMovie } from "src/interfaces";
 import { modalShowMessege } from "src/helpersModal";
 
-// --------------------
 export const CREATE_USER = (navigate: any, userData: IUserTMS, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
@@ -31,7 +28,6 @@ export const CREATE_USER = (navigate: any, userData: IUserTMS, setModal: (v: JSX
     };
 };
 
-// --------------------
 export const ACTIVATE_USER = (navigate: any, uid: string, token: string) => {
     return async () => {
         try {
@@ -53,7 +49,6 @@ export const ACTIVATE_USER = (navigate: any, uid: string, token: string) => {
     };
 };
 
-// --------------------
 export const SIGN_IN = (navigate: any, email: string, password: string, fromPage: string, arrMovieIsFilled: boolean, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
@@ -96,7 +91,6 @@ export const SIGN_IN = (navigate: any, email: string, password: string, fromPage
     };
 };
 
-// --------------------
 export const RESET_PASSWORD = (navigate: any, email: string, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
@@ -123,7 +117,6 @@ export const RESET_PASSWORD = (navigate: any, email: string, setModal: (v: JSX.E
     };
 };
 
-// --------------------
 export const RESET_PASSWORD_CONFIRM = (navigate: any, uid: string, token: string, new_password: string, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
@@ -149,7 +142,6 @@ export const RESET_PASSWORD_CONFIRM = (navigate: any, uid: string, token: string
     };
 };
 
-// --------------------
 export const RESET_PASSWORD_IN_ACCOUNT = (token: string, new_password: string, current_password: string, setModal: (v: JSX.Element) => void) => {
     return async () => {
         try {
@@ -172,7 +164,6 @@ export const RESET_PASSWORD_IN_ACCOUNT = (token: string, new_password: string, c
     };
 };
 
-
 export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         
@@ -192,7 +183,6 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
     };
 };
 
-// --------------------
 export const ADD_CARD_SELECT = (card_id: number, newCardSelect: IDataCardSelect, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         try {

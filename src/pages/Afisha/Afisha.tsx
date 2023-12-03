@@ -16,7 +16,7 @@ import { getArrDate, getArrMoviesShow, getArrSoonDatesWithWeek, setDateStore } f
 
 const Afisha = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const [modal, setModal] = useState(<div/>);
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
@@ -28,7 +28,7 @@ const Afisha = () => {
     const searchAudio = useSelector(({store}) => store.search.audio);
     let searchLanguage = useSelector(({store}) => store.search.language);
 
-    const arrNews = useSelector(({store}) => store.news);
+    const arrNews = useSelector(({storePages}) => storePages.news);
     const pageNews = arrNews.filter((item: INews) => item.page === "afisha");
 
     const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);

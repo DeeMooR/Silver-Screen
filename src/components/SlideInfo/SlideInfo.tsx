@@ -11,7 +11,7 @@ interface ISlideInfo {
 }
 
 const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const navigate = useNavigate();
     let filmTitle, filmGenres;
     const isMovie = typeof slide.movie_id === 'number' && slide.movie_id !== 0;

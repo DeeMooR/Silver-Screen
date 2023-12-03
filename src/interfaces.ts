@@ -1,3 +1,58 @@
+/* ---------  USER  --------- */
+export interface IUserTMS {
+    username: string,
+    email: string,
+    password: string
+}
+
+export interface IUser {
+    id: number,
+    my_card: [],
+    my_seat_select: [],
+    my_movie: []
+}
+
+export interface IDataMyCard {
+    card_id: number,
+    number_card: number,
+    start: string,
+    end: string,
+    status: boolean
+}
+
+export interface IAddMyCard {
+    number_card: number,
+    start: string,
+    end: string,
+    status: boolean
+}
+
+export interface IDataMyMovie {
+    date: string,
+    i_row: number,
+    i_column: number,
+    type_id: string,
+    movie_id: number,
+    seance_id: number
+}
+
+export interface IDataCardSelect {
+    card_id: number,
+    number: number,
+    cost: number
+}
+
+export interface IDataSeatSelect {
+    id: number,
+    i_row: number,
+    i_column: number,
+    seat_type: string,
+    seance_id: number
+}
+
+
+
+/* ---------  DATA  --------- */
 export interface IMovie {
     id: number,
     image: string,
@@ -33,38 +88,11 @@ export interface ISlide {
     link?: string
 }
 
-export interface IUserTMS {
-    username: string,
-    email: string,
-    password: string
-}
-
 export interface ICard {
     id: number,
     image: string,
     cost: number,
     amount: number
-}
-
-export interface IDataCardSelect {
-    card_id: number,
-    number: number,
-    cost: number
-}
-
-export interface IDataMyCard {
-    card_id: number,
-    number_card: number,
-    start: string,
-    end: string,
-    status: boolean
-}
-
-export interface IAddMyCard {
-    number_card: number,
-    start: string,
-    end: string,
-    status: boolean
 }
 
 export interface IRoom {
@@ -85,30 +113,6 @@ export interface ISeatType {
     image: string,
     image_select: string,
     description: string
-}
-
-export interface IUser {
-    id: number,
-    my_card: [],
-    my_seat_select: [],
-    my_movie: []
-}
-
-export interface IDataSeatSelect {
-    id: number,
-    i_row: number,
-    i_column: number,
-    seat_type: string,
-    seance_id: number
-}
-
-export interface IDataMyMovie {
-    date: string,
-    i_row: number,
-    i_column: number,
-    type_id: string,
-    movie_id: number,
-    seance_id: number
 }
 
 export interface IPageTitle {

@@ -20,7 +20,7 @@ const Main = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
     const arrSliderSwiper: ISlide[] = useSelector(({storePages}) => storePages.slider);
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
 
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
@@ -28,7 +28,7 @@ const Main = () => {
     dispatch({ type: "CLEAR_SEARCH", payload: getArrDate()[0] });
     const [modal, setModal] = useState(<div/>);
 
-    const arrNews = useSelector(({store}) => store.news);
+    const arrNews = useSelector(({storePages}) => storePages.news);
     const pageNews = arrNews.filter((item: INews) => item.page === "main");
 
     useEffect(() => {

@@ -13,16 +13,16 @@ interface IBasket {
 }
 
 const Basket:FC<IBasket> = ({type, setModal}) => {
-    const arrGiftSelect = useSelector(({store}) => store.cardSelect);
-    const arrSeatSelect = useSelector(({store}) => store.my_seat_select);
+    const arrGiftSelect = useSelector(({storeUser}) => storeUser.card_select);
+    const arrSeatSelect = useSelector(({storeUser}) => storeUser.my_seat_select);
 
     const {id, date, seance} = useParams<{id: string, date: string, seance: string}>();
     const newId = (id) ? +id : 0;
     const newDate = (date) ? date : '';
     const newSeance = (seance) ? +seance : 0;
 
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
-    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.arrRooms);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
+    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
     const seatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
 
     const movie = arrMovies.find(movie => movie.id === newId);

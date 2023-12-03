@@ -14,7 +14,7 @@ const VisaPage = () => {
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const [modal, setModal] = useState(<div/>);
 
-    const arrPageTitle = useSelector(({store}) => store.pageTitles);
+    const arrPageTitle = useSelector(({storePages}) => storePages.pageTitles);
     const pageTitle = arrPageTitle.find((item: IPageTitle) => item.page === "visa");
 
     useEffect(() => {

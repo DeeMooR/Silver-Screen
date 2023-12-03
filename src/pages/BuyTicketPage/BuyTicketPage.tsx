@@ -25,13 +25,12 @@ const BuyTicketPage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
     const {id = '', date, seance} = useParams<{id: string, date: string, seance: string}>();
-    const userId = useSelector(({store}) => store.user.id);
-    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
+    const userId = useSelector(({storeUser}) => storeUser.user.id);
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
-    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.arrRooms);
+    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
     const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
-    const arrSeatSelect: IDataSeatSelect[] = useSelector(({store}) => store.my_seat_select);
+    const arrSeatSelect: IDataSeatSelect[] = useSelector(({storeUser}) => storeUser.my_seat_select);
     let exampleImage;
     if (arrSeatTypes.length) exampleImage = arrSeatTypes[0].image;
     
@@ -45,7 +44,7 @@ const BuyTicketPage = () => {
     const [modalTextButtonIsOpen, setModalTextButtonIsOpen] = useState(false);
     const [modalPayIsOpen, setModalPayIsOpen] = useState(false);
 
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const movie = arrMovies.find(movie => movie.id === +newId);
    
     const objDate = movie?.schedule.find((item) => item.date === newDate);

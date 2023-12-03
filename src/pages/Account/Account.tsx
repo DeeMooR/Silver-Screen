@@ -17,8 +17,8 @@ import AccountBuy from './AccountBuy/AccountBuy';
 const Account = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    let name = useSelector(({store}) => store.user.username);
-    let email = useSelector(({store}) => store.user.email);
+    let name = useSelector(({storeUser}) => storeUser.user.username);
+    let email = useSelector(({storeUser}) => storeUser.user.email);
     let token = localStorage.getItem('access') || 'err';
 
     const [modal, setModal] = useState(<div/>);
@@ -47,7 +47,7 @@ const Account = () => {
         setConfirmNewPassword('');
     }
     const clickExit = () => {
-        dispatch({ type: "CLEAR_MY_SEAT_SELECT" });
+        dispatch({ type: "CLEAR_STORE_USER" });
         localStorage.removeItem('access');
         navigate('/sign-in', {state: {fromPage: '/'}});
     }

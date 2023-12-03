@@ -20,16 +20,16 @@ import Basket from 'src/components/Basket'
 const PresentCard = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    const userId = useSelector(({store}) => store.user.id);
-    const arrGiftCards: ICard[] = useSelector(({store}) => store.card);
-    const arrCardSelect: IDataCardSelect[] = useSelector(({store}) => store.cardSelect);
+    const userId = useSelector(({storeUser}) => storeUser.user.id);
+    const arrGiftCards: ICard[] = useSelector(({storePages}) => storePages.cards);
+    const arrCardSelect: IDataCardSelect[] = useSelector(({storeUser}) => storeUser.card_select);
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const [modal, setModal] = useState(<div/>);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const token = localStorage.getItem('access');
 
-    const arrPageTitle = useSelector(({store}) => store.pageTitles);
+    const arrPageTitle = useSelector(({storePages}) => storePages.pageTitles);
     const pageTitle = arrPageTitle.find((item: IPageTitle) => item.page === "presentcard");
 
     const clickSignIn = () => {

@@ -2,10 +2,12 @@ import { legacy_createStore as createStore, applyMiddleware, combineReducers } f
 import thunk from 'redux-thunk';
 import { composeWithDevTools} from 'redux-devtools-extension'
 import storeMainReducer from './storeMain';
+import storeUserReducer from './storeUser';
 import storePagesReducer from './storePages';
 
 const rootReducer = combineReducers({
     store: storeMainReducer,
+    storeUser: storeUserReducer,
     storePages: storePagesReducer,
 });
 

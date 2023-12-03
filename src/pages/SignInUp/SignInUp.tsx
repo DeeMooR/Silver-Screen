@@ -20,7 +20,7 @@ interface ISignInUp {
 const SignInUp:FC<ISignInUp> = ({page}) => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const arrMovieIsFilled = (arrMovies.length) ? true : false;
     
     const [name, setName] = useState('');

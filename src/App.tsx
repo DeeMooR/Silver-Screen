@@ -31,7 +31,7 @@ function App() {
     const navigate = useNavigate();
     const token = localStorage.getItem('access');
 
-    const userId = useSelector(({store}) => store.user.id);
+    const userId = useSelector(({storeUser}) => storeUser.user.id);
     const [modal, setModal] = useState(<div/>);
 
     if (token) {

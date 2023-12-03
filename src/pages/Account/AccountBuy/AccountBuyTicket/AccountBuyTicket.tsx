@@ -9,13 +9,14 @@ interface IAccountBuyTicket {
 }
 
 const AccountBuyTicket:FC<IAccountBuyTicket> = ({obj}) => {
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
-    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.arrRooms);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
+    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
 
     const objMovie = arrMovies.find((item) => item.id === obj.movie_id);
     const shedule = objMovie?.schedule.find(item => item.date === obj.date);
     const objSeance = shedule?.seances.find((item) => item.id === obj.seance_id);
     const room = arrRooms.find(room => room.id === objSeance?.room_id);
+    console.log(arrRooms)
     
     const getCost = (seat_type: String) => {
         return (seat_type === 'single') ? (room?.cost_single || 0) : (room?.cost_sofa || 0);

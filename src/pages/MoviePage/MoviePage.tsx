@@ -20,7 +20,7 @@ const MoviePage = () => {
     const [isModal, setIsModal] = useState(false);
     let { id = '' } = useParams<{ id: string }>();
 
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const searchDate = useSelector(({store}) => store.search.date);
     const movie = arrMovies.find(movie => movie.id == +id);
     

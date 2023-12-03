@@ -22,17 +22,17 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
     const newDate = (date) ? date : '';
     const newSeance = (seance) ? +seance : 0;
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.arrRooms);
+    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
     const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
-    const arrSeatSelect = useSelector(({store}) => store.my_seat_select);
-    const userId = useSelector(({store}) => store.user.id);
+    const arrSeatSelect = useSelector(({storeUser}) => storeUser.my_seat_select);
+    const userId = useSelector(({storeUser}) => storeUser.user.id);
     const token = localStorage.getItem('access');
 
     const objRoom = arrRooms.find((item) => item.id === room);                                    // объект room: room, cost_single, cost_sofa, rows
     const objRow = objRoom?.rows[indexRow];                                                       // объект row: id, type, seats
     const objType = arrSeatTypes.find((item: ISeatType) => item.type === objRow?.type_id);        // объект type: type, image, description
 
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const movie = arrMovies.find(movie => movie.id === newId);
     const schedule = movie?.schedule.find(item => item.date === newDate);
 
