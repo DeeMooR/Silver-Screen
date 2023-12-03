@@ -41,9 +41,21 @@ public class MySeatSelectController {
     }
 
     @GetMapping
-    public ResponseEntity getAllMySeatSelect() {
+    public ResponseEntity getOneUserMySeatSelect(@RequestHeader("user_id") int user_id) {
         try {
-            return ResponseEntity.ok(mySeatSelectService.getAll());
+            return ResponseEntity.ok(mySeatSelectService.getOneUserAll(user_id));
+        } catch (MyException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error");
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteMySeatSelect(@PathVariable int id) {
+        try {
+            mySeatSelectService.delete(id);
+            return ResponseEntity.ok("Бронь снята");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error");
         }

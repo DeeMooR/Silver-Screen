@@ -20,7 +20,7 @@ import Account from './pages/Account';
 import Page404 from './pages/Page404/Page404';
 import PresentCard from './pages/PresentCard';
 import BuyTicketPage from './pages/BuyTicketPage';
-import { GET_SEAT_SELECT, GET_USER } from './actions/actions';
+import { GET_MY_SEAT_SELECT, GET_USER } from './actions/actions';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { IDataSeatSelect } from './interfaces';
@@ -37,7 +37,7 @@ function App() {
     if (token) {
         const fetchData = async () => {
             await dispatch(GET_USER(token));
-            await dispatch(GET_SEAT_SELECT(userId, setModal));
+            await dispatch(GET_MY_SEAT_SELECT(userId, setModal));
         };
         fetchData();
     }

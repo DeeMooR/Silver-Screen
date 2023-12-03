@@ -4,21 +4,21 @@ export interface IMovie {
     title: string,
     age: number,
     language: 'RU' | 'ENG' | 'BEL',
-    isSUB?: boolean,
     genres: string[],
+    sub: boolean,
     video: string,
     duration: number,
     description: string,
     trailer: string,
     schedule: {
         date: string,
-        seances: number[]
+        seances: ISeance[]
     }[]
 }
 
 export interface ISeance {
     id: number,
-    room: number,
+    room_id: number,
     time: string,
     places: number[][]
 }
@@ -95,13 +95,20 @@ export interface IUser {
 }
 
 export interface IDataSeatSelect {
-    idMovie: number,
+    id: number,
+    i_row: number,
+    i_column: number,
+    seat_type: string,
+    seance_id: number
+}
+
+export interface IDataMyMovie {
     date: string,
-    row: number,
-    column: number,
-    cost: number,
-    typeSeat: string,
-    idSeance: number
+    i_row: number,
+    i_column: number,
+    type_id: string,
+    movie_id: number,
+    seance_id: number
 }
 
 export interface IPageTitle {

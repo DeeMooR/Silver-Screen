@@ -13,7 +13,8 @@ const Schedule:FC<ISchedule> = ({movie}) => {
     const searchVideo = useSelector(({store}) => store.search.video);
     const searchAudio = useSelector(({store}) => store.search.audio);
     const searchLanguage = useSelector(({store}) => store.search.language);
-    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
+
+    let arrSeances: ISeance[] = [];
 
     let i = 0;
     let filteredMovie: ISeance[] = [];
@@ -22,7 +23,7 @@ const Schedule:FC<ISchedule> = ({movie}) => {
     
     const filterMovies = () => {
         // Проверка "Фильм с субтитрами?"
-        if (searchLanguage.includes('SUB') && !movie.isSUB) return;
+        if (searchLanguage.includes('SUB') && !movie.sub) return;
 
         // Проверка "Фильм на выбранном языке?"
         if (!searchLanguage.length ||
@@ -40,58 +41,57 @@ const Schedule:FC<ISchedule> = ({movie}) => {
         let scheduleDay = movie.schedule.find(item => item.date == searchDate);
         if (!scheduleDay) return;
 
+        arrSeances = scheduleDay.seances;
+
         // Фильтрация по выбранным параметрам звука
         if (searchAudio.length) {
             console.log('in audio')
             for (const item of searchAudio) {
                 switch (item) {
                 case 'Dolby Digital':
-                    addSeances = scheduleDay.seances
-                        .map(number => arrSeances.find(seance => seance.id === number))
+                    addSeances = arrSeances
                         .filter(seance => {
-                            return (seance) ? [1, 2].includes(seance.room) : false;
+                            return (seance) ? [1, 2].includes(seance.room_id) : false;
                         }) as ISeance[];
                     filteredMovie.push(...addSeances);
                     break;
                 case 'Dolby Atmos':
-                    addSeances = scheduleDay.seances
-                        .map(number => arrSeances.find(seance => seance.id === number))
+                    addSeances = arrSeances
                         .filter(seance => {
-                            return (seance) ? [3, 4].includes(seance.room) : false;
+                            return (seance) ? [3, 4].includes(seance.room_id) : false;
                         }) as ISeance[];
                     filteredMovie.push(...addSeances);
                     break;
                 case 'Harman Kardon':
-                    addSeances = scheduleDay.seances
-                        .map(number => arrSeances.find(seance => seance.id === number))
+                    addSeances = arrSeances
                         .filter(seance => {
-                            return (seance) ? [5, 6].includes(seance.room) : false;
+                            return (seance) ? [5, 6].includes(seance.room_id) : false;
                         }) as ISeance[];
                     filteredMovie.push(...addSeances);
                     break;
                 }
             }
         } else {
-            filteredMovie = arrSeances.filter((seance) => scheduleDay?.seances.includes(seance.id));
+            filteredMovie = arrSeances;
         }
 
         // Проверка "Есть ли сеансы на IMAX или ScreenX?"
         if (searchVideo.includes('IMAX') && searchVideo.includes('ScreenX')) {
-            const arrScreenX = filteredMovie.filter(item => item.room === 5);
-            const arrIMAX = filteredMovie.filter(item => item.room === 6);
+            const arrScreenX = filteredMovie.filter(item => item.room_id === 5);
+            const arrIMAX = filteredMovie.filter(item => item.room_id === 6);
             filteredMovie = [...arrScreenX, ...arrIMAX];
             return;
         }
         if (searchVideo.includes('ScreenX')) {
-            fixSeances = filteredMovie.filter(item => item.room === 5);
+            fixSeances = filteredMovie.filter(item => item.room_id === 5);
             filteredMovie = [...fixSeances];
         } 
         if (searchVideo.includes('IMAX')) {
-            fixSeances = filteredMovie.filter(item => item.room === 6);
+            fixSeances = filteredMovie.filter(item => item.room_id === 6);
             filteredMovie = [...fixSeances];
         }
     }
-    if (arrSeances.length) filterMovies();
+    if (movie) filterMovies();
 
 
     console.log(filteredMovie)

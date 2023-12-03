@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import './AccountBuy.css'
-import { ICard, IDataMyCard, IDataSeatSelect, IMovie, ISeance } from 'src/interfaces'
-import { GET_GIFT_CARDS, GET_MOVIES, GET_MY_CARDS_MOVIES, GET_SEANCES } from 'src/actions/actions';
+import { ICard, IDataMyCard, IDataMyMovie, IDataSeatSelect, IMovie, ISeance } from 'src/interfaces'
+import { GET_GIFT_CARDS, GET_MOVIES, GET_MY_CARDS_MOVIES, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
@@ -14,20 +14,18 @@ const AccountBuy = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const arrGiftCards: ICard[] = useSelector(({store}) => store.card);
     const arrMyCards: IDataMyCard[] = useSelector(({store}) => store.my_card);
-    const arrMyMovies: IDataSeatSelect[] = useSelector(({store}) => store.myMovie);
+    const arrMyMovies: IDataMyMovie[] = useSelector(({store}) => store.myMovie);
     const userId = useSelector(({store}) => store.user.id);
     const isLoading = useSelector(({store}) => store.isLoading);
     const [modal, setModal] = useState(<div/>);
 
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
-    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
 
     useEffect(() => {
         const fetchData = async () => {
             window.scrollTo({ top: 0 });
             dispatch({ type: "SET_LOADING" });
             if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
-            if (!arrSeances.length) await dispatch(GET_SEANCES(setModal));
             if (!arrMyCards.length) await dispatch(GET_MY_CARDS_MOVIES(userId, setModal));
             if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
             dispatch({ type: "SET_LOADING" });
@@ -37,6 +35,15 @@ const AccountBuy = () => {
 
     useEffect(() => {
         arrMyMovies.reverse();
+        arrMyMovies.forEach(my_movie => {
+            const movie_id = my_movie.movie_id;
+            const date = my_movie.date;
+            const findMovie = arrMovies.find(movie => movie.id === movie_id);
+            const findShedule = findMovie?.schedule.find(item => item.date === date);
+            if (findShedule?.seances.length === 0) {
+                dispatch(GET_SEANCES_ONE_MOVIE(movie_id, setModal));
+            }
+        })
     },[arrMyMovies])
     useEffect(() => {
         arrMyCards.reverse();

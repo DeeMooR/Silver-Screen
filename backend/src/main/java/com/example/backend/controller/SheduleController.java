@@ -27,10 +27,21 @@ public class SheduleController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity getAllSchedule() {
         try {
             return ResponseEntity.ok(scheduleService.getAll());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error");
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity getOneMovieSchedule(@RequestHeader("movie_id") int movie_id) {
+        try {
+            return ResponseEntity.ok(scheduleService.getArrOneMovie(movie_id));
+        } catch (MyException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error");
         }

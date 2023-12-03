@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './BuyTicketPage.css'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { IDataSeatSelect, IMovie, IRoom, IRow, ISeance, ISeatType } from 'src/interfaces';
+import { IDataMyMovie, IDataSeatSelect, IMovie, IRoom, IRow, ISeance, ISeatType } from 'src/interfaces';
 import { addDayOfWeek, formateDateItem, getAudio, getTimePlusDuration } from 'src/helpers';
 import PageMovieTemplate from 'src/components/PageMovieTemplate';
 
@@ -13,7 +13,7 @@ import screen from "src/icons/screen.png"
 import RowSeats from 'src/components/RowSeats';
 import SeatTypeInfo from 'src/components/SeatTypeInfo';
 import Button from 'src/components/Button';
-import { GET_MOVIES, GET_ROOMS, GET_SEANCES, GET_SEAT_TYPES, SEND_MY_SEATS } from 'src/actions/actions';
+import { GET_MOVIES, GET_ROOMS, GET_SEAT_TYPES, GET_SEANCES_ONE_MOVIE, BUY_MY_SEAT_SELECT } from 'src/actions/actions';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import ModalTextButton from 'src/components/ModalTextButton';
@@ -26,14 +26,12 @@ const BuyTicketPage = () => {
     const navigate = useNavigate();
     const {id = '', date, seance} = useParams<{id: string, date: string, seance: string}>();
     const userId = useSelector(({store}) => store.user.id);
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
     const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
-    const movie = arrMovies[+id] || null;
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.arrRooms);
     const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
-    const arrSeatSelect: IDataSeatSelect[] = useSelector(({store}) => store.mySeatSelect);
+    const arrSeatSelect: IDataSeatSelect[] = useSelector(({store}) => store.my_seat_select);
     let exampleImage;
     if (arrSeatTypes.length) exampleImage = arrSeatTypes[0].image;
     
@@ -46,15 +44,16 @@ const BuyTicketPage = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalTextButtonIsOpen, setModalTextButtonIsOpen] = useState(false);
     const [modalPayIsOpen, setModalPayIsOpen] = useState(false);
+
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const movie = arrMovies.find(movie => movie.id === +newId);
    
-    const objDate = movie?.schedule.find((item) => item.date === date);
-    const allSeances = arrSeances.filter((seance) => objDate?.seances.includes(seance.id));
-    const objSeance = allSeances.find((item) => item.id === +newSeance);
-    const objRoom = arrRooms.find((item) => item.id === objSeance?.room);       // объект room: id, cost_single, cost_sofa, rows
+    const objDate = movie?.schedule.find((item) => item.date === newDate);
+    const objSeance = objDate?.seances.find((item) => item.id === +newSeance);
+    const objRoom = arrRooms.find((item) => item.id === objSeance?.room_id);       // объект room: id, cost_single, cost_sofa, rows
 
     const arrRoomSeatTypes = objRoom?.rows
         .reduce((types: { type: string; cost: number }[], item: IRow) => {
-            console.log(types);
             if (!types.some((typesItem) => typesItem.type === item.type_id)) {
                 if (item.type_id === "single") types.push({ type: "single", cost: objRoom?.cost_single });
                 if (item.type_id === "sofa") types.push({ type: "sofa", cost: objRoom?.cost_sofa });
@@ -79,7 +78,9 @@ const BuyTicketPage = () => {
             if (!arrMovies.length) {
                 await dispatch({ type: "SET_LOADING_PAGE" });
                 await dispatch(GET_MOVIES(setModal));
-                await dispatch(GET_SEANCES(setModal));
+                await arrMovies.forEach(movie => {
+                    dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
+                })
                 if (!arrRooms.length) await dispatch(GET_ROOMS(setModal));
                 if (!arrSeatTypes.length) await dispatch(GET_SEAT_TYPES(setModal));
                 dispatch({ type: "SET_LOADING_PAGE" });
@@ -93,21 +94,33 @@ const BuyTicketPage = () => {
         fetchData();
     },[])
 
+    useEffect(() => {
+        if (movie && objDate && objDate.seances.length === 0) dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
+    }, [movie])
 
-    const clickPay = () => {
+
+    const clickPay = async () => {
         setModalPayIsOpen(true);
-        dispatch(SEND_MY_SEATS(userId, arrSeatSelect, arrSeances, setModal));
+        for (const item of arrSeatSelect) {
+            const obj = {
+                i_row: item.i_row,
+                i_column: item.i_column,
+                date: newDate,
+                cost: 30
+            };
+            await dispatch(BUY_MY_SEAT_SELECT(userId, +newId, +newSeance, item.seat_type, item.id, obj, setModal));
+        }
+        await dispatch(GET_SEANCES_ONE_MOVIE(+newId, setModal));
+        await dispatch({ type: "CLEAR_MY_SEAT_SELECT" });
     }
 
     let timeEnd = '';
-    if (objSeance) timeEnd = getTimePlusDuration(objSeance?.time || '', movie.duration);
-
-    console.log(objSeance)
+    if (movie && objSeance) timeEnd = getTimePlusDuration(objSeance?.time || '', movie.duration);
 
     return (
         <>
         {modal}
-        {(isLoadingPage || !arrMovies.length) ? (
+        {(isLoadingPage || !movie) ? (
             <div className="loaderPage">
                 <div className="loaderPage__element"></div>
             </div>
@@ -121,7 +134,7 @@ const BuyTicketPage = () => {
                             <div className='buyTicketPage-header__info'>
                                 <div className="flex__icon-text">
                                     <img src={location} alt="location" />
-                                    <p>Silver Screen в ТРЦ Arena city г. Минск, пр Победителей, 84 / Зал {objSeance?.room}</p>
+                                    <p>Silver Screen в ТРЦ Arena city г. Минск, пр Победителей, 84 / Зал {objSeance?.room_id}</p>
                                 </div>
                                 <div className="flex__icon-text">
                                     <img src={calendar} alt="calendar" />
@@ -129,7 +142,7 @@ const BuyTicketPage = () => {
                                 </div>
                                 <div className="flex__icon-text">
                                     <img src={video} className='icon_video' alt="video" />
-                                    <p>{movie.video} / {getAudio(objSeance?.room || 1)} </p>
+                                    <p>{movie.video} / {getAudio(objSeance?.room_id || 1)} </p>
                                 </div>
                                 <div className="buyTicketPage-header__age">{movie.age}+</div>
                             </div>
@@ -146,7 +159,7 @@ const BuyTicketPage = () => {
                             <img src={screen} className='buyTicketPage__screen' alt="screen" />
                             <div className="buyTicketPage__seats">
                                 {objSeance?.places?.map((row: number[], i: number) => (
-                                    <RowSeats arrRow={row} room={objSeance?.room} indexRow={i} setModal={setModal} setModalIsOpen={setModalTextButtonIsOpen} key={i} />
+                                    <RowSeats arrRow={row} room={objSeance?.room_id} indexRow={i} setModal={setModal} setModalIsOpen={setModalTextButtonIsOpen} key={i} />
                                 ))}
                             </div>
                             <div className='buyTicketPage__example'>

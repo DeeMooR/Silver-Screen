@@ -11,13 +11,12 @@ import { Link } from 'react-router-dom'
 import HorizontalNews from 'src/components/HorizontalNews'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { GET_MOVIES, GET_NEWS, GET_SEANCES } from 'src/actions/actions'
+import { GET_MOVIES, GET_NEWS, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions'
 import { getArrDate, getArrMoviesShow, getArrSoonDatesWithWeek, setDateStore } from 'src/helpers'
 
 const Afisha = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
-    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
     const [modal, setModal] = useState(<div/>);
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
@@ -61,17 +60,19 @@ const Afisha = () => {
     useEffect(() => {
         window.scrollTo({top: 0});
         const fetchData = async () => {
-            if (!arrSeances.length) {
-                if (!arrMovies.length) {
-                    await dispatch({ type: "SET_LOADING_PAGE" });
-                    await dispatch(GET_MOVIES(setModal));
-                    await dispatch(GET_SEANCES(setModal));
-                    await dispatch({ type: "SET_LOADING_PAGE" });
-                } else {
-                    await dispatch({ type: "SET_LOADING_PAGE" });
-                    await dispatch(GET_SEANCES(setModal));
-                    await dispatch({ type: "SET_LOADING_PAGE" });
-                }
+            if (!arrMovies.length) {
+                await dispatch({ type: "SET_LOADING_PAGE" });
+                await dispatch(GET_MOVIES(setModal));
+                await arrMovies.forEach(movie => {
+                    dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
+                })
+                await dispatch({ type: "SET_LOADING_PAGE" });
+            } else {
+                await dispatch({ type: "SET_LOADING_PAGE" });
+                await arrMovies.forEach(movie => {
+                    dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
+                })
+                await dispatch({ type: "SET_LOADING_PAGE" });
             }
             if (!arrNews.length) {
                 await dispatch({ type: "SET_LOADING" });
@@ -115,9 +116,7 @@ const Afisha = () => {
                     addToFilterOne = filteredMovies.filter(movie => {
                         if (filterOne.some(item => item.title === movie.title)) return false;
                         let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                        const allSeances = arrSeances.filter((seance) => scheduleDay?.seances.includes(seance.id));
-                        if (allSeances) return allSeances.some(oneSeance => [1, 2].includes(oneSeance.room));
-                        return false;
+                        return scheduleDay?.seances.some(oneSeance => [1, 2].includes(oneSeance.room_id));
                     });
                     filterOne.push(...addToFilterOne);
                     break;
@@ -125,9 +124,7 @@ const Afisha = () => {
                     addToFilterOne = filteredMovies.filter(movie => {
                         if (filterOne.some(item => item.title === movie.title)) return false;
                         let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                        const allSeances = arrSeances.filter((seance) => scheduleDay?.seances.includes(seance.id));
-                        if (allSeances) return allSeances.some(oneSeance => [3, 4].includes(oneSeance.room));
-                        return false;
+                        return scheduleDay?.seances.some(oneSeance => [3, 4].includes(oneSeance.room_id));
                     });
                     filterOne.push(...addToFilterOne);
                     break;
@@ -135,9 +132,7 @@ const Afisha = () => {
                     addToFilterOne = filteredMovies.filter(movie => {
                         if (filterOne.some(item => item.title === movie.title)) return false;
                         let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                        const allSeances = arrSeances.filter((seance) => scheduleDay?.seances.includes(seance.id));
-                        if (allSeances) return allSeances.some(oneSeance => [5, 6].includes(oneSeance.room));
-                        return false;
+                        return scheduleDay?.seances.some(oneSeance => [5, 6].includes(oneSeance.room_id));
                     });
                     filterOne.push(...addToFilterOne);
                     break;
@@ -156,9 +151,7 @@ const Afisha = () => {
                         addToFilterOne = filteredMovies.filter(movie => {
                             if (filterOne.some(item => item.title === movie.title)) return false;
                             let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                            const allSeances = arrSeances.filter((seance) => scheduleDay?.seances.includes(seance.id));
-                            if (allSeances) return allSeances.some(oneSeance => oneSeance.room === 5);
-                            return false;
+                            return scheduleDay?.seances.some(oneSeance => oneSeance.room_id === 5);
                         });              
                         filterOne.push(...addToFilterOne);
                         break;
@@ -166,9 +159,7 @@ const Afisha = () => {
                         addToFilterOne = filteredMovies.filter(movie => {
                             if (filterOne.some(item => item.title === movie.title)) return false;
                             let scheduleDay = movie.schedule.find(item => item.date == searchDate);
-                            const allSeances = arrSeances.filter((seance) => scheduleDay?.seances.includes(seance.id));
-                            if (allSeances) return allSeances.some(oneSeance => oneSeance.room === 6);
-                            return false;
+                            return scheduleDay?.seances.some(oneSeance => oneSeance.room_id === 6);
                         });
                         filterOne.push(...addToFilterOne);
                         break;
@@ -182,7 +173,7 @@ const Afisha = () => {
 
         // Фильтрация фильмов по критерий SUB
         if (searchLanguage.includes('SUB')) {
-            filteredMovies = filteredMovies.filter(movie => movie.isSUB === true);
+            filteredMovies = filteredMovies.filter(movie => movie.sub === true);
         }
 
         // Фильтрация фильмов по параметру Language

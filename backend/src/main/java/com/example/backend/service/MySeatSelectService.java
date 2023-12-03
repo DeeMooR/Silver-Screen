@@ -4,6 +4,7 @@ import com.example.backend.entity.*;
 import com.example.backend.exception.MyException;
 import com.example.backend.model.MyMovie;
 import com.example.backend.model.MySeatSelect;
+import com.example.backend.modelShort.MySeatSelectShort;
 import com.example.backend.repository.MySeatSelectRepo;
 import com.example.backend.repository.SeanceRepo;
 import com.example.backend.repository.UserRepo;
@@ -25,7 +26,7 @@ public class MySeatSelectService {
     @Autowired
     private SeanceRepo seanceRepo;
 
-    public MySeatSelect add(MySeatSelectEntity seat, int user_id, int seance_id) throws MyException {
+    public MySeatSelectShort add(MySeatSelectEntity seat, int user_id, int seance_id) throws MyException {
         Optional<UserEntity> findUser = userRepo.findById(user_id);
         if (!findUser.isPresent()) {
             throw new MyException("Ошибка в получение user");
@@ -38,7 +39,7 @@ public class MySeatSelectService {
         }
         seat.setSeance(findSeance.get());
 
-        return MySeatSelect.toModel(mySeatSelectRepo.save(seat));
+        return MySeatSelectShort.toModel(mySeatSelectRepo.save(seat));
     }
 
     public MySeatSelect getOne(int id) throws MyException {
@@ -49,10 +50,23 @@ public class MySeatSelectService {
         return MySeatSelect.toModel(mySeatSelect.get());
     }
 
-    public List<MySeatSelect> getAll() {
+    public List<MySeatSelect> getOneUserAll(int user_id) throws MyException {
+        Optional<UserEntity> findUser = userRepo.findById(user_id);
+        if (!findUser.isPresent()) {
+            throw new MyException("Ошибка в получение user");
+        }
+
         Iterable<MySeatSelectEntity> mySeatSelectEntities = mySeatSelectRepo.findAll();
         return StreamSupport.stream(mySeatSelectEntities.spliterator(), false)
+                .filter(item -> item.getUser().getId() == user_id)
                 .map(MySeatSelect::toModel)
                 .collect(Collectors.toList());
+    }
+
+    public void delete(int id) {
+        Optional<MySeatSelectEntity> findSeat = mySeatSelectRepo.findById(id);
+        if (findSeat.isPresent()) {
+            mySeatSelectRepo.delete(findSeat.get());
+        }
     }
 }

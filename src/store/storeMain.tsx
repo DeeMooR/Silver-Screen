@@ -20,7 +20,7 @@ const initialState = {
     movieTypeSelect: 'already', 
     card: [],
     cardSelect: [],
-    mySeatSelect: [],
+    my_seat_select: [],
     my_card: [],
     myMovie: [],
     pageTitles: [],
@@ -148,33 +148,53 @@ const rootReducerMain = (state = initialState, action: any) => {
                 myMovie: action.payload
             };
         }
+        case 'ADD_MY_MOVIE': {
+            return {
+                ...state,
+                myMovie: [
+                    ...state.myMovie, 
+                    action.payload
+                ],
+            };
+        }
         case 'CLEAR_MY_MOVIE':  {
             return {
                 ...state,
                 myMovie: []
             };
         }
+
+
+
         case 'SET_MY_SEAT_SELECT':  {
             return {
                 ...state,
-                mySeatSelect: action.payload
+                my_seat_select: action.payload
             };
         }
         case 'ADD_MY_SEAT_SELECT': {
             return {
                 ...state,
-                mySeatSelect: [
-                    ...state.mySeatSelect, 
+                my_seat_select: [
+                    ...state.my_seat_select, 
                     action.payload
                 ],
+            };
+        }
+        case 'DELETE_MY_SEAT_SELECT': {
+            const seat_id = action.payload;
+            return {
+                ...state,
+                my_seat_select: state.my_seat_select.filter((item: IDataSeatSelect) => item.id !== seat_id)
             };
         }
         case 'CLEAR_MY_SEAT_SELECT': {
             return {
                 ...state,
-                mySeatSelect: [],
+                my_seat_select: [],
             };
         }
+
         case 'SET_PAGE_TITLES':  {
             return {
                 ...state,

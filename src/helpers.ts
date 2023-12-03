@@ -161,8 +161,8 @@ export const getArrDates7Days = () => {
         const year = date.getFullYear();
         return `${day < 10 ? '0' : ''}${day}.${month < 10 ? '0' : ''}${month}.${year}`;
     }
-      const currentDate = today;
-      const arr = [formatDate(currentDate)];
+        const currentDate = today;
+        const arr = [formatDate(currentDate)];
     for (let i = 1; i <= 6; i++) {
         const nextDate = new Date(currentDate);
         nextDate.setDate(currentDate.getDate() + i);

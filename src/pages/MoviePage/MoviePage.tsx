@@ -11,7 +11,7 @@ import './MoviePage.css'
 
 import iconPlay from "src/icons/play.png"
 import PageMovieTemplate from 'src/components/PageMovieTemplate';
-import { GET_MOVIES, GET_SEANCES } from 'src/actions/actions';
+import { GET_MOVIES, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
@@ -21,14 +21,15 @@ const MoviePage = () => {
     let { id = '' } = useParams<{ id: string }>();
 
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
-    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
     const searchDate = useSelector(({store}) => store.search.date);
-    const movie = arrMovies[+id] || null;
+    const movie = arrMovies.find(movie => movie.id == +id);
     
     useEffect(() => {
         if (movie) {
+            const schedule = movie.schedule.find(item => item.date === searchDate.split(', ')[1]); 
+            if (schedule?.seances.length === 0) dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
+
             const isAlready = movie?.schedule.some((item) => getArrDates7Days().includes(item.date));
-            console.log(isAlready)
             if (searchDate === getArrDate()[0]) {
                 if (isAlready) {
                     dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'already' });
@@ -47,18 +48,9 @@ const MoviePage = () => {
     useEffect(() => {
         if (id) dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: id });
         const fetchData = async () => {
-            if (!arrSeances.length) {
-                if (!arrMovies.length) {
-                    await dispatch({ type: "SET_LOADING_PAGE" });
-                    await dispatch(GET_MOVIES(setModal));
-                    await dispatch(GET_SEANCES(setModal));
-                    await dispatch({ type: "SET_LOADING_PAGE" });
-                } else {
-                    await dispatch({ type: "SET_LOADING_PAGE" });
-                    await dispatch(GET_SEANCES(setModal));
-                    await dispatch({ type: "SET_LOADING_PAGE" });
-                }
-            }
+            await dispatch({ type: "SET_LOADING_PAGE" });
+            if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
+            await dispatch({ type: "SET_LOADING_PAGE" });
         };
         fetchData();
     }, []);
@@ -89,7 +81,7 @@ const MoviePage = () => {
     return (
         <>
         {modal}
-        {(isLoadingPage || !arrMovies.length) ? (
+        {(isLoadingPage || !movie) ? (
             <div className="loaderPage">
                 <div className="loaderPage__element"></div>
             </div>

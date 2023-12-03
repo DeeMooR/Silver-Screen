@@ -25,8 +25,8 @@ const ScheduleItem:FC<IScheduleItem> = ({video, seance}) => {
     return (
         <div className={`scheduleItem ${nowTimeMoreStart ? 'alreadyStart' : ''}`} onClick={clickSeance}>
             <p className='scheduleItem__time'>{seance.time}</p>
-            <p className='scheduleItem__audio'>{getAudio(seance.room)} {video}</p>
-            <p className='scheduleItem__room'>Зал {seance.room} {getRoomVideo(+seance.room)}</p>
+            <p className='scheduleItem__audio'>{getAudio(seance.room_id)} {video}</p>
+            <p className='scheduleItem__room'>Зал {seance.room_id} {getRoomVideo(+seance.room_id)}</p>
         </div>
     )
 }

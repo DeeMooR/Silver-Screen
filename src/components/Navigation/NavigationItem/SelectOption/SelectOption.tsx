@@ -28,26 +28,28 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
 
 
     const idMovie = useSelector(({store}) => store.idActiveMoviePage);
-    let movie = arrMovies[idMovie];
+    let movie = arrMovies.find(movie => movie.id === idMovie);
     const [arrMoviesDates, setArrMoviesDates] = useState<string[]>([]);
     
     useEffect(() => {
         const filterOutputDates = () => {
-            const newArrMoviesDates = movie.schedule.map(item => item.date)
-            .map(item => {
-                for (let itemWithDayOfWeek of arrDate) {
-                    if (itemWithDayOfWeek.split(', ')[1] === item) return itemWithDayOfWeek;
+            if (movie) {
+                const newArrMoviesDates = movie.schedule.map(item => item.date)
+                .map(item => {
+                    for (let itemWithDayOfWeek of arrDate) {
+                        if (itemWithDayOfWeek.split(', ')[1] === item) return itemWithDayOfWeek;
+                    }
+                    return '';
+                })
+                .filter(item => item !== '');
+                setArrMoviesDates(newArrMoviesDates);
+                if (searchDate === arrDate[0]) {
+                    console.log('set.first')
+                    setDateStore(newArrMoviesDates[0], dispatch);
                 }
-                return '';
-            })
-            .filter(item => item !== '');
-            setArrMoviesDates(newArrMoviesDates);
-            if (searchDate === arrDate[0]) {
-                console.log('set.first')
-                setDateStore(newArrMoviesDates[0], dispatch);
             }
         }
-        if (idMovie) filterOutputDates();
+        if (movie) filterOutputDates();
         else setArrMoviesDates(arrDate);
     },[idMovie, movieTypeSelect])
 

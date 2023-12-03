@@ -10,6 +10,7 @@ public class MySeatSelectEntity {
     private int id;
     private int i_row;
     private int i_column;
+    private String seat_type;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -31,6 +32,9 @@ public class MySeatSelectEntity {
     public void setI_column(int i_column) {
         this.i_column = i_column;
     }
+    public void setSeat_type(String seat_type) {
+        this.seat_type = seat_type;
+    }
     public void setUser(UserEntity user) {
         this.user = user;
     }
@@ -46,6 +50,9 @@ public class MySeatSelectEntity {
     }
     public int getI_column() {
         return i_column;
+    }
+    public String getSeat_type() {
+        return seat_type;
     }
     public UserEntity getUser() {
         return user;

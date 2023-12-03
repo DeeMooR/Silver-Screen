@@ -47,6 +47,7 @@ const Account = () => {
         setConfirmNewPassword('');
     }
     const clickExit = () => {
+        dispatch({ type: "CLEAR_MY_SEAT_SELECT" });
         localStorage.removeItem('access');
         navigate('/sign-in', {state: {fromPage: '/'}});
     }
