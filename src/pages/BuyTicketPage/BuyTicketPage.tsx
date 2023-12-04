@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import './BuyTicketPage.css'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { IDataMyMovie, IDataSeatSelect, IMovie, IRoom, IRow, ISeance, ISeatType } from 'src/interfaces';
-import { addDayOfWeek, formateDateItem, getAudio, getTimePlusDuration } from 'src/helpers';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 import PageMovieTemplate from 'src/components/PageMovieTemplate';
+import ModalTextButton from 'src/components/ModalTextButton';
+import SeatTypeInfo from 'src/components/SeatTypeInfo';
+import Basket from 'src/components/Basket';
+import ModalPay from 'src/components/ModalPay';
+import After10pm from 'src/components/After10pm';
+import RowSeats from 'src/components/RowSeats';
+import Button from 'src/components/Button';
+import { GET_MOVIES, GET_ROOMS, GET_SEAT_TYPES, GET_SEANCES_ONE_MOVIE, BUY_MY_SEAT_SELECT, GET_MY_SEAT_SELECT } from 'src/actions/actions';
+import { addDayOfWeek, formateDateItem, getAudio, getTimePlusDuration } from 'src/helpers';
+import { IDataSeatSelect, IMovie, IRoom, IRow, ISeatType } from 'src/interfaces';
+import './BuyTicketPage.css'
 
 import location from "src/icons/location.png"
 import calendar from "src/icons/calendar.png"
 import video from "src/icons/video.svg"
 import screen from "src/icons/screen.png"
-import RowSeats from 'src/components/RowSeats';
-import SeatTypeInfo from 'src/components/SeatTypeInfo';
-import Button from 'src/components/Button';
-import { GET_MOVIES, GET_ROOMS, GET_SEAT_TYPES, GET_SEANCES_ONE_MOVIE, BUY_MY_SEAT_SELECT } from 'src/actions/actions';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
-import ModalTextButton from 'src/components/ModalTextButton';
-import Basket from 'src/components/Basket';
-import ModalPay from 'src/components/ModalPay';
-import After10pm from 'src/components/After10pm';
 
 const BuyTicketPage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
@@ -92,6 +92,10 @@ const BuyTicketPage = () => {
         };
         fetchData();
     },[])
+
+    useEffect(() => {
+        if (userId) dispatch(GET_MY_SEAT_SELECT(userId, +newSeance, setModal));
+    }, [userId])
 
     useEffect(() => {
         if (movie && objDate && objDate.seances.length === 0) dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));

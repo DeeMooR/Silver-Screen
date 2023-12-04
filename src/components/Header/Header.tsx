@@ -8,7 +8,6 @@ import logoBig from "src/icons/logo_big.png"
 import logoBig_pink from "src/icons/logo_big_pink.png"
 import logoSmall from "src/icons/logo_small.png"
 import logoSmall_pink from "src/icons/logo_small_pink.png"
-
 import menu from "src/icons/menu.png"
 import account from "src/icons/account.png"
 

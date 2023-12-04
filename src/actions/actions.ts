@@ -3,6 +3,29 @@ import { ThunkDispatch } from "redux-thunk";
 import { IDataCardSelect, IDataSeatSelect, IUserTMS, IAddMyCard, IDataMyMovie } from "src/interfaces";
 import { modalShowMessege } from "src/helpersModal";
 
+/* ---------  ACCOUNT  --------- */
+
+export const GET_USER = (token: string) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'https://studapi.teachmeskills.by/auth/users/me/',
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },  
+                }
+            )
+            if (response.ok) {
+                const userData = await response.json();
+                dispatch({ type: "SET_USER", payload: userData });
+            }
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
 export const CREATE_USER = (navigate: any, userData: IUserTMS, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
@@ -91,6 +114,9 @@ export const SIGN_IN = (navigate: any, email: string, password: string, fromPage
     };
 };
 
+
+/* ---------  PASSWORD  --------- */
+
 export const RESET_PASSWORD = (navigate: any, email: string, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
@@ -164,17 +190,21 @@ export const RESET_PASSWORD_IN_ACCOUNT = (token: string, new_password: string, c
     };
 };
 
-export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
+
+/* ---------  USER GET DATA  --------- */
+
+export const GET_MY_CARDS_MOVIES = (userId: number, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-        
+
         try {
-            let response = await fetch(
-                "http://localhost:8080/card"
+            const response = await fetch(
+                `http://localhost:8080/user/${userId}`
             )
             if (response.ok) {
-                const arrGiftCards = await response.json();
-                console.log(arrGiftCards);
-                dispatch({ type: "SET_GIFT_CARD", payload: arrGiftCards });
+                const user = await response.json();
+                console.log(user.my_card)
+                dispatch({ type: "SET_MY_CARD", payload: user.my_card });
+                dispatch({ type: "SET_MY_MOVIE", payload: user.my_movie });
             } 
             else modalShowMessege(setModal, false);
         } catch (err) {
@@ -182,6 +212,35 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
         }
     };
 };
+
+export const GET_MY_SEAT_SELECT = (user_id: number, seance_id: number, setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+
+        try {
+            const response = await fetch(
+                'http://localhost:8080/my_seat_select',
+                {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'user_id': `${user_id}`,
+                        'seance_id': `${seance_id}`
+                    },
+                }
+            )
+            if (response.ok) {
+                const my_seat_select: IDataSeatSelect[] = await response.json();
+                dispatch({ type: "SET_MY_SEAT_SELECT", payload: my_seat_select });
+            } 
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+
+/* ---------  CHANGE CARD  --------- */
 
 export const ADD_CARD_SELECT = (card_id: number, newCardSelect: IDataCardSelect, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
@@ -227,143 +286,8 @@ export const ADD_MY_CARD = (user_id: number, card_id: number, addMyCard: IAddMyC
     };
 };
 
-export const GET_MY_CARDS_MOVIES = (userId: number, setModal: (v: JSX.Element) => void) => {
-    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
 
-        try {
-            const response = await fetch(
-                `http://localhost:8080/user/${userId}`
-            )
-            if (response.ok) {
-                const user = await response.json();
-                console.log(user.my_card)
-                dispatch({ type: "SET_MY_CARD", payload: user.my_card });
-                dispatch({ type: "SET_MY_MOVIE", payload: user.my_movie });
-            } 
-            else modalShowMessege(setModal, false);
-        } catch (err) {
-          console.log(err);
-        }
-    };
-};
-
-export const GET_SEAT_TYPES = (setModal: (v: JSX.Element) => void) => {
-    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-        try {
-            const response = await fetch(
-                'http://localhost:8080/seat_type'
-            )
-            if (response.ok) {
-                const arrSeatTypes = await response.json();
-                dispatch({ type: "SET_SEAT_TYPES", payload: arrSeatTypes });
-            } 
-            else modalShowMessege(setModal, false);
-        } catch (err) {
-          console.log(err);
-        }
-    };
-};
-
-export const GET_SLIDER = (setModal: (v: JSX.Element) => void) => {
-    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-        try {
-            const response = await fetch(
-                "http://localhost:8080/slider"
-            )
-            if (response.ok) {
-                const arrSlider = await response.json();
-                dispatch({ type: "SET_SLIDER", payload: arrSlider });
-            } 
-            else modalShowMessege(setModal, false);
-        } catch (err) {
-          console.log(err);
-        }
-    };
-};
-
-export const GET_ROOMS = (setModal: (v: JSX.Element) => void) => {
-    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-        try {
-            const response = await fetch(
-                'http://localhost:8080/room'
-            )
-            if (response.ok) {
-                const arrRooms = await response.json();
-                dispatch({ type: "SET_ROOMS", payload: arrRooms });
-            }
-            else modalShowMessege(setModal, false);
-        } catch (err) {
-          console.log(err);
-        }
-    };
-};
-
-export const GET_MOVIES = (setModal: (v: JSX.Element) => void) => {
-    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-        try {
-            const response = await fetch(
-                "http://localhost:8080/movie"
-            )
-            if (response.ok) {
-                const arrMovies = await response.json();
-                dispatch({ type: "SET_MOVIES", payload: arrMovies });
-            }
-            else modalShowMessege(setModal, false);
-        } catch (err) {
-          console.log(err);
-        }
-    };
-};
-
-export const GET_SEANCES_ONE_MOVIE = (movie_id: number, setModal: (v: JSX.Element) => void) => {
-    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-        try {
-            const response = await fetch(
-                "http://localhost:8080/schedule",
-                {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'movie_id': `${movie_id}`
-                    },
-                }
-            )
-            if (response.ok) {
-                const arrSeances = await response.json();
-                dispatch({ type: "SET_SEANCES_ONE_MOVIE", payload: {movie_id, arrSeances} });
-            }
-            else modalShowMessege(setModal, false);
-        } catch (err) {
-          console.log(err);
-        }
-    };
-};
-
-
-export const GET_MY_SEAT_SELECT = (user_id: number, setModal: (v: JSX.Element) => void) => {
-    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
-
-        try {
-            const response = await fetch(
-                'http://localhost:8080/my_seat_select',
-                {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'user_id': `${user_id}`
-                    },
-                }
-            )
-            if (response.ok) {
-                const my_seat_select: IDataSeatSelect[] = await response.json();
-                dispatch({ type: "SET_MY_SEAT_SELECT", payload: my_seat_select });
-            } 
-            else modalShowMessege(setModal, false);
-        } catch (err) {
-          console.log(err);
-        }
-    };
-};
+/* ---------  CHANGE SEAT SELECT  --------- */
 
 export const ADD_MY_SEAT_SELECT = (user_id: number, movie_id: number, seance_id: number, add_my_seat_select: any, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
@@ -511,21 +435,113 @@ export const BUY_MY_SEAT_SELECT = (user_id: number, movie_id: number, seance_id:
 };
 
 
-export const GET_USER = (token: string) => {
+/* ---------  GET DATA  --------- */
+
+export const GET_MOVIES = (setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         try {
             const response = await fetch(
-                'https://studapi.teachmeskills.by/auth/users/me/',
+                "http://localhost:8080/movie"
+            )
+            if (response.ok) {
+                const arrMovies = await response.json();
+                dispatch({ type: "SET_MOVIES", payload: arrMovies });
+            }
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_SEANCES_ONE_MOVIE = (movie_id: number, setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                "http://localhost:8080/schedule",
                 {
+                    method: "GET",
                     headers: {
-                        Authorization: `Bearer ${token}`,
-                    },  
+                        'Content-Type': 'application/json',
+                        'movie_id': `${movie_id}`
+                    },
                 }
             )
             if (response.ok) {
-                const userData = await response.json();
-                dispatch({ type: "SET_USER", payload: userData });
+                const arrSeances = await response.json();
+                dispatch({ type: "SET_SEANCES_ONE_MOVIE", payload: {movie_id, arrSeances} });
             }
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_ROOMS = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'http://localhost:8080/room'
+            )
+            if (response.ok) {
+                const arrRooms = await response.json();
+                dispatch({ type: "SET_ROOMS", payload: arrRooms });
+            }
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        
+        try {
+            let response = await fetch(
+                "http://localhost:8080/card"
+            )
+            if (response.ok) {
+                const arrGiftCards = await response.json();
+                console.log(arrGiftCards);
+                dispatch({ type: "SET_GIFT_CARD", payload: arrGiftCards });
+            } 
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_SEAT_TYPES = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                'http://localhost:8080/seat_type'
+            )
+            if (response.ok) {
+                const arrSeatTypes = await response.json();
+                dispatch({ type: "SET_SEAT_TYPES", payload: arrSeatTypes });
+            } 
+            else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const GET_SLIDER = (setModal: (v: JSX.Element) => void) => {
+    return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
+        try {
+            const response = await fetch(
+                "http://localhost:8080/slider"
+            )
+            if (response.ok) {
+                const arrSlider = await response.json();
+                dispatch({ type: "SET_SLIDER", payload: arrSlider });
+            } 
+            else modalShowMessege(setModal, false);
         } catch (err) {
           console.log(err);
         }

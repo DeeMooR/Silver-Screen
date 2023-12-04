@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { compareTimeNowStart, getAudio, getRoomVideo, getTodayDayMonthYear } from 'src/helpers'
 import { ISeance } from 'src/interfaces'
 import './ScheduleItem.css'
-import { useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
 
 interface IScheduleItem {
     video: string,

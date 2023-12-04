@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getArrDate, getArrSelect, formateDateItem, getArrSoonDatesWithWeek, setDateStore } from 'src/helpers';
-import './SelectOption.css'
 import { IMovie } from 'src/interfaces';
+import './SelectOption.css'
 
 interface ISelectOption {
     type: string,

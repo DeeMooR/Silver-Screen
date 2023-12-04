@@ -1,13 +1,13 @@
-import React, { FC, useEffect, useState } from 'react'
-import './AccountBuy.css'
-import { ICard, IDataMyCard, IDataMyMovie, IDataSeatSelect, IMovie, IRoom, ISeance } from 'src/interfaces'
-import { GET_GIFT_CARDS, GET_MOVIES, GET_MY_CARDS_MOVIES, GET_ROOMS, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions';
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { Link } from 'react-router-dom';
 import { AnyAction } from 'redux';
 import AccountBuyCard from './AccountBuyCard/AccountBuyCard';
-import { Link } from 'react-router-dom';
 import AccountBuyTicket from './AccountBuyTicket';
+import { GET_GIFT_CARDS, GET_MOVIES, GET_MY_CARDS_MOVIES, GET_ROOMS, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions';
+import { ICard, IDataMyCard, IDataMyMovie, IMovie, IRoom } from 'src/interfaces'
+import './AccountBuy.css'
 
 
 const AccountBuy = () => {

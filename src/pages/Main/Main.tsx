@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { Link } from 'react-router-dom';
+import { AnyAction } from 'redux';
 import PageTemplate from 'src/components/PageTemplate'
 import HorizontalNews from 'src/components/HorizontalNews';
 import SliderSwiper from 'src/components/SliderSwiper';
 import SliderMovies from 'src/components/SliderMovies';
+import MainText from './MainText';
+import { getArrDate } from 'src/helpers';
+import { GET_MOVIES, GET_NEWS, GET_SLIDER } from 'src/actions/actions';
+import { IMovie, INews, ISlide } from 'src/interfaces';
 import { BackgroundSlider } from './styled';
 import './Main.css'
 
 import slider_background from "src/icons/afisha_background.svg"
-import { getArrDate } from 'src/helpers';
-import { IMovie, INews, ISlide } from 'src/interfaces';
-import MainText from './MainText';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
-import { GET_MOVIES, GET_NEWS, GET_SLIDER } from 'src/actions/actions';
 
 const Main = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();

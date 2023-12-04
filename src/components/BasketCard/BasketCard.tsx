@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react'
-import { ICard, IDataCardSelect } from 'src/interfaces'
+import React, { FC } from 'react'
+import { IDataCardSelect } from 'src/interfaces'
 import './BasketCard.css'
 
 interface IBasketCard {

@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import { getArrDate, setDateStore } from './helpers';
+import { decodeJwt, expToMinutes, updateAccessToken } from './updateToken';
+import { GET_MY_SEAT_SELECT, GET_USER } from './actions/actions';
+
 import Main from './pages/Main';
 import MoviePage from './pages/MoviePage';
 import Entertainment from './pages/Entertainment';
 import Afisha from './pages/Afisha';
-import { getArrDate, setDateStore } from './helpers';
 import VisaPage from './pages/VisaPage';
 import NewsPage from './pages/NewsPage';
 import SignInUp from './pages/SignInUp';
 import SuccessOrNot from './pages/SuccessOrNot';
 import ActivateUser from './components/ActivateUser';
-import { decodeJwt, expToMinutes, updateAccessToken } from './updateToken';
 import CheckEmail from './pages/CheckEmail/CheckEmail';
 import ResetPassword from './pages/ResetPassword';
 import NewPasswordSuccess from './pages/NewPasswordSuccess';
@@ -20,10 +24,6 @@ import Account from './pages/Account';
 import Page404 from './pages/Page404/Page404';
 import PresentCard from './pages/PresentCard';
 import BuyTicketPage from './pages/BuyTicketPage';
-import { GET_MY_SEAT_SELECT, GET_USER } from './actions/actions';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
-import { IDataSeatSelect } from './interfaces';
 
 function App() {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
@@ -37,7 +37,6 @@ function App() {
     if (token) {
         const fetchData = async () => {
             await dispatch(GET_USER(token));
-            await dispatch(GET_MY_SEAT_SELECT(userId, setModal));
         };
         fetchData();
     }

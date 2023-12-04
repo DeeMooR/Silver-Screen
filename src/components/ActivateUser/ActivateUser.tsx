@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { ACTIVATE_USER } from "src/actions/actions";
+import { useDispatch } from "react-redux";
+import { AnyAction } from "redux";
 import PageFormTemplate from "../PageFormTemplate";
+import { ACTIVATE_USER } from "src/actions/actions";
 
 const ActivateUser = () => {
     const { uid, token } = useParams();

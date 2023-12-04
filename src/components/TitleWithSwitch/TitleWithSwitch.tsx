@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import './TitleWithSwitch.css'
 import { useDispatch } from 'react-redux'
+import './TitleWithSwitch.css'
 
 interface ITitleWithSwitch {
     title: string,

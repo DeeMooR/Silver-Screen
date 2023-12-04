@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import PageTemplate from 'src/components/PageTemplate'
-import SlideInfo from 'src/components/SlideInfo'
-
-import './VisaPage.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
+import SlideInfo from 'src/components/SlideInfo'
+import PageTemplate from 'src/components/PageTemplate'
 import { GET_PAGE_TITLES } from 'src/actions/actions'
 import { IPageTitle } from 'src/interfaces'
+import './VisaPage.css'
 
 const VisaPage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();

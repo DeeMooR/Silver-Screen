@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
-import './Basket.css'
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { IDataCardSelect, IDataSeatSelect, IMovie, IRoom, ISeatType } from 'src/interfaces';
-import BasketSeat from '../BasketSeat/BasketSeat';
+import BasketSeat from '../BasketSeat';
 import BasketCard from '../BasketCard';
-import { useParams } from 'react-router-dom';
+import './Basket.css'
 
 interface IBasket {
     type: 'card' | 'seat',

@@ -1,19 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import PageMovieTemplate from 'src/components/PageMovieTemplate';
 import Navigation from 'src/components/Navigation';
 import Schedule from 'src/components/Schedule';
 import Modal from 'src/components/Modal';
 import { getArrDate, setDateStore, getArrDates7Days, getArrSoonDatesWithWeek } from 'src/helpers';
+import { GET_MOVIES, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions';
+import { IMovie } from 'src/interfaces';
 import { StyledTrailer } from './styled'
-import { IMovie, ISeance } from 'src/interfaces';
 import './MoviePage.css'
 
 import iconPlay from "src/icons/play.png"
-import PageMovieTemplate from 'src/components/PageMovieTemplate';
-import { GET_MOVIES, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
 
 const MoviePage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();

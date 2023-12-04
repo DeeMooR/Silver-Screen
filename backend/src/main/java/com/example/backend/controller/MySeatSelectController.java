@@ -41,9 +41,10 @@ public class MySeatSelectController {
     }
 
     @GetMapping
-    public ResponseEntity getOneUserMySeatSelect(@RequestHeader("user_id") int user_id) {
+    public ResponseEntity getOneUserMySeatSelect(@RequestHeader("user_id") int user_id,
+                                                 @RequestHeader("seance_id") int seance_id) {
         try {
-            return ResponseEntity.ok(mySeatSelectService.getOneUserAll(user_id));
+            return ResponseEntity.ok(mySeatSelectService.getOneUserOneSeance(user_id, seance_id));
         } catch (MyException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

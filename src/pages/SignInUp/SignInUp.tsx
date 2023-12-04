@@ -1,17 +1,14 @@
 import React, { FC, useEffect, useState } from 'react'
-import './SignInUp.css'
-import Input from 'src/components/Input'
-import Button from 'src/components/Button'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { CREATE_USER, SIGN_IN } from 'src/actions/actions'
-import PageFormTemplate from 'src/components/PageFormTemplate'
 import ButtonForm from 'src/components/ButtonForm'
-import ModalSuccess from 'src/components/ModalSuccess'
+import Input from 'src/components/Input'
+import PageFormTemplate from 'src/components/PageFormTemplate'
+import { CREATE_USER, SIGN_IN } from 'src/actions/actions'
 import { IMovie } from 'src/interfaces'
+import './SignInUp.css'
 
 interface ISignInUp {
     page: 'Sign In' | 'Sign Up'

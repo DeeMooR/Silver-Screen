@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useState } from 'react'
-import { ICard, IDataCardSelect, ISlide } from 'src/interfaces'
+import { useDispatch, useSelector } from 'react-redux'
+import { ThunkDispatch } from 'redux-thunk'
+import { AnyAction } from 'redux'
+import { ADD_CARD_SELECT } from 'src/actions/actions'
+import { ICard, IDataCardSelect } from 'src/interfaces'
 import './GiftCard.css'
 
 import plus from "src/icons/plus.png"
 import minus from "src/icons/minus.png"
-import { ThunkDispatch } from 'redux-thunk'
-import { useDispatch, useSelector } from 'react-redux'
-import { AnyAction } from 'redux'
-import { ADD_CARD_SELECT } from 'src/actions/actions'
 
 interface IGiftCard {
     obj: ICard,

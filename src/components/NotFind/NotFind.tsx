@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Button from '../Button'
 import { formateDateItem, getArrDate, getArrSoonDatesWithWeek, setDateStore } from 'src/helpers';
 import './NotFind.css'
-import { useNavigate } from 'react-router-dom';
 
 interface INotFind {
     page: 'afisha' | 'main'

@@ -1,8 +1,8 @@
-import React, { FC, useEffect } from 'react'
-import './AccountBuyTicket.css'
-import { ICard, IDataCardSelect, IDataMyCard, IDataMyMovie, IDataSeatSelect, IMovie, IRoom, ISeance } from 'src/interfaces'
+import React, { FC } from 'react'
 import { useSelector } from 'react-redux'
 import { compareTimeNowStart, getAudio, getTimePlusDuration, getTodayDayMonthYear } from 'src/helpers'
+import { IDataMyMovie, IMovie, IRoom } from 'src/interfaces'
+import './AccountBuyTicket.css'
 
 interface IAccountBuyTicket {
     obj: IDataMyMovie

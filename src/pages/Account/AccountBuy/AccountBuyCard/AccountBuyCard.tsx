@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
-import './AccountBuyCard.css'
-import { ICard, IDataCardSelect, IDataMyCard } from 'src/interfaces'
 import { useSelector } from 'react-redux'
 import { compareDayNowEnd } from 'src/helpers'
+import { ICard, IDataMyCard } from 'src/interfaces'
+import './AccountBuyCard.css'
 
 interface IAccountBuyCard {
     obj: IDataMyCard

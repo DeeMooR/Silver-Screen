@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Button from 'src/components/Button'
 import { IMovie, ISlide } from 'src/interfaces'
 import './SlideInfo.css'
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 interface ISlideInfo {
     slide: ISlide,

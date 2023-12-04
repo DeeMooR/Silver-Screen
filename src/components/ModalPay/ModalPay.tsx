@@ -1,10 +1,9 @@
-import React, { FC, useEffect, useState } from 'react';
-import { IMovie } from 'src/interfaces';
+import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import './ModalPay.css'
 
 import cross from "src/icons/cross.svg"
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 interface IModalPay {
     isOpen: boolean,

@@ -5,7 +5,6 @@ import "./SlideBar.css"
 
 import logoBig from "src/icons/logo_big.png"
 import logoBig_pink from "src/icons/logo_big_pink.png"
-
 import background from "src/icons/slide_bar.svg"
 import cross from "src/icons/cross.svg"
 import account from "src/icons/account.png"

@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react'
-import './PageFormTemplate.css'
-import { BackgroundImage } from './styled'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { BackgroundImage } from './styled'
+import './PageFormTemplate.css'
 
 import left from "src/icons/left.svg"
 

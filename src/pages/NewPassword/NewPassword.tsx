@@ -1,15 +1,13 @@
-import React, { FC, useEffect, useState } from 'react'
-import './NewPassword.css'
-import Input from 'src/components/Input'
-import Button from 'src/components/Button'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { RESET_PASSWORD, RESET_PASSWORD_CONFIRM } from 'src/actions/actions'
-import PageFormTemplate from 'src/components/PageFormTemplate'
+import Input from 'src/components/Input'
 import ButtonForm from 'src/components/ButtonForm'
+import PageFormTemplate from 'src/components/PageFormTemplate'
+import { RESET_PASSWORD_CONFIRM } from 'src/actions/actions'
+import './NewPassword.css'
 
 const NewPassword = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();

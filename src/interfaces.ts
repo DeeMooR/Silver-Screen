@@ -1,4 +1,5 @@
 /* ---------  USER  --------- */
+
 export interface IUserTMS {
     username: string,
     email: string,
@@ -51,8 +52,8 @@ export interface IDataSeatSelect {
 }
 
 
-
 /* ---------  DATA  --------- */
+
 export interface IMovie {
     id: number,
     image: string,

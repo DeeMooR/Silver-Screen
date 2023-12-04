@@ -50,15 +50,21 @@ public class MySeatSelectService {
         return MySeatSelect.toModel(mySeatSelect.get());
     }
 
-    public List<MySeatSelect> getOneUserAll(int user_id) throws MyException {
+    public List<MySeatSelect> getOneUserOneSeance(int user_id, int seance_id) throws MyException {
         Optional<UserEntity> findUser = userRepo.findById(user_id);
         if (!findUser.isPresent()) {
             throw new MyException("Ошибка в получение user");
         }
 
+        Optional<SeanceEntity> findSeance = seanceRepo.findById(seance_id);
+        if (!findSeance.isPresent()) {
+            throw new MyException("Ошибка в получение seance");
+        }
+
         Iterable<MySeatSelectEntity> mySeatSelectEntities = mySeatSelectRepo.findAll();
         return StreamSupport.stream(mySeatSelectEntities.spliterator(), false)
                 .filter(item -> item.getUser().getId() == user_id)
+                .filter(item -> item.getSeance().getId() == seance_id)
                 .map(MySeatSelect::toModel)
                 .collect(Collectors.toList());
     }

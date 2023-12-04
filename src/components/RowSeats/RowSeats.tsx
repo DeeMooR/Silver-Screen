@@ -1,12 +1,12 @@
-import React, { FC, useState } from 'react'
-import './RowSeats.css'
+import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { SeatImage } from './styled'
-import { IDataSeatSelect, IMovie, IRoom, ISeance, ISeatType } from 'src/interfaces'
-import { ADD_MY_SEAT_SELECT, REMOVE_MY_SEAT_SELECT } from 'src/actions/actions'
+import { useParams } from 'react-router-dom'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { useParams } from 'react-router-dom'
+import { ADD_MY_SEAT_SELECT, REMOVE_MY_SEAT_SELECT } from 'src/actions/actions'
+import { IDataSeatSelect, IMovie, IRoom, ISeatType } from 'src/interfaces'
+import { SeatImage } from './styled'
+import './RowSeats.css'
 
 interface IRowSeats {
     arrRow: number[],

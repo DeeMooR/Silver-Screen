@@ -1,13 +1,13 @@
-import React, { FC, useState } from 'react'
-import { ICard, IDataCardSelect, IDataSeatSelect, IMovie, IRoom, ISeance, ISeatType } from 'src/interfaces'
-import './BasketSeat.css'
-
-import cross from "src/icons/cross.svg"
+import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
 import { REMOVE_MY_SEAT_SELECT } from 'src/actions/actions'
-import { useParams } from 'react-router-dom'
+import { IDataSeatSelect, IMovie, ISeatType } from 'src/interfaces'
+import './BasketSeat.css'
+
+import cross from "src/icons/cross.svg"
 
 interface IBasketSeat {
     obj: IDataSeatSelect,

@@ -1,10 +1,9 @@
-import React, { FC, useEffect, useState } from 'react';
-import { IMovie } from 'src/interfaces';
+import React, { FC, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../Button';
 import './ModalTextButton.css'
 
 import cross from "src/icons/cross.svg"
-import { Link } from 'react-router-dom';
 
 interface IModalTextButton {
     isOpen: boolean,

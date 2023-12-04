@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import PageTemplate from 'src/components/PageTemplate'
-import SlideInfo from 'src/components/SlideInfo'
-
-import { INews, IPageTitle } from 'src/interfaces'
-import HorizontalNews from 'src/components/HorizontalNews'
-import './Entertainment.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
+import HorizontalNews from 'src/components/HorizontalNews'
+import PageTemplate from 'src/components/PageTemplate'
+import SlideInfo from 'src/components/SlideInfo'
 import { GET_NEWS, GET_PAGE_TITLES } from 'src/actions/actions'
+import { INews, IPageTitle } from 'src/interfaces'
+import './Entertainment.css'
 
 const Entertainment = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();

@@ -1,10 +1,11 @@
 import React, { FC, ReactNode, useEffect, useRef, useState } from 'react'
-import './PageMovieTemplate.css'
-import { BackgroundImage } from './styled'
+import { useNavigate } from 'react-router-dom'
 import { IMovie } from 'src/interfaces'
+import { BackgroundImage } from './styled'
+import './PageMovieTemplate.css'
 
 import left from "src/icons/left.svg"
-import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 interface IPageMovieTemplate {
     children: ReactNode,
@@ -14,6 +15,7 @@ interface IPageMovieTemplate {
 }
 
 const PageMovieTemplate:FC<IPageMovieTemplate> = ({children, movie, customBack, fromPage}) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -37,6 +39,7 @@ const PageMovieTemplate:FC<IPageMovieTemplate> = ({children, movie, customBack, 
     }, []);
 
     const clickBack = () => {
+        if (fromPage === '/buy-ticket') dispatch({ type: "CLEAR_MY_SEAT_SELECT" });
         if (fromPage) navigate(`${customBack}`, {state: {fromPage: fromPage}});
         else if (customBack) navigate(`${customBack}`);
         else navigate(-1);

@@ -1,10 +1,9 @@
 import React, { FC } from 'react'
-import './HorizontalNews.css'
-import { BackgroundImage } from './styled'
-import Button from '../Button'
-import { IMovie, INews } from 'src/interfaces'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import Button from '../Button'
+import { INews } from 'src/interfaces'
+import { BackgroundImage } from './styled'
+import './HorizontalNews.css'
 
 interface IHorizontalNews {
     obj: INews,

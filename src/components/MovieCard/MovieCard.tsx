@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import Button from '../Button'
 import { IMovie } from '../../interfaces'
 import { StyledImage } from './styled'
 import './MovieCard.css'
-import Button from '../Button'
-import { useDispatch } from 'react-redux'
 
 interface IMovieCard {
     obj: IMovie,

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { StyledIcon } from './styled'
 import './Footer.css'
 
@@ -14,7 +15,6 @@ import mastercard from "../../icons/mastercard.svg"
 import unionpay from "../../icons/unionpay.svg"
 import belcard from "../../icons/belcard.svg"
 import assist from "../../icons/assist.svg"
-import { Link } from 'react-router-dom'
 
 const Footer = () => {
     return (

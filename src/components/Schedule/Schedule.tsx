@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC } from 'react'
+import { useSelector } from 'react-redux';
 import ScheduleItem from './ScheduleItem/ScheduleItem';
 import { IMovie, ISeance } from 'src/interfaces'
 import './Schedule.css'
