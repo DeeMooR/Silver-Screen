@@ -1,11 +1,11 @@
 import React, { FC, ReactNode, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { IMovie } from 'src/interfaces'
 import { BackgroundImage } from './styled'
 import './PageMovieTemplate.css'
 
 import left from "src/icons/left.svg"
-import { useDispatch } from 'react-redux'
 
 interface IPageMovieTemplate {
     children: ReactNode,

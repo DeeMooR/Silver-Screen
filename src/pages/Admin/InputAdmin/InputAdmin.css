@@ -1,0 +1,42 @@
+.inputAdmin {
+  margin: 0 0 14px 0;
+}
+.inputAdmin .inputAdmin__title {
+  margin: 0 0 15px 0;
+}
+.inputAdmin .inputAdmin__title.surely {
+  padding: 0 0 0 15px;
+  position: relative;
+}
+.inputAdmin .inputAdmin__title.surely:before {
+  content: "*";
+  position: absolute;
+  left: 0;
+  color: red;
+}
+.inputAdmin .inputAdmin__input {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 7px;
+  line-height: 20px;
+  background-color: #323537;
+  color: rgba(255, 255, 255, 0.8);
+}
+.inputAdmin .inputAdmin__input.defect {
+  background-color: rgba(188, 27, 40, 0.35);
+}
+.inputAdmin .inputAdmin__checkbox {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.inputAdmin .inputAdmin__checkbox input {
+  width: 15px;
+  height: 15px;
+}
+.inputAdmin .inputAdmin__radiobox {
+  display: flex;
+}
+.inputAdmin .inputAdmin__radiobox span {
+  margin: 0 10px 0 5px;
+}

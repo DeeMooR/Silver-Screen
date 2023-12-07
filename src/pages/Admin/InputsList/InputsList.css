@@ -1,0 +1,15 @@
+.inputsList .inputsList__subtitle {
+  font-size: 23px;
+  font-weight: 500;
+  padding: 15px 0 0 0;
+  margin: 0 0 18px 0;
+}
+.inputsList .inputsList__flex {
+  display: flex;
+  -moz-column-gap: 30px;
+       column-gap: 30px;
+  flex-wrap: wrap;
+}
+.inputsList .inputsList__flex .inputsList__item {
+  width: calc(50% - 15px);
+}

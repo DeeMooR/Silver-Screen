@@ -24,6 +24,7 @@ import Account from './pages/Account';
 import Page404 from './pages/Page404/Page404';
 import PresentCard from './pages/PresentCard';
 import BuyTicketPage from './pages/BuyTicketPage';
+import Admin from './pages/Admin';
 
 function App() {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
@@ -78,6 +79,7 @@ function App() {
     return (
         <>
             <Routes>
+                <Route path='/admin' element={<Admin />} />
                 <Route path='/sign-in' element={<SignInUp page='Sign In' />} />
                 <Route path='/sign-up' element={<SignInUp page='Sign Up' />} />
                 <Route path='/success' element={<SuccessOrNot success />} />

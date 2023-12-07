@@ -1,7 +1,8 @@
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { IDataCardSelect, IDataSeatSelect, IUserTMS, IAddMyCard, IDataMyMovie } from "src/interfaces";
+import { IDataCardSelect, IDataSeatSelect, IUserTMS, IAddMyCard, IDataMyMovie, IRoom } from "src/interfaces";
 import { modalShowMessege } from "src/helpersModal";
+import { IDataInputAdmin } from "src/helpers";
 
 /* ---------  ACCOUNT  --------- */
 
@@ -576,6 +577,85 @@ export const GET_NEWS = (setModal: (v: JSX.Element) => void) => {
                 dispatch({ type: "SET_NEWS", payload: arrNews });
             }
             else modalShowMessege(setModal, false);
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+
+/* --------- ADD DATA  --------- */
+
+export const ADD_DATA = (url: string, objBody: any, foreignKeys: any, setMessage: (value: string) => void) => {
+    return async () => {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        Object.keys(foreignKeys).forEach(name => {
+            headers.append(name, foreignKeys[name]);
+        });
+
+        try {
+            const response = await fetch(
+                `http://localhost:8080/${url}`,
+                {
+                    method: "POST",
+                    body: JSON.stringify(objBody),
+                    headers: headers,
+                }
+            )
+            if (response.ok) setMessage('Успешно');
+            else setMessage('Ошибка');
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
+export const ADD_SEANCE_AND_PLACES = (objBody: any, foreignKeys: any, objRoom: IRoom, setMessage: (value: string) => void) => {
+    return async () => {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        Object.keys(foreignKeys).forEach(name => {
+            headers.append(name, foreignKeys[name]);
+        });
+
+        try {
+            let response = await fetch(
+                'http://localhost:8080/seance',
+                {
+                    method: "POST",
+                    body: JSON.stringify(objBody),
+                    headers: headers,
+                }
+            )
+            if (response.ok) {
+                const seance_id = await response.json();
+                console.log(seance_id)
+                console.log(objRoom)
+                setMessage('Успешно');
+
+                const sendSequentially = async () => {
+                    for (const item of objRoom.rows) {
+                        const row = new Array(item.seats).fill(0);
+                        console.log(row);
+                        response = await fetch(
+                            'http://localhost:8080/places',
+                            {
+                                method: "POST",
+                                body: JSON.stringify(row),
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'seance_id': `${seance_id}`
+                                }
+                            }
+                        );
+                        if (response.ok) setMessage('Успешно');
+                        else setMessage('Ошибка');
+                    }
+                }
+                sendSequentially();
+            }
+            else setMessage('Ошибка');
         } catch (err) {
           console.log(err);
         }
