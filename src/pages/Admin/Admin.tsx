@@ -71,7 +71,7 @@ const Admin = () => {
     }
 
     const clickBack = () => {
-        navigate('/sign-in');
+        navigate('/sign-in', {state: {fromPage: 'admin'}});
     }
 
     useEffect(() => {

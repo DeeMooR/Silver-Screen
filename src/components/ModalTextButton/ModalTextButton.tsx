@@ -13,10 +13,18 @@ interface IModalTextButton {
 }
 
 const ModalTextButton:FC<IModalTextButton> = ({isOpen, setIsOpen, setIsOpenOther, type}) => {
+    // скрыть скролл при откртом окне
     if (isOpen) {
         document.body.style.overflowY = 'hidden';
         document.body.style.padding = '0 7px 0 0';
     }
+
+    // вернуть что окно открыто
+    useEffect(() => {
+        setIsOpen(true);
+    }, [])
+
+    // закрыть окно
     const clickClose = () => {
         setIsOpen(false);
         if (setIsOpenOther) setIsOpenOther(false);
@@ -25,13 +33,11 @@ const ModalTextButton:FC<IModalTextButton> = ({isOpen, setIsOpen, setIsOpenOther
             document.body.style.padding = '0';
         },400);
     }
+
+    // закрыть окно при клике вне окна
     const clickBackground = (event: React.MouseEvent<HTMLDivElement>) => {
         if (event.target === event.currentTarget) clickClose();
     };
-
-    useEffect(() => {
-        setIsOpen(true);
-    }, [])
 
     return (
         <div className={`modalTextButton__background ${isOpen? 'open' : ''}`} onClick={(e) => clickBackground(e)}>

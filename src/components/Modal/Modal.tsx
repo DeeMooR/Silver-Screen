@@ -11,23 +11,23 @@ interface IModal {
 }
 
 const Modal:FC<IModal> = ({movie, isModal, setIsModal}) => {
+    const trailerVideo = (movie) ? `https://www.youtube.com/embed/${movie.trailer.split("v=")[1]}` : '';
+    
+    // скрыть скролл при откртом окне
+    if (isModal) document.body.style.overflowY = 'hidden';
 
-    if (isModal) {
-        document.body.style.overflowY = 'hidden';
-    }
-
+    // закрыть окно
     const clickCross = () => {
         setIsModal(false);
         setTimeout(() => {
             document.body.style.overflowY = 'auto';
         },400);
     }
+
+    // закрыть окно при клике вне окна
     const clickBackground = (event: React.MouseEvent<HTMLDivElement>) => {
         if (event.target === event.currentTarget) clickCross();
     };
-
-    let trailerVideo;
-    if (movie) trailerVideo = `https://www.youtube.com/embed/${movie.trailer.split("v=")[1]}`;
 
     return (
         <div className={`modal__background ${isModal ? 'open' : ''}`} onClick={(e) => clickBackground(e)}>

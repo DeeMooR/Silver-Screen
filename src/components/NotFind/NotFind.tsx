@@ -13,37 +13,42 @@ const NotFind:FC<INotFind> = ({page}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
-    const [searchFilled, setSearchFilled] = useState(false);
     const search = useSelector(({store}) => store.search);
-
-    const arrDate = (movieTypeSelect === 'already') ? getArrDate() : getArrSoonDatesWithWeek();
-    const indexArrDay = arrDate.indexOf(search.date);
-    let showNextDay;
-    if (indexArrDay !== arrDate.length - 1) showNextDay = formateDateItem(arrDate[indexArrDay + 1]);
-    else showNextDay = formateDateItem(arrDate[0]);
     
+    const [searchFilled, setSearchFilled] = useState(false);
+    const arrDate = (movieTypeSelect === 'already') ? getArrDate() : getArrSoonDatesWithWeek();
+
+    // проверить есть ли выбранные параметры
     useEffect(() => {
         if ((search.date === getArrDate()[0] || search.date === getArrSoonDatesWithWeek()[0]) && !search.video.length && !search.audio.length && !search.language.length) setSearchFilled(false);
         else setSearchFilled(true);
     }, [search])
 
+    // текст для след дня
+    const indexArrDay = arrDate.indexOf(search.date);
+    const showNextDay = (indexArrDay !== arrDate.length - 1) ? formateDateItem(arrDate[indexArrDay + 1]) : formateDateItem(arrDate[0]);
+
+    // очистить фильтры
     const clearSearch = () => {
         dispatch({ type: "CLEAR_SEARCH", payload: arrDate[0] });
     }
+
+    // установить след день
     const setNextDay = () => {
         if (indexArrDay !== arrDate.length - 1) setDateStore(arrDate[indexArrDay + 1], dispatch);
         else setDateStore(arrDate[0], dispatch);
     }
 
+    // изменить фильмы на Скоро
     const clickSoon = () => {
         navigate('/afisha');
         dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: "soon" });
     }
+    // изменить фильмы на Сейчас в кино
     const clickAlready = () => {
         navigate('/afisha');
         dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: "already" });
     }
-
     
     return (
         <div className={`not-find ${page === 'main' ? 'not-find-small' : ''}`}>

@@ -18,19 +18,22 @@ const GiftCard:FC<IGiftCard> = ({obj, arrGiftCards}) => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
 
     const arrGiftSelect: IDataCardSelect[] = useSelector(({storeUser}) => storeUser.card_select);
-    const [amountSelect, setAmountSelect] = useState(0);
+    const [amountSelect, setAmountSelect] = useState(0);    // кол-во выбранных карт
     const [modal, setModal] = useState(<div/>);
   
     useEffect(() => {
         if (!arrGiftSelect.length) setAmountSelect(0);
     }, [arrGiftSelect])
 
+    // удаление из корзину
     const clickMinus = () => {
         if (amountSelect > 0) {
             setAmountSelect(amountSelect - 1);
             dispatch({ type: "REMOVE_CARD_SELECT", payload: obj.id });
         }
     }
+
+    // добавление в корзину
     const clickPlus = () => {
         setAmountSelect(amountSelect + 1);
         const newCardSelect: IDataCardSelect = {

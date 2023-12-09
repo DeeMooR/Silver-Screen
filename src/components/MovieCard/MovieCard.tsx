@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import Button from '../Button'
 import { IMovie } from '../../interfaces'
 import { StyledImage } from './styled'
@@ -12,23 +11,23 @@ interface IMovieCard {
 }
 
 const MovieCard:FC<IMovieCard> = ({obj, page}) => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [buttonText, setButtonText] = useState(`${window.innerWidth < 900 ? 'Купить' : 'Купить билет'}`);
 
-    const moveNewPage = () => {
-        navigate(`/afisha/${obj.id}`, {state: {fromPage: `/${page}`}});
-    }
-  
+    // текст изменяется в зависимости от размера окна браузера
     useEffect(() => {
         const updateButtonText = () => {
             if (window.innerWidth < 900) setButtonText('Купить');
             else setButtonText('Купить билет');
         };
-
         window.addEventListener('resize', updateButtonText);
         return () => window.removeEventListener('resize', updateButtonText);
     }, []);
+
+    // перейти на страницу фильма
+    const moveNewPage = () => {
+        navigate(`/afisha/${obj.id}`, {state: {fromPage: `/${page}`}});
+    }
 
     return (
         <div className={`movieCard movieCard-${page}`}>

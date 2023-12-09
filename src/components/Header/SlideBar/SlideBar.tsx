@@ -18,13 +18,18 @@ const SlideBar:FC<ISlideBar> = ({ clickMenu, setClickMenu }) => {
     const navigate = useNavigate();
     const token = localStorage.getItem('access');
     
+    // скрыть меню
     const handleClick = () => {
         setClickMenu(false);
     }
+
+    // нажат логотип
     const logoClick = () => {
         navigate('/');
         handleClick();
     }
+
+    // переход в аккаунт или на стрианцу 'sign-in'
     const accountClick = () => {
         if (token) navigate('/account');
         else navigate('/sign-in');

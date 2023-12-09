@@ -17,10 +17,6 @@ interface IRowSeats {
 }
 
 const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpen}) => {
-    const {id, date, seance} = useParams<{id: string, date: string, seance: string}>();
-    const newId = (id) ? +id : 0;
-    const newDate = (date) ? date : '';
-    const newSeance = (seance) ? +seance : 0;
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
     const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
@@ -28,17 +24,29 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
     const userId = useSelector(({storeUser}) => storeUser.user.id);
     const token = localStorage.getItem('access');
 
-    const objRoom = arrRooms.find((item) => item.id === room);                                    // объект room: room, cost_single, cost_sofa, rows
-    const objRow = objRoom?.rows[indexRow];                                                       // объект row: id, type, seats
-    const objType = arrSeatTypes.find((item: ISeatType) => item.type === objRow?.type_id);        // объект type: type, image, description
+    // для изменения мест нужного сеанса
+    const {id, date, seance} = useParams<{id: string, date: string, seance: string}>();
+    const newId = (id) ? +id : 0;
+    const newDate = (date) ? date : '';
+    const newSeance = (seance) ? +seance : 0;
+    
+    // чтобы получить image
+    const objRoom = arrRooms.find((item) => item.id === room);
+    const objRow = objRoom?.rows[indexRow];
+    const objType = arrSeatTypes.find((item: ISeatType) => item.type === objRow?.type_id);
 
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
-    const movie = arrMovies.find(movie => movie.id === newId);
-    const schedule = movie?.schedule.find(item => item.date === newDate);
+    // чтобы дойти до schedule
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);   //??
+    const movie = arrMovies.find(movie => movie.id === newId);  //??
+    const schedule = movie?.schedule.find(item => item.date === newDate);   //??
 
+    // изменение места
     const clickSeat = (number: number, indexRow: number, indexColumn: number) => {
-        if (schedule) {
+        if (schedule) {     //??
+            // return, если место куплено
             if (number === 1 || number === userId || (number !== -userId && number < 0)) return;
+
+            // переход на страницу 'sign-in'
             if (!token) {
                 setModalIsOpen(true);
                 return;
@@ -47,6 +55,7 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
             const row = indexRow + 1;
             const column = indexColumn + 1;
 
+            // выбрать или снять выбор места
             if (number === 0) {
                 const add_my_seat_select = {
                     i_row: row,

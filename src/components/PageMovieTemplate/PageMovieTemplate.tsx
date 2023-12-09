@@ -20,6 +20,7 @@ const PageMovieTemplate:FC<IPageMovieTemplate> = ({children, movie, customBack, 
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const [isScrolled, setIsScrolled] = useState(false);
 
+    // изменяется header если был скролл
     useEffect(() => {
         const handleScroll = () => {
             const scrollBlock = scrollRef.current;
@@ -38,6 +39,7 @@ const PageMovieTemplate:FC<IPageMovieTemplate> = ({children, movie, customBack, 
         };
     }, []);
 
+    // переход назад
     const clickBack = () => {
         if (fromPage === '/buy-ticket') dispatch({ type: "CLEAR_MY_SEAT_SELECT" });
         if (fromPage) navigate(`${customBack}`, {state: {fromPage: fromPage}});

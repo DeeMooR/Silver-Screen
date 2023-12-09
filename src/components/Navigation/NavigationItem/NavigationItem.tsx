@@ -17,8 +17,8 @@ interface INavigationItem {
 const NavigationItem:FC<INavigationItem> = ({icon, text, type, navActive, handleClick}) => {
     const searchDate = useSelector(({store}) => store.search.date);
     let searchArr = useSelector(({store}) => store.search[type]);
-    const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
 
+    // из массива коротких LNG в длинные Language
     if (type === 'language') {
         searchArr = searchArr.map((item: string) => getFullLanguage(item))
     }
@@ -28,6 +28,7 @@ const NavigationItem:FC<INavigationItem> = ({icon, text, type, navActive, handle
         <div className="navigationItem" onClick={() => handleClick(type)}>
             <img src={icon} className="navigationItem__image" alt="icon" />
             <p className="navigationItem__text">
+                /* текущая дата, либо название категории, либо выбранное в этой категории */
                 {type === 'date' ? formateDateItem(searchDate) :
                     (searchArr.length !== 0 ? searchArr.join(', ') : text)
                 }

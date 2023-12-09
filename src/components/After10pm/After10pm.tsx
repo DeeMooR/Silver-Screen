@@ -6,7 +6,6 @@ interface IAfter10pm {
 }
 
 const After10pm:FC<IAfter10pm> = ({timeEnd}) => {
-  
     const [hours, minutes] = timeEnd.split(':').map(Number);
     const show = (hours === 22 || hours === 23 || (hours >= 0 && hours < 3)) ? true : false;
 

@@ -13,11 +13,14 @@ interface ITitleWithSwitch {
 const TitleWithSwitch:FC<ITitleWithSwitch> = ({title, switch_1, switch_2, active, setActive}) => {
     const dispatch = useDispatch();
 
+    // сделать активным 1
     const clickFirst = () => {
         setActive(1);
         if (title === 'Афиша кино') dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'already' });
         else setActive(1)
     }
+
+    // сделать активным 2
     const clickSecond = () => {
         setActive(2);
         if (title === 'Афиша кино') dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'soon' });

@@ -15,9 +15,9 @@ const ScheduleItem:FC<IScheduleItem> = ({video, seance}) => {
     const searchDate = useSelector(({store}) => store.search.date).split(', ')[1];
     const {id} = useParams<{id: string}>();
 
-    let nowTimeMoreStart = false;
-    if (getTodayDayMonthYear() === searchDate) nowTimeMoreStart = compareTimeNowStart(seance.time);
+    const nowTimeMoreStart = (getTodayDayMonthYear() === searchDate) ? compareTimeNowStart(seance.time) : false;
 
+    // переход на страницу сеанса
     const clickSeance = () => {
         if (!nowTimeMoreStart) navigate(`/buy-ticket/${id}/${searchDate}/${seance.id}`);
     }

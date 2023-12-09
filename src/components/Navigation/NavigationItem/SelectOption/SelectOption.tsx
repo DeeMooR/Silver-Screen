@@ -10,30 +10,31 @@ interface ISelectOption {
 }
 
 const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
-    const [clickCheckbox, setClickCheckbox] = useState<string[]>([]);
-    const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
-    const searchDate = useSelector(({store}) => store.search.date);
-
-    const typeKey = useSelector(({store}) => store.search[type]);
     const dispatch = useDispatch();
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
+    const idMovie = useSelector(({store}) => store.idActiveMoviePage);
+    const searchDate = useSelector(({store}) => store.search.date);
+    const movieTypeSelect = useSelector(({store}) => store.movieTypeSelect);
+    const typeKey = useSelector(({store}) => store.search[type]);
+
+    const [arrMoviesDates, setArrMoviesDates] = useState<string[]>([]);
+    const [clickCheckbox, setClickCheckbox] = useState<string[]>([]);
+
+    // отображаеются выбранные ранее параметры
     useEffect(() => {
         setClickCheckbox(typeKey);
     }, [typeKey]);
-
-    const arrDate: string[] = (movieTypeSelect === 'already') ? getArrDate() : getArrSoonDatesWithWeek();
-    console.log(arrDate)
-    const arrSelect: string[] = getArrSelect(type);
-    const arrShortLang: string[] = getArrSelect('shortLang');
-
-
-    const idMovie = useSelector(({store}) => store.idActiveMoviePage);
-    let movie = arrMovies.find(movie => movie.id === idMovie);
-    const [arrMoviesDates, setArrMoviesDates] = useState<string[]>([]);
     
+    const arrDate: string[] = (movieTypeSelect === 'already') ? getArrDate() : getArrSoonDatesWithWeek();
+    const arrSelect: string[] = getArrSelect(type);     // массив параметров выбора
+    const arrShortLang: string[] = getArrSelect('shortLang');   // массив короткиx LNG
+    let movie = arrMovies.find(movie => movie.id === idMovie);
+    
+    // устанавливаем массив всех дат или дат фильма
     useEffect(() => {
         const filterOutputDates = () => {
             if (movie) {
+                // получаем массив дат фильма
                 const newArrMoviesDates = movie.schedule.map(item => item.date)
                 .map(item => {
                     for (let itemWithDayOfWeek of arrDate) {
@@ -43,8 +44,9 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
                 })
                 .filter(item => item !== '');
                 setArrMoviesDates(newArrMoviesDates);
+
+                // меняем активную дату с сегодняшней на 1 у фильма
                 if (searchDate === arrDate[0]) {
-                    console.log('set.first')
                     setDateStore(newArrMoviesDates[0], dispatch);
                 }
             }
@@ -53,6 +55,7 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
         else setArrMoviesDates(arrDate);
     },[idMovie, movieTypeSelect])
 
+    // устанавливаем выбранную дату
     const handleClickItem = (i: number) => {
         handleClick('');    // Скрывает slidebar после нажатия (1/2)
         dispatch({ type: "TOGGLE_NAV_ACTIVE", payload: '' });
@@ -65,10 +68,12 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
         });
     }
 
+    // изменяем выбранные параметры
     const handleClickCheckbox = (i: number, event: React.MouseEvent<HTMLLabelElement | HTMLSpanElement>) => {
         if (event.target === event.currentTarget) {
             setClickCheckbox(prevArr => {
                 let newArr;
+                // добавить или удалить параметр из массива выбранных
                 if (type === 'language') {
                     if (prevArr.includes(arrShortLang[i])) newArr = prevArr.filter(item => item !== arrShortLang[i]);
                     else newArr = [...prevArr, arrShortLang[i]];
@@ -116,7 +121,9 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
                         </p>
                         {arrSelect.map((item: string, i: number) => (
                             <>
-                            {type === 'video' && i === 2 && <p className='selectOption__title'>Экран:</p>}
+                            {type === 'video' && i === 2 && 
+                                <p className='selectOption__title'>Экран:</p>
+                            }
                             <label className='selectOption__choise' onClick={(event) => handleClickCheckbox(i, event)} key={i}>
                                 {item}
                                 <input type="checkbox" />

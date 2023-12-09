@@ -14,12 +14,11 @@ interface IHorizontalNews {
 const HorizontalNews:FC<IHorizontalNews> = ({obj, page, reverse}) => {
     const navigate = useNavigate();
     
+    // переход на страницу новости
     const clickButton = () => {
         if (obj.link) navigate(`${obj.link}`);
         else navigate('/page404');
     }
-
-    console.log(obj)
 
     return (
         <>

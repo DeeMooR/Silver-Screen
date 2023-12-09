@@ -12,6 +12,7 @@ import 'swiper/css/navigation';
 
 const SliderSwiper = () => {
     const arrSliderSwiper: ISlide[] = useSelector(({storePages}) => storePages.slider);
+    
     return (
     <>
         <Swiper 

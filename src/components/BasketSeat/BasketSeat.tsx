@@ -17,22 +17,23 @@ interface IBasketSeat {
 
 const BasketSeat:FC<IBasketSeat> = ({obj, cost, setModal}) => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
-    const objSeatType = arrSeatTypes.find((item) => item.type === obj.seat_type);
-    const arrSeatSelect: IDataSeatSelect[] = useSelector(({storeUser}) => storeUser.my_seat_select);
-    const userId = useSelector(({storeUser}) => storeUser.user.id);
-
-
-    const {id, date, seance} = useParams<{id: string, date: string, seance: string}>();
-    const newId = (id) ? +id : 0;
-    const newDate = (date) ? date : '';
 
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
-    const movie = arrMovies.find(movie => movie.id === newId);
-    const schedule = movie?.schedule.find(item => item.date === newDate);
+    const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
+    const arrSeatSelect: IDataSeatSelect[] = useSelector(({storeUser}) => storeUser.my_seat_select);
 
+    // чтобы получить image
+    const objSeatType = arrSeatTypes.find((item) => item.type === obj.seat_type);
+    
+    const {id, date, seance} = useParams<{id: string, date: string, seance: string}>(); //??
+    const newId = (id) ? +id : 0; //??
+    const newDate = (date) ? date : ''; //??
+    const movie = arrMovies.find(movie => movie.id === newId); //??
+    const schedule = movie?.schedule.find(item => item.date === newDate); //??
+    
+    // удаление из корзины
     const clickCross = () => {
-        if (schedule) {
+    if (schedule) { //??
             const objSeat = arrSeatSelect.find((seat: IDataSeatSelect) => 
                 seat.i_row === obj.i_row && seat.i_column === obj.i_column && seat.seance_id === obj.seance_id
             );

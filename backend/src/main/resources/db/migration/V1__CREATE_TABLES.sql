@@ -12,23 +12,23 @@ CREATE TABLE user (
 CREATE TABLE my_card (
     id int primary key AUTO_INCREMENT,
     number_card int not null,
-    start varchar(64) not null,
-    end varchar(64) not null,
+    start varchar(10) not null,
+    end varchar(10) not null,
     status boolean not null
 ) engine=MyISAM;
 
 CREATE TABLE my_seat_select (
     id int primary key AUTO_INCREMENT,
     i_row int not null,
-    i_column int not null
+    i_column int not null,
+    seat_type varchar(20) not null
 ) engine=MyISAM;
 
 CREATE TABLE my_movie (
     id int primary key AUTO_INCREMENT,
-    date varchar(64) not null,
+    date varchar(10) not null,
     i_row int not null,
-    i_column int not null,
-    cost int not null
+    i_column int not null
 ) engine=MyISAM;
 
 CREATE TABLE card (
@@ -39,7 +39,7 @@ CREATE TABLE card (
 ) engine=MyISAM;
 
 CREATE TABLE seat_type (
-    type varchar(64) primary key not null,
+    type varchar(20) primary key not null,
     image varchar(64) not null,
     image_select varchar(64) not null,
     description varchar(200) not null,
@@ -61,13 +61,13 @@ CREATE TABLE movie (
     image varchar(64) not null,
     title varchar(64) not null,
     age int not null,
-    language varchar(4) not null,
+    language varchar(5) not null,
+    genres tinyblob not null,
     sub boolean default false,
     video varchar(4) not null,
     duration int not null,
     description varchar(500) not null,
-    trailer varchar(64) not null,
-    genres String[] not null
+    trailer varchar(64) not null
 ) engine=MyISAM;
 
 CREATE TABLE genre (
@@ -77,12 +77,17 @@ CREATE TABLE genre (
 
 CREATE TABLE schedule (
     id int primary key AUTO_INCREMENT,
-    date varchar(12) not null
+    date varchar(10) not null
 ) engine=MyISAM;
 
 CREATE TABLE seance (
     id int primary key AUTO_INCREMENT,
     time varchar(5) not null
+) engine=MyISAM;
+
+CREATE TABLE places (
+    id int primary key AUTO_INCREMENT,
+    numbers tinyblob not null
 ) engine=MyISAM;
 
 CREATE TABLE slider (
@@ -96,7 +101,7 @@ CREATE TABLE slider (
 ) engine=MyISAM;
 
 CREATE TABLE page_title (
-    page varchar(64) primary key not null,
+    page varchar(20) primary key not null,
     image varchar(64) not null,
     title varchar(64) not null,
     text varchar(64) not null
@@ -109,11 +114,6 @@ CREATE TABLE page_news (
     background_image varchar(64),
     title varchar(64) not null,
     description varchar(400) not null,
-    date varchar(64),
+    date varchar(10),
     link varchar(64)
-) engine=MyISAM;
-
-CREATE TABLE places (
-    id int primary key AUTO_INCREMENT,
-    numbers int[] not null
 ) engine=MyISAM;

@@ -16,11 +16,13 @@ const ModalPay:FC<IModalPay> = ({isOpen, setIsOpen, setIsOpenOther, type}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    // скрыть скролл при откртом окне
     if (isOpen) {
         document.body.style.overflowY = 'hidden';
         document.body.style.padding = '0 7px 0 0';
     }
 
+    // закрыть окно
     const clickCross = () => {
         dispatch({ type: "CLEAR_CARD_SELECT" });
         if(setIsOpenOther) setIsOpenOther(false);
@@ -30,9 +32,13 @@ const ModalPay:FC<IModalPay> = ({isOpen, setIsOpen, setIsOpenOther, type}) => {
             document.body.style.padding = '0';
         },400);
     }
+
+    // закрыть окно при клике вне окна
     const clickBackground = (event: React.MouseEvent<HTMLDivElement>) => {
         if (event.target === event.currentTarget) clickCross();
     };
+
+    // перейти в аккаунт
     const clickAccount = () => {
         dispatch({ type: "CLEAR_CARD_SELECT" });
         document.body.style.overflowY = 'auto';

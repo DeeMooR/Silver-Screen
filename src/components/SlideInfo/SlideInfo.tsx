@@ -11,17 +11,21 @@ interface ISlideInfo {
 }
 
 const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const navigate = useNavigate();
-    let filmTitle, filmGenres;
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
+
+    // определение типа слайда 
     const isMovie = typeof slide.movie_id === 'number' && slide.movie_id !== 0;
     const isMain = isMovie || slide.text_button;
+    let filmTitle, filmGenres;
 
+    // измнение данные, если слайд фильма
     if (arrMovies.length && slide.movie_id && isMovie) {
         filmTitle = arrMovies[slide.movie_id].title;
         filmGenres = arrMovies[slide.movie_id].genres.join(', ') + ', ' + arrMovies[slide.movie_id].age + '+';
     }
 
+    // переход по кнопке
     const clickButton = () => {
         if (isMovie) {
             navigate(`/afisha/${slide.movie_id}`, {state: {fromPage: '/main'}});
