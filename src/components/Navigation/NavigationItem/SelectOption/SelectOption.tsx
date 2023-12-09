@@ -28,7 +28,7 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
     const arrDate: string[] = (movieTypeSelect === 'already') ? getArrDate() : getArrSoonDatesWithWeek();
     const arrSelect: string[] = getArrSelect(type);     // массив параметров выбора
     const arrShortLang: string[] = getArrSelect('shortLang');   // массив короткиx LNG
-    let movie = arrMovies.find(movie => movie.id === idMovie);
+    const movie = arrMovies.find(movie => movie.id === idMovie);
     
     // устанавливаем массив всех дат или дат фильма
     useEffect(() => {
@@ -53,7 +53,7 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
         }
         if (movie) filterOutputDates();
         else setArrMoviesDates(arrDate);
-    },[idMovie, movieTypeSelect])
+    },[movie, movieTypeSelect])
 
     // устанавливаем выбранную дату
     const handleClickItem = (i: number) => {

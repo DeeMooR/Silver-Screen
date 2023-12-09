@@ -50,7 +50,7 @@ const Afisha = () => {
         }
     },[movieTypeSelect])
 
-    dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: '' });
+    dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: null });
     
     let filteredMovies: IMovie[] = [];
     let filterOne: IMovie[];

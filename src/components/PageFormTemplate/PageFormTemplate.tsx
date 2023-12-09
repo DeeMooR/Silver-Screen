@@ -19,7 +19,8 @@ const PageFormTemplate:FC<IPageFormTemplate> = ({children, page}) => {
     const clickLeft = () => {
         if (location.state) {
             if (location.state.fromPage === '/admin') navigate('/');
-            if (location.state.fromPage !== '/presentcard' && location.state.fromPage.slice(0, 11) !== '/buy-ticket') navigate('/');
+            else if (location.state.fromPage !== '/presentcard' && location.state.fromPage.slice(0, 11) !== '/buy-ticket') navigate('/');
+            else navigate(-1);
         }
         else navigate(-1);
     }

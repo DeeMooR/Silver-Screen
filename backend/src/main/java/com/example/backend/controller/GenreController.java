@@ -22,7 +22,7 @@ public class GenreController {
                                    @RequestHeader("movie_id") int movie_id) {
         try {
             genreService.add(name, movie_id);
-            return ResponseEntity.ok("Жанр '" + name + "' добавлен к фильму id=" + movie_id);
+            return ResponseEntity.ok("Жанр " + name + " добавлен к фильму id=" + movie_id);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error");
         }

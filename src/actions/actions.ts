@@ -1,8 +1,7 @@
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
-import { IDataCardSelect, IDataSeatSelect, IUserTMS, IAddMyCard, IDataMyMovie, IRoom } from "src/interfaces";
+import { IDataCardSelect, IDataSeatSelect, IUserTMS, IAddMyCard, IDataMyMovie, IRoom, INews } from "src/interfaces";
 import { modalShowMessege } from "src/helpersModal";
-import { IDataInputAdmin } from "src/helpers";
 
 /* ---------  ACCOUNT  --------- */
 
@@ -595,7 +594,7 @@ export const GET_NEWS = (setModal: (v: JSX.Element) => void) => {
                 'http://localhost:8080/page_news'
             )
             if (response.ok) {
-                const arrNews = await response.json();
+                const arrNews: INews[] = await response.json();
                 dispatch({ type: "SET_NEWS", payload: arrNews });
             }
             else modalShowMessege(setModal, false);

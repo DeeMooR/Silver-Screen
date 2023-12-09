@@ -13,6 +13,7 @@ interface ISlideInfo {
 const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
     const navigate = useNavigate();
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
+    const movie = arrMovies.find(movie => movie.id === slide.movie_id);
 
     // определение типа слайда 
     const isMovie = typeof slide.movie_id === 'number' && slide.movie_id !== 0;
@@ -20,9 +21,9 @@ const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
     let filmTitle, filmGenres;
 
     // измнение данные, если слайд фильма
-    if (arrMovies.length && slide.movie_id && isMovie) {
-        filmTitle = arrMovies[slide.movie_id].title;
-        filmGenres = arrMovies[slide.movie_id].genres.join(', ') + ', ' + arrMovies[slide.movie_id].age + '+';
+    if (movie) {
+        filmTitle = movie.title;
+        filmGenres = movie.genres.join(', ') + ', ' + movie.age + '+';
     }
 
     // переход по кнопке

@@ -27,8 +27,8 @@ const ModalTextButton:FC<IModalTextButton> = ({isOpen, setIsOpen, setIsOpenOther
     // закрыть окно
     const clickClose = () => {
         setIsOpen(false);
-        if (setIsOpenOther) setIsOpenOther(false);
         setTimeout(() => {
+            if (setIsOpenOther) setIsOpenOther(false);
             document.body.style.overflowY = 'auto';
             document.body.style.padding = '0';
         },400);

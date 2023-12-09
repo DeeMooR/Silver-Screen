@@ -19,7 +19,7 @@ public class SheduleController {
                                     @RequestHeader("movie_id") int movie_id) {
         try {
             scheduleService.add(schedule, movie_id);
-            return ResponseEntity.ok("Дата показа фильма сохранена");
+            return ResponseEntity.ok("Дата показа фильма сохранена id=" + schedule.getId());
         } catch (MyException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

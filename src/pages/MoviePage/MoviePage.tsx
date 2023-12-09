@@ -46,7 +46,7 @@ const MoviePage = () => {
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
 
     useEffect(() => {
-        if (id) dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: id });
+        if (id) dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: +id });
         const fetchData = async () => {
             await dispatch({ type: "SET_LOADING_PAGE" });
             if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));

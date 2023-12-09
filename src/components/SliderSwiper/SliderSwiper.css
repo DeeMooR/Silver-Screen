@@ -39,7 +39,7 @@
         margin: 0;
     }
 }
-.swiperPosters > .swiper-pagination-bullets .swiper-pagination-bullet {
+.swiperPosters.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
     margin: 0 5px 60px;
 }
 .swiperPosters .swiper-pagination-bullet {

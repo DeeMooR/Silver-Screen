@@ -32,15 +32,15 @@ CREATE TABLE my_movie (
 
 CREATE TABLE card (
     id int primary key AUTO_INCREMENT,
-    image varchar(64) not null,
+    image varchar(100) not null,
     cost int not null,
     amount int not null
 );
 
 CREATE TABLE seat_type (
     type varchar(20) primary key not null,
-    image varchar(64) not null,
-    image_select varchar(64) not null,
+    image varchar(100) not null,
+    image_select varchar(100) not null,
     description varchar(200) not null
 );
 
@@ -57,7 +57,7 @@ CREATE TABLE room_row (
 
 CREATE TABLE movie (
     id int primary key AUTO_INCREMENT,
-    image varchar(64) not null,
+    image varchar(100) not null,
     title varchar(64) not null,
     age int not null,
     language varchar(5) not null,
@@ -65,7 +65,7 @@ CREATE TABLE movie (
     video varchar(4) not null,
     duration int not null,
     description varchar(500) not null,
-    trailer varchar(64) not null
+    trailer varchar(100) not null
 );
 
 CREATE TABLE genre (
@@ -90,28 +90,28 @@ CREATE TABLE places (
 
 CREATE TABLE slider (
     id int primary key AUTO_INCREMENT,
-    image varchar(64) not null,
+    image varchar(100) not null,
     movie_id int,
-    title varchar(64),
-    text varchar(64),
+    title varchar(100),
+    text varchar(200),
     text_button varchar(64),
-    link varchar(64)
+    link varchar(100)
 );
 
 CREATE TABLE page_title (
     page varchar(20) primary key not null,
-    image varchar(64) not null,
+    image varchar(100) not null,
     title varchar(64) not null,
-    text varchar(64) not null
+    text varchar(400) not null
 );
 
 CREATE TABLE page_news (
     id int primary key AUTO_INCREMENT,
     page varchar(20) not null,
-    image varchar(64) not null,
-    background_image varchar(64),
-    title varchar(64) not null,
+    image varchar(100) not null,
+    background_image varchar(100),
+    title varchar(100) not null,
     description varchar(400) not null,
-    date varchar(10),
-    link varchar(64)
+    date varchar(32),
+    link varchar(100)
 );

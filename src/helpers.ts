@@ -307,3 +307,10 @@ export const getArrSoonDatesWithWeek = () => {
     }
     return dateArray;
 }
+
+export const preloadImages = (...images: string[]) => {
+    images.forEach((image, i) => {
+      const img = new Image();
+      img.src = image;
+    });
+  }
