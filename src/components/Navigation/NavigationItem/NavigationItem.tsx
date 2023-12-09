@@ -28,7 +28,7 @@ const NavigationItem:FC<INavigationItem> = ({icon, text, type, navActive, handle
         <div className="navigationItem" onClick={() => handleClick(type)}>
             <img src={icon} className="navigationItem__image" alt="icon" />
             <p className="navigationItem__text">
-                /* текущая дата, либо название категории, либо выбранное в этой категории */
+                {/* текущая дата, либо название категории, либо выбранное в этой категории */}
                 {type === 'date' ? formateDateItem(searchDate) :
                     (searchArr.length !== 0 ? searchArr.join(', ') : text)
                 }

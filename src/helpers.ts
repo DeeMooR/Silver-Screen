@@ -25,18 +25,19 @@ export const tables = [
     {
         title: "movie",
         primary_key: [],
-        foreign_key: [],
+        foreign_key: [
+            {name: 'genres', type: 'string[]'}
+        ],
         inputs: [
+            {name: 'language', type: 'RU|ENG|BEL'},
+            {name: 'sub', type: 'boolean'},
             {name: 'image', type: 'string'},
             {name: 'title', type: 'string'},
             {name: 'age', type: 'number'},
-            {name: 'genres', type: 'string[]'},
             {name: 'video', type: 'string'},
             {name: 'duration', type: 'number'},
             {name: 'description', type: 'string'},
-            {name: 'trailer', type: 'string'},
-            {name: 'language', type: 'RU|ENG|BEL'},
-            {name: 'sub', type: 'boolean'}
+            {name: 'trailer', type: 'string'}
         ] 
     },
     {

@@ -29,6 +29,7 @@
   display: flex;
   gap: 5px;
   align-items: center;
+  padding: 0 0 5px 0;
 }
 .inputAdmin .inputAdmin__checkbox input {
   width: 15px;
@@ -36,6 +37,7 @@
 }
 .inputAdmin .inputAdmin__radiobox {
   display: flex;
+  padding: 0 0 5px 0;
 }
 .inputAdmin .inputAdmin__radiobox span {
   margin: 0 10px 0 5px;

@@ -18,8 +18,9 @@ public class MovieEntity {
     private int duration;
     private String description;
     private String trailer;
-    @ElementCollection
-    private List<String> genres;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
+    private List<GenreEntity> genres;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
     private List<ScheduleEntity> schedule;
@@ -60,7 +61,7 @@ public class MovieEntity {
     public void setTrailer(String trailer) {
         this.trailer = trailer;
     }
-    public void setGenres(List<String> genres) {
+    public void setGenres(List<GenreEntity> genres) {
         this.genres = genres;
     }
     public void setSchedule(List<ScheduleEntity> schedule) {
@@ -100,7 +101,7 @@ public class MovieEntity {
     public String getTrailer() {
         return trailer;
     }
-    public List<String> getGenres() {
+    public List<GenreEntity> getGenres() {
         return genres;
     }
     public List<ScheduleEntity> getSchedule() {

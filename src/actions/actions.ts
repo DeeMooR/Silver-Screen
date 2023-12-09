@@ -611,6 +611,47 @@ export const ADD_DATA = (url: string, objBody: any, foreignKeys: any, setMessage
     };
 };
 
+export const ADD_MOVIE_AND_GENRES = (objBody: any, genres: string[], setMessage: (value: string) => void) => {
+    return async () => {
+        try {
+            let response = await fetch(
+                'http://localhost:8080/movie',
+                {
+                    method: "POST",
+                    body: JSON.stringify(objBody),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            )
+            if (response.ok) {
+                setMessage('Успешно');
+                const objMovie = await response.json();
+                const sendGenres = async () => {
+                    for (const item of genres) {
+                        response = await fetch(
+                            'http://localhost:8080/genre',
+                            {
+                                method: "POST",
+                                body: JSON.stringify(item),
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'movie_id': `${objMovie.id}`
+                                }
+                            }
+                        );
+                        if (!response.ok) setMessage('Ошибка');
+                    }
+                }
+                sendGenres();
+            }
+            else setMessage('Ошибка');
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
 export const ADD_SEANCE_AND_PLACES = (objBody: any, foreignKeys: any, objRoom: IRoom, setMessage: (value: string) => void) => {
     return async () => {
         const headers = new Headers();
@@ -629,11 +670,8 @@ export const ADD_SEANCE_AND_PLACES = (objBody: any, foreignKeys: any, objRoom: I
                 }
             )
             if (response.ok) {
-                const seance_id = await response.json();
-                console.log(seance_id)
-                console.log(objRoom)
                 setMessage('Успешно');
-
+                const seance_id = await response.json();
                 const sendSequentially = async () => {
                     for (const item of objRoom.rows) {
                         const row = new Array(item.seats).fill(0);
@@ -649,8 +687,7 @@ export const ADD_SEANCE_AND_PLACES = (objBody: any, foreignKeys: any, objRoom: I
                                 }
                             }
                         );
-                        if (response.ok) setMessage('Успешно');
-                        else setMessage('Ошибка');
+                        if (!response.ok) setMessage('Ошибка');
                     }
                 }
                 sendSequentially();

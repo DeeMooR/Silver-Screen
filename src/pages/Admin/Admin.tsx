@@ -5,7 +5,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import ButtonForm from 'src/components/ButtonForm';
 import InputsList from './InputsList';
-import { ADD_DATA, ADD_SEANCE_AND_PLACES, GET_ROOMS } from 'src/actions/actions';
+import { ADD_DATA, ADD_MOVIE_AND_GENRES, ADD_SEANCE_AND_PLACES, GET_ROOMS } from 'src/actions/actions';
 import { ITable, tables } from 'src/helpers'
 import { IRoom } from 'src/interfaces';
 import './Admin.css'
@@ -20,7 +20,7 @@ const Admin = () => {
     const [active, setActive] = useState<ITable>(tables[0]);
     const [message, setMessage] = useState('');
     const [primaryKeys, setPrimaryKeys] = useState({});
-    const [foreignKeys, setForeignKeys] = useState<{room_id?: string}>({});
+    const [foreignKeys, setForeignKeys] = useState<{room_id?: string, genres?: string[]}>({});
     const [fields, setFields] = useState<Record<string, any>>({});
 
     const clickOption = (item: ITable) => {
@@ -61,6 +61,12 @@ const Admin = () => {
             const room = (foreignKeys.room_id) ? foreignKeys.room_id : '';
             const objRoom = arrRooms.find((item) => item.id === +room);
             if (objRoom) dispatch(ADD_SEANCE_AND_PLACES(changedFiels, foreignKeys, objRoom, setMessage));
+            else setMessage('Ошибка');
+            return;
+        }
+        if (active.title === 'movie') {
+            const genres = foreignKeys.genres;
+            if (genres) dispatch(ADD_MOVIE_AND_GENRES(changedFiels, genres, setMessage));
             else setMessage('Ошибка');
             return;
         }

@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import com.example.backend.entity.GenreEntity;
 import com.example.backend.entity.MovieEntity;
 import com.example.backend.modelShort.ScheduleShort;
 import com.example.backend.modelShort.ScheduleWithoutSeance;
@@ -36,7 +37,7 @@ public class Movie {
         model.setDuration(entity.getDuration());
         model.setDescription(entity.getDescription());
         model.setTrailer(entity.getTrailer());
-        model.setGenres(entity.getGenres());
+        model.setGenres(entity.getGenres().stream().map(item -> item.getName()).collect(Collectors.toList()));
         model.setSchedule(entity.getSchedule().stream().map(ScheduleWithoutSeance::toModel).collect(Collectors.toList()));
         return model;
     }
