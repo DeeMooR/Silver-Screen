@@ -37,6 +37,7 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
 
     const clickButton = () => {
         if (email === 'admin' && password === 'admin') {
+            localStorage.setItem('isAdmin', 'true');
             navigate('/admin');
             return;
         }

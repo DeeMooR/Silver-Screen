@@ -49,10 +49,13 @@ public class MyCardController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity changeStatusMyCard(@RequestParam int id) {
+    @PutMapping("/status")
+    public ResponseEntity changeStatusMyCard(@RequestHeader("user_id") int user_id,
+                                             @RequestHeader("number_card") int number_card) {
         try {
-            return ResponseEntity.ok(myCardService.changeStatus(id));
+            return ResponseEntity.ok(myCardService.changeStatus(user_id, number_card));
+        } catch (MyException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error");
         }

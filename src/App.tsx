@@ -31,6 +31,7 @@ function App() {
     const location = useLocation();
     const navigate = useNavigate();
     const token = localStorage.getItem('access');
+    const isAdmin = localStorage.getItem('isAdmin') ? true : false;
 
     const userId = useSelector(({storeUser}) => storeUser.user.id);
     const [modal, setModal] = useState(<div/>);
@@ -79,7 +80,9 @@ function App() {
     return (
         <>
             <Routes>
-                <Route path='/admin' element={<Admin />} />
+                {isAdmin &&
+                    <Route path='/admin' element={<Admin />} />
+                }
                 <Route path='/sign-in' element={<SignInUp page='Sign In' />} />
                 <Route path='/sign-up' element={<SignInUp page='Sign Up' />} />
                 <Route path='/success' element={<SuccessOrNot success />} />

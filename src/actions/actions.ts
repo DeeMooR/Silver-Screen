@@ -287,6 +287,28 @@ export const ADD_MY_CARD = (user_id: number, card_id: number, addMyCard: IAddMyC
     };
 };
 
+export const CHAGE_CARD_STATUS = (user_id: number, number_card: number, setMessage: (value: string) => void) => {
+    return async () => {
+        try {
+            const response = await fetch(
+                `http://localhost:8080/my_card/status`,
+                {
+                    method: "PUT",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'user_id': `${user_id}`,
+                        'number_card': `${number_card}`
+                    }
+                }
+            )
+            if (response.ok) setMessage('Успешно');
+            else setMessage('Ошибка');
+        } catch (err) {
+          console.log(err);
+        }
+    };
+};
+
 
 /* ---------  CHANGE SEAT SELECT  --------- */
 

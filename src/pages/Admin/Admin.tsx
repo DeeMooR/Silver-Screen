@@ -5,9 +5,9 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import ButtonForm from 'src/components/ButtonForm';
 import InputsList from './InputsList';
-import { ADD_DATA, ADD_MOVIE_AND_GENRES, ADD_SEANCE_AND_PLACES, GET_ROOMS } from 'src/actions/actions';
+import { ADD_DATA, ADD_MOVIE_AND_GENRES, ADD_SEANCE_AND_PLACES, CHAGE_CARD_STATUS, GET_ROOMS } from 'src/actions/actions';
 import { ITable, tables } from 'src/helpers'
-import { IRoom } from 'src/interfaces';
+import { IForeignKeys, IRoom } from 'src/interfaces';
 import './Admin.css'
 
 import left from "src/icons/left.svg"
@@ -20,7 +20,7 @@ const Admin = () => {
     const [active, setActive] = useState<ITable>(tables[0]);
     const [message, setMessage] = useState('');
     const [primaryKeys, setPrimaryKeys] = useState({});
-    const [foreignKeys, setForeignKeys] = useState<{room_id?: string, genres?: string[]}>({});
+    const [foreignKeys, setForeignKeys] = useState<IForeignKeys>({});
     const [fields, setFields] = useState<Record<string, any>>({});
 
     const clickOption = (item: ITable) => {
@@ -70,6 +70,13 @@ const Admin = () => {
             else setMessage('Ошибка');
             return;
         }
+        if (active.title === 'change card status') {
+            const user_id = foreignKeys.user_id;
+            const number_card = foreignKeys.number_card;
+            if (user_id && number_card) dispatch(CHAGE_CARD_STATUS(user_id, number_card, setMessage));
+            else setMessage('Ошибка');
+            return;
+        }
 
         const url = (active.url) ? active.url : active.title;
         const objBody = {...primaryKeys, ...changedFiels};
@@ -78,6 +85,7 @@ const Admin = () => {
 
     const clickBack = () => {
         navigate('/sign-in', {state: {fromPage: 'admin'}});
+        localStorage.removeItem('isAdmin')
     }
 
     useEffect(() => {
@@ -109,7 +117,9 @@ const Admin = () => {
                     {active.foreign_key.length > 0 &&
                         <InputsList title='Foreign keys' list={active.foreign_key} setObjAdmin={setForeignKeys}  />
                     }
-                    <InputsList title='Fields' list={active.inputs} setObjAdmin={setFields} />
+                    {active.inputs.length > 0 &&
+                        <InputsList title='Fields' list={active.inputs} setObjAdmin={setFields} />
+                    }
                     {message &&
                         <p className={`admin__message ${message === 'Успешно' ? 'success' : ''}`}>{message}</p>
                     }

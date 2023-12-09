@@ -133,3 +133,12 @@ export interface INews {
     date?: string,
     link?: string,
 }
+
+/* ---------  OTHER  --------- */
+
+export interface IForeignKeys {
+    room_id?: number,
+    user_id?: number,
+    number_card?: number,
+    genres?: string[]
+}

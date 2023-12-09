@@ -99,6 +99,15 @@ export const tables = [
             {name: 'link?', type: 'string'}
         ] 
     },
+    {
+        title: "change card status",
+        primary_key: [],
+        foreign_key: [
+            {name: 'user_id', type: 'number'},
+            {name: 'number_card', type: 'number'}
+        ],
+        inputs: [] 
+    }
 ];
 
 export const getTimePlusDuration = (date: string, duration: number) => {

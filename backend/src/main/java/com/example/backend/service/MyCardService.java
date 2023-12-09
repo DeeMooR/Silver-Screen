@@ -3,6 +3,7 @@ package com.example.backend.service;
 import com.example.backend.entity.*;
 import com.example.backend.exception.MyException;
 import com.example.backend.model.MyCard;
+import com.example.backend.model.Places;
 import com.example.backend.repository.CardRepo;
 import com.example.backend.repository.MyCardRepo;
 import com.example.backend.repository.UserRepo;
@@ -56,8 +57,17 @@ public class MyCardService {
                 .collect(Collectors.toList());
     }
 
-    public MyCard changeStatus(int id) {
-        MyCardEntity card = myCardRepo.findById(id).get();
+    public MyCard changeStatus(int user_id, int number_card) throws MyException {
+        Iterable<MyCardEntity> allCards = myCardRepo.findAll();
+
+        MyCardEntity card = StreamSupport.stream(allCards.spliterator(), false)
+                .filter(item -> item.getNumber_card() == number_card)
+                .findFirst().orElse(null);
+
+        if (card == null) throw new MyException("Карточка не найдена");
+        if (card.getUser().getId() != user_id) throw new MyException("user введён неверно");
+        if (!card.isStatus()) throw new MyException("Карта не активна");
+
         card.setStatus(false);
         return MyCard.toModel(myCardRepo.save(card));
     }
