@@ -8,10 +8,6 @@ const Page404 = () => {
     const navigate = useNavigate();
     const bg_image = "https://i.ibb.co/52nM9bx/page-404.jpg";
 
-    const clickBack = () => {
-        navigate(-1);
-    };
-
     return (
         <div className='page404'>
             <BackgroundImage image={bg_image} />

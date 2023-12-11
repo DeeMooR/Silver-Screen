@@ -3,9 +3,6 @@ import { IMovie } from "./interfaces";
 
 const russianMonths = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const arrDaysOfWeek = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
-const today = new Date('2023-10-25');
-
-// export const tables = ['movie', 'schedule', 'seance', 'slider', 'card', 'pageNews'];
 
 export interface IDataInputAdmin {
     name: string,
@@ -20,6 +17,15 @@ export interface ITable {
     foreign_key: IDataInputAdmin[],
     inputs: IDataInputAdmin[]
 }
+
+export const setTodayDate = () => {
+    const date25 = new Date('2023-10-25');
+    const currentTime = new Date();
+    date25.setHours(currentTime.getHours());
+    date25.setMinutes(currentTime.getMinutes());
+    return date25;
+}
+const today = setTodayDate();
 
 export const tables = [
     {
@@ -151,11 +157,12 @@ export const compareDayNowEnd = (end: string) => {
     return false;
 }
     
-export const compareTimeNowStart = (strat: string) => {
+export const compareTimeNowStart = (start: string) => {
     const currentDate = today;
-    const [stratHours, stratMinutes] = strat.split(':').map(Number);
+    const [stratHours, stratMinutes] = start.split(':').map(Number);
     const currentHours = currentDate.getHours();
     const currentMinutes = currentDate.getMinutes();
+    console.log(today)
     if (currentHours > stratHours || (currentHours === stratHours && currentMinutes >= stratMinutes)) {
         return true;
     }
@@ -249,7 +256,6 @@ export const getFullLanguage = (shortLang: string) => {
 }
 
 export const setDateStore = (searchDate: string, dispatch: any) => {
-    const arrDate = getArrDate();
     dispatch({ 
         type: "SET_SEARCH", 
         payload: {
@@ -313,4 +319,16 @@ export const preloadImages = (...images: string[]) => {
       const img = new Image();
       img.src = image;
     });
-  }
+}
+  
+export const checkFullObjIsFill = (obj: Record<string, any>) => {
+    for (const key in obj) {
+        if (!key.includes('?')) {
+            const value = obj[key];
+            if (value === undefined || value === null || (Array.isArray(value) && value.length === 0) || (typeof value === 'string' && value.trim() === '')) {
+                return false;
+            }
+        }
+    }
+    return true;
+}

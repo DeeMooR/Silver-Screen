@@ -18,35 +18,28 @@ interface IBasketSeat {
 const BasketSeat:FC<IBasketSeat> = ({obj, cost, setModal}) => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
 
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
     const arrSeatSelect: IDataSeatSelect[] = useSelector(({storeUser}) => storeUser.my_seat_select);
+    const {id} = useParams<{id: string}>();
+    const newId = (id) ? +id : 0;
 
     // чтобы получить image
     const objSeatType = arrSeatTypes.find((item) => item.type === obj.seat_type);
     
-    const {id, date, seance} = useParams<{id: string, date: string, seance: string}>(); //??
-    const newId = (id) ? +id : 0; //??
-    const newDate = (date) ? date : ''; //??
-    const movie = arrMovies.find(movie => movie.id === newId); //??
-    const schedule = movie?.schedule.find(item => item.date === newDate); //??
-    
     // удаление из корзины
     const clickCross = () => {
-    if (schedule) { //??
-            const objSeat = arrSeatSelect.find((seat: IDataSeatSelect) => 
-                seat.i_row === obj.i_row && seat.i_column === obj.i_column && seat.seance_id === obj.seance_id
-            );
-            if (objSeat) {
-                const data = {
-                    i_row: obj.i_row,
-                    i_column: obj.i_column,
-                    seat_id: objSeat.id,
-                    movie_id: newId,
-                    seance_id: obj.seance_id
-                }
-                dispatch(REMOVE_MY_SEAT_SELECT(data, setModal));
+        const objSeat = arrSeatSelect.find((seat: IDataSeatSelect) => 
+            seat.i_row === obj.i_row && seat.i_column === obj.i_column && seat.seance_id === obj.seance_id
+        );
+        if (objSeat) {
+            const data = {
+                i_row: obj.i_row,
+                i_column: obj.i_column,
+                seat_id: objSeat.id,
+                movie_id: newId,
+                seance_id: obj.seance_id
             }
+            dispatch(REMOVE_MY_SEAT_SELECT(data, setModal));
         }
     }
 

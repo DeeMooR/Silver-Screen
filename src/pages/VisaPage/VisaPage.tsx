@@ -10,12 +10,13 @@ import './VisaPage.css'
 
 const VisaPage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
-    const [modal, setModal] = useState(<div/>);
-
     const arrPageTitle = useSelector(({storePages}) => storePages.pageTitles);
+    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
+    
+    const [modal, setModal] = useState(<div/>);
     const pageTitle = arrPageTitle.find((item: IPageTitle) => item.page === "visa");
 
+    // получить данные с бд
     useEffect(() => {
         window.scrollTo({top: 0});
         const fetchData = async () => {
@@ -25,7 +26,6 @@ const VisaPage = () => {
         };
         fetchData();
     },[])
-
 
     return (
         <>

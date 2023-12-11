@@ -21,38 +21,44 @@ const Account = () => {
 
     const [modal, setModal] = useState(<div/>);
     const [isMismatch, setIsMismatch] = useState(false);
+    const [activePage, setActivePage] = useState(1);
 
+    // State для изменения пароля
     const [current_password, setCurrentPassword] = useState('');
     const [new_password, setNewPassword] = useState('');
     const [confirm_new_password, setConfirmNewPassword] = useState('');
 
-    const [activePage, setActivePage] = useState(1);
-
+    // очистить данные о картах и фильмах пользователя
     useEffect(() => {
         window.scrollTo({top: 0});
         dispatch({ type: "CLEAR_MY_CARD" });
         dispatch({ type: "CLEAR_MY_MOVIE" });
     },[])
 
+    // убрать красное выделение если начал изменять
     useEffect(() => {
         setIsMismatch(false);
     },[new_password, confirm_new_password])
 
-
+    // очистить поля ввода
     const clickCancel = () => {
         setCurrentPassword('');
         setNewPassword('');
         setConfirmNewPassword('');
     }
+
+    // сохранить новый пароль
+    const clickSave = () => {
+        if (new_password !== confirm_new_password) setIsMismatch(true);
+        else dispatch(RESET_PASSWORD_IN_ACCOUNT(token, new_password, current_password, setModal));
+    };
+
+     // выход из аккаунта
     const clickExit = () => {
         dispatch({ type: "CLEAR_STORE_USER" });
         localStorage.removeItem('access');
         navigate('/sign-in', {state: {fromPage: '/'}});
     }
-    const clickSave = () => {
-        if (new_password !== confirm_new_password) setIsMismatch(true);
-        else dispatch(RESET_PASSWORD_IN_ACCOUNT(token, new_password, current_password, setModal));
-    };
 
     return (
         <PageTemplate wrapper>

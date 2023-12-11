@@ -9,29 +9,32 @@ interface IInputAdmin {
 }
 
 const InputAdmin:FC<IInputAdmin> = ({obj, clearInput, updateObj}) => {
-    const [isEmpty, setEmpty] = useState(false);
     const [value, setValue] = useState('');
     const [isChecked, setChecked] = useState(false);
 
+    // изменить название поля
     const isSurely = (obj.name[obj.name.length - 1] === '?') ? true : false;
     const newName = (isSurely) ? obj.name.slice(0, -1) : obj.name;
     const arrRadio = (obj.type.includes('|')) ?  obj.type.split('|') : [];
 
+    // очистить поля ввода
     useEffect(() => {
         if (clearInput) setValue('');
     }, [clearInput]);
 
+    // обновить значение поля в объекте
     const changeValue = (value: string, isArr?: boolean) => {
+        setValue(value);
         if (isArr) {
             const addArr = value.split(', ');
-            setValue(value);
             updateObj(obj.name, addArr);
-        } else {
-            setValue(value);
+        } 
+        else {
             updateObj(obj.name, value);
         }
     }
 
+    // обновить значение checkbox в объекте
     const changeCheckbox = () => {
         setChecked(!isChecked);
         updateObj(obj.name, !isChecked);

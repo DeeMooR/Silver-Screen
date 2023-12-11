@@ -77,6 +77,7 @@ function App() {
 
     const searchDate = useSelector(({store}) => store.search.date);
     if (searchDate === '') setDateStore(getArrDate()[0], dispatch);
+    
     return (
         <>
             <Routes>

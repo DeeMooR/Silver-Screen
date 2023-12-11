@@ -12,12 +12,18 @@ import './ResetPassword.css'
 const ResetPassword = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [isEmptyEmail, setIsEmptyEmail] = useState(false);
-    
-    const [modal, setModal] = useState(<div/>);
     const isLoading = useSelector(({store}) => store.isLoading);
 
+    const [modal, setModal] = useState(<div/>);
+    const [email, setEmail] = useState('');
+    const [isEmptyEmail, setIsEmptyEmail] = useState(false);
+
+    // убрать красное выделение если начал изменять
+    useEffect(() => {
+        setIsEmptyEmail(false);
+    },[email])
+
+    // сбросить пароль либо подсветить поле красным
     const clickButton = () => {
         if (email === '') {
             setIsEmptyEmail(true);
@@ -25,9 +31,6 @@ const ResetPassword = () => {
         }
         dispatch(RESET_PASSWORD(navigate, email, setModal));
     }
-    useEffect(() => {
-        setIsEmptyEmail(false);
-    },[email])
 
     return (
         <PageFormTemplate page='Reset password'>

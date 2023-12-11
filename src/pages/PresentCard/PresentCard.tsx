@@ -18,21 +18,40 @@ import './PresentCard.css'
 const PresentCard = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    const userId = useSelector(({storeUser}) => storeUser.user.id);
+
     const arrGiftCards: ICard[] = useSelector(({storePages}) => storePages.cards);
     const arrCardSelect: IDataCardSelect[] = useSelector(({storeUser}) => storeUser.card_select);
+    const arrPageTitle = useSelector(({storePages}) => storePages.pageTitles);
+    const userId = useSelector(({storeUser}) => storeUser.user.id);
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
-    const [modal, setModal] = useState(<div/>);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
     const token = localStorage.getItem('access');
 
-    const arrPageTitle = useSelector(({storePages}) => storePages.pageTitles);
+    const [modal, setModal] = useState(<div/>);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    
     const pageTitle = arrPageTitle.find((item: IPageTitle) => item.page === "presentcard");
 
+    // очистить корзину и получить данные с бд
+    useEffect(() => {
+        window.scrollTo({top: 0});
+        dispatch({ type: "CLEAR_CARD_SELECT" });
+
+        const fetchData = async () => {
+            await dispatch({ type: "SET_LOADING_PAGE" });
+            if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
+            if (!arrPageTitle.length) await dispatch(GET_PAGE_TITLES(setModal));
+            await dispatch({ type: "SET_LOADING_PAGE" });
+        };
+        fetchData();
+    },[])
+
+    // перейти на страницу 'Sign-in'
     const clickSignIn = () => {
         navigate('/sign-in', {state: {fromPage: '/presentcard'}});
     }
+
+    // оплатить карту
     const clickPay = () => {
         setModalIsOpen(true);
         arrCardSelect.map((item) => {
@@ -45,19 +64,6 @@ const PresentCard = () => {
             dispatch(ADD_MY_CARD(userId, item.card_id, myCard, setModal));
         })
     }
-
-    useEffect(() => {
-        window.scrollTo({top: 0});
-        dispatch({ type: "CLEAR_CARD_SELECT" });
-
-        const fetchData = async () => {
-            dispatch({ type: "SET_LOADING_PAGE" });
-            if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
-            if (!arrPageTitle.length) await dispatch(GET_PAGE_TITLES(setModal));
-            dispatch({ type: "SET_LOADING_PAGE" });
-        };
-        if (!arrGiftCards.length) fetchData();
-    },[])
 
     return (
         <PageTemplate>

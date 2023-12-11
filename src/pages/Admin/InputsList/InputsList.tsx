@@ -13,6 +13,7 @@ const InputsList:FC<IIputsList> = ({title, list, setObjAdmin}) => {
     const [objValues, setObjValues] = useState<{ [key: string]: any }>({});
     const [clearInput, setClearInput] = useState(false);
 
+    // установить новый пустой объект и вернуть его
     useEffect(() => {
         setClearInput(true);
         const newObj: { [key: string]: any } = {};
@@ -25,6 +26,7 @@ const InputsList:FC<IIputsList> = ({title, list, setObjAdmin}) => {
         setObjAdmin(newObj);
     }, [list]);
 
+    // обновить объект введённых данных
     const updateObj = (field: string, value: any) => {
         const newObj = { ...objValues, [field]: value };
         setClearInput(false);

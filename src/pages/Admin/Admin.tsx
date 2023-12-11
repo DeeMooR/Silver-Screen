@@ -6,7 +6,7 @@ import { AnyAction } from 'redux';
 import ButtonForm from 'src/components/ButtonForm';
 import InputsList from './InputsList';
 import { ADD_DATA, ADD_MOVIE_AND_GENRES, ADD_SEANCE_AND_PLACES, CHAGE_CARD_STATUS, GET_ROOMS } from 'src/actions/actions';
-import { ITable, tables } from 'src/helpers'
+import { ITable, checkFullObjIsFill, tables } from 'src/helpers'
 import { IForeignKeys, IRoom } from 'src/interfaces';
 import './Admin.css'
 
@@ -16,13 +16,21 @@ const Admin = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
     const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
+
     const [modal, setModal] = useState(<div/>);
-    const [active, setActive] = useState<ITable>(tables[0]);
     const [message, setMessage] = useState('');
+    const [active, setActive] = useState<ITable>(tables[0]);
+    
+    // записываются заполненные поля
     const [primaryKeys, setPrimaryKeys] = useState({});
     const [foreignKeys, setForeignKeys] = useState<IForeignKeys>({});
     const [fields, setFields] = useState<Record<string, any>>({});
+  
+    useEffect(() => {
+        dispatch(GET_ROOMS(setModal));
+    },[])
 
+    // очистить поля и перейти на другую секцию
     const clickOption = (item: ITable) => {
         setActive(item);
         setMessage('');
@@ -31,32 +39,33 @@ const Admin = () => {
         setFields({});
     }
 
-    const checkArrIsFill = (obj: Record<string, any>) => {
-        for (const key in obj) {
-            if (!key.includes('?')) {
-                const value = obj[key];
-                if (value === undefined || value === null || (Array.isArray(value) && value.length === 0) || (typeof value === 'string' && value.trim() === '')) {
-                    setMessage('Заполните обязательные поля!');
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
+    // добавить данные на бд
     const clickSend = () => {
         console.log('Primary Keys:', primaryKeys);
         console.log('Foreign Keys:', foreignKeys);
         console.log('Fields:', fields);
 
-        if (!checkArrIsFill(fields) || !checkArrIsFill(primaryKeys) || !checkArrIsFill(foreignKeys)) return;
-        setMessage('');
+        // проверка все ли обязательные поля заполнены
+        if (!checkFullObjIsFill(fields) || !checkFullObjIsFill(primaryKeys) ||!checkFullObjIsFill(foreignKeys)) {
+            setMessage('Заполните обязательные поля!');
+            return;
+        }
+
+        // удаляем '?' из названий полей
         const changedFiels: Record<string, any> = {};
         for (const key in fields) {
             const newKey = key.endsWith('?') ? key.slice(0, -1) : key;
             changedFiels[newKey] = fields[key];
         }
 
+        // добавить фильм и жанры
+        if (active.title === 'movie') {
+            const genres = foreignKeys.genres;
+            if (genres) dispatch(ADD_MOVIE_AND_GENRES(changedFiels, genres, setMessage));
+            else setMessage('Ошибка');
+            return;
+        }
+        // добавить сеанс и места
         if (active.title === 'seance') {
             const room = (foreignKeys.room_id) ? foreignKeys.room_id : '';
             const objRoom = arrRooms.find((item) => item.id === +room);
@@ -64,12 +73,7 @@ const Admin = () => {
             else setMessage('Ошибка');
             return;
         }
-        if (active.title === 'movie') {
-            const genres = foreignKeys.genres;
-            if (genres) dispatch(ADD_MOVIE_AND_GENRES(changedFiels, genres, setMessage));
-            else setMessage('Ошибка');
-            return;
-        }
+        // изменить статус карты пользователя
         if (active.title === 'change card status') {
             const user_id = foreignKeys.user_id;
             const number_card = foreignKeys.number_card;
@@ -78,19 +82,17 @@ const Admin = () => {
             return;
         }
 
+        // добавить данные
         const url = (active.url) ? active.url : active.title;
         const objBody = {...primaryKeys, ...changedFiels};
         dispatch(ADD_DATA(url, objBody, foreignKeys, setMessage));
     }
 
+    // выход из аккаунта админа
     const clickBack = () => {
         navigate('/sign-in', {state: {fromPage: 'admin'}});
         localStorage.removeItem('isAdmin')
     }
-
-    useEffect(() => {
-        dispatch(GET_ROOMS(setModal));
-    },[])
 
     return (
         <div className='admin__wrapper'>

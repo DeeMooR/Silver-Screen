@@ -12,32 +12,34 @@ import './AccountBuy.css'
 
 const AccountBuy = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const arrGiftCards: ICard[] = useSelector(({storePages}) => storePages.cards);
     const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
-    const arrMyCards: IDataMyCard[] = useSelector(({storeUser}) => storeUser.my_card);
-    const arrMyMovies: IDataMyMovie[] = useSelector(({storeUser}) => storeUser.my_movie);
     const userId = useSelector(({storeUser}) => storeUser.user.id);
     const isLoading = useSelector(({store}) => store.isLoading);
+
+    const arrMyCards: IDataMyCard[] = useSelector(({storeUser}) => storeUser.my_card);
+    const arrMyMovies: IDataMyMovie[] = useSelector(({storeUser}) => storeUser.my_movie);
     const [modal, setModal] = useState(<div/>);
 
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
-
     useEffect(() => {
+        window.scrollTo({ top: 0 });
         const fetchData = async () => {
-            window.scrollTo({ top: 0 });
             dispatch({ type: "SET_LOADING" });
             if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
-            if (!arrMyCards.length) await dispatch(GET_MY_CARDS_MOVIES(userId, setModal));
             if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
             if (!arrRooms.length) await dispatch(GET_ROOMS(setModal));
+            if (!arrMyCards.length || !arrMyMovies.length) await dispatch(GET_MY_CARDS_MOVIES(userId, setModal));
             dispatch({ type: "SET_LOADING" });
         };
         fetchData();
     },[])
 
+    // отобразить фильмы в обратном порядке
     useEffect(() => {
         arrMyMovies.reverse();
         arrMyMovies.forEach(my_movie => {
+            // получаем данные о сеансах куленных фильмов
             const movie_id = my_movie.movie_id;
             const date = my_movie.date;
             const findMovie = arrMovies.find(movie => movie.id === movie_id);
@@ -47,6 +49,8 @@ const AccountBuy = () => {
             }
         })
     },[arrMyMovies])
+
+    // отобразить карты в обратном порядке
     useEffect(() => {
         arrMyCards.reverse();
     },[arrMyCards])

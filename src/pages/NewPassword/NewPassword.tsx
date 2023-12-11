@@ -12,14 +12,20 @@ import './NewPassword.css'
 const NewPassword = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-
-    const [isMismatch, setIsMismatch] = useState(false);
-    const [modal, setModal] = useState(<div/>);
     const isLoading = useSelector(({store}) => store.isLoading);
     const { uid, token } = useParams();
 
+    const [modal, setModal] = useState(<div/>);
+    const [isMismatch, setIsMismatch] = useState(false);
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+    // убрать красное выделение если начал изменять
+    useEffect(() => {
+        setIsMismatch(false);
+    },[password, confirmPassword])
+
+    // сбросить пароль либо подсветить красным поля
     const clickButton = () => {
         if (password !== confirmPassword) {
             setIsMismatch(true);
@@ -27,9 +33,6 @@ const NewPassword = () => {
         }
         if (uid && token) dispatch(RESET_PASSWORD_CONFIRM(navigate, uid, token, password, setModal));
     }
-    useEffect(() => {
-        setIsMismatch(false);
-    },[password, confirmPassword])
 
     return (
         <PageFormTemplate page='New password'>

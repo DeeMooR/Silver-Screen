@@ -17,24 +17,27 @@ interface ISignInUp {
 const SignInUp:FC<ISignInUp> = ({page}) => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
+    const location = useLocation();
+
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
-    const arrMovieIsFilled = (arrMovies.length) ? true : false;
+    const isLoading = useSelector(({store}) => store.isLoading);
+    const [modal, setModal] = useState(<div/>);
     
+    // State для хранения введённой информации
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     
+    // State для подсвечивания красным
     const [isEmptyName, setIsEmptyName] = useState(false);
     const [isEmptyEmail, setIsEmptyEmail] = useState(false);
     const [isMismatch, setIsMismatch] = useState(false);
-
-    const [modal, setModal] = useState(<div/>);
-    const isLoading = useSelector(({store}) => store.isLoading);
-
-    const location = useLocation();
+    
+    const arrMovieIsFilled = (arrMovies.length) ? true : false;
     const fromPage = (location.state && location.state.fromPage) ? location.state.fromPage : '';
 
+    // переход на страницу 'Admin', регистрация или авторизация
     const clickButton = () => {
         if (email === 'admin' && password === 'admin') {
             localStorage.setItem('isAdmin', 'true');
@@ -54,6 +57,7 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
         }
     }
 
+    // убрать красное выделение если начал изменять
     useEffect(() => {
         setIsMismatch(false);
     },[password, confirmPassword])

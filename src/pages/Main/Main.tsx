@@ -18,40 +18,30 @@ import slider_background from "src/icons/afisha_background.svg"
 
 const Main = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
-    const arrSliderSwiper: ISlide[] = useSelector(({storePages}) => storePages.slider);
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
-
+    const arrNews: INews[] = useSelector(({storePages}) => storePages.news);
+    const arrSliderSwiper: ISlide[] = useSelector(({storePages}) => storePages.slider);
+    const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
-    console.log(getArrDate()[0]);
-    dispatch({ type: "CLEAR_SEARCH", payload: getArrDate()[0] });
-    const [modal, setModal] = useState(<div/>);
 
-    const arrNews = useSelector(({storePages}) => storePages.news);
+    const [modal, setModal] = useState(<div/>);
     const pageNews = arrNews.filter((item: INews) => item.page === "main");
 
+    // очистить фильтры, получить данные с бд
     useEffect(() => {
         window.scrollTo({top: 0});
+        dispatch({ type: "CLEAR_SEARCH", payload: getArrDate()[0] });
         dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: "already" });
+        
         const fetchData = async () => {
-            if (!arrMovies.length) {
-                await dispatch({ type: "SET_LOADING_PAGE" });
-                await dispatch(GET_MOVIES(setModal));
-                if (!arrSliderSwiper.length) await dispatch(GET_SLIDER(setModal));
-                await dispatch({ type: "SET_LOADING_PAGE" });
-
-                await dispatch({ type: "SET_LOADING" });
-                if (!arrNews.length) await dispatch(GET_NEWS(setModal));
-                dispatch({ type: "SET_LOADING" });
-            } else {
-                await dispatch({ type: "SET_LOADING_PAGE" });
-                if (!arrSliderSwiper.length) await dispatch(GET_SLIDER(setModal));
-                await dispatch({ type: "SET_LOADING_PAGE" });
-                await dispatch({ type: "SET_LOADING" });
-                if (!arrNews.length) await dispatch(GET_NEWS(setModal));
-                dispatch({ type: "SET_LOADING" });
-            }
+            await dispatch({ type: "SET_LOADING_PAGE" });
+            if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
+            if (!arrSliderSwiper.length) await dispatch(GET_SLIDER(setModal));
+            await dispatch({ type: "SET_LOADING_PAGE" });
+            await dispatch({ type: "SET_LOADING" });
+            if (!arrNews.length) await dispatch(GET_NEWS(setModal));
+            await dispatch({ type: "SET_LOADING" });
         };
         fetchData();
     },[])

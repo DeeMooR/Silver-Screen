@@ -12,7 +12,7 @@ import After10pm from 'src/components/After10pm';
 import RowSeats from 'src/components/RowSeats';
 import Button from 'src/components/Button';
 import { GET_MOVIES, GET_ROOMS, GET_SEAT_TYPES, GET_SEANCES_ONE_MOVIE, BUY_MY_SEAT_SELECT, GET_MY_SEAT_SELECT } from 'src/actions/actions';
-import { addDayOfWeek, formateDateItem, getAudio, getTimePlusDuration } from 'src/helpers';
+import { addDayOfWeek, formateDateItem, getAudio, getTimePlusDuration, setDateStore } from 'src/helpers';
 import { IDataSeatSelect, IMovie, IRoom, IRow, ISeatType } from 'src/interfaces';
 import './BuyTicketPage.css'
 
@@ -24,33 +24,60 @@ import screen from "src/icons/screen.png"
 const BuyTicketPage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    const {id = '', date, seance} = useParams<{id: string, date: string, seance: string}>();
-    const userId = useSelector(({storeUser}) => storeUser.user.id);
-    const isLoading = useSelector(({store}) => store.isLoading);
-    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
     const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
     const arrSeatSelect: IDataSeatSelect[] = useSelector(({storeUser}) => storeUser.my_seat_select);
-    let exampleImage;
-    if (arrSeatTypes.length) exampleImage = arrSeatTypes[0].image;
-    
+    const userId = useSelector(({storeUser}) => storeUser.user.id);
+    const isLoading = useSelector(({store}) => store.isLoading);
+    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
     const token = localStorage.getItem('access');
+    
+    const {id = '', date, seance} = useParams<{id: string, date: string, seance: string}>();
     const newId = id || '';
     const newDate = date || '';
     const newSeance = seance || '';
-
+    
     const [modal, setModal] = useState(<div/>);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalTextButtonIsOpen, setModalTextButtonIsOpen] = useState(false);
     const [modalPayIsOpen, setModalPayIsOpen] = useState(false);
-
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
+    
     const movie = arrMovies.find(movie => movie.id === +newId);
-   
     const objDate = movie?.schedule.find((item) => item.date === newDate);
     const objSeance = objDate?.seances.find((item) => item.id === +newSeance);
-    const objRoom = arrRooms.find((item) => item.id === objSeance?.room_id);       // объект room: id, cost_single, cost_sofa, rows
+    const objRoom = arrRooms.find((item) => item.id === objSeance?.room_id);
+    
+    const fullURL = window.location.href;
+    const movieURL = '/afisha' + fullURL.split('buy-ticket')[1].split('/').slice(0, 2).join('/');
+    const exampleImage = (arrSeatTypes.length) ? arrSeatTypes[0].image : '';
+    const timeEnd = (movie && objSeance) ? getTimePlusDuration(objSeance?.time || '', movie.duration) : '';
 
+    // получить данные с бд
+    useEffect(() => {
+        setDateStore(addDayOfWeek(newDate), dispatch);
+        window.scrollTo({top: 0});
+        const fetchData = async () => {
+            await dispatch({ type: "SET_LOADING_PAGE" });
+            if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
+            if (!arrRooms.length) await dispatch(GET_ROOMS(setModal));
+            if (!arrSeatTypes.length) await dispatch(GET_SEAT_TYPES(setModal));
+            await dispatch({ type: "SET_LOADING_PAGE" });
+        };
+        fetchData();
+    },[])
+
+    // получить сеансы фильма с бд
+    useEffect(() => {
+        if (movie && objDate && objDate.seances.length === 0) dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
+    }, [movie])
+
+    // получить выбранные места с бд
+    useEffect(() => {
+        if (userId) dispatch(GET_MY_SEAT_SELECT(userId, +newSeance, setModal));
+    }, [userId])
+
+    // получить все типы мест на этом сеансе
     const arrRoomSeatTypes = objRoom?.rows
         .reduce((types: { type: string; cost: number }[], item: IRow) => {
             if (!types.some((typesItem) => typesItem.type === item.type_id)) {
@@ -60,48 +87,14 @@ const BuyTicketPage = () => {
             return types;
         }, [])
         .sort((a, b) => a.cost - b.cost);
-
-    const fullURL = window.location.href;
-    const movieURL = '/afisha' + fullURL.split('buy-ticket')[1].split('/').slice(0, 2).join('/');
-
+        
+    // переход на страницу 'Sign-in'
     const clickSignIn = () => {
-        const fullURL = window.location.href
         const url = fullURL.split('3000')[1];
         navigate('/sign-in', {state: {fromPage: url}});
     }
 
-    
-    useEffect(() => {
-        window.scrollTo({top: 0});
-        const fetchData = async () => {
-            if (!arrMovies.length) {
-                await dispatch({ type: "SET_LOADING_PAGE" });
-                await dispatch(GET_MOVIES(setModal));
-                await arrMovies.forEach(movie => {
-                    dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
-                })
-                if (!arrRooms.length) await dispatch(GET_ROOMS(setModal));
-                if (!arrSeatTypes.length) await dispatch(GET_SEAT_TYPES(setModal));
-                dispatch({ type: "SET_LOADING_PAGE" });
-            } else {
-                dispatch({ type: "SET_LOADING_PAGE" });
-                if (!arrRooms.length) await dispatch(GET_ROOMS(setModal));
-                if (!arrSeatTypes.length) await dispatch(GET_SEAT_TYPES(setModal));
-                dispatch({ type: "SET_LOADING_PAGE" });
-            }
-        };
-        fetchData();
-    },[])
-
-    useEffect(() => {
-        if (userId) dispatch(GET_MY_SEAT_SELECT(userId, +newSeance, setModal));
-    }, [userId])
-
-    useEffect(() => {
-        if (movie && objDate && objDate.seances.length === 0) dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
-    }, [movie])
-
-
+    // купить билет
     const clickPay = async () => {
         setModalPayIsOpen(true);
         for (const item of arrSeatSelect) {
@@ -113,12 +106,10 @@ const BuyTicketPage = () => {
             };
             await dispatch(BUY_MY_SEAT_SELECT(userId, +newId, +newSeance, item.seat_type, item.id, obj, setModal));
         }
-        await dispatch(GET_SEANCES_ONE_MOVIE(+newId, setModal));
         await dispatch({ type: "CLEAR_MY_SEAT_SELECT" });
+        // отобразить купленные билеты занятыми
+        await dispatch(GET_SEANCES_ONE_MOVIE(+newId, setModal));
     }
-
-    let timeEnd = '';
-    if (movie && objSeance) timeEnd = getTimePlusDuration(objSeance?.time || '', movie.duration);
 
     return (
         <>

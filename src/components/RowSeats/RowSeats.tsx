@@ -25,9 +25,8 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
     const token = localStorage.getItem('access');
 
     // для изменения мест нужного сеанса
-    const {id, date, seance} = useParams<{id: string, date: string, seance: string}>();
+    const {id, seance} = useParams<{id: string, date: string, seance: string}>();
     const newId = (id) ? +id : 0;
-    const newDate = (date) ? date : '';
     const newSeance = (seance) ? +seance : 0;
     
     // чтобы получить image
@@ -35,48 +34,41 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
     const objRow = objRoom?.rows[indexRow];
     const objType = arrSeatTypes.find((item: ISeatType) => item.type === objRow?.type_id);
 
-    // чтобы дойти до schedule
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);   //??
-    const movie = arrMovies.find(movie => movie.id === newId);  //??
-    const schedule = movie?.schedule.find(item => item.date === newDate);   //??
-
     // изменение места
     const clickSeat = (number: number, indexRow: number, indexColumn: number) => {
-        if (schedule) {     //??
-            // return, если место куплено
-            if (number === 1 || number === userId || (number !== -userId && number < 0)) return;
+        // return, если место куплено
+        if (number === 1 || number === userId || (number !== -userId && number < 0)) return;
 
-            // переход на страницу 'sign-in'
-            if (!token) {
-                setModalIsOpen(true);
-                return;
+        // переход на страницу 'sign-in'
+        if (!token) {
+            setModalIsOpen(true);
+            return;
+        }
+
+        const row = indexRow + 1;
+        const column = indexColumn + 1;
+
+        // выбрать или снять выбор места
+        if (number === 0) {
+            const add_my_seat_select = {
+                i_row: row,
+                i_column: column,
+                seat_type: objType?.type || ''
             }
-
-            const row = indexRow + 1;
-            const column = indexColumn + 1;
-
-            // выбрать или снять выбор места
-            if (number === 0) {
-                const add_my_seat_select = {
+            dispatch(ADD_MY_SEAT_SELECT(userId, newId, newSeance, add_my_seat_select, setModal));
+        } else {
+            const objSeat = arrSeatSelect.find((seat: IDataSeatSelect) => 
+                seat.i_row === row && seat.i_column === column && seat.seance_id === newSeance
+            );
+            if (objSeat) {
+                const data = {
                     i_row: row,
                     i_column: column,
-                    seat_type: objType?.type || ''
+                    seat_id: objSeat.id,
+                    movie_id: newId,
+                    seance_id: newSeance
                 }
-                dispatch(ADD_MY_SEAT_SELECT(userId, newId, newSeance, add_my_seat_select, setModal));
-            } else {
-                const objSeat = arrSeatSelect.find((seat: IDataSeatSelect) => 
-                    seat.i_row === row && seat.i_column === column && seat.seance_id === newSeance
-                );
-                if (objSeat) {
-                    const data = {
-                        i_row: row,
-                        i_column: column,
-                        seat_id: objSeat.id,
-                        movie_id: newId,
-                        seance_id: newSeance
-                    }
-                    dispatch(REMOVE_MY_SEAT_SELECT(data, setModal));
-                }
+                dispatch(REMOVE_MY_SEAT_SELECT(data, setModal));
             }
         }
     }

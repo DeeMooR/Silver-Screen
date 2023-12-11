@@ -17,34 +17,22 @@ import iconPlay from "src/icons/play.png"
 
 const MoviePage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const [isModal, setIsModal] = useState(false);
-    let { id = '' } = useParams<{ id: string }>();
-
+    const location = useLocation();
+    
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const searchDate = useSelector(({store}) => store.search.date);
-    const movie = arrMovies.find(movie => movie.id == +id);
-    
-    useEffect(() => {
-        if (movie) {
-            const schedule = movie.schedule.find(item => item.date === searchDate.split(', ')[1]); 
-            if (schedule?.seances.length === 0) dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
-
-            const isAlready = movie?.schedule.some((item) => getArrDates7Days().includes(item.date));
-            if (searchDate === getArrDate()[0]) {
-                if (isAlready) {
-                    dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'already' });
-                    setDateStore(getArrDate()[0], dispatch);
-                } else {
-                    dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'soon' });
-                    setDateStore(getArrSoonDatesWithWeek()[0], dispatch);
-                }
-            }
-        }
-    }, [movie])
-
-    const [modal, setModal] = useState(<div/>);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
 
+    const [modal, setModal] = useState(<div/>);
+    const [isModal, setIsModal] = useState(false);
+
+    // получить объект фильма
+    let { id = '' } = useParams<{ id: string }>();
+    const movie = arrMovies.find(movie => movie.id == +id);
+    const isAlready = movie?.schedule.some((item) => getArrDates7Days().includes(item.date));
+    let fullFirstDate: string | undefined;
+    
+    // получить данные с бд
     useEffect(() => {
         if (id) dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: +id });
         const fetchData = async () => {
@@ -55,22 +43,44 @@ const MoviePage = () => {
         fetchData();
     }, []);
 
-    const location = useLocation();
+    useEffect(() => {
+        if (movie && searchDate) {
+            const schedule = movie.schedule.find(item => item.date === searchDate.split(', ')[1]); 
+            if (schedule?.seances.length === 0) dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
+
+        }
+    }, [movie, searchDate]);
+
+    useEffect(() => {
+        if (movie) {
+            if (isAlready) {
+                dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'already' });
+                if (searchDate === getArrSoonDatesWithWeek()[0]) {
+                    fullFirstDate = getArrDate().find(item => {
+                        if (movie.schedule[0].date === item.split(', ')[1]) return true;
+                        return false;
+                    });
+                }
+            } else {
+                dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'soon' });
+                if (searchDate === getArrDate()[0]) {
+                    fullFirstDate = getArrSoonDatesWithWeek().find(item => {
+                        if (movie.schedule[0].date === item.split(', ')[1]) return true;
+                        return false;
+                    });
+                }
+            }
+            if (fullFirstDate) setDateStore(fullFirstDate, dispatch);
+        }
+    }, [isAlready]);
+    
+    // ссылка для возвращения
     let customBackStr;
     if (location.state && location.state.fromPage === '/buy-ticket') customBackStr = '/afisha';
     else if (!location.state) customBackStr = '/';
     else customBackStr = '';
 
-
-    let fullFirstDate;
-    if (location.state && location.state.fromPage === 'main') {
-        fullFirstDate = getArrDate().find(item => {
-            if (movie && movie.schedule[0].date === item.split(', ')[1]) return true;
-            return false;
-        });
-    }
-    if (fullFirstDate) setDateStore(fullFirstDate, dispatch);
-    
+    // ссылка для видео, длительность фильма
     let videoId, newDuration;
     if (movie) {
         videoId = movie.trailer.split("v=")[1];

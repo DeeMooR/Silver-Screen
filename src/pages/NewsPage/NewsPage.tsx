@@ -11,14 +11,15 @@ import './NewsPage.css'
 
 const NewsPage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
-    const [modal, setModal] = useState(<div/>);
-    
-    const arrPageTitle = useSelector(({storePages}) => storePages.pageTitles);
     const arrNews = useSelector(({storePages}) => storePages.news);
+    const arrPageTitle = useSelector(({storePages}) => storePages.pageTitles);
+    const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
+    
+    const [modal, setModal] = useState(<div/>);
     const pageTitle = arrPageTitle.find((item: IPageTitle) => item.page === "news");
     const pageNews = arrNews.filter((item: INews) => item.page === "news");
 
+    // получить заголовки и новости с бд
     useEffect(() => {
         window.scrollTo({top: 0});
         const fetchData = async () => {
