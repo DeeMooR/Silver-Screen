@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import ScheduleItem from './ScheduleItem/ScheduleItem';
-import { filterSeancesInMoviePage } from 'src/filterMovies';
+import { filterSeancesInMoviePage } from 'src/helpers/helperFilterMovies';
 import { IMovie, ISeance } from 'src/interfaces'
 import './Schedule.css'
 
@@ -20,9 +20,7 @@ const Schedule:FC<ISchedule> = ({movie}) => {
 
     useEffect(() => {
         const updateSeances = async () => {
-            console.log(movie, searchDate, searchVideo, searchAudio, searchLanguage)
             const updateMovie = await filterSeancesInMoviePage(movie, searchDate, searchVideo, searchAudio, searchLanguage);
-            console.log(updateMovie)
             await setFilteredMovie(updateMovie);
             await setAlready(true);
         };

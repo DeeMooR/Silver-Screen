@@ -35,7 +35,7 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
     const [isMismatch, setIsMismatch] = useState(false);
     
     const arrMovieIsFilled = (arrMovies.length) ? true : false;
-    let fromPage = '';
+    let fromPage = '/';
     if (location.state && location.state.fromPage) {
         fromPage = (location.state.fromPage === 'admin') ? '/' : location.state.fromPage;
     }
@@ -48,12 +48,16 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
             return;
         }
 
-        if (page === 'Sign Up' && name === '') setIsEmptyName(true);
-        if (page === 'Sign Up' && (password !== confirmPassword || password === '' || confirmPassword === '')) setIsMismatch(true);
-        if (page === 'Sign In' && password === '') setIsMismatch(true);
-        if (page === 'Sign In' && password !== '') setIsMismatch(false);    // если после красного password в Sign Up перейти в Sign In и нажать на button
+        // проверяем заполненность полей
         if (email === '') setIsEmptyEmail(true);
+        if (page === 'Sign Up' && name === '') setIsEmptyName(true);
+        if (page === 'Sign Up' && (password !== confirmPassword || password === '')) setIsMismatch(true);
+        if (page === 'Sign In' && password === '') setIsMismatch(true);
+
+        // если после красного password в Sign Up перейти в Sign In и нажать на button
+        if (page === 'Sign In' && password !== '') setIsMismatch(false);
         
+        // отправляем данные
         if (page === 'Sign In' && email !== '' && password !== '') dispatch(SIGN_IN(navigate, email, password, fromPage, arrMovieIsFilled, setModal));
         if (page === 'Sign Up' && name !== '' && email !== '' && password !== '' && password === confirmPassword) {
             dispatch(CREATE_USER(navigate, {username: name, email, password}, setModal));

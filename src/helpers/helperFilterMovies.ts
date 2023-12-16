@@ -1,4 +1,4 @@
-import { IMovie, ISeance } from "./interfaces";
+import { IMovie, ISeance } from "src/interfaces";
 
 export const filterSeancesInMoviePage = (movie: IMovie, searchDate: string, arrVideo: string[], arrAudio: string[], arrLang: string[]) => {
     let arrSeances: ISeance[] = [];
@@ -30,7 +30,6 @@ export const filterSeancesInMoviePage = (movie: IMovie, searchDate: string, arrV
 
     // Фильтрация по выбранным параметрам звука
     if (arrAudio.length) {
-        console.log('in audio')
         for (const item of arrAudio) {
             switch (item) {
             case 'Dolby Digital':

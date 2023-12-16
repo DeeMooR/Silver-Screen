@@ -85,6 +85,7 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
                         isEmpty={number === 0 ? true : false}
                         cursor={number === 0 || number == -userId ? 'pointer' : 'default'}
                         onClick={() => clickSeat(number, indexRow, indexColumn)}
+                        key={indexColumn}
                     />
                 ))}
                 <p className='rowSeats__number'>{indexRow + 1}</p>

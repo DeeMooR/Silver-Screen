@@ -1,8 +1,5 @@
-import { ICard } from 'src/interfaces';
-
 const initialState = {
     navActive: '',
-    idActiveMoviePage: '',
     search: {
         date: '',
         video: [],
@@ -20,12 +17,6 @@ const rootReducerMain = (state = initialState, action: any) => {
             return {
                 ...state,
                 navActive: action.payload
-            };
-        }
-        case 'SET_ID_ACTIVE_MOVIE_PAGE': {
-            return {
-                ...state,
-                idActiveMoviePage: action.payload
             };
         }
         case 'SET_SEARCH': {

@@ -4,7 +4,7 @@ import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import MovieCard from '../MovieCard';
 import NotFind from '../NotFind';
-import { getArrMoviesShow } from 'src/helpers';
+import { getArrMoviesShow } from 'src/helpers/helper';
 import { IMovie } from 'src/interfaces';
 import './SliderMovies.css';
 
@@ -80,21 +80,17 @@ const SliderMovies = () => {
             className="swiperMovies"
         >
             {arrMoviesShow.map((card: IMovie, i: number) => (
-                <>
                 <SwiperSlide key={i}>
                     <div className="slide__item">
                         <MovieCard obj={card} page='main' />
                     </div>
                 </SwiperSlide>
-                {i === arrMoviesShow.length - 1 && 
-                    <SwiperSlide className='slide__not-find'>
-                        <div>
-                            <NotFind page='main' />
-                        </div>
-                    </SwiperSlide>
-                }
-                </>
             ))} 
+            <SwiperSlide className='slide__not-find'>
+                <div>
+                    <NotFind page='main' />
+                </div>
+            </SwiperSlide>
         </Swiper>
     </>
     )

@@ -1,78 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
-import { getArrDate, setDateStore } from './helpers';
-import { decodeJwt, expToMinutes, updateAccessToken } from './updateToken';
-import { GET_MY_SEAT_SELECT, GET_USER } from './actions/actions';
+import { decodeJwt, expToMinutes, startTokenRefreshTimer } from './helpers/helperToken';
+import { getArrDate, setDateStore } from './helpers/helper';
+import { GET_USER } from './actions/actions';
 
+import Admin from './pages/Admin';
+import Account from './pages/Account';
+import SignInUp from './pages/SignInUp';
 import Main from './pages/Main';
-import MoviePage from './pages/MoviePage';
-import Entertainment from './pages/Entertainment';
 import Afisha from './pages/Afisha';
+import MoviePage from './pages/MoviePage';
+import BuyTicketPage from './pages/BuyTicketPage';
+import PresentCard from './pages/PresentCard';
+import Entertainment from './pages/Entertainment';
 import VisaPage from './pages/VisaPage';
 import NewsPage from './pages/NewsPage';
-import SignInUp from './pages/SignInUp';
-import SuccessOrNot from './pages/SuccessOrNot';
+import Page404 from './pages/Page404/Page404';
 import ActivateUser from './components/ActivateUser';
 import CheckEmail from './pages/CheckEmail/CheckEmail';
+import SuccessOrNot from './pages/SuccessOrNot';
 import ResetPassword from './pages/ResetPassword';
 import NewPasswordSuccess from './pages/NewPasswordSuccess';
 import NewPassword from './pages/NewPassword/NewPassword';
-import Account from './pages/Account';
-import Page404 from './pages/Page404/Page404';
-import PresentCard from './pages/PresentCard';
-import BuyTicketPage from './pages/BuyTicketPage';
-import Admin from './pages/Admin';
 
 function App() {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
+    const searchDate = useSelector(({store}) => store.search.date);
+
     const token = localStorage.getItem('access');
     const isAdmin = localStorage.getItem('isAdmin') ? true : false;
-
-    if (token) {
-        const fetchData = async () => {
-            await dispatch(GET_USER(token));
-        };
-        fetchData();
-    }
-
-    const startTokenRefreshTimer = () => {
-        if (token) {
-            const expirationTimestamp = decodeJwt(token).payload.exp;
-            const currentTime = Date.now();
-            const timeUntilExpiration = expirationTimestamp*1000 - currentTime;
-    
-            if(timeUntilExpiration > 20000) {
-                setInterval(updateAccessToken, timeUntilExpiration - 20000);
-            } else {
-                localStorage.removeItem('access');
-            }
-        }
-    };
-
-    if (token) {
-        const JWTData = decodeJwt(token);
-        console.log(JWTData);
-        let expTimestamp = JWTData.payload.exp;
-        let remainingMinutes = expToMinutes(expTimestamp)
-        console.log('remaining:' + remainingMinutes);
-    }
+    if (searchDate === '') setDateStore(getArrDate()[0], dispatch);
 
     useEffect(() => {
+        if (token) dispatch(GET_USER(token));
+    }, [token]);
+
+    // если истекло время переход на страницу 'Sign-in'
+    useEffect(() => {
         window.addEventListener('storage', (event) => {
-            console.log(event);
             if (event.key === 'access' && event.newValue === null) {
                 navigate("/sign-in");
             }
         });
-        startTokenRefreshTimer();
+        if (token) startTokenRefreshTimer(token);
     }, []);
 
-    const searchDate = useSelector(({store}) => store.search.date);
-    if (searchDate === '') setDateStore(getArrDate()[0], dispatch);
+    // оставшееся время действия токена
+    if (token) {
+        const JWTData = decodeJwt(token);
+        let expTimestamp = JWTData.payload.exp;
+        let remainingMinutes = expToMinutes(expTimestamp)
+        console.log('remaining:' + remainingMinutes);
+    }
     
     return (
         <>

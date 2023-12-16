@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { compareTimeNowStart, getAudio, getRoomVideo, getTodayDayMonthYear } from 'src/helpers'
+import { compareTimeNowStart, getAudio, getDatePoints, getRoomVideo, getTodayDate } from 'src/helpers/helper'
 import { ISeance } from 'src/interfaces'
 import './ScheduleItem.css'
 
@@ -15,7 +15,7 @@ const ScheduleItem:FC<IScheduleItem> = ({video, seance}) => {
     const searchDate = useSelector(({store}) => store.search.date).split(', ')[1];
     const {id} = useParams<{id: string}>();
 
-    const nowTimeMoreStart = (getTodayDayMonthYear() === searchDate) ? compareTimeNowStart(seance.time) : false;
+    const nowTimeMoreStart = (getDatePoints(getTodayDate()) === searchDate) ? compareTimeNowStart(seance.time) : false;
 
     // переход на страницу сеанса
     const clickSeance = () => {

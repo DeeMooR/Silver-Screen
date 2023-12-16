@@ -8,7 +8,7 @@ import HorizontalNews from 'src/components/HorizontalNews';
 import SliderSwiper from 'src/components/SliderSwiper';
 import SliderMovies from 'src/components/SliderMovies';
 import MainText from './MainText';
-import { getArrDate } from 'src/helpers';
+import { getArrDate } from 'src/helpers/helper';
 import { GET_MOVIES, GET_NEWS, GET_SLIDER } from 'src/actions/actions';
 import { IMovie, INews, ISlide } from 'src/interfaces';
 import { BackgroundSlider } from './styled';

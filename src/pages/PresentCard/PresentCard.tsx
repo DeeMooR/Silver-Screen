@@ -10,7 +10,7 @@ import ModalPay from 'src/components/ModalPay'
 import Button from 'src/components/Button'
 import Basket from 'src/components/Basket'
 import PageTemplate from 'src/components/PageTemplate'
-import { getDateIn180, getTodayDate } from 'src/helpers'
+import { getDateIn180, getDatePoints, getTodayDate } from 'src/helpers/helper'
 import { GET_GIFT_CARDS, ADD_MY_CARD, GET_PAGE_TITLES } from 'src/actions/actions'
 import { ICard, IDataCardSelect, IAddMyCard, IPageTitle } from 'src/interfaces'
 import './PresentCard.css'
@@ -57,7 +57,7 @@ const PresentCard = () => {
         arrCardSelect.map((item) => {
             const myCard: IAddMyCard = {
                 number_card: item.number,
-                start: getTodayDate(),
+                start: getDatePoints(getTodayDate()),
                 end: getDateIn180(),
                 status: true
             }

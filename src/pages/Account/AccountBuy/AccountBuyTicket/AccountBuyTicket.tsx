@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { useSelector } from 'react-redux'
-import { compareTimeNowStart, getAudio, getTimePlusDuration, getTodayDayMonthYear } from 'src/helpers'
+import { compareTimeNowStart, getAudio, getDatePoints, getTimePlusDuration, getTodayDate } from 'src/helpers/helper'
 import { IDataMyMovie, IMovie, IRoom } from 'src/interfaces'
 import './AccountBuyTicket.css'
 
@@ -24,7 +24,7 @@ const AccountBuyTicket:FC<IAccountBuyTicket> = ({obj}) => {
     }
 
     // фильм уже начался?
-    const alreadyStart = (objSeance && getTodayDayMonthYear() === obj.date) ? compareTimeNowStart(objSeance?.time) : false;
+    const alreadyStart = (objSeance && getDatePoints(getTodayDate()) === obj.date) ? compareTimeNowStart(objSeance?.time) : false;
 
     return (
         <>

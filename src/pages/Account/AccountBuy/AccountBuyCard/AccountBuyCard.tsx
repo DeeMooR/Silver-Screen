@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { useSelector } from 'react-redux'
-import { compareDayNowEnd } from 'src/helpers'
+import { compareDayNowEnd } from 'src/helpers/helper'
 import { ICard, IDataMyCard } from 'src/interfaces'
 import './AccountBuyCard.css'
 

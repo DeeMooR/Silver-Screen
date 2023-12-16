@@ -12,7 +12,7 @@ import After10pm from 'src/components/After10pm';
 import RowSeats from 'src/components/RowSeats';
 import Button from 'src/components/Button';
 import { GET_MOVIES, GET_ROOMS, GET_SEAT_TYPES, GET_SEANCES_ONE_MOVIE, BUY_MY_SEAT_SELECT, GET_MY_SEAT_SELECT } from 'src/actions/actions';
-import { addDayOfWeek, formateDateItem, getAudio, getTimePlusDuration, setDateStore } from 'src/helpers';
+import { addDayOfWeek, formateDateItem, getAudio, getTimePlusDuration, setDateStore } from 'src/helpers/helper';
 import { IDataSeatSelect, IMovie, IRoom, IRow, ISeatType } from 'src/interfaces';
 import './BuyTicketPage.css'
 

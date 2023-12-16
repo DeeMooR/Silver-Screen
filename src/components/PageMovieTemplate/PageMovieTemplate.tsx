@@ -19,7 +19,7 @@ const PageMovieTemplate:FC<IPageMovieTemplate> = ({children, movie, customBack, 
     const navigate = useNavigate();
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const [isScrolled, setIsScrolled] = useState(false);
-console.log(customBack)
+    
     // изменяется header если был скролл
     useEffect(() => {
         const handleScroll = () => {

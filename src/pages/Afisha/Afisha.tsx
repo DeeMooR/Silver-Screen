@@ -9,8 +9,8 @@ import NotFind from 'src/components/NotFind'
 import Navigation from 'src/components/Navigation'
 import TitleWithSwitch from 'src/components/TitleWithSwitch'
 import HorizontalNews from 'src/components/HorizontalNews'
-import { getArrDate, getArrMoviesShow, getArrSoonDatesWithWeek, setDateStore } from 'src/helpers'
-import { filterMoviesInAfisha } from 'src/filterMovies'
+import { getArrDate, getArrMoviesShow, getArrSoonDatesWithWeek, setDateStore } from 'src/helpers/helper'
+import { filterMoviesInAfisha } from 'src/helpers/helperFilterMovies'
 import { GET_MOVIES, GET_NEWS, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions'
 import { IMovie, INews } from 'src/interfaces'
 import './Afisha.css'
@@ -38,9 +38,8 @@ const Afisha = () => {
     const arrMoviesShow = getArrMoviesShow(arrMovies, movieTypeSelect);
     const filteredMovies = filterMoviesInAfisha(arrMoviesShow, searchDate, searchVideo, searchAudio, searchLanguage);
 
-    // получуние нужных данных
+    // получение нужных данных
     useEffect(() => {
-        dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: null });
         window.scrollTo({top: 0});
         if (movieTypeSelect === 'already') setActivePage(1);
         else setActivePage(2);
@@ -48,9 +47,6 @@ const Afisha = () => {
         const fetchData = async () => {
             await dispatch({ type: "SET_LOADING_PAGE" });
             if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
-            await arrMovies.forEach(movie => {
-                dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
-            })
             await dispatch({ type: "SET_LOADING_PAGE" });
 
             if (!arrNews.length) {
@@ -61,6 +57,15 @@ const Afisha = () => {
         };
         fetchData();
     },[])
+
+    // переключение всех сеансов для фильтрации
+    useEffect(() => {
+        arrMovies.forEach(movie => {
+            if (movie.schedule[0].seances.length === 0) {
+                dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
+            }
+        })
+    },[arrMovies.length])
 
     // переключение между 'Сейчас' или 'Скоро в кино'
     useEffect(() => {

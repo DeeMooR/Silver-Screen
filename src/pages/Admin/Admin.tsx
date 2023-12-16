@@ -6,8 +6,8 @@ import { AnyAction } from 'redux';
 import ButtonForm from 'src/components/ButtonForm';
 import InputsList from './InputsList';
 import { ADD_DATA, ADD_MOVIE_AND_GENRES, ADD_SEANCE_AND_PLACES, CHAGE_CARD_STATUS, GET_ROOMS } from 'src/actions/actions';
-import { ITable, checkFullObjIsFill, tables } from 'src/helpers'
-import { IForeignKeys, IRoom } from 'src/interfaces';
+import { ITable, IForeignKeys, tables, checkFullObjIsFill } from 'src/helpers/helperAdmin';
+import { IRoom } from 'src/interfaces';
 import './Admin.css'
 
 import left from "src/icons/left.svg"
@@ -41,9 +41,6 @@ const Admin = () => {
 
     // добавить данные на бд
     const clickSend = () => {
-        console.log('Primary Keys:', primaryKeys);
-        console.log('Foreign Keys:', foreignKeys);
-        console.log('Fields:', fields);
 
         // проверка все ли обязательные поля заполнены
         if (!checkFullObjIsFill(fields) || !checkFullObjIsFill(primaryKeys) ||!checkFullObjIsFill(foreignKeys)) {

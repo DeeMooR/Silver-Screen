@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { ThunkDispatch } from "redux-thunk";
 import { IDataCardSelect, IDataSeatSelect, IUserTMS, IAddMyCard, IDataMyMovie, IRoom, INews } from "src/interfaces";
-import { modalShowMessege } from "src/helpersModal";
+import { modalShowMessege } from "src/helpers/helperModal";
 
 /* ---------  ACCOUNT  --------- */
 
@@ -29,7 +29,6 @@ export const GET_USER = (token: string) => {
 export const CREATE_USER = (navigate: any, userData: IUserTMS, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
-        console.log(userData)
         try {
             let activate = await fetch(
                 "https://studapi.teachmeskills.by/auth/users/",
@@ -97,7 +96,6 @@ export const SIGN_IN = (navigate: any, email: string, password: string, fromPage
                         }
                         if (fromPage) await navigate(`${fromPage}`);
                         else await navigate(-1);
-                        console.log({access, refresh});
                         localStorage.setItem("access", access);
                         localStorage.setItem("refresh", refresh);
                         dispatch({ type: "SET_LOADING" });
@@ -120,8 +118,6 @@ export const SIGN_IN = (navigate: any, email: string, password: string, fromPage
 export const RESET_PASSWORD = (navigate: any, email: string, setModal: (v: JSX.Element) => void) => {
     return async (dispatch: ThunkDispatch<any, {}, AnyAction>) => {
         dispatch({ type: "SET_LOADING" });
-        console.log('ku')
-        console.log(email)
         try {
             let response = await fetch(
                 "https://studapi.teachmeskills.by/auth/users/reset_password/",
@@ -202,7 +198,6 @@ export const GET_MY_CARDS_MOVIES = (userId: number, setModal: (v: JSX.Element) =
             )
             if (response.ok) {
                 const user = await response.json();
-                console.log(user.my_card)
                 dispatch({ type: "SET_MY_CARD", payload: user.my_card });
                 dispatch({ type: "SET_MY_MOVIE", payload: user.my_movie });
             } 
@@ -526,7 +521,6 @@ export const GET_GIFT_CARDS = (setModal: (v: JSX.Element) => void) => {
             )
             if (response.ok) {
                 const arrGiftCards = await response.json();
-                console.log(arrGiftCards);
                 dispatch({ type: "SET_GIFT_CARD", payload: arrGiftCards });
             } 
             else modalShowMessege(setModal, false);
@@ -696,7 +690,6 @@ export const ADD_SEANCE_AND_PLACES = (objBody: any, foreignKeys: any, objRoom: I
                 const sendSequentially = async () => {
                     for (const item of objRoom.rows) {
                         const row = new Array(item.seats).fill(0);
-                        console.log(row);
                         response = await fetch(
                             'http://localhost:8080/places',
                             {

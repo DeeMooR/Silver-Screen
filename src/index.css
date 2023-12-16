@@ -1,4 +1,4 @@
-/* nulling style */
+/*--------- NULLING STYLE ----------*/
 *{
 	padding: 0;
 	margin: 0;
@@ -33,7 +33,7 @@ ul li{list-style: none;}
 img{display: block; vertical-align: top;}
 h1,h2,h3,h4,h5,h6{font-family: 'Ubuntu'; font-weight:400;}
 
-/* other styles */
+/*--------- STYLES ---------*/
 
 body {
     margin: 0;
@@ -65,7 +65,7 @@ body::-webkit-scrollbar-thumb {
     min-height: 100%;
 }
 
-/* loader */
+/*--------- LOADER ---------*/
 
 .loaderPage {
     display: flex;
@@ -137,7 +137,7 @@ body::-webkit-scrollbar-thumb {
     }
 } 
 
-/* h1 - h6 */
+/*--------- H1 - H6 ---------*/
 
 h2 {
     font-size: 50px;

@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import InputAdmin from '../InputAdmin'
-import { IDataInputAdmin } from 'src/helpers'
+import { IDataInputAdmin } from 'src/helpers/helperAdmin'
 import './InputsList.css'
 
 interface IIputsList {

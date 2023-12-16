@@ -61,7 +61,6 @@ const rootReducerUser = (state = initialState, action: any) => {
             };
         }
         case 'SET_MY_CARD':  {
-            console.log(action.payload)
             return {
                 ...state,
                 my_card: action.payload

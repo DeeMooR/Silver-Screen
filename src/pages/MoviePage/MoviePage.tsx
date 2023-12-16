@@ -7,7 +7,7 @@ import PageMovieTemplate from 'src/components/PageMovieTemplate';
 import Navigation from 'src/components/Navigation';
 import Schedule from 'src/components/Schedule';
 import Modal from 'src/components/Modal';
-import { getArrDate, setDateStore, getArrDates7Days, getArrSoonDatesWithWeek } from 'src/helpers';
+import { getArrDate, setDateStore, getArrDates7Days, getArrSoonDatesWithWeek } from 'src/helpers/helper';
 import { GET_MOVIES, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions';
 import { IMovie } from 'src/interfaces';
 import { StyledTrailer } from './styled'
@@ -35,7 +35,6 @@ const MoviePage = () => {
     
     // получить данные с бд
     useEffect(() => {
-        if (id) dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: +id });
         const fetchData = async () => {
             await dispatch({ type: "SET_LOADING_PAGE" });
             if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
@@ -43,12 +42,13 @@ const MoviePage = () => {
         };
         fetchData();
 
-        // ссылка для возвращения
+        // ссылка для иконки 'Назад'
         if (location.state && location.state.fromPage === '/buy-ticket') setCustomBackStr('/afisha');
         else if (!location.state) setCustomBackStr('/');
         else setCustomBackStr('');
     }, []);
 
+    // получить сеансы с бд
     useEffect(() => {
         if (movie && searchDate) {
             const schedule = movie.schedule.find(item => item.date === searchDate.split(', ')[1]); 
@@ -56,6 +56,7 @@ const MoviePage = () => {
         }
     }, [movie, searchDate]);
 
+    // установить даты в зависимости от 'Сейчас' или 'Скоро в кино'
     useEffect(() => {
         if (movie) {
             if (isAlready) {

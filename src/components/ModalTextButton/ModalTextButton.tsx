@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../Button';
 import './ModalTextButton.css'
 
@@ -13,6 +13,8 @@ interface IModalTextButton {
 }
 
 const ModalTextButton:FC<IModalTextButton> = ({isOpen, setIsOpen, setIsOpenOther, type}) => {
+    const navigate = useNavigate();
+    
     // скрыть скролл при откртом окне
     if (isOpen) {
         document.body.style.overflowY = 'hidden';
@@ -41,6 +43,12 @@ const ModalTextButton:FC<IModalTextButton> = ({isOpen, setIsOpen, setIsOpenOther
         if (event.target === event.currentTarget) clickClose();
     };
 
+    // переход на страницу 'Sign-in'
+    const clickSignIn = () => {
+        const url = window.location.href.split('3000')[1];
+        navigate('/sign-in', {state: {fromPage: url}});
+    }
+
     return (
         <div className={`modalTextButton__background ${isOpen? 'open' : ''}`} onClick={(e) => clickBackground(e)}>
             <div className={`modalTextButton ${isOpen ? 'open' : ''}`}>
@@ -54,7 +62,7 @@ const ModalTextButton:FC<IModalTextButton> = ({isOpen, setIsOpen, setIsOpenOther
                     ) : (
                         <>
                         <p className='modalTextButton__title'>Требуется авторизация!</p>
-                        <p className='modalTextButton__text'>Для покупки билета в кино необходимо <Link to='/sign-in'>войти в аккаунт</Link></p>
+                        <p className='modalTextButton__text'>Для покупки билета в кино необходимо <a onClick={clickSignIn}>войти в аккаунт</a></p>
                         </>
                     )}
                     <Button color='red' fill handleClick={clickClose}>Понятно</Button>

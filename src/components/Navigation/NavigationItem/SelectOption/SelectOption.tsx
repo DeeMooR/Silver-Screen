@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getArrDate, getArrSelect, formateDateItem, getArrSoonDatesWithWeek, setDateStore } from 'src/helpers';
+import { useParams } from 'react-router-dom';
+import { getArrDate, getArrSelect, formateDateItem, getArrSoonDatesWithWeek, setDateStore } from 'src/helpers/helper';
 import { IMovie } from 'src/interfaces';
 import './SelectOption.css'
 
@@ -11,12 +12,11 @@ interface ISelectOption {
 
 const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
     const dispatch = useDispatch();
+    let { id = '' } = useParams<{ id: string }>();
     const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
-    const idMovie = useSelector(({store}) => store.idActiveMoviePage);
     const searchDate = useSelector(({store}) => store.search.date);
     const movieTypeSelect = useSelector(({store}) => store.movieTypeSelect);
     const typeKey = useSelector(({store}) => store.search[type]);
-    console.log(idMovie)
 
     const [arrMoviesDates, setArrMoviesDates] = useState<string[]>([]);
     const [clickCheckbox, setClickCheckbox] = useState<string[]>([]);
@@ -29,13 +29,10 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
     const arrDate: string[] = (movieTypeSelect === 'already') ? getArrDate() : getArrSoonDatesWithWeek();
     const arrSelect: string[] = getArrSelect(type);     // массив параметров выбора
     const arrShortLang: string[] = getArrSelect('shortLang');   // массив короткиx LNG
-    const movie = arrMovies.find(movie => movie.id === idMovie);
+    const movie = arrMovies.find(movie => movie.id === +id);
     
     // устанавливаем массив всех дат или дат фильма
     useEffect(() => {
-        // чтобы не было ошибки при: главная -> фильм из Скоро -> главная -> афиша
-        dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: null });
-
         const filterOutputDates = () => {
             if (movie) {
                 // получаем массив дат фильма
