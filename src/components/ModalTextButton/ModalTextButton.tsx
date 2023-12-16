@@ -21,7 +21,9 @@ const ModalTextButton:FC<IModalTextButton> = ({isOpen, setIsOpen, setIsOpenOther
 
     // вернуть что окно открыто
     useEffect(() => {
-        setIsOpen(true);
+        setTimeout(() => {
+            setIsOpen(true);
+        }, 50);
     }, [])
 
     // закрыть окно

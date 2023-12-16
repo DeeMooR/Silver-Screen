@@ -67,6 +67,18 @@ const rootReducerMain = (state = initialState, action: any) => {
                 isLoadingPage: !state.isLoadingPage,
             };
         }
+        case 'SET_LOADING_PAGE_TRUE': {
+            return {
+                ...state,
+                isLoadingPage: true,
+            };
+        }
+        case 'SET_LOADING_PAGE_FALSE': {
+            return {
+                ...state,
+                isLoadingPage: false,
+            };
+        }
         default: return state;
     }
 };

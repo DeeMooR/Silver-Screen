@@ -35,7 +35,10 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
     const [isMismatch, setIsMismatch] = useState(false);
     
     const arrMovieIsFilled = (arrMovies.length) ? true : false;
-    const fromPage = (location.state && location.state.fromPage) ? location.state.fromPage : '';
+    let fromPage = '';
+    if (location.state && location.state.fromPage) {
+        fromPage = (location.state.fromPage === 'admin') ? '/' : location.state.fromPage;
+    }
 
     // переход на страницу 'Admin', регистрация или авторизация
     const clickButton = () => {

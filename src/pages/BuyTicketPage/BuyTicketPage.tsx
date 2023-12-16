@@ -38,11 +38,13 @@ const BuyTicketPage = () => {
     const newDate = date || '';
     const newSeance = seance || '';
     
+    // для отображения модальных окон
     const [modal, setModal] = useState(<div/>);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalTextButtonIsOpen, setModalTextButtonIsOpen] = useState(false);
     const [modalPayIsOpen, setModalPayIsOpen] = useState(false);
     
+    // получание информации о сеансе из других таблиц
     const movie = arrMovies.find(movie => movie.id === +newId);
     const objDate = movie?.schedule.find((item) => item.date === newDate);
     const objSeance = objDate?.seances.find((item) => item.id === +newSeance);
@@ -55,27 +57,28 @@ const BuyTicketPage = () => {
 
     // получить данные с бд
     useEffect(() => {
+        dispatch({ type: "SET_LOADING_PAGE_TRUE" });
         setDateStore(addDayOfWeek(newDate), dispatch);
         window.scrollTo({top: 0});
+        if (!arrMovies.length) dispatch(GET_MOVIES(setModal));
+        if (userId) dispatch(GET_MY_SEAT_SELECT(userId, +newSeance, setModal));
+
         const fetchData = async () => {
-            await dispatch({ type: "SET_LOADING_PAGE" });
-            if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
             if (!arrRooms.length) await dispatch(GET_ROOMS(setModal));
             if (!arrSeatTypes.length) await dispatch(GET_SEAT_TYPES(setModal));
-            await dispatch({ type: "SET_LOADING_PAGE" });
+
+            // получить данные о сеансах и местах до отображения страницы
+            if (movie) {
+                if (objDate?.seances.length === 0) {
+                    await dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
+                    await dispatch({ type: "SET_LOADING_PAGE_FALSE" });
+                }
+                else dispatch({ type: "SET_LOADING_PAGE_FALSE" });
+            }
         };
-        fetchData();
-    },[])
-
-    // получить сеансы фильма с бд
-    useEffect(() => {
-        if (movie && objDate && objDate.seances.length === 0) dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
-    }, [movie])
-
-    // получить выбранные места с бд
-    useEffect(() => {
-        if (userId) dispatch(GET_MY_SEAT_SELECT(userId, +newSeance, setModal));
-    }, [userId])
+        // if чтобы при отображении RowSeats userId уже был загружен
+        if (token === null || userId !== null) fetchData();
+    },[movie, userId])
 
     // получить все типы мест на этом сеансе
     const arrRoomSeatTypes = objRoom?.rows
@@ -142,7 +145,9 @@ const BuyTicketPage = () => {
                             </div>
                         </div>
                     </div>
-                    <After10pm timeEnd={timeEnd} />
+                    {timeEnd &&
+                        <After10pm timeEnd={timeEnd} />
+                    }
                     <div className={`buyTicketPage__table ${isLoading ? 'loading' : ''}`}>
                         {isLoading &&
                             <div className="loader">

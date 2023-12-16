@@ -28,13 +28,9 @@ import Admin from './pages/Admin';
 
 function App() {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const location = useLocation();
     const navigate = useNavigate();
     const token = localStorage.getItem('access');
     const isAdmin = localStorage.getItem('isAdmin') ? true : false;
-
-    const userId = useSelector(({storeUser}) => storeUser.user.id);
-    const [modal, setModal] = useState(<div/>);
 
     if (token) {
         const fetchData = async () => {

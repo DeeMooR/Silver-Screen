@@ -1,6 +1,6 @@
 import { IMovie, ISeance } from "./interfaces";
 
-export const filterMoviesInMoviePage = (movie: IMovie, searchDate: string, arrVideo: string[], arrAudio: string[], arrLang: string[]) => {
+export const filterSeancesInMoviePage = (movie: IMovie, searchDate: string, arrVideo: string[], arrAudio: string[], arrLang: string[]) => {
     let arrSeances: ISeance[] = [];
     let fixSeances: ISeance[] = [];
     let filteredMovie: ISeance[] = [];

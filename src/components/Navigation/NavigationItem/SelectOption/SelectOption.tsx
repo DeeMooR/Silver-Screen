@@ -16,6 +16,7 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
     const searchDate = useSelector(({store}) => store.search.date);
     const movieTypeSelect = useSelector(({store}) => store.movieTypeSelect);
     const typeKey = useSelector(({store}) => store.search[type]);
+    console.log(idMovie)
 
     const [arrMoviesDates, setArrMoviesDates] = useState<string[]>([]);
     const [clickCheckbox, setClickCheckbox] = useState<string[]>([]);
@@ -32,6 +33,9 @@ const SelectOption:FC<ISelectOption> = ({type, handleClick}) => {
     
     // устанавливаем массив всех дат или дат фильма
     useEffect(() => {
+        // чтобы не было ошибки при: главная -> фильм из Скоро -> главная -> афиша
+        dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: null });
+
         const filterOutputDates = () => {
             if (movie) {
                 // получаем массив дат фильма

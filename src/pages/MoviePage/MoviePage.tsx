@@ -25,6 +25,7 @@ const MoviePage = () => {
 
     const [modal, setModal] = useState(<div/>);
     const [isModal, setIsModal] = useState(false);
+    const [customBackStr, setCustomBackStr] = useState('');
 
     // получить объект фильма
     let { id = '' } = useParams<{ id: string }>();
@@ -41,13 +42,17 @@ const MoviePage = () => {
             await dispatch({ type: "SET_LOADING_PAGE" });
         };
         fetchData();
+
+        // ссылка для возвращения
+        if (location.state && location.state.fromPage === '/buy-ticket') setCustomBackStr('/afisha');
+        else if (!location.state) setCustomBackStr('/');
+        else setCustomBackStr('');
     }, []);
 
     useEffect(() => {
         if (movie && searchDate) {
             const schedule = movie.schedule.find(item => item.date === searchDate.split(', ')[1]); 
             if (schedule?.seances.length === 0) dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
-
         }
     }, [movie, searchDate]);
 
@@ -73,12 +78,6 @@ const MoviePage = () => {
             if (fullFirstDate) setDateStore(fullFirstDate, dispatch);
         }
     }, [isAlready]);
-    
-    // ссылка для возвращения
-    let customBackStr;
-    if (location.state && location.state.fromPage === '/buy-ticket') customBackStr = '/afisha';
-    else if (!location.state) customBackStr = '/';
-    else customBackStr = '';
 
     // ссылка для видео, длительность фильма
     let videoId, newDuration;
@@ -122,7 +121,7 @@ const MoviePage = () => {
                         </aside>
                     </div>
                 </div>
-                <Modal movie={movie} isModal={isModal} setIsModal={setIsModal} />
+                <Modal movie={movie} isModal={isModal} setIsModal={setIsModal} setCustomBack={setCustomBackStr} />
             </PageMovieTemplate>
         )}
         </>
