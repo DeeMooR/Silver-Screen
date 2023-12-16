@@ -35,25 +35,27 @@
                 text-align: center;
                 margin: 0 0 17px 0;
             }
-            .option__item {
-                display: block;
-                font-size: 20px;
-                padding: 17px 0;
-                color: rgba(255, 255, 255, 0.5);
-                &.active {
-                    position: relative;
-                    padding: 17px 0 17px 20px;
-                    color: #fff;
-                    &:before {
-                        content: '';
-                        position: absolute;
-                        top: 50%;
-                        left: 0;
-                        width: 7px;
-                        height: 7px;
-                        transform: translate(0, -50%);
-                        border-radius: 50%;
-                        background-color: #fff;
+            .option__items {
+                .option__item {
+                    display: block;
+                    font-size: 20px;
+                    padding: 17px 0;
+                    color: rgba(255, 255, 255, 0.5);
+                    &.active {
+                        position: relative;
+                        padding: 17px 0 17px 20px;
+                        color: #fff;
+                        &:before {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            left: 0;
+                            width: 7px;
+                            height: 7px;
+                            transform: translate(0, -50%);
+                            border-radius: 50%;
+                            background-color: #fff;
+                        }
                     }
                 }
             }
@@ -85,6 +87,86 @@
                 height: 40px;
                 margin: 20px 0 0 0;
             }
+        }
+    }
+}
+
+@media (max-width: 1023.98px) {
+    .admin__wrapper {
+        .admin__flex {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            .admin__options {
+                width: 100%;
+                border-radius: 20px 20px 0 0;
+                .option__title {
+                    font-size: 25px;
+                    margin: 0 0 25px 0;
+                }
+                .option__items {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    row-gap: 20px;
+                    column-gap: 15%;
+                    .option__item {
+                        padding: 0;
+                        &.active {
+                            padding: 0 0 0 15px;
+                        }
+                    }
+                }
+            }
+            .admin__form {
+                width: 100%;
+                border-radius: 0 0 20px 20px;
+                .form__title {
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 599.98px) {
+    .admin__wrapper {
+        .admin__flex {
+            .admin__form {
+                .admin__message {
+                    font-size: 17px;
+                    text-align: center;
+                }
+                button {
+                    width: 85%;
+                    height: 40px;
+                    margin: 20px 7.5% 0;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 479.98px) {
+    .admin__wrapper {
+        .admin__flex {
+            .admin__form {
+                .admin__message {
+                    font-size: 16px;
+                }
+                button {
+                    width: 100%;
+                    margin: 20px 0;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 419.98px) {
+    .admin__wrapper .admin__flex .admin__options {
+        .option__items {
+            column-gap: 10%;
         }
     }
 }

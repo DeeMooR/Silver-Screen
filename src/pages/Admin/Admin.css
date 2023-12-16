@@ -38,18 +38,18 @@
   text-align: center;
   margin: 0 0 17px 0;
 }
-.admin__wrapper .admin__flex .admin__options .option__item {
+.admin__wrapper .admin__flex .admin__options .option__items .option__item {
   display: block;
   font-size: 20px;
   padding: 17px 0;
   color: rgba(255, 255, 255, 0.5);
 }
-.admin__wrapper .admin__flex .admin__options .option__item.active {
+.admin__wrapper .admin__flex .admin__options .option__items .option__item.active {
   position: relative;
   padding: 17px 0 17px 20px;
   color: #fff;
 }
-.admin__wrapper .admin__flex .admin__options .option__item.active:before {
+.admin__wrapper .admin__flex .admin__options .option__items .option__item.active:before {
   content: "";
   position: absolute;
   top: 50%;
@@ -87,4 +87,67 @@
   width: 30%;
   height: 40px;
   margin: 20px 0 0 0;
+}
+
+@media (max-width: 1023.98px) {
+  .admin__wrapper .admin__flex {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .admin__wrapper .admin__flex .admin__options {
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+  }
+  .admin__wrapper .admin__flex .admin__options .option__title {
+    font-size: 25px;
+    margin: 0 0 25px 0;
+  }
+  .admin__wrapper .admin__flex .admin__options .option__items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 20px;
+    -moz-column-gap: 15%;
+         column-gap: 15%;
+  }
+  .admin__wrapper .admin__flex .admin__options .option__items .option__item {
+    padding: 0;
+  }
+  .admin__wrapper .admin__flex .admin__options .option__items .option__item.active {
+    padding: 0 0 0 15px;
+  }
+  .admin__wrapper .admin__flex .admin__form {
+    width: 100%;
+    border-radius: 0 0 20px 20px;
+  }
+  .admin__wrapper .admin__flex .admin__form .form__title {
+    text-align: center;
+  }
+}
+@media (max-width: 599.98px) {
+  .admin__wrapper .admin__flex .admin__form .admin__message {
+    font-size: 17px;
+    text-align: center;
+  }
+  .admin__wrapper .admin__flex .admin__form button {
+    width: 85%;
+    height: 40px;
+    margin: 20px 7.5% 0;
+  }
+}
+@media (max-width: 479.98px) {
+  .admin__wrapper .admin__flex .admin__form .admin__message {
+    font-size: 16px;
+  }
+  .admin__wrapper .admin__flex .admin__form button {
+    width: 100%;
+    margin: 20px 0;
+  }
+}
+@media (max-width: 419.98px) {
+  .admin__wrapper .admin__flex .admin__options .option__items {
+    -moz-column-gap: 10%;
+         column-gap: 10%;
+  }
 }

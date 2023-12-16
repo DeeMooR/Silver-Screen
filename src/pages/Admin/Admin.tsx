@@ -103,13 +103,15 @@ const Admin = () => {
             <div className="admin__flex">
                 <div className="admin__options">
                     <p className='option__title'>Tables:</p>
-                    {tables.map((item, index) => (
-                        <a 
-                            className={`option__item ${active === item ? 'active' : ''}`}
-                            onClick={() => clickOption(item)}
-                            key={index}
-                        >{item.title}</a>
-                    ))}
+                    <div className="option__items">
+                        {tables.map((item, index) => (
+                            <a 
+                                className={`option__item ${active === item ? 'active' : ''}`}
+                                onClick={() => clickOption(item)}
+                                key={index}
+                            >{item.title}</a>
+                        ))}
+                    </div>
                 </div>
                 <div className="admin__form">
                     <p className='form__title'>{active.title}</p>
