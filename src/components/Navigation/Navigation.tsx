@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import NavigationItem from './NavigationItem'
 import './Navigation.css'
 
@@ -6,12 +7,12 @@ import calendar from "../../icons/calendar.png"
 import video from "../../icons/video.svg"
 import audio from "../../icons/audio.png"
 import language from "../../icons/language.png"
-import { useDispatch } from 'react-redux'
 
 const Navigation = () => {
-    const [navActive, setNavActive] = useState('');
     const dispatch = useDispatch();
+    const [navActive, setNavActive] = useState('');
 
+    // отобразить другой фильтр или скрыть текущий
     const handleClick = (type: string) => {
         if (navActive === type) {
             setNavActive('');

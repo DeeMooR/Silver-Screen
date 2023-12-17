@@ -1,40 +1,31 @@
-import { legacy_createStore as createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { composeWithDevTools} from 'redux-devtools-extension'
+import { ICard, IMovie, INews, IPageTitle, IRoom, ISeatType, ISlide } from 'src/interfaces';
 
-const initialState = {
-    entertainmentNews: [],
-    newsPageNews: [],
-    sliderSwiper: [],
+interface IState {
+    slider: ISlide[];
+    seatTypes: ISeatType[];
+    rooms: IRoom[];
+    movies: IMovie[];
+    cards: ICard[];
+    pageTitles: IPageTitle[];
+    news: INews[];
+}
+  
+const initialState: IState = {
+    slider: [],
     seatTypes: [],
-    mainNews: [],
-    afishaNews: [],
-    mainVisa: {},
-    mainEntertainment: {},
-    mainPresentCard: {},
-    arrRooms: [],
-    arrMovies: [],
-    arrSeances: []
+    rooms: [],
+    movies: [],
+    cards: [],
+    pageTitles: [],
+    news: [],
 };
 
 const rootReducerPages = (state = initialState, action: any) => {
     switch (action.type) {
-        case 'SET_ENTERTAINMENT_NEWS': {
+        case 'SET_SLIDER': {
             return {
                 ...state,
-                entertainmentNews: action.payload,
-            };
-        }
-        case 'SET_NEWSPAGE_NEWS': {
-            return {
-                ...state,
-                newsPageNews: action.payload,
-            };
-        }
-        case 'SET_SLIDER_SWIPER': {
-            return {
-                ...state,
-                sliderSwiper: action.payload,
+                slider: action.payload,
             };
         }
         case 'SET_SEAT_TYPES': {
@@ -43,61 +34,71 @@ const rootReducerPages = (state = initialState, action: any) => {
                 seatTypes: action.payload,
             };
         }
-        case 'SET_MAIN_NEWS': {
-            return {
-                ...state,
-                mainNews: action.payload,
-            };
-        }
-        case 'SET_AFISHA_NEWS': {
-            return {
-                ...state,
-                afishaNews: action.payload,
-            };
-        }
-        case 'SET_MAIN_VISA': {
-            return {
-                ...state,
-                mainVisa: action.payload,
-            };
-        }
-        case 'SET_MAIN_ENTERTAINMENT': {
-            return {
-                ...state,
-                mainEntertainment: action.payload,
-            };
-        }
-        case 'SET_MAIN_PRESENT_CARD': {
-            return {
-                ...state,
-                mainPresentCard: action.payload,
-            };
-        }
         case 'SET_ROOMS': {
             return {
                 ...state,
-                arrRooms: action.payload,
+                rooms: action.payload,
             };
         }
         case 'SET_MOVIES': {
             return {
                 ...state,
-                arrMovies: action.payload,
+                movies: action.payload,
             };
         }
-        case 'SET_SEANCES': {
+        case 'SET_SEANCES_ONE_MOVIE': {
+            const movie_id = action.payload.movie_id;
+            const arrSeances = action.payload.arrSeances;
             return {
                 ...state,
-                arrSeances: action.payload,
+                movies: state.movies.map(movie => {
+                    if (movie.id === movie_id) {
+                        return {
+                        ...movie,
+                        schedule: arrSeances
+                        };
+                    }
+                    return movie;
+                })
+            };
+        }
+        case 'SET_GIFT_CARD':  {
+            return {
+                ...state,
+                cards: action.payload
+            };
+        }
+        case 'INCREMENT_GIFT_CARD':  {
+            const card_id = action.payload;
+            const i = state.cards.findIndex((card: ICard) => card.id === card_id);   // индекс в массиве cards
+            if (i !== -1) {
+                const newGiftCards: ICard[] = [...state.cards];
+                newGiftCards[i] = {
+                  ...newGiftCards[i],
+                  amount: newGiftCards[i].amount + 1,
+                };
+            
+                return {
+                    ...state,
+                    cards: newGiftCards,
+                };
+            }
+            return state;
+        }
+        case 'SET_PAGE_TITLES':  {
+            return {
+                ...state,
+                pageTitles: action.payload
+            };
+        }
+        case 'SET_NEWS':  {
+            return {
+                ...state,
+                news: action.payload
             };
         }
         default: return state;
     }
 };
-
-// const storePage = createStore(
-//     rootReducerPages, 
-//     composeWithDevTools(applyMiddleware(thunk))
-// );
 
 export default rootReducerPages;

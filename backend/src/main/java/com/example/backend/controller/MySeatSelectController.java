@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/my_seat_select")
 public class MySeatSelectController {
@@ -40,9 +41,22 @@ public class MySeatSelectController {
     }
 
     @GetMapping
-    public ResponseEntity getAllMySeatSelect() {
+    public ResponseEntity getOneUserMySeatSelect(@RequestHeader("user_id") int user_id,
+                                                 @RequestHeader("seance_id") int seance_id) {
         try {
-            return ResponseEntity.ok(mySeatSelectService.getAll());
+            return ResponseEntity.ok(mySeatSelectService.getOneUserOneSeance(user_id, seance_id));
+        } catch (MyException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error");
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteMySeatSelect(@PathVariable int id) {
+        try {
+            mySeatSelectService.delete(id);
+            return ResponseEntity.ok("Бронь снята");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error");
         }

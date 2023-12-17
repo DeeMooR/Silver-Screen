@@ -2,11 +2,10 @@ package com.example.backend.model;
 
 import com.example.backend.entity.GenreEntity;
 import com.example.backend.entity.MovieEntity;
-import com.example.backend.entity.MyMovieEntity;
 import com.example.backend.modelShort.ScheduleShort;
+import com.example.backend.modelShort.ScheduleWithoutSeance;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Movie {
@@ -21,7 +20,7 @@ public class Movie {
     private String description;
     private String trailer;
     private List<String> genres;
-    private List<ScheduleShort> schedule;
+    private List<ScheduleWithoutSeance> schedule;
 
     public Movie() {
     }
@@ -38,8 +37,8 @@ public class Movie {
         model.setDuration(entity.getDuration());
         model.setDescription(entity.getDescription());
         model.setTrailer(entity.getTrailer());
-        model.setGenres(entity.getGenres().stream().map(genreEntity -> genreEntity.getName()).collect(Collectors.toList()));
-        model.setSchedule(entity.getSchedule().stream().map(ScheduleShort::toModel).collect(Collectors.toList()));
+        model.setGenres(entity.getGenres().stream().map(item -> item.getName()).collect(Collectors.toList()));
+        model.setSchedule(entity.getSchedule().stream().map(ScheduleWithoutSeance::toModel).collect(Collectors.toList()));
         return model;
     }
 
@@ -76,7 +75,7 @@ public class Movie {
     public void setGenres(List<String> genres) {
         this.genres = genres;
     }
-    public void setSchedule(List<ScheduleShort> schedule) {
+    public void setSchedule(List<ScheduleWithoutSeance> schedule) {
         this.schedule = schedule;
     }
 
@@ -113,7 +112,7 @@ public class Movie {
     public List<String> getGenres() {
         return genres;
     }
-    public List<ScheduleShort> getSchedule() {
+    public List<ScheduleWithoutSeance> getSchedule() {
         return schedule;
     }
 }

@@ -1,4 +1,4 @@
-import ModalSuccess from "./components/ModalSuccess";
+import ModalSuccess from "src/components/ModalSuccess";
 
 export const modalShowMessege = (
     setModal: (v: JSX.Element) => void,

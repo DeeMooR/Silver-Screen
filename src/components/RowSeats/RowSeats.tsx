@@ -1,12 +1,12 @@
-import React, { FC, useState } from 'react'
-import './RowSeats.css'
+import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { SeatImage } from './styled'
-import { IDataSeatSelect, IRoom, ISeance, ISeatType } from 'src/interfaces'
-import { ADD_SEAT_SELECT, REMOVE_SEAT_SELECT } from 'src/actions/actions'
+import { useParams } from 'react-router-dom'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { useParams } from 'react-router-dom'
+import { ADD_MY_SEAT_SELECT, REMOVE_MY_SEAT_SELECT } from 'src/actions/actions'
+import { IDataSeatSelect, IMovie, IRoom, ISeatType } from 'src/interfaces'
+import { SeatImage } from './styled'
+import './RowSeats.css'
 
 interface IRowSeats {
     arrRow: number[],
@@ -17,23 +17,29 @@ interface IRowSeats {
 }
 
 const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpen}) => {
-    const {id, date, seance} = useParams<{id: string, date: string, seance: string}>();
-    const newId = (id) ? +id : 0;
-    const newSeance = (seance) ? +seance : 0;
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.arrRooms);
+    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
     const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
-    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
-    const arrSeatSelect = useSelector(({store}) => store.seatSelect);
-    const userId = useSelector(({store}) => store.user.id);
+    const arrSeatSelect = useSelector(({storeUser}) => storeUser.my_seat_select);
+    const userId = useSelector(({storeUser}) => storeUser.user.id);
     const token = localStorage.getItem('access');
 
-    const objRoom = arrRooms.find((item) => item.room === room);              // объект room: room, costSingle, costSofa, rows
-    const objRow = objRoom?.rows.find((item) => item.idRow === indexRow + 1);   // объект row:  idRow, type, seats
-    const objType = arrSeatTypes.find((item: ISeatType) => item.type === objRow?.type);        // объект type: type, image, description
+    // для изменения мест нужного сеанса
+    const {id, seance} = useParams<{id: string, date: string, seance: string}>();
+    const newId = (id) ? +id : 0;
+    const newSeance = (seance) ? +seance : 0;
+    
+    // чтобы получить image
+    const objRoom = arrRooms.find((item) => item.id === room);
+    const objRow = objRoom?.rows[indexRow];
+    const objType = arrSeatTypes.find((item: ISeatType) => item.type === objRow?.type_id);
 
+    // изменение места
     const clickSeat = (number: number, indexRow: number, indexColumn: number) => {
+        // return, если место куплено
         if (number === 1 || number === userId || (number !== -userId && number < 0)) return;
+
+        // переход на страницу 'sign-in'
         if (!token) {
             setModalIsOpen(true);
             return;
@@ -41,44 +47,29 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
 
         const row = indexRow + 1;
         const column = indexColumn + 1;
+
+        // выбрать или снять выбор места
         if (number === 0) {
-            const objSeatSelect: IDataSeatSelect = {
-                idMovie: newId,
-                date: date || '',
-                row: row,
-                column: column,
-                cost: (objType?.type && objRoom) ? (objType.type === "single" ? objRoom.costSingle : objRoom.costSofa) : 0,
-                typeSeat: objType?.type || '',
-                idSeance: newSeance
+            const add_my_seat_select = {
+                i_row: row,
+                i_column: column,
+                seat_type: objType?.type || ''
             }
-            const newArrSeances = arrSeances.map((seance) => {
-                if (seance.id === newSeance) {
-                    const updatedRows = [...seance.places];
-                    updatedRows[indexRow][indexColumn] = -userId;
-                    return {
-                        ...seance,
-                        places: updatedRows,
-                    };
-                }
-                return seance;
-            });
-            dispatch(ADD_SEAT_SELECT(userId, newArrSeances, objSeatSelect, setModal));
+            dispatch(ADD_MY_SEAT_SELECT(userId, newId, newSeance, add_my_seat_select, setModal));
         } else {
-            const newSeatSelect = arrSeatSelect.filter((item: IDataSeatSelect) => {
-                return !(item.idSeance === newSeance && item.row === row && item.column === column);
-            });
-            const newArrSeances = arrSeances.map((seance) => {
-                if (seance.id === newSeance) {
-                    const updatedRows = [...seance.places];
-                    updatedRows[indexRow][indexColumn] = 0;
-                    return {
-                        ...seance,
-                        places: updatedRows,
-                    };
+            const objSeat = arrSeatSelect.find((seat: IDataSeatSelect) => 
+                seat.i_row === row && seat.i_column === column && seat.seance_id === newSeance
+            );
+            if (objSeat) {
+                const data = {
+                    i_row: row,
+                    i_column: column,
+                    seat_id: objSeat.id,
+                    movie_id: newId,
+                    seance_id: newSeance
                 }
-                return seance;
-            });
-            dispatch(REMOVE_SEAT_SELECT(userId, newArrSeances, newSeatSelect, setModal));
+                dispatch(REMOVE_MY_SEAT_SELECT(data, setModal));
+            }
         }
     }
 
@@ -89,11 +80,12 @@ const RowSeats:FC<IRowSeats> = ({arrRow, room, indexRow, setModal, setModalIsOpe
                 <p className='rowSeats__number'>{indexRow + 1}</p>
                 {arrRow.map((number, indexColumn) => (
                     <SeatImage
-                        image={(number === -userId && token) ? objType.imageSelect : objType.image}
+                        image={(number === -userId && token) ? objType.image_select : objType.image}
                         type={objType.type}
                         isEmpty={number === 0 ? true : false}
                         cursor={number === 0 || number == -userId ? 'pointer' : 'default'}
                         onClick={() => clickSeat(number, indexRow, indexColumn)}
+                        key={indexColumn}
                     />
                 ))}
                 <p className='rowSeats__number'>{indexRow + 1}</p>

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SeanceShort {
+    private int id;
     private String time;
     private int room_id;
     private List<int[]> places;
@@ -15,12 +16,16 @@ public class SeanceShort {
 
     public static SeanceShort toModel(SeanceEntity entity) {
         SeanceShort model = new SeanceShort();
+        model.setId(entity.getId());
         model.setTime(entity.getTime());
         model.setRoom_id(entity.getRoom().getId());
         model.setPlaces(entity.getPlaces().stream().map(placesEntity -> placesEntity.getNumbers()).collect(Collectors.toList()));
         return model;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public void setTime(String time) {
         this.time = time;
     }
@@ -31,6 +36,9 @@ public class SeanceShort {
         this.places = places;
     }
 
+    public int getId() {
+        return id;
+    }
     public String getTime() {
         return time;
     }

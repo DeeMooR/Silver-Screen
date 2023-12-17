@@ -1,18 +1,18 @@
-import React, { FC, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Autoplay, Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import MovieCard from '../MovieCard';
+import NotFind from '../NotFind';
+import { getArrMoviesShow } from 'src/helpers/helper';
 import { IMovie } from 'src/interfaces';
+import './SliderMovies.css';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
-import './SliderMovies.css';
-import NotFind from '../NotFind';
-import { useSelector } from 'react-redux';
-import { getArrMoviesShow } from 'src/helpers';
 
 const SliderMovies = () => {
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
     const movieTypeSelect: string = useSelector(({store}) => store.movieTypeSelect);
     const arrMoviesShow = getArrMoviesShow(arrMovies, movieTypeSelect)
 
@@ -80,21 +80,17 @@ const SliderMovies = () => {
             className="swiperMovies"
         >
             {arrMoviesShow.map((card: IMovie, i: number) => (
-                <>
                 <SwiperSlide key={i}>
                     <div className="slide__item">
                         <MovieCard obj={card} page='main' />
                     </div>
                 </SwiperSlide>
-                {i === arrMoviesShow.length - 1 && 
-                    <SwiperSlide className='slide__not-find'>
-                        <div>
-                            <NotFind page='main' />
-                        </div>
-                    </SwiperSlide>
-                }
-                </>
             ))} 
+            <SwiperSlide className='slide__not-find'>
+                <div>
+                    <NotFind page='main' />
+                </div>
+            </SwiperSlide>
         </Swiper>
     </>
     )

@@ -11,6 +11,7 @@ interface IModalSuccess {
 const ModalSuccess:FC<IModalSuccess> = ({isSuccess}) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
 
+    // отобразить и затем скрыть окно
     useEffect(() => {
         setTimeout(() => {
             setIsModalVisible(true);

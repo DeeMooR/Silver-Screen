@@ -1,6 +1,5 @@
 package com.example.backend.model;
 
-import com.example.backend.entity.GenreEntity;
 import com.example.backend.entity.PlacesEntity;
 
 public class Places {

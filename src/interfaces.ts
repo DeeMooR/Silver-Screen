@@ -1,109 +1,135 @@
+/* ---------  USER  --------- */
+
+export interface IUserTMS {
+    username: string,
+    email: string,
+    password: string
+}
+
+export interface IUser {
+    id: number,
+    my_card: [],
+    my_seat_select: [],
+    my_movie: []
+}
+
+export interface IDataMyCard {
+    card_id: number,
+    number_card: number,
+    start: string,
+    end: string,
+    status: boolean
+}
+
+export interface IAddMyCard {
+    number_card: number,
+    start: string,
+    end: string,
+    status: boolean
+}
+
+export interface IDataMyMovie {
+    date: string,
+    i_row: number,
+    i_column: number,
+    type_id: string,
+    movie_id: number,
+    seance_id: number
+}
+
+export interface IDataCardSelect {
+    card_id: number,
+    number: number,
+    cost: number
+}
+
+export interface IDataSeatSelect {
+    id: number,
+    i_row: number,
+    i_column: number,
+    seat_type: string,
+    seance_id: number
+}
+
+
+/* ---------  DATA  --------- */
+
 export interface IMovie {
     id: number,
     image: string,
     title: string,
     age: number,
     language: 'RU' | 'ENG' | 'BEL',
-    isSUB?: boolean,
     genres: string[],
+    sub: boolean,
     video: string,
     duration: number,
     description: string,
     trailer: string,
     schedule: {
         date: string,
-        seances: number[]
+        seances: ISeance[]
     }[]
 }
 
 export interface ISeance {
     id: number,
-    room: number,
+    room_id: number,
     time: string,
     places: number[][]
 }
 
 export interface ISlide {
-    id?: number,
-    image: string,
-    idFilm?: number,
-    title?: string,
-    text?: string,
-    textButton?: string,
-    link?: string,
-    type?: string
-}
-
-export interface INews {
     id: number,
     image: string,
-    background_image?: string,
-    title: string,
-    description: string,
-    date?: string,
-    link?: string,
+    movie_id?: number,
+    title?: string,
+    text?: string,
+    text_button?: string,
+    link?: string
 }
 
-export interface IUser {
-    username: string,
-    email: string,
-    password: string
-}
-
-export interface IDataGiftCard {
+export interface ICard {
     id: number,
     image: string,
     cost: number,
     amount: number
 }
 
-export interface IDataGiftSelect {
-    idCard: number,
-    number: number,
-    cost: number
-}
-
-export interface IDataMyCard {
-    numberCard: number,
-    idCard: number,
-    start: string,
-    end: string,
-    status: boolean
-}
-
 export interface IRoom {
-    room: number,
-    costSingle: number,
-    costSofa: number,
+    id: number,
+    cost_single: number,
+    cost_sofa: number,
     rows: IRow[]
 }
 
 export interface IRow {
-    idRow: number,
-    type: string,
+    id: number,
+    type_id: string,
     seats: number
 }
 
 export interface ISeatType {
     type: string,
     image: string,
-    imageSelect: string,
+    image_select: string,
     description: string
 }
 
-export interface IUserBuy {
-    id: number,
-    cards: [],
-    seatSelect: [],
-    movies: []
+export interface IPageTitle {
+    page: string,
+    image: string,
+    title: string,
+    text: string
 }
 
-export interface IDataSeatSelect {
-    idMovie: number,
-    date: string,
-    row: number,
-    column: number,
-    cost: number,
-    typeSeat: string,
-    idSeance: number
+export interface INews {
+    id: number,
+    page: string,
+    image: string,
+    background_image?: string,
+    title: string,
+    description: string,
+    date?: string,
+    link?: string,
 }

@@ -1,14 +1,13 @@
 package com.example.backend.controller;
 
-import com.example.backend.entity.GenreEntity;
 import com.example.backend.entity.SliderEntity;
 import com.example.backend.exception.MyException;
-import com.example.backend.service.GenreService;
 import com.example.backend.service.SliderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/slider")
 public class SliderController {

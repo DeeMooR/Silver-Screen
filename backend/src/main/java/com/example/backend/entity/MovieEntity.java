@@ -1,7 +1,5 @@
 package com.example.backend.entity;
 
-import com.example.backend.model.Genre;
-
 import javax.persistence.*;
 import java.util.List;
 

@@ -1,43 +1,56 @@
-import React, { FC, useEffect, useState } from 'react'
-import './AccountBuy.css'
-import { IDataGiftCard, IDataMyCard, IDataSeatSelect, IMovie, ISeance } from 'src/interfaces'
-import { GET_GIFT_CARDS, GET_MOVIES, GET_MY_CARDS_MOVIES, GET_SEANCES } from 'src/actions/actions';
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { Link } from 'react-router-dom';
 import { AnyAction } from 'redux';
 import AccountBuyCard from './AccountBuyCard/AccountBuyCard';
-import { Link } from 'react-router-dom';
 import AccountBuyTicket from './AccountBuyTicket';
+import { GET_GIFT_CARDS, GET_MOVIES, GET_MY_CARDS_MOVIES, GET_ROOMS, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions';
+import { ICard, IDataMyCard, IDataMyMovie, IMovie, IRoom } from 'src/interfaces'
+import './AccountBuy.css'
 
 
 const AccountBuy = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const arrGiftCards: IDataGiftCard[] = useSelector(({store}) => store.giftCards);
-    const arrMyCards: IDataMyCard[] = useSelector(({store}) => store.myCards);
-    const arrMyMovies: IDataSeatSelect[] = useSelector(({store}) => store.myMovies);
-    const userId = useSelector(({store}) => store.user.id);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
+    const arrGiftCards: ICard[] = useSelector(({storePages}) => storePages.cards);
+    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
+    const userId = useSelector(({storeUser}) => storeUser.user.id);
     const isLoading = useSelector(({store}) => store.isLoading);
+
+    const arrMyCards: IDataMyCard[] = useSelector(({storeUser}) => storeUser.my_card);
+    const arrMyMovies: IDataMyMovie[] = useSelector(({storeUser}) => storeUser.my_movie);
     const [modal, setModal] = useState(<div/>);
 
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
-    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
-
     useEffect(() => {
+        window.scrollTo({ top: 0 });
         const fetchData = async () => {
-            window.scrollTo({ top: 0 });
             dispatch({ type: "SET_LOADING" });
             if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
-            if (!arrSeances.length) await dispatch(GET_SEANCES(setModal));
-            if (!arrMyCards.length) await dispatch(GET_MY_CARDS_MOVIES(userId, setModal));
             if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
+            if (!arrRooms.length) await dispatch(GET_ROOMS(setModal));
+            if (!arrMyCards.length || !arrMyMovies.length) await dispatch(GET_MY_CARDS_MOVIES(userId, setModal));
             dispatch({ type: "SET_LOADING" });
         };
         fetchData();
     },[])
 
+    // отобразить фильмы в обратном порядке
     useEffect(() => {
         arrMyMovies.reverse();
+        arrMyMovies.forEach(my_movie => {
+            // получаем данные о сеансах куленных фильмов
+            const movie_id = my_movie.movie_id;
+            const date = my_movie.date;
+            const findMovie = arrMovies.find(movie => movie.id === movie_id);
+            const findShedule = findMovie?.schedule.find(item => item.date === date);
+            if (findShedule?.seances.length === 0) {
+                dispatch(GET_SEANCES_ONE_MOVIE(movie_id, setModal));
+            }
+        })
     },[arrMyMovies])
+
+    // отобразить карты в обратном порядке
     useEffect(() => {
         arrMyCards.reverse();
     },[arrMyCards])
@@ -67,7 +80,7 @@ const AccountBuy = () => {
                 {arrMyCards.length ? (
                     <div className="accountBuy__items">
                         {arrMyCards.map((item) => (
-                            <AccountBuyCard obj={item} key={item.numberCard} />
+                            <AccountBuyCard obj={item} key={item.number_card} />
                         ))}
                     </div>
                 ) : (

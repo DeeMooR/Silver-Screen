@@ -56,7 +56,7 @@
 .slideInfo.slideInfo-otherPage .slideInfo__wrapper .slideInfo__description {
   display: flex;
   flex-direction: column;
-  max-width: 400px;
+  max-width: 420px;
 }
 .slideInfo.slideInfo-otherPage .slideInfo__wrapper .slideInfo__description.description-reverse {
   flex-direction: column-reverse;

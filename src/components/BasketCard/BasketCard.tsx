@@ -1,9 +1,9 @@
-import React, { FC, useState } from 'react'
-import { IDataGiftCard, IDataGiftSelect } from 'src/interfaces'
+import React, { FC } from 'react'
+import { IDataCardSelect } from 'src/interfaces'
 import './BasketCard.css'
 
 interface IBasketCard {
-    obj: IDataGiftSelect
+    obj: IDataCardSelect
 }
 
 const BasketCard:FC<IBasketCard> = ({obj}) => {

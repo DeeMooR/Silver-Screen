@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Button from 'src/components/Button'
 import { IMovie, ISlide } from 'src/interfaces'
 import './SlideInfo.css'
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 interface ISlideInfo {
     slide: ISlide,
@@ -11,19 +11,25 @@ interface ISlideInfo {
 }
 
 const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
     const navigate = useNavigate();
-    let filmTitle, filmGenres;
-    const isMain = typeof slide.idFilm === 'number' || slide.textButton;
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
+    const movie = arrMovies.find(movie => movie.id === slide.movie_id);
 
-    if (arrMovies.length && typeof slide.idFilm === 'number') {
-        filmTitle = arrMovies[slide.idFilm].title;
-        filmGenres = arrMovies[slide.idFilm].genres.join(', ') + ', ' + arrMovies[slide.idFilm].age + '+';
+    // определение типа слайда 
+    const isMovie = typeof slide.movie_id === 'number' && slide.movie_id !== 0;
+    const isMain = isMovie || slide.text_button;
+    let filmTitle, filmGenres;
+
+    // измнение данные, если слайд фильма
+    if (movie) {
+        filmTitle = movie.title;
+        filmGenres = movie.genres.join(', ') + ', ' + movie.age + '+';
     }
 
+    // переход по кнопке
     const clickButton = () => {
-        if (typeof slide.idFilm === 'number') {
-            navigate(`/afisha/${slide.idFilm}`, {state: {fromPage: '/main'}});
+        if (isMovie) {
+            navigate(`/afisha/${slide.movie_id}`, {state: {fromPage: '/main'}});
         } else if (slide.link) {
             navigate(slide.link);
         } else navigate('/page404');
@@ -43,7 +49,7 @@ const SlideInfo:FC<ISlideInfo> = ({slide, reverse}) => {
                     {isMain &&
                         <div className="slideInfo__button">
                             <Button color='red' handleClick={clickButton}>
-                                {slide.textButton ? slide.textButton : 'Купить билет'}
+                                {slide.text_button ? slide.text_button : 'Купить билет'}
                             </Button>
                         </div>
                     }

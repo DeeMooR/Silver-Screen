@@ -4,6 +4,7 @@ import com.example.backend.entity.PageNewsEntity;
 
 public class PageNews {
     private int id;
+    private String page;
     private String image;
     private String background_image;
     private String title;
@@ -17,6 +18,7 @@ public class PageNews {
     public static PageNews toModel(PageNewsEntity entity) {
         PageNews model = new PageNews();
         model.setId(entity.getId());
+        model.setPage(entity.getPage());
         model.setImage(entity.getImage());
         model.setBackground_image(entity.getBackground_image());
         model.setTitle(entity.getTitle());
@@ -28,6 +30,9 @@ public class PageNews {
 
     public void setId(int id) {
         this.id = id;
+    }
+    public void setPage(String page) {
+        this.page = page;
     }
     public void setImage(String image) {
         this.image = image;
@@ -50,6 +55,9 @@ public class PageNews {
 
     public int getId() {
         return id;
+    }
+    public String getPage() {
+        return page;
     }
     public String getImage() {
         return image;

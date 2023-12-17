@@ -1,16 +1,12 @@
-import React, { FC, ReactNode } from 'react'
-import './Page404.css'
-import { BackgroundImage } from './styled'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Button from 'src/components/Button'
+import { BackgroundImage } from './styled'
+import './Page404.css'
 
 const Page404 = () => {
     const navigate = useNavigate();
     const bg_image = "https://i.ibb.co/52nM9bx/page-404.jpg";
-
-    const clickBack = () => {
-        navigate(-1);
-    };
 
     return (
         <div className='page404'>

@@ -1,27 +1,31 @@
-import React, { FC, useEffect, useState } from 'react'
-import './NewPassword.css'
-import Input from 'src/components/Input'
-import Button from 'src/components/Button'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { RESET_PASSWORD, RESET_PASSWORD_CONFIRM } from 'src/actions/actions'
-import PageFormTemplate from 'src/components/PageFormTemplate'
+import Input from 'src/components/Input'
 import ButtonForm from 'src/components/ButtonForm'
+import PageFormTemplate from 'src/components/PageFormTemplate'
+import { RESET_PASSWORD_CONFIRM } from 'src/actions/actions'
+import './NewPassword.css'
 
 const NewPassword = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-
-    const [isMismatch, setIsMismatch] = useState(false);
-    const [modal, setModal] = useState(<div/>);
     const isLoading = useSelector(({store}) => store.isLoading);
     const { uid, token } = useParams();
 
+    const [modal, setModal] = useState(<div/>);
+    const [isMismatch, setIsMismatch] = useState(false);
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+    // убрать красное выделение если начал изменять
+    useEffect(() => {
+        setIsMismatch(false);
+    },[password, confirmPassword])
+
+    // сбросить пароль либо подсветить красным поля
     const clickButton = () => {
         if (password !== confirmPassword) {
             setIsMismatch(true);
@@ -29,9 +33,6 @@ const NewPassword = () => {
         }
         if (uid && token) dispatch(RESET_PASSWORD_CONFIRM(navigate, uid, token, password, setModal));
     }
-    useEffect(() => {
-        setIsMismatch(false);
-    },[password, confirmPassword])
 
     return (
         <PageFormTemplate page='New password'>

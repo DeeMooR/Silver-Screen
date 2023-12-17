@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/card")
 public class CardController {
@@ -40,6 +41,17 @@ public class CardController {
     public ResponseEntity getAllCard() {
         try {
             return ResponseEntity.ok(cardService.getAll());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error");
+        }
+    }
+
+    @PutMapping("/increment")
+    public ResponseEntity incrementOneCard(@RequestBody int id) {
+        try {
+            return ResponseEntity.ok(cardService.incrementOne(id));
+        } catch (MyException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error");
         }

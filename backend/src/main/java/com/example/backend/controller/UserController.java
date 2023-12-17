@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -19,8 +20,6 @@ public class UserController {
         try {
             userService.add(user);
             return ResponseEntity.ok("Пользователь успешно сохранён");
-        } catch (MyException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error");
         }
@@ -45,7 +44,6 @@ public class UserController {
             return ResponseEntity.badRequest().body("Error");
         }
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable int id) {

@@ -8,7 +8,6 @@ import logoBig from "src/icons/logo_big.png"
 import logoBig_pink from "src/icons/logo_big_pink.png"
 import logoSmall from "src/icons/logo_small.png"
 import logoSmall_pink from "src/icons/logo_small_pink.png"
-
 import menu from "src/icons/menu.png"
 import account from "src/icons/account.png"
 
@@ -18,6 +17,7 @@ const Header = () => {
     const [clickMenu, setClickMenu] = useState(false);
     const token = localStorage.getItem('access');
 
+    // отслеживние скролла
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 0) setIsScrolled(true);
@@ -27,21 +27,19 @@ const Header = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // скрыть скролл при откртом меню
     useEffect(() => {
-        if (clickMenu) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'auto';
-        }
+        if (clickMenu) document.body.style.overflow = 'hidden';
+        else document.body.style.overflow = 'auto';
     }, [clickMenu]);
 
+    // переход в аккаунт или на стрианцу 'sign-in'
     const clickAccount = () => {
         if (token) navigate('/account');
         else navigate('/sign-in');
     }
 
     return (
-        <>
         <header className={`header ${isScrolled ? 'scrollHeader' : ''}`}>
             <div className="header__wrapper">
                 <div className="header__content">
@@ -65,7 +63,6 @@ const Header = () => {
             </div>
             <SlideBar clickMenu={clickMenu} setClickMenu={setClickMenu} />
         </header>
-        </>
     )
 }
 

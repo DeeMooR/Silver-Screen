@@ -1,7 +1,7 @@
-import React, { FC, useState } from 'react'
-import PageFormTemplate from 'src/components/PageFormTemplate'
-import ButtonForm from 'src/components/ButtonForm'
+import React, { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ButtonForm from 'src/components/ButtonForm'
+import PageFormTemplate from 'src/components/PageFormTemplate'
 import './SuccessOrNot.css'
 
 interface ISuccessOrNot {

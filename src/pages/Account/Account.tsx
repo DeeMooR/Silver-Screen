@@ -1,59 +1,64 @@
 import React, { useEffect, useState } from 'react'
-import PageTemplate from 'src/components/PageTemplate';
-import './Account.css'
-import InputNotActive from 'src/components/InputNotActive';
 import { useDispatch, useSelector } from 'react-redux';
-import Input from 'src/components/Input';
-import Button from 'src/components/Button';
-import TitleWithSwitch from 'src/components/TitleWithSwitch';
-import ModalSuccess from 'src/components/ModalSuccess';
 import { useNavigate } from 'react-router-dom';
-import { RESET_PASSWORD_IN_ACCOUNT } from 'src/actions/actions';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
-import { IDataMyCard } from 'src/interfaces';
-import AccountBuy from './AccountBuy/AccountBuy';
+import TitleWithSwitch from 'src/components/TitleWithSwitch';
+import PageTemplate from 'src/components/PageTemplate';
+import InputNotActive from 'src/components/InputNotActive';
+import Input from 'src/components/Input';
+import Button from 'src/components/Button';
+import AccountBuy from './AccountBuy';
+import { RESET_PASSWORD_IN_ACCOUNT } from 'src/actions/actions';
+import './Account.css'
 
 const Account = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    let name = useSelector(({store}) => store.user.username);
-    let email = useSelector(({store}) => store.user.email);
+    let name = useSelector(({storeUser}) => storeUser.user.username);
+    let email = useSelector(({storeUser}) => storeUser.user.email);
     let token = localStorage.getItem('access') || 'err';
 
     const [modal, setModal] = useState(<div/>);
     const [isMismatch, setIsMismatch] = useState(false);
+    const [activePage, setActivePage] = useState(1);
 
+    // State для изменения пароля
     const [current_password, setCurrentPassword] = useState('');
     const [new_password, setNewPassword] = useState('');
     const [confirm_new_password, setConfirmNewPassword] = useState('');
 
-    const [activePage, setActivePage] = useState(1);
-
+    // очистить данные о картах и фильмах пользователя
     useEffect(() => {
         window.scrollTo({top: 0});
-        dispatch({ type: "CLEAR_MY_CARDS" });
-        dispatch({ type: "CLEAR_MY_MOVIES" });
+        dispatch({ type: "CLEAR_MY_CARD" });
+        dispatch({ type: "CLEAR_MY_MOVIE" });
     },[])
 
+    // убрать красное выделение если начал изменять
     useEffect(() => {
         setIsMismatch(false);
     },[new_password, confirm_new_password])
 
-
+    // очистить поля ввода
     const clickCancel = () => {
         setCurrentPassword('');
         setNewPassword('');
         setConfirmNewPassword('');
     }
-    const clickExit = () => {
-        localStorage.removeItem('access');
-        navigate('/sign-in', {state: {fromPage: '/'}});
-    }
+
+    // сохранить новый пароль
     const clickSave = () => {
         if (new_password !== confirm_new_password) setIsMismatch(true);
         else dispatch(RESET_PASSWORD_IN_ACCOUNT(token, new_password, current_password, setModal));
     };
+
+     // выход из аккаунта
+    const clickExit = () => {
+        dispatch({ type: "CLEAR_STORE_USER" });
+        localStorage.removeItem('access');
+        navigate('/sign-in', {state: {fromPage: '/'}});
+    }
 
     return (
         <PageTemplate wrapper>

@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import './Input.css'
 import { Link } from 'react-router-dom'
+import './Input.css'
 
 interface IInput {
     title: string,

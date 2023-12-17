@@ -1,17 +1,14 @@
 import React, { FC, useEffect, useState } from 'react'
-import './SignInUp.css'
-import Input from 'src/components/Input'
-import Button from 'src/components/Button'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import { CREATE_USER, SIGN_IN } from 'src/actions/actions'
-import PageFormTemplate from 'src/components/PageFormTemplate'
 import ButtonForm from 'src/components/ButtonForm'
-import ModalSuccess from 'src/components/ModalSuccess'
+import Input from 'src/components/Input'
+import PageFormTemplate from 'src/components/PageFormTemplate'
+import { CREATE_USER, SIGN_IN } from 'src/actions/actions'
 import { IMovie } from 'src/interfaces'
+import './SignInUp.css'
 
 interface ISignInUp {
     page: 'Sign In' | 'Sign Up'
@@ -20,37 +17,54 @@ interface ISignInUp {
 const SignInUp:FC<ISignInUp> = ({page}) => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
-    const arrMovieIsFilled = (arrMovies.length) ? true : false;
+    const location = useLocation();
+
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
+    const isLoading = useSelector(({store}) => store.isLoading);
+    const [modal, setModal] = useState(<div/>);
     
+    // State для хранения введённой информации
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     
+    // State для подсвечивания красным
     const [isEmptyName, setIsEmptyName] = useState(false);
     const [isEmptyEmail, setIsEmptyEmail] = useState(false);
     const [isMismatch, setIsMismatch] = useState(false);
+    
+    const arrMovieIsFilled = (arrMovies.length) ? true : false;
+    let fromPage = '/';
+    if (location.state && location.state.fromPage) {
+        fromPage = (location.state.fromPage === 'admin') ? '/' : location.state.fromPage;
+    }
 
-    const [modal, setModal] = useState(<div/>);
-    const isLoading = useSelector(({store}) => store.isLoading);
-
-    const location = useLocation();
-    const fromPage = (location.state && location.state.fromPage) ? location.state.fromPage : '';
-
+    // переход на страницу 'Admin', регистрация или авторизация
     const clickButton = () => {
-        if (page === 'Sign Up' && name === '') setIsEmptyName(true);
-        if (page === 'Sign Up' && (password !== confirmPassword || password === '' || confirmPassword === '')) setIsMismatch(true);
-        if (page === 'Sign In' && password === '') setIsMismatch(true);
-        if (page === 'Sign In' && password !== '') setIsMismatch(false);    // если после красного password в Sign Up перейти в Sign In и нажать на button
+        if (email === 'admin' && password === 'admin') {
+            localStorage.setItem('isAdmin', 'true');
+            navigate('/admin');
+            return;
+        }
+
+        // проверяем заполненность полей
         if (email === '') setIsEmptyEmail(true);
+        if (page === 'Sign Up' && name === '') setIsEmptyName(true);
+        if (page === 'Sign Up' && (password !== confirmPassword || password === '')) setIsMismatch(true);
+        if (page === 'Sign In' && password === '') setIsMismatch(true);
+
+        // если после красного password в Sign Up перейти в Sign In и нажать на button
+        if (page === 'Sign In' && password !== '') setIsMismatch(false);
         
+        // отправляем данные
         if (page === 'Sign In' && email !== '' && password !== '') dispatch(SIGN_IN(navigate, email, password, fromPage, arrMovieIsFilled, setModal));
         if (page === 'Sign Up' && name !== '' && email !== '' && password !== '' && password === confirmPassword) {
             dispatch(CREATE_USER(navigate, {username: name, email, password}, setModal));
         }
     }
 
+    // убрать красное выделение если начал изменять
     useEffect(() => {
         setIsMismatch(false);
     },[password, confirmPassword])

@@ -1,79 +1,84 @@
 import React, { useEffect, useState } from 'react'
-import './PresentCard.css'
-import SlideInfo from 'src/components/SlideInfo'
-import { getDateIn180, getTodayDate } from 'src/helpers'
-import PageTemplate from 'src/components/PageTemplate'
-import { BackgroundPresentCard } from './styled'
-import { IDataGiftCard, IDataGiftSelect, IDataMyCard } from 'src/interfaces'
-import GiftCard from 'src/components/GiftCard/GiftCard'
-import PresentCardText from './PresentCardText'
 import { useDispatch, useSelector } from 'react-redux'
-import { GET_GIFT_CARDS, SEND_MY_CARDS } from 'src/actions/actions'
+import { Link, useNavigate } from 'react-router-dom'
 import { ThunkDispatch } from 'redux-thunk'
 import { AnyAction } from 'redux'
-import BasketCard from 'src/components/BasketCard'
-import Button from 'src/components/Button'
-import { Link, useNavigate } from 'react-router-dom'
+import SlideInfo from 'src/components/SlideInfo'
+import GiftCard from 'src/components/GiftCard'
+import PresentCardText from './PresentCardText'
 import ModalPay from 'src/components/ModalPay'
+import Button from 'src/components/Button'
 import Basket from 'src/components/Basket'
+import PageTemplate from 'src/components/PageTemplate'
+import { getDateIn180, getDatePoints, getTodayDate } from 'src/helpers/helper'
+import { GET_GIFT_CARDS, ADD_MY_CARD, GET_PAGE_TITLES } from 'src/actions/actions'
+import { ICard, IDataCardSelect, IAddMyCard, IPageTitle } from 'src/interfaces'
+import './PresentCard.css'
 
 const PresentCard = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    const userId = useSelector(({store}) => store.user.id);
-    const arrGiftCards: IDataGiftCard[] = useSelector(({store}) => store.giftCards);
-    const arrGiftSelect: IDataGiftSelect[] = useSelector(({store}) => store.giftSelect);
-    const mainPresentCard = useSelector(({storePages}) => storePages.mainPresentCard);
+
+    const arrGiftCards: ICard[] = useSelector(({storePages}) => storePages.cards);
+    const arrCardSelect: IDataCardSelect[] = useSelector(({storeUser}) => storeUser.card_select);
+    const arrPageTitle = useSelector(({storePages}) => storePages.pageTitles);
+    const userId = useSelector(({storeUser}) => storeUser.user.id);
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
-    const [modal, setModal] = useState(<div/>);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
     const token = localStorage.getItem('access');
 
+    const [modal, setModal] = useState(<div/>);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    
+    const pageTitle = arrPageTitle.find((item: IPageTitle) => item.page === "presentcard");
+
+    // очистить корзину и получить данные с бд
+    useEffect(() => {
+        window.scrollTo({top: 0});
+        dispatch({ type: "CLEAR_CARD_SELECT" });
+
+        const fetchData = async () => {
+            await dispatch({ type: "SET_LOADING_PAGE" });
+            if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
+            if (!arrPageTitle.length) await dispatch(GET_PAGE_TITLES(setModal));
+            await dispatch({ type: "SET_LOADING_PAGE" });
+        };
+        fetchData();
+    },[])
+
+    // перейти на страницу 'Sign-in'
     const clickSignIn = () => {
         navigate('/sign-in', {state: {fromPage: '/presentcard'}});
     }
+
+    // оплатить карту
     const clickPay = () => {
         setModalIsOpen(true);
-        const addArrMyCards: IDataMyCard[] = arrGiftSelect.map((item) => {
-            const objMyCard: IDataMyCard = {
-                numberCard: item.number,
-                idCard: item.idCard,
-                start: getTodayDate(),
+        arrCardSelect.map((item) => {
+            const myCard: IAddMyCard = {
+                number_card: item.number,
+                start: getDatePoints(getTodayDate()),
                 end: getDateIn180(),
                 status: true
             }
-            return objMyCard;
+            dispatch(ADD_MY_CARD(userId, item.card_id, myCard, setModal));
         })
-        dispatch(SEND_MY_CARDS(userId, addArrMyCards, setModal));
     }
-
-    useEffect(() => {
-        window.scrollTo({top: 0});
-        dispatch({ type: "CLEAR_GIFT_SELECT" });
-
-        const fetchData = async () => {
-            dispatch({ type: "SET_LOADING_PAGE" });
-            if (!arrGiftCards.length) await dispatch(GET_GIFT_CARDS(setModal));
-            dispatch({ type: "SET_LOADING_PAGE" });
-        };
-        if (!arrGiftCards.length) fetchData();
-    },[])
 
     return (
         <PageTemplate>
             {modal}
-            <div className='presentCard'>
-                <div className="presentCard__main">
-                    <SlideInfo slide={mainPresentCard} reverse />
+            {isLoadingPage || !pageTitle ? (
+                <div className="loaderPage">
+                    <div className="loaderPage__element"></div>
                 </div>
-                <div className="presentCard__wrapper">
-                    <p className="presentCard__this">Электронная подарочная карта кинопространств mooon и Silver Screen - это лучшая возможность в пару кликов получить online-подарок, который подарит приятные эмоции другу, коллеге или близкому вам человеку</p>
-                        {isLoadingPage ? (
-                            <div className="loaderPage">
-                                <div className="loaderPage__element"></div>
-                            </div>
-                        ) : (
+            ) : (
+                <div className='presentCard'>
+                    <div className="presentCard__main">
+                        <SlideInfo slide={pageTitle} reverse />
+                    </div>
+                    <div className="presentCard__wrapper">
+                        <p className="presentCard__this">Электронная подарочная карта кинопространств mooon и Silver Screen - это лучшая возможность в пару кликов получить online-подарок, который подарит приятные эмоции другу, коллеге или близкому вам человеку</p>
                             <div className={`presentCard__table ${isLoading ? 'loading' : ''}`}>
                                 {isLoading &&
                                     <div className="loader">
@@ -81,14 +86,14 @@ const PresentCard = () => {
                                     </div>
                                 }
                                 <div className="presentCard__cards">
-                                    {arrGiftCards.map((item: IDataGiftCard) => (
+                                    {arrGiftCards.map((item: ICard) => (
                                         <div className="cards__item" key={item.id}>
                                             <GiftCard obj={item} arrGiftCards={arrGiftCards} />
                                         </div>
                                     ))}
                                 </div>
-                                <div className={`presentCard__basket ${!arrGiftSelect.length ? 'empty' : ''}`}>
-                                    {arrGiftSelect.length ?
+                                <div className={`presentCard__basket ${!arrCardSelect.length ? 'empty' : ''}`}>
+                                    {arrCardSelect.length ?
                                         <>
                                         <p className='presentCard-basket__title'>Корзина</p>
                                         <Basket type='card' setModal={setModal} />
@@ -103,11 +108,11 @@ const PresentCard = () => {
                                     }
                                 </div>
                             </div>
-                        )}
-                    <PresentCardText />
+                        <PresentCardText />
+                    </div>
+                    <ModalPay isOpen={modalIsOpen} setIsOpen={setModalIsOpen} type='card' />
                 </div>
-                <ModalPay isOpen={modalIsOpen} setIsOpen={setModalIsOpen} type='card' />
-            </div>
+            )}
         </PageTemplate>
     )
 }

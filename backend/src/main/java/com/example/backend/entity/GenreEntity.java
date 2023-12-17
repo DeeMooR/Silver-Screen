@@ -1,6 +1,7 @@
 package com.example.backend.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "genre")
@@ -13,10 +14,6 @@ public class GenreEntity {
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private MovieEntity movie;
-
-
-    public GenreEntity() {
-    }
 
     public void setId(int id) {
         this.id = id;

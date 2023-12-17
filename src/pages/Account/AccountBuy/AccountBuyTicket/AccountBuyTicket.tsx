@@ -1,47 +1,55 @@
-import React, { FC, useEffect } from 'react'
-import './AccountBuyTicket.css'
-import { IDataGiftCard, IDataGiftSelect, IDataMyCard, IDataSeatSelect, IMovie, ISeance } from 'src/interfaces'
+import React, { FC } from 'react'
 import { useSelector } from 'react-redux'
-import { compareTimeNowStart, getAudio, getTimePlusDuration, getTodayDayMonthYear } from 'src/helpers'
+import { compareTimeNowStart, getAudio, getDatePoints, getTimePlusDuration, getTodayDate } from 'src/helpers/helper'
+import { IDataMyMovie, IMovie, IRoom } from 'src/interfaces'
+import './AccountBuyTicket.css'
 
 interface IAccountBuyTicket {
-    obj: IDataSeatSelect
+    obj: IDataMyMovie
 }
 
 const AccountBuyTicket:FC<IAccountBuyTicket> = ({obj}) => {
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
-    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
+    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
 
-    const objMovie = arrMovies.find((item) => item.id === obj.idMovie);
-    const objSeance = arrSeances.find((item) => item.id === obj.idSeance);
+    // получаем данные о фильме для отображения
+    const movie = arrMovies.find((item) => item.id === obj.movie_id);
+    const shedule = movie?.schedule.find(item => item.date === obj.date);
+    const objSeance = shedule?.seances.find((item) => item.id === obj.seance_id);
+    const room = arrRooms.find(room => room.id === objSeance?.room_id);
 
-    let alreadyStart = false;
-    if (objSeance && getTodayDayMonthYear() === obj.date) alreadyStart = compareTimeNowStart(objSeance?.time);
+    // получаем стоимость билета
+    const getCost = (seat_type: String) => {
+        return (seat_type === 'single') ? (room?.cost_single || 0) : (room?.cost_sofa || 0);
+    }
+
+    // фильм уже начался?
+    const alreadyStart = (objSeance && getDatePoints(getTodayDate()) === obj.date) ? compareTimeNowStart(objSeance?.time) : false;
 
     return (
         <>
-        {objMovie && objSeance &&
+        {movie && objSeance &&
             <div className='accountBuyTicket'>
-                <img src={objMovie?.image} className='accountBuyTicket__image' alt="movie" />
+                <img src={movie?.image} className='accountBuyTicket__image' alt="movie" />
                 <div className="accountBuyTicket__info">
-                    <p className='accountBuyTicket__title'>{objMovie.title}</p>
+                    <p className='accountBuyTicket__title'>{movie.title}</p>
                     <div className="accountBuyTicket__text">
                         <div className="accountBuyTicket__left">
                             <p className={`accountBuyTicket__date-time ${alreadyStart ? 'alreadyStart' : ''}`}>
-                                {obj.date} / {objSeance.time} - {getTimePlusDuration(objSeance.time, objMovie.duration)}
+                                {obj.date} / {objSeance.time} - {getTimePlusDuration(objSeance.time, movie.duration)}
                             </p>
                             <p className='accountBuyTicket__other'>
-                                <span>{objMovie.language}{objMovie.isSUB && ', SUB'}</span>
-                                <span>{objMovie.video}</span>
-                                <span>{getAudio(objSeance.room)}</span>
-                                <span className='accountBuyTicket__age'>{objMovie.age}+</span>
+                                <span>{movie.language}{movie.sub && ', SUB'}</span>
+                                <span>{movie.video}</span>
+                                <span>{getAudio(objSeance.room_id)}</span>
+                                <span className='accountBuyTicket__age'>{movie.age}+</span>
                             </p>
                         </div>
                         <div className="accountBuyTicket__middle">
-                            <p className='accountBuyTicket__seat'>{obj.row} ряд, {obj.column} место / зал {objSeance.room}</p>
-                            <p className='accountBuyTicket__type'>Тип места: <span>{obj.typeSeat}</span></p>
+                            <p className='accountBuyTicket__seat'>{obj.i_row} ряд, {obj.i_column} место / зал {objSeance.room_id}</p>
+                            <p className='accountBuyTicket__type'>Тип места: <span>{obj.type_id}</span></p>
                         </div>
-                        <p className='accountBuyTicket__cost'>{obj.cost} BYN</p>
+                        <p className='accountBuyTicket__cost'>{getCost(obj.type_id)} BYN</p>
                     </div>
                 </div>
             </div>

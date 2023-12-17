@@ -48,4 +48,18 @@ public class PlacesService {
                 .map(Places::toModel)
                 .collect(Collectors.toList());
     }
+
+    public Places change(int set_number, int seance_id, int index_row, int index_column) throws MyException {
+        Iterable<PlacesEntity> places = placesRepo.findAll();
+
+        List<PlacesEntity> filterPlaces = StreamSupport.stream(places.spliterator(), false)
+                .filter(item -> item.getSeance().getId() == seance_id)
+                .collect(Collectors.toList());
+
+        int[] new_numbers = filterPlaces.get(index_row).getNumbers();
+        new_numbers[index_column] = set_number;
+        filterPlaces.get(index_row).setNumbers(new_numbers);
+        PlacesEntity updatedPlace = placesRepo.save(filterPlaces.get(index_row));
+        return Places.toModel(updatedPlace);
+    }
 }

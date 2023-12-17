@@ -1,59 +1,53 @@
 import React, { FC, useEffect, useState } from 'react'
-import { IDataGiftCard, IDataGiftSelect, ISlide } from 'src/interfaces'
+import { useDispatch, useSelector } from 'react-redux'
+import { ThunkDispatch } from 'redux-thunk'
+import { AnyAction } from 'redux'
+import { ADD_CARD_SELECT } from 'src/actions/actions'
+import { ICard, IDataCardSelect } from 'src/interfaces'
 import './GiftCard.css'
 
 import plus from "src/icons/plus.png"
 import minus from "src/icons/minus.png"
-import { ThunkDispatch } from 'redux-thunk'
-import { useDispatch, useSelector } from 'react-redux'
-import { AnyAction } from 'redux'
-import { ADD_GIFT_SELECT } from 'src/actions/actions'
 
 interface IGiftCard {
-    obj: IDataGiftCard,
-    arrGiftCards: IDataGiftCard[]
+    obj: ICard,
+    arrGiftCards: ICard[]
 }
 
 const GiftCard:FC<IGiftCard> = ({obj, arrGiftCards}) => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
 
-    const arrGiftSelect: IDataGiftSelect[] = useSelector(({store}) => store.giftSelect);
-    const [amountSelect, setAmountSelect] = useState(0);
+    const arrGiftSelect: IDataCardSelect[] = useSelector(({storeUser}) => storeUser.card_select);
+    const [amountSelect, setAmountSelect] = useState(0);    // кол-во выбранных карт
     const [modal, setModal] = useState(<div/>);
   
     useEffect(() => {
         if (!arrGiftSelect.length) setAmountSelect(0);
     }, [arrGiftSelect])
 
+    // удаление из корзину
     const clickMinus = () => {
         if (amountSelect > 0) {
             setAmountSelect(amountSelect - 1);
-            dispatch({ type: "REMOVE_GIFT_SELECT", payload: obj.id });
+            dispatch({ type: "REMOVE_CARD_SELECT", payload: obj.id });
         }
     }
+
+    // добавление в корзину
     const clickPlus = () => {
         setAmountSelect(amountSelect + 1);
-        const objForGiftSelect: IDataGiftSelect = {
-            idCard: obj.id,
+        const newCardSelect: IDataCardSelect = {
+            card_id: obj.id,
             number: obj.amount + 1,
             cost: obj.cost
         };
-        let arrWithNewAmount = arrGiftCards.map((item) => {
-            if (item.id === obj.id) {
-              return {
-                ...item,
-                amount: item.amount + 1,
-              };
-            }
-            return item;
-        });
-        dispatch(ADD_GIFT_SELECT(arrWithNewAmount, objForGiftSelect, setModal));
+        dispatch(ADD_CARD_SELECT(obj.id, newCardSelect, setModal));
     }
 
     return (
         <div className='giftCard'>
             {modal}
-            <img src={obj.image} className='giftCard__image' alt="giftCard" />
+            <img src={obj.image} className='giftCard__image' alt="card" />
             <div className="giftCard__info">
                 <p className='giftCard__title'>Подарочная карта</p>
                 <div className="giftCard__choise">

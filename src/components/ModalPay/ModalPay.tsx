@@ -1,10 +1,9 @@
-import React, { FC, useEffect, useState } from 'react';
-import { IMovie } from 'src/interfaces';
+import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import './ModalPay.css'
 
 import cross from "src/icons/cross.svg"
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 interface IModalPay {
     isOpen: boolean,
@@ -17,13 +16,15 @@ const ModalPay:FC<IModalPay> = ({isOpen, setIsOpen, setIsOpenOther, type}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    // скрыть скролл при откртом окне
     if (isOpen) {
         document.body.style.overflowY = 'hidden';
         document.body.style.padding = '0 7px 0 0';
     }
 
+    // закрыть окно
     const clickCross = () => {
-        dispatch({ type: "CLEAR_GIFT_SELECT" });
+        dispatch({ type: "CLEAR_CARD_SELECT" });
         if(setIsOpenOther) setIsOpenOther(false);
         setIsOpen(false);
         setTimeout(() => {
@@ -31,11 +32,15 @@ const ModalPay:FC<IModalPay> = ({isOpen, setIsOpen, setIsOpenOther, type}) => {
             document.body.style.padding = '0';
         },400);
     }
+
+    // закрыть окно при клике вне окна
     const clickBackground = (event: React.MouseEvent<HTMLDivElement>) => {
         if (event.target === event.currentTarget) clickCross();
     };
+
+    // перейти в аккаунт
     const clickAccount = () => {
-        dispatch({ type: "CLEAR_GIFT_SELECT" });
+        dispatch({ type: "CLEAR_CARD_SELECT" });
         document.body.style.overflowY = 'auto';
         document.body.style.padding = '0';
         navigate('/account');

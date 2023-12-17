@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/seance")
 public class SeanceController {
@@ -21,7 +22,7 @@ public class SeanceController {
                                     @RequestHeader("room_id") int room_id) {
         try {
             seanceService.add(seance, schedule_id, room_id);
-            return ResponseEntity.ok("Сеанс сохранён");
+            return ResponseEntity.ok(seance.getId());
         } catch (MyException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

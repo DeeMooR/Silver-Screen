@@ -1,10 +1,9 @@
-import React, { FC, useEffect, useState } from 'react';
-import { IMovie } from 'src/interfaces';
+import React, { FC, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../Button';
 import './ModalTextButton.css'
 
 import cross from "src/icons/cross.svg"
-import { Link } from 'react-router-dom';
 
 interface IModalTextButton {
     isOpen: boolean,
@@ -14,25 +13,41 @@ interface IModalTextButton {
 }
 
 const ModalTextButton:FC<IModalTextButton> = ({isOpen, setIsOpen, setIsOpenOther, type}) => {
+    const navigate = useNavigate();
+    
+    // скрыть скролл при откртом окне
     if (isOpen) {
         document.body.style.overflowY = 'hidden';
         document.body.style.padding = '0 7px 0 0';
     }
+
+    // вернуть что окно открыто
+    useEffect(() => {
+        setTimeout(() => {
+            setIsOpen(true);
+        }, 50);
+    }, [])
+
+    // закрыть окно
     const clickClose = () => {
         setIsOpen(false);
-        if (setIsOpenOther) setIsOpenOther(false);
         setTimeout(() => {
+            if (setIsOpenOther) setIsOpenOther(false);
             document.body.style.overflowY = 'auto';
             document.body.style.padding = '0';
         },400);
     }
+
+    // закрыть окно при клике вне окна
     const clickBackground = (event: React.MouseEvent<HTMLDivElement>) => {
         if (event.target === event.currentTarget) clickClose();
     };
 
-    useEffect(() => {
-        setIsOpen(true);
-    }, [])
+    // переход на страницу 'Sign-in'
+    const clickSignIn = () => {
+        const url = window.location.href.split('3000')[1];
+        navigate('/sign-in', {state: {fromPage: url}});
+    }
 
     return (
         <div className={`modalTextButton__background ${isOpen? 'open' : ''}`} onClick={(e) => clickBackground(e)}>
@@ -47,7 +62,7 @@ const ModalTextButton:FC<IModalTextButton> = ({isOpen, setIsOpen, setIsOpenOther
                     ) : (
                         <>
                         <p className='modalTextButton__title'>Требуется авторизация!</p>
-                        <p className='modalTextButton__text'>Для покупки билета в кино необходимо <Link to='/sign-in'>войти в аккаунт</Link></p>
+                        <p className='modalTextButton__text'>Для покупки билета в кино необходимо <a onClick={clickSignIn}>войти в аккаунт</a></p>
                         </>
                     )}
                     <Button color='red' fill handleClick={clickClose}>Понятно</Button>

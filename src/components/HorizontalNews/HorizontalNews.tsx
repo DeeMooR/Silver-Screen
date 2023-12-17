@@ -1,10 +1,9 @@
 import React, { FC } from 'react'
-import './HorizontalNews.css'
-import { BackgroundImage } from './styled'
-import Button from '../Button'
-import { IMovie, INews } from 'src/interfaces'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import Button from '../Button'
+import { INews } from 'src/interfaces'
+import { BackgroundImage } from './styled'
+import './HorizontalNews.css'
 
 interface IHorizontalNews {
     obj: INews,
@@ -15,12 +14,11 @@ interface IHorizontalNews {
 const HorizontalNews:FC<IHorizontalNews> = ({obj, page, reverse}) => {
     const navigate = useNavigate();
     
+    // переход на страницу новости
     const clickButton = () => {
         if (obj.link) navigate(`${obj.link}`);
         else navigate('/page404');
     }
-
-    console.log(obj)
 
     return (
         <>

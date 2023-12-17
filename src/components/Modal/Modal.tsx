@@ -7,27 +7,35 @@ import cross from "src/icons/cross.svg"
 interface IModal {
     movie: IMovie,
     isModal: boolean,
-    setIsModal: (value: boolean) => void
+    setIsModal: (value: boolean) => void,
+    setCustomBack: (str: string) => void
 }
 
-const Modal:FC<IModal> = ({movie, isModal, setIsModal}) => {
+const Modal:FC<IModal> = ({movie, isModal, setIsModal, setCustomBack}) => {
+    const [trailerVideo, setTrailerVideo] = useState('');
+    
+    // скрыть скролл и установить ссылку на видео
+    useEffect(() => {
+        if (isModal) {
+            document.body.style.overflowY = 'hidden';
+            setTrailerVideo(`https://www.youtube.com/embed/${movie.trailer.split("v=")[1]}`);
+        }
+    }, [isModal])
 
-    if (isModal) {
-        document.body.style.overflowY = 'hidden';
-    }
-
+    // закрыть окно и остановить видео
     const clickCross = () => {
         setIsModal(false);
+        setTrailerVideo('');
         setTimeout(() => {
             document.body.style.overflowY = 'auto';
         },400);
+        setCustomBack('/afisha');
     }
+
+    // закрыть окно и остановить видео при клике вне окна
     const clickBackground = (event: React.MouseEvent<HTMLDivElement>) => {
         if (event.target === event.currentTarget) clickCross();
     };
-
-    let trailerVideo;
-    if (movie) trailerVideo = `https://www.youtube.com/embed/${movie.trailer.split("v=")[1]}`;
 
     return (
         <div className={`modal__background ${isModal ? 'open' : ''}`} onClick={(e) => clickBackground(e)}>
@@ -38,7 +46,7 @@ const Modal:FC<IModal> = ({movie, isModal, setIsModal}) => {
                         <img src={cross} className='modal__cross' onClick={() => clickCross()} alt="cross" />
                     </div>
                     <div className="modal__video">
-                        <iframe src={trailerVideo} allowFullScreen></iframe>
+                        <iframe src={trailerVideo} id="Youtube" allowFullScreen></iframe>
                     </div>
                 </div>
             </div>

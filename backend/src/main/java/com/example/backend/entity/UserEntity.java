@@ -1,5 +1,9 @@
 package com.example.backend.entity;
 
+import com.example.backend.modelShort.MyCardShort;
+import com.example.backend.modelShort.MyMovieShort;
+import com.example.backend.modelShort.MySeatSelectShort;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,15 +12,13 @@ import java.util.List;
 public class UserEntity {
     @Id
     private int id;
-    private String username;
-    private String password;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<MyCardEntity> myCards;
+    private List<MyCardEntity> my_card;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<MyMovieEntity> myMovies;
+    private List<MyMovieEntity> my_movie;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<MySeatSelectEntity> mySeatSelect;
+    private List<MySeatSelectEntity> my_seat_select;
 
     public UserEntity() {
     }
@@ -24,38 +26,26 @@ public class UserEntity {
     public void setId(int id) {
         this.id = id;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setMy_card(List<MyCardEntity> my_card) {
+        this.my_card = my_card;
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setMy_movie(List<MyMovieEntity> my_movie) {
+        this.my_movie = my_movie;
     }
-    public void setMyCards(List<MyCardEntity> myCards) {
-        this.myCards = myCards;
-    }
-    public void setMyMovies(List<MyMovieEntity> myMovies) {
-        this.myMovies = myMovies;
-    }
-    public void setMySeatSelect(List<MySeatSelectEntity> mySeatSelect) {
-        this.mySeatSelect = mySeatSelect;
+    public void setMy_seat_select(List<MySeatSelectEntity> my_seat_select) {
+        this.my_seat_select = my_seat_select;
     }
 
     public int getId() {
         return id;
     }
-    public String getUsername() {
-        return username;
+    public List<MyCardEntity> getMy_card() {
+        return my_card;
     }
-    public String getPassword() {
-        return password;
+    public List<MyMovieEntity> getMy_movie() {
+        return my_movie;
     }
-    public List<MyCardEntity> getMyCards() {
-        return myCards;
-    }
-    public List<MyMovieEntity> getMyMovies() {
-        return myMovies;
-    }
-    public List<MySeatSelectEntity> getMySeatSelect() {
-        return mySeatSelect;
+    public List<MySeatSelectEntity> getMy_seat_select() {
+        return my_seat_select;
     }
 }

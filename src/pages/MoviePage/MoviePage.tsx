@@ -1,84 +1,86 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import PageMovieTemplate from 'src/components/PageMovieTemplate';
 import Navigation from 'src/components/Navigation';
 import Schedule from 'src/components/Schedule';
 import Modal from 'src/components/Modal';
-import { getArrDate, setDateStore, getArrDates7Days, getArrSoonDatesWithWeek } from 'src/helpers';
+import { getArrDate, setDateStore, getArrDates7Days, getArrSoonDatesWithWeek } from 'src/helpers/helper';
+import { GET_MOVIES, GET_SEANCES_ONE_MOVIE } from 'src/actions/actions';
+import { IMovie } from 'src/interfaces';
 import { StyledTrailer } from './styled'
-import { IMovie, ISeance } from 'src/interfaces';
 import './MoviePage.css'
 
 import iconPlay from "src/icons/play.png"
-import PageMovieTemplate from 'src/components/PageMovieTemplate';
-import { GET_MOVIES, GET_SEANCES } from 'src/actions/actions';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
 
 const MoviePage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
-    const [isModal, setIsModal] = useState(false);
-    let { id = '' } = useParams<{ id: string }>();
-
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
-    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
-    const searchDate = useSelector(({store}) => store.search.date);
-    const movie = arrMovies[+id] || null;
+    const location = useLocation();
     
-    useEffect(() => {
-        if (movie) {
-            const isAlready = movie?.schedule.some((item) => getArrDates7Days().includes(item.date));
-            console.log(isAlready)
-            if (searchDate === getArrDate()[0]) {
-                if (isAlready) {
-                    dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'already' });
-                    setDateStore(getArrDate()[0], dispatch);
-                } else {
-                    dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'soon' });
-                    setDateStore(getArrSoonDatesWithWeek()[0], dispatch);
-                }
-            }
-        }
-    }, [movie])
-
-    const [modal, setModal] = useState(<div/>);
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
+    const searchDate = useSelector(({store}) => store.search.date);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
 
+    const [modal, setModal] = useState(<div/>);
+    const [isModal, setIsModal] = useState(false);
+    const [customBackStr, setCustomBackStr] = useState('');
+
+    // получить объект фильма
+    let { id = '' } = useParams<{ id: string }>();
+    const movie = arrMovies.find(movie => movie.id == +id);
+    const isAlready = movie?.schedule.some((item) => getArrDates7Days().includes(item.date));
+    let fullFirstDate: string | undefined;
+    
+    // получить данные с бд
     useEffect(() => {
-        if (id) dispatch({ type: "SET_ID_ACTIVE_MOVIE_PAGE", payload: id });
         const fetchData = async () => {
-            if (!arrSeances.length) {
-                if (!arrMovies.length) {
-                    await dispatch({ type: "SET_LOADING_PAGE" });
-                    await dispatch(GET_MOVIES(setModal));
-                    await dispatch(GET_SEANCES(setModal));
-                    await dispatch({ type: "SET_LOADING_PAGE" });
-                } else {
-                    await dispatch({ type: "SET_LOADING_PAGE" });
-                    await dispatch(GET_SEANCES(setModal));
-                    await dispatch({ type: "SET_LOADING_PAGE" });
-                }
-            }
+            await dispatch({ type: "SET_LOADING_PAGE" });
+            if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
+            await dispatch({ type: "SET_LOADING_PAGE" });
         };
         fetchData();
+
+        // ссылка для иконки 'Назад'
+        if (location.state && location.state.fromPage === '/buy-ticket') setCustomBackStr('/afisha');
+        else if (!location.state) setCustomBackStr('/');
+        else setCustomBackStr('');
     }, []);
 
-    const location = useLocation();
-    let customBackStr;
-    if (location.state && location.state.fromPage === '/buy-ticket') customBackStr = '/afisha';
-    else if (!location.state) customBackStr = '/';
-    else customBackStr = '';
+    // получить сеансы с бд
+    useEffect(() => {
+        if (movie && searchDate) {
+            const schedule = movie.schedule.find(item => item.date === searchDate.split(', ')[1]); 
+            if (schedule?.seances.length === 0) dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
+        }
+    }, [movie, searchDate]);
 
+    // установить даты в зависимости от 'Сейчас' или 'Скоро в кино'
+    useEffect(() => {
+        if (movie) {
+            if (isAlready) {
+                dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'already' });
+                if (searchDate === getArrSoonDatesWithWeek()[0]) {
+                    fullFirstDate = getArrDate().find(item => {
+                        if (movie.schedule[0].date === item.split(', ')[1]) return true;
+                        return false;
+                    });
+                }
+            } else {
+                dispatch({ type: "SET_MOVIE_TYPE_SELECT", payload: 'soon' });
+                if (searchDate === getArrDate()[0]) {
+                    fullFirstDate = getArrSoonDatesWithWeek().find(item => {
+                        if (movie.schedule[0].date === item.split(', ')[1]) return true;
+                        return false;
+                    });
+                }
+            }
+            if (fullFirstDate) setDateStore(fullFirstDate, dispatch);
+        }
+    }, [isAlready]);
 
-    let fullFirstDate;
-    if (location.state && location.state.fromPage === 'main') {
-        fullFirstDate = getArrDate().find(item => {
-            if (movie && movie.schedule[0].date === item.split(', ')[1]) return true;
-            return false;
-        });
-    }
-    if (fullFirstDate) setDateStore(fullFirstDate, dispatch);
-    
+    // ссылка для видео, длительность фильма
     let videoId, newDuration;
     if (movie) {
         videoId = movie.trailer.split("v=")[1];
@@ -89,7 +91,7 @@ const MoviePage = () => {
     return (
         <>
         {modal}
-        {(isLoadingPage || !arrMovies.length) ? (
+        {(isLoadingPage || !movie) ? (
             <div className="loaderPage">
                 <div className="loaderPage__element"></div>
             </div>
@@ -120,7 +122,7 @@ const MoviePage = () => {
                         </aside>
                     </div>
                 </div>
-                <Modal movie={movie} isModal={isModal} setIsModal={setIsModal} />
+                <Modal movie={movie} isModal={isModal} setIsModal={setIsModal} setCustomBack={setCustomBackStr} />
             </PageMovieTemplate>
         )}
         </>

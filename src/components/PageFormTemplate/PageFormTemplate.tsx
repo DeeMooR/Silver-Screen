@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from 'react'
-import './PageFormTemplate.css'
-import { BackgroundImage } from './styled'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { BackgroundImage } from './styled'
+import './PageFormTemplate.css'
 
 import left from "src/icons/left.svg"
 
@@ -15,10 +15,16 @@ const PageFormTemplate:FC<IPageFormTemplate> = ({children, page}) => {
     const location = useLocation();
     const bg_image = "https://i.ibb.co/TLxy6cz/sign-background.png";
 
+    // переход назад или на главную
     const clickLeft = () => {
-        if (location.state && location.state.fromPage !== '/presentcard' && location.state.fromPage.slice(0, 11) !== '/buy-ticket') navigate('/');
+        if (location.state) {
+            if (location.state.fromPage === '/admin') navigate('/');
+            else if (location.state.fromPage !== '/presentcard' && location.state.fromPage.slice(0, 11) !== '/buy-ticket') navigate('/');
+            else navigate(-1);
+        }
         else navigate(-1);
     }
+
     return (
         <div className='pageFormTemplate'>
             <div className="pageFormTemplate__left" onClick={clickLeft}>

@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
-import { compareTimeNowStart, getAudio, getRoomVideo, getTodayDayMonthYear } from 'src/helpers'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { compareTimeNowStart, getAudio, getDatePoints, getRoomVideo, getTodayDate } from 'src/helpers/helper'
 import { ISeance } from 'src/interfaces'
 import './ScheduleItem.css'
-import { useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
 
 interface IScheduleItem {
     video: string,
@@ -15,9 +15,9 @@ const ScheduleItem:FC<IScheduleItem> = ({video, seance}) => {
     const searchDate = useSelector(({store}) => store.search.date).split(', ')[1];
     const {id} = useParams<{id: string}>();
 
-    let nowTimeMoreStart = false;
-    if (getTodayDayMonthYear() === searchDate) nowTimeMoreStart = compareTimeNowStart(seance.time);
+    const nowTimeMoreStart = (getDatePoints(getTodayDate()) === searchDate) ? compareTimeNowStart(seance.time) : false;
 
+    // переход на страницу сеанса
     const clickSeance = () => {
         if (!nowTimeMoreStart) navigate(`/buy-ticket/${id}/${searchDate}/${seance.id}`);
     }
@@ -25,8 +25,8 @@ const ScheduleItem:FC<IScheduleItem> = ({video, seance}) => {
     return (
         <div className={`scheduleItem ${nowTimeMoreStart ? 'alreadyStart' : ''}`} onClick={clickSeance}>
             <p className='scheduleItem__time'>{seance.time}</p>
-            <p className='scheduleItem__audio'>{getAudio(seance.room)} {video}</p>
-            <p className='scheduleItem__room'>Зал {seance.room} {getRoomVideo(+seance.room)}</p>
+            <p className='scheduleItem__audio'>{getAudio(seance.room_id)} {video}</p>
+            <p className='scheduleItem__room'>Зал {seance.room_id} {getRoomVideo(+seance.room_id)}</p>
         </div>
     )
 }

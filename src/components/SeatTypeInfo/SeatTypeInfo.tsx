@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
-import './SeatTypeInfo.css'
-import { ISeatType } from 'src/interfaces';
 import { useSelector } from 'react-redux';
+import { ISeatType } from 'src/interfaces';
+import './SeatTypeInfo.css'
 
 interface ISeatTypeInfo {
     typeAndCost: {type: string, cost: number}

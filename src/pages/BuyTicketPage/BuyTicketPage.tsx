@@ -1,111 +1,123 @@
 import React, { useEffect, useState } from 'react'
-import './BuyTicketPage.css'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { IDataSeatSelect, IMovie, IRoom, IRow, ISeance, ISeatType } from 'src/interfaces';
-import { addDayOfWeek, formateDateItem, getAudio, getTimePlusDuration } from 'src/helpers';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 import PageMovieTemplate from 'src/components/PageMovieTemplate';
+import ModalTextButton from 'src/components/ModalTextButton';
+import SeatTypeInfo from 'src/components/SeatTypeInfo';
+import Basket from 'src/components/Basket';
+import ModalPay from 'src/components/ModalPay';
+import After10pm from 'src/components/After10pm';
+import RowSeats from 'src/components/RowSeats';
+import Button from 'src/components/Button';
+import { GET_MOVIES, GET_ROOMS, GET_SEAT_TYPES, GET_SEANCES_ONE_MOVIE, BUY_MY_SEAT_SELECT, GET_MY_SEAT_SELECT } from 'src/actions/actions';
+import { addDayOfWeek, formateDateItem, getAudio, getTimePlusDuration, setDateStore } from 'src/helpers/helper';
+import { IDataSeatSelect, IMovie, IRoom, IRow, ISeatType } from 'src/interfaces';
+import './BuyTicketPage.css'
 
 import location from "src/icons/location.png"
 import calendar from "src/icons/calendar.png"
 import video from "src/icons/video.svg"
 import screen from "src/icons/screen.png"
-import RowSeats from 'src/components/RowSeats';
-import SeatTypeInfo from 'src/components/SeatTypeInfo';
-import Button from 'src/components/Button';
-import { GET_MOVIES, GET_ROOMS, GET_SEANCES, GET_SEAT_TYPES, SEND_MY_SEATS } from 'src/actions/actions';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
-import ModalTextButton from 'src/components/ModalTextButton';
-import Basket from 'src/components/Basket';
-import ModalPay from 'src/components/ModalPay';
-import After10pm from 'src/components/After10pm';
 
 const BuyTicketPage = () => {
     const dispatch = useDispatch<ThunkDispatch<any, {}, AnyAction>>();
     const navigate = useNavigate();
-    const {id = '', date, seance} = useParams<{id: string, date: string, seance: string}>();
-    const userId = useSelector(({store}) => store.user.id);
-    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.arrMovies);
-    const arrSeances: ISeance[] = useSelector(({storePages}) => storePages.arrSeances);
-    const movie = arrMovies[+id] || null;
+    const arrMovies: IMovie[] = useSelector(({storePages}) => storePages.movies);
+    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.rooms);
+    const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
+    const arrSeatSelect: IDataSeatSelect[] = useSelector(({storeUser}) => storeUser.my_seat_select);
+    const userId = useSelector(({storeUser}) => storeUser.user.id);
     const isLoading = useSelector(({store}) => store.isLoading);
     const isLoadingPage = useSelector(({store}) => store.isLoadingPage);
-    const arrRooms: IRoom[] = useSelector(({storePages}) => storePages.arrRooms);
-    const arrSeatTypes: ISeatType[] = useSelector(({storePages}) => storePages.seatTypes);
-    const arrSeatSelect: IDataSeatSelect[] = useSelector(({store}) => store.seatSelect);
-    let exampleImage;
-    if (arrSeatTypes.length) exampleImage = arrSeatTypes[0].image;
-    
     const token = localStorage.getItem('access');
+    
+    const {id = '', date, seance} = useParams<{id: string, date: string, seance: string}>();
     const newId = id || '';
     const newDate = date || '';
     const newSeance = seance || '';
-
+    
+    // для отображения модальных окон
     const [modal, setModal] = useState(<div/>);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalTextButtonIsOpen, setModalTextButtonIsOpen] = useState(false);
     const [modalPayIsOpen, setModalPayIsOpen] = useState(false);
-   
-    const objDate = movie?.schedule.find((item) => item.date === date);
-    const allSeances = arrSeances.filter((seance) => objDate?.seances.includes(seance.id));
-    const objSeance = allSeances.find((item) => item.id === +newSeance);
-    const objRoom = arrRooms.find((item) => item.room === objSeance?.room);       // объект room: room, costSingle, costSofa, rows
+    
+    // получание информации о сеансе из других таблиц
+    const movie = arrMovies.find(movie => movie.id === +newId);
+    const objDate = movie?.schedule.find((item) => item.date === newDate);
+    const objSeance = objDate?.seances.find((item) => item.id === +newSeance);
+    const objRoom = arrRooms.find((item) => item.id === objSeance?.room_id);
+    
+    const fullURL = window.location.href;
+    const movieURL = '/afisha' + fullURL.split('buy-ticket')[1].split('/').slice(0, 2).join('/');
+    const exampleImage = (arrSeatTypes.length) ? arrSeatTypes[0].image : '';
+    const timeEnd = (movie && objSeance) ? getTimePlusDuration(objSeance?.time || '', movie.duration) : '';
 
+    // получить данные с бд
+    useEffect(() => {
+        dispatch({ type: "SET_LOADING_PAGE_TRUE" });
+        setDateStore(addDayOfWeek(newDate), dispatch);
+        window.scrollTo({top: 0});
+        if (!arrMovies.length) dispatch(GET_MOVIES(setModal));
+        if (userId) dispatch(GET_MY_SEAT_SELECT(userId, +newSeance, setModal));
+
+        const fetchData = async () => {
+            if (!arrRooms.length) await dispatch(GET_ROOMS(setModal));
+            if (!arrSeatTypes.length) await dispatch(GET_SEAT_TYPES(setModal));
+
+            // получить данные о сеансах и местах до отображения страницы
+            if (movie) {
+                if (objDate?.seances.length === 0) {
+                    await dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
+                    await dispatch({ type: "SET_LOADING_PAGE_FALSE" });
+                }
+                else dispatch({ type: "SET_LOADING_PAGE_FALSE" });
+            }
+        };
+        // if чтобы при отображении RowSeats userId уже был загружен
+        if (token === null || userId !== null) fetchData();
+    },[movie, userId])
+
+    // получить все типы мест на этом сеансе
     const arrRoomSeatTypes = objRoom?.rows
         .reduce((types: { type: string; cost: number }[], item: IRow) => {
-            console.log(types);
-            if (!types.some((typesItem) => typesItem.type === item.type)) {
-                if (item.type === "single") types.push({ type: "single", cost: objRoom?.costSingle });
-                if (item.type === "sofa") types.push({ type: "sofa", cost: objRoom?.costSofa });
+            if (!types.some((typesItem) => typesItem.type === item.type_id)) {
+                if (item.type_id === "single") types.push({ type: "single", cost: objRoom?.cost_single });
+                if (item.type_id === "sofa") types.push({ type: "sofa", cost: objRoom?.cost_sofa });
             }
             return types;
         }, [])
         .sort((a, b) => a.cost - b.cost);
-
-    const fullURL = window.location.href;
-    const movieURL = '/afisha' + fullURL.split('buy-ticket')[1].split('/').slice(0, 2).join('/');
-
+        
+    // переход на страницу 'Sign-in'
     const clickSignIn = () => {
-        const fullURL = window.location.href
         const url = fullURL.split('3000')[1];
         navigate('/sign-in', {state: {fromPage: url}});
     }
 
-    
-    useEffect(() => {
-        window.scrollTo({top: 0});
-        const fetchData = async () => {
-            if (!arrMovies.length) {
-                await dispatch({ type: "SET_LOADING_PAGE" });
-                await dispatch(GET_MOVIES(setModal));
-                await dispatch(GET_SEANCES(setModal));
-                if (!arrRooms.length) await dispatch(GET_ROOMS(setModal));
-                if (!arrSeatTypes.length) await dispatch(GET_SEAT_TYPES(setModal));
-                dispatch({ type: "SET_LOADING_PAGE" });
-            } else {
-                dispatch({ type: "SET_LOADING_PAGE" });
-                if (!arrRooms.length) await dispatch(GET_ROOMS(setModal));
-                if (!arrSeatTypes.length) await dispatch(GET_SEAT_TYPES(setModal));
-                dispatch({ type: "SET_LOADING_PAGE" });
-            }
-        };
-        fetchData();
-    },[])
-
-
-    const clickPay = () => {
+    // купить билет
+    const clickPay = async () => {
         setModalPayIsOpen(true);
-        dispatch(SEND_MY_SEATS(userId, arrSeatSelect, arrSeances, setModal));
+        for (const item of arrSeatSelect) {
+            const obj = {
+                i_row: item.i_row,
+                i_column: item.i_column,
+                date: newDate,
+                cost: 30
+            };
+            await dispatch(BUY_MY_SEAT_SELECT(userId, +newId, +newSeance, item.seat_type, item.id, obj, setModal));
+        }
+        await dispatch({ type: "CLEAR_MY_SEAT_SELECT" });
+        // отобразить купленные билеты занятыми
+        await dispatch(GET_SEANCES_ONE_MOVIE(+newId, setModal));
     }
-
-    let timeEnd = '';
-    if (objSeance) timeEnd = getTimePlusDuration(objSeance?.time || '', movie.duration);
 
     return (
         <>
         {modal}
-        {(isLoadingPage || !arrMovies.length) ? (
+        {(isLoadingPage || !movie) ? (
             <div className="loaderPage">
                 <div className="loaderPage__element"></div>
             </div>
@@ -119,7 +131,7 @@ const BuyTicketPage = () => {
                             <div className='buyTicketPage-header__info'>
                                 <div className="flex__icon-text">
                                     <img src={location} alt="location" />
-                                    <p>Silver Screen в ТРЦ Arena city г. Минск, пр Победителей, 84 / Зал {objSeance?.room}</p>
+                                    <p>Silver Screen в ТРЦ Arena city г. Минск, пр Победителей, 84 / Зал {objSeance?.room_id}</p>
                                 </div>
                                 <div className="flex__icon-text">
                                     <img src={calendar} alt="calendar" />
@@ -127,13 +139,15 @@ const BuyTicketPage = () => {
                                 </div>
                                 <div className="flex__icon-text">
                                     <img src={video} className='icon_video' alt="video" />
-                                    <p>{movie.video} / {getAudio(objSeance?.room || 1)} </p>
+                                    <p>{movie.video} / {getAudio(objSeance?.room_id || 1)} </p>
                                 </div>
                                 <div className="buyTicketPage-header__age">{movie.age}+</div>
                             </div>
                         </div>
                     </div>
-                    <After10pm timeEnd={timeEnd} />
+                    {timeEnd &&
+                        <After10pm timeEnd={timeEnd} />
+                    }
                     <div className={`buyTicketPage__table ${isLoading ? 'loading' : ''}`}>
                         {isLoading &&
                             <div className="loader">
@@ -144,7 +158,7 @@ const BuyTicketPage = () => {
                             <img src={screen} className='buyTicketPage__screen' alt="screen" />
                             <div className="buyTicketPage__seats">
                                 {objSeance?.places?.map((row: number[], i: number) => (
-                                    <RowSeats arrRow={row} room={objSeance?.room} indexRow={i} setModal={setModal} setModalIsOpen={setModalTextButtonIsOpen} key={i} />
+                                    <RowSeats arrRow={row} room={objSeance?.room_id} indexRow={i} setModal={setModal} setModalIsOpen={setModalTextButtonIsOpen} key={i} />
                                 ))}
                             </div>
                             <div className='buyTicketPage__example'>
