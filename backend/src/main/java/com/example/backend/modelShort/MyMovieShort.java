@@ -19,7 +19,6 @@ public class MyMovieShort {
         model.setDate(entity.getDate());
         model.setI_row(entity.getI_row());
         model.setI_column(entity.getI_column());
-        model.setCost(entity.getCost());
         model.setType_id(entity.getType().getType());
         model.setSeance_id(entity.getSeance().getId());
         model.setMovie_id(entity.getMovie().getId());

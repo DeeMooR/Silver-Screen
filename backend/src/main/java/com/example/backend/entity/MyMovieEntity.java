@@ -12,7 +12,6 @@ public class MyMovieEntity {
     private String date;
     private int i_row;
     private int i_column;
-    private int cost;
 
     @ManyToOne
     @JoinColumn(name = "type_id")
@@ -45,9 +44,6 @@ public class MyMovieEntity {
     public void setI_column(int i_column) {
         this.i_column = i_column;
     }
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
     public void setType(SeatTypeEntity type) {
         this.type = type;
     }
@@ -72,9 +68,6 @@ public class MyMovieEntity {
     }
     public int getI_column() {
         return i_column;
-    }
-    public int getCost() {
-        return cost;
     }
     public SeatTypeEntity getType() {
         return type;

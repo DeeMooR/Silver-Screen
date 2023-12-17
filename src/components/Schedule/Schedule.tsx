@@ -24,10 +24,9 @@ const Schedule:FC<ISchedule> = ({movie}) => {
             await setFilteredMovie(updateMovie);
             await setAlready(true);
         };
-
-        // проверяем загрузились ли сеансы
+        
         const schedule = movie.schedule.find(item => item.date === searchDate); 
-        if (schedule?.seances.length !== 0 && schedule?.date === searchDate) updateSeances();
+        if (schedule?.date === searchDate) updateSeances();
     }, [movie, searchDate, searchVideo, searchAudio, searchLanguage])
     
     return (

@@ -42,7 +42,7 @@ const SignInUp:FC<ISignInUp> = ({page}) => {
 
     // переход на страницу 'Admin', регистрация или авторизация
     const clickButton = () => {
-        if (email === 'admin' && password === 'admin') {
+        if (email === 'admin' && password === 'PHW#84#jeor') {
             localStorage.setItem('isAdmin', 'true');
             navigate('/admin');
             return;

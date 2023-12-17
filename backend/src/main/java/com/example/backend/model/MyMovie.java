@@ -7,7 +7,6 @@ public class MyMovie {
     private String date;
     private int i_row;
     private int i_column;
-    private int cost;
     private String type_id;
     private int seance_id;
     private int movie_id;
@@ -22,7 +21,6 @@ public class MyMovie {
         model.setDate(entity.getDate());
         model.setI_row(entity.getI_row());
         model.setI_column(entity.getI_column());
-        model.setCost(entity.getCost());
         model.setType_id(entity.getType().getType());
         model.setSeance_id(entity.getSeance().getId());
         model.setMovie_id(entity.getMovie().getId());
@@ -41,9 +39,6 @@ public class MyMovie {
     }
     public void setI_column(int i_column) {
         this.i_column = i_column;
-    }
-    public void setCost(int cost) {
-        this.cost = cost;
     }
     public void setType_id(String type_id) {
         this.type_id = type_id;
@@ -69,9 +64,6 @@ public class MyMovie {
     }
     public int getI_column() {
         return i_column;
-    }
-    public int getCost() {
-        return cost;
     }
     public String getType_id() {
         return type_id;

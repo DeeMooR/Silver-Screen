@@ -35,25 +35,28 @@ const MoviePage = () => {
     
     // получить данные с бд
     useEffect(() => {
-        const fetchData = async () => {
-            await dispatch({ type: "SET_LOADING_PAGE" });
-            if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
-            await dispatch({ type: "SET_LOADING_PAGE" });
-        };
-        fetchData();
-
         // ссылка для иконки 'Назад'
         if (location.state && location.state.fromPage === '/buy-ticket') setCustomBackStr('/afisha');
         else if (!location.state) setCustomBackStr('/');
         else setCustomBackStr('');
+
+        const fetchData = async () => {
+            await dispatch({ type: "SET_LOADING_PAGE_TRUE" });
+            if (!arrMovies.length) await dispatch(GET_MOVIES(setModal));
+        };
+        fetchData();
     }, []);
 
     // получить сеансы с бд
     useEffect(() => {
-        if (movie && searchDate) {
-            const schedule = movie.schedule.find(item => item.date === searchDate.split(', ')[1]); 
-            if (schedule?.seances.length === 0) dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
-        }
+        const fetchData = async () => {
+            if (movie && searchDate) {
+                const schedule = movie.schedule.find(item => item.date === searchDate.split(', ')[1]); 
+                if (schedule?.seances.length === 0) await dispatch(GET_SEANCES_ONE_MOVIE(movie.id, setModal));
+                await dispatch({ type: "SET_LOADING_PAGE_FALSE" });
+            }
+        };
+        fetchData();
     }, [movie, searchDate]);
 
     // установить даты в зависимости от 'Сейчас' или 'Скоро в кино'
