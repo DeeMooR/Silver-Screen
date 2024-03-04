@@ -82,7 +82,7 @@ const Afisha = () => {
     return (
         <>
         {modal}
-        {isLoadingPage || !filteredMovies.length ? (
+        {isLoadingPage ? (
             <div className="loaderPage">
                 <div className="loaderPage__element"></div>
             </div>
